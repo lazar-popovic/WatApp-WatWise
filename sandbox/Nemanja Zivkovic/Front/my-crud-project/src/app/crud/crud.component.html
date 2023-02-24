@@ -1,0 +1,39 @@
+<div class="container">
+    <h1>CRUD Example</h1>
+  
+    
+    <form (submit)="createItem()">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" [(ngModel)]="newItem.name" required>
+  
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" [(ngModel)]="newItem.description" required></textarea>
+  
+      <button type="submit">Create</button>
+    </form>
+  
+    <hr>
+  
+    <ul>
+      <li *ngFor="let item of items">
+        <h2>{{ item.name }}</h2>
+        <p>{{ item.description }}</p>
+        <button (click)="editItem(item)">Edit</button>
+        <button (click)="deleteItem(item)">Delete</button>
+      </li>
+    </ul>
+  
+    <form *ngIf="editMode" (submit)="updateItem()">
+      <input type="hidden" id="editId" name="editId" [(ngModel)]="editItems.id" required>
+  
+      <label for="editName">Name:</label>
+      <input type="text" id="editName" name="editName" [(ngModel)]="editItem.name" required>
+  
+      <label for="editDescription">Description:</label>
+      <textarea id="editDescription" name="editDescription" [(ngModel)]="editItem.description" required></textarea>
+  
+      <button type="submit">Save</button>
+      <button (click)="cancelEdit()">Cancel</button>
+    </form>
+  </div>
+  
