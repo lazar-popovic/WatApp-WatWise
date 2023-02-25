@@ -28,4 +28,51 @@ public class DevicesController : ControllerBase
     {
         return await this._connection.Devices.FindAsync(id);
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> deleteDevice(int id)
+    {
+        Device device = await _connection.Devices.FindAsync(id);
+        if (device == null)
+        {
+            return NotFound();
+        }
+
+        _connection.Devices.Remove(device);
+        await _connection.SaveChangesAsync();
+        return NoContent();
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> postDevice(Device device) 
+    {
+        if (!ModelState.IsValid) {
+            return BadRequest(ModelState);
+        }
+        await _connection.Devices.AddAsync(device);
+        await _connection.SaveChangesAsync();
+        
+        return Ok(device);
+    }
+    
+    [HttpPut]
+    public async Task<IActionResult> updateDevice(Device device) 
+    {
+        if (!ModelState.IsValid) {
+            return BadRequest(ModelState);
+        }
+        
+        var existingProduct = await _connection.Devices.FirstOrDefaultAsync(p => p.Id == device.Id);
+
+        if (existingProduct == null) {
+            return NotFound();
+        }
+
+        existingProduct.Name = device.Name;
+        existingProduct.Price = device.Price;
+
+        await _connection.SaveChangesAsync();
+
+        return Ok(existingProduct);
+    }
 }
