@@ -1,6 +1,7 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
+import { CartComponent } from './app/cart/cart.component';
 
 
 platformBrowserDynamic().bootstrapModule(AppModule)
@@ -65,4 +66,5 @@ class CrudApp {
     }
   }
 }
+
 

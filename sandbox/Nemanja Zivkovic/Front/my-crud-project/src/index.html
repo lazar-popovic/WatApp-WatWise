@@ -41,6 +41,7 @@
         <th>Device Name</th>
         <th>Serial Number</th>
         <th>Price</th>
+        <th>Buy</th>
       </tr>
     </thead>
     <tbody>
@@ -48,26 +49,31 @@
         <td>Device 1</td>
         <td>1234567890</td>
         <td>$99.99</td>
+        <td><button class="btn-add-to-cart" (click)="addToCart()">Add to Cart</button></td>
       </tr>
       <tr data-toggle="modal" data-target="#myModal">
         <td>Device 2</td>
         <td>1287654321</td>
         <td>$149.99</td>
+        <td><button class="btn-add-to-cart" (click)="addToCart()">Add to Cart</button></td>
       </tr>
       <tr data-toggle="modal" data-target="#myModal">
         <td>Device 3</td>
         <td>1543654321</td>
         <td>$49.99</td>
+        <td><button class="btn-add-to-cart" (click)="addToCart()">Add to Cart</button></td>
       </tr>
       <tr data-toggle="modal" data-target="#myModal">
         <td>Device 4</td>
         <td>0987631421</td>
         <td>$9.99</td>
+        <td><button class="btn-add-to-cart" (click)="addToCart()">Add to Cart</button></td>
       </tr>
       <tr data-toggle="modal" data-target="#myModal">
         <td>Device 5</td>
         <td>0987654521</td>
         <td>$249.99</td>
+        <td><button class="btn-add-to-cart" (click)="addToCart()">Add to Cart</button></td>
       </tr>
     </tbody>
   </table>
@@ -93,8 +99,7 @@
   
   <br>
 
-
-	
+  <app-cart></app-cart>
 
   <app-root>
     

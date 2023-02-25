@@ -193,6 +193,23 @@ nav {
     cursor: pointer;
   }
 
+  .btn-add-to-cart {
+    background: linear-gradient(to bottom, #a7de83, #59ab6f); 
+    border: none;
+    border-radius: 5px;
+    color: #fbfbfb;
+    cursor: pointer;
+    font-size: 16px;  
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+  }
+
+  .btn-add-to-cart:hover {
+    background: linear-gradient(to bottom, #a7de83, #56725e); 
+  }
+  
 
 
   
