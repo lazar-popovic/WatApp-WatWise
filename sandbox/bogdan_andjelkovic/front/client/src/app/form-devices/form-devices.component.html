@@ -1,0 +1,15 @@
+<div class="w-25 m-3">
+  <form class="form">
+    <div class="form-group">
+      <label for="name">Device name</label>
+      <input [(ngModel)]="name" type="text" class="form-control" id="name" name="name">
+    </div>
+    <div class="form-group">
+      <label for="price">Device price</label>
+      <input [(ngModel)]="price" type="text" class="form-control" id="price" name="price">
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary mt-2" type="button" (click)="submitForm()">Add device</button>
+    </div>
+  </form>
+</div>

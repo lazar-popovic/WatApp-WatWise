@@ -40,23 +40,23 @@ public class DevicesController : ControllerBase
 
         _connection.Devices.Remove(device);
         await _connection.SaveChangesAsync();
-        return NoContent();
+        return Ok(this.getDevices());
     }
     
     [HttpPost]
-    public async Task<IActionResult> postDevice(Device device) 
+    public async Task<IActionResult> postDevice([FromBody] Device device) 
     {
         if (!ModelState.IsValid) {
             return BadRequest(ModelState);
         }
-        await _connection.Devices.AddAsync(device);
+        await _connection.Devices.AddAsync( device);
         await _connection.SaveChangesAsync();
         
-        return Ok(device);
+        return Ok(this.getDevices());
     }
     
     [HttpPut]
-    public async Task<IActionResult> updateDevice(Device device) 
+    public async Task<IActionResult> updateDevice([FromBody]Device device) 
     {
         if (!ModelState.IsValid) {
             return BadRequest(ModelState);

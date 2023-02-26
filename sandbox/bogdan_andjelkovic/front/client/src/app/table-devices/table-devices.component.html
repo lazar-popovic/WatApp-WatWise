@@ -1,0 +1,20 @@
+<div class="p-3 w-100 overflow-auto" style="height: 400px;">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let device of devicesService.devices">
+      <td class="col-1">{{device.id}}</td>
+      <td class="col-8">{{device.name}}</td>
+      <td class="col-2">{{device.price}} $</td>
+      <td class="col-1"><button (click)="deleteDevice(device.id)" type="button" class="btn btn-danger">Delete</button></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
