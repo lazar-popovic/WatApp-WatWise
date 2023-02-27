@@ -1,3 +1,23 @@
-<button (click)="pokreni()">Click</button><br>
-<label>{{test}}</label><br>
-<label>{{title}}</label>
+<table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Number Index</th>
+        <th></th>
+      </tr>
+    </thead>
+    <button (click)="getStudents()">Give table of Students</button>
+
+    <tr *ngFor="let student of students">
+        <td>{{ student.id }}</td>
+        <td>{{ student.name }}</td>
+        <td>{{student.number}}</td>
+        <td>
+            <button (click)="deleteStudent(student)">Delete</button>   
+            </td>
+        </tr>
+
+    </table>
+
+    
