@@ -1,0 +1,27 @@
+<form>
+    <div class="mb3"></div>
+        <label for="playerName" class="form-label">Insert player's name:</label><br>
+        <input type="text" class="form-control" [(ngModel)] = "playerName" name="playerName">
+    <hr>
+
+    <div class="mb3"></div>
+        <label for="playerNumber" class="form-label">Insert player's jersey number:</label><br>
+        <input type="text" class="form-control" [(ngModel)] = "playerNumber" name="playerNumber">
+    <hr>
+    
+    <div class="mb3">
+        <label for="teamId" class="form-label">Select team:</label><br>
+        <select class="from-control" name="teamId" id="teamId" [(ngModel)] = "teamId">
+            <option *ngFor="let team of teamsList$|async" [value]="team.id">{{team.teamName}}</option>
+        </select>
+    </div>
+    
+    <br>
+
+    <button (click)="addPlayer()" *ngIf="player.id == 0" class="btn btn-primary">
+        Add new player
+    </button>
+    <button (click)="updatePlayer()" *ngIf="player.id != 0" class="btn btn-primary">
+        Update player
+    </button>
+</form>

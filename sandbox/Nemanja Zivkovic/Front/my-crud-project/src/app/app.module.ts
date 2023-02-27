@@ -1,25 +1,29 @@
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms'; 
-import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { CrudComponent } from './crud/crud.component';
-import { CartComponent } from './cart/cart.component';
+import { PlayerComponent } from './player/player.component';
+import { ShowPlayerComponent } from './player/show-player/show-player.component';
+import { AddEditPlayerComponent } from './player/add-edit-player/add-edit-player.component';
+
+import { PlayersApiService } from './players-api.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CrudComponent,
-    CartComponent
+    PlayerComponent,
+    ShowPlayerComponent,
+    AddEditPlayerComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule,
-    AppRoutingModule
-    
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [PlayersApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
