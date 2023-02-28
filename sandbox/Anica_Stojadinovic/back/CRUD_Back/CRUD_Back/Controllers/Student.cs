@@ -2,8 +2,10 @@
 {
     public class Student
     {
-        public int id;
-        public string name;
-        public string numberi;
+        public int id { get; set; }
+        public string name { get; set; }
+        public string numberi { get; set; }
+
+
     }
 }

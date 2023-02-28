@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 interface Student {
   id: number;
   name: string;
-  number: string;
+  numberi: string;
 }
 
 @Component({
@@ -12,11 +12,15 @@ interface Student {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   students!: Student[];
 
   constructor(private http:HttpClient){}
+
+  ngOnInit(): void {
+    this.getStudents();
+  }
 
   getStudents(): void {
     this.http.get<Student[]>('https://localhost:44373/api/Values')

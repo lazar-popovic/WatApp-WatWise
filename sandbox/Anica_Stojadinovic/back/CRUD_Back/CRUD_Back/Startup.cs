@@ -46,7 +46,9 @@ namespace CRUD_Back
 
             app.UseHttpsRedirection();
 
+
             app.UseRouting();
+            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
 
             app.UseAuthorization();
 
@@ -54,6 +56,7 @@ namespace CRUD_Back
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

@@ -7,12 +7,10 @@
         <th></th>
       </tr>
     </thead>
-    <button (click)="getStudents()">Give table of Students</button>
-
     <tr *ngFor="let student of students">
-        <td>{{ student.id }}</td>
-        <td>{{ student.name }}</td>
-        <td>{{student.number}}</td>
+        <td>{{student.id}}</td>
+        <td>{{student.name}}</td>
+        <td>{{student.numberi}}</td>
         <td>
             <button (click)="deleteStudent(student)">Delete</button>   
             </td>
