@@ -40,7 +40,7 @@ public class DevicesController : ControllerBase
 
         _connection.Devices.Remove(device);
         await _connection.SaveChangesAsync();
-        return Ok(this.getDevices());
+        return Ok();
     }
     
     [HttpPost]
@@ -52,7 +52,7 @@ public class DevicesController : ControllerBase
         await _connection.Devices.AddAsync( device);
         await _connection.SaveChangesAsync();
         
-        return Ok(this.getDevices());
+        return Ok(device);
     }
     
     [HttpPut]

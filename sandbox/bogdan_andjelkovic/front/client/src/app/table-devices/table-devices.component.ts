@@ -32,4 +32,8 @@ export class TableDevicesComponent implements OnInit{
       console.log('Error:', error);
     });
   }
+
+  updateDevice( id: number) {
+
+  }
 }

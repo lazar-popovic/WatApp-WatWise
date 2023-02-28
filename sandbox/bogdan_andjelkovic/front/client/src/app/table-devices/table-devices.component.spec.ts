@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TableDevicesComponent } from './table-devices.component';
+import { FormDevicesComponent} from "../form-devices/form-devices.component";
 
 describe('TableDevicesComponent', () => {
   let component: TableDevicesComponent;
