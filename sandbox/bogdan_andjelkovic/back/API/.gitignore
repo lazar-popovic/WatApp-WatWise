@@ -1,0 +1,26 @@
+﻿# Visual Studio files
+.vs/
+*.suo
+*.user
+*.psess
+*.vsp
+*.csproj.user
+
+# Build results
+bin/
+obj/
+
+# NuGet Packages
+*.nupkg
+packages/
+
+# MSTest test Results
+TestResults/
+
+# Other
+[Tt]humbs.db
+*.log
+*.vspscc
+*.vssscc
+*.orig
+_ReSharper*/
