@@ -15,7 +15,9 @@ interface Student {
 export class AppComponent implements OnInit {
 
   students!: Student[];
-
+  selectedUser: Student = { id: 0, name: '', numberi: '' };
+  idn :any;
+  student!:Student;
   constructor(private http:HttpClient){}
 
   ngOnInit(): void {
@@ -28,19 +30,25 @@ export class AppComponent implements OnInit {
     }
 
     createStudent(student: Student): void {
-      this.http.post<Student>('https://localhost:44371/api/Values', student)
+      this.http.post<Student>('https://localhost:44373/api/Values', student)
         .subscribe(() => {
           this.getStudents();
+           
           });
     }
-    deleteStudent(student: Student): void {
-      this.http.delete(`https://localhost:44371/api/Values/${student.id}`)
+    deleteStudent(id: number): void {
+      this.http.delete(`https://localhost:44373/api/Values/${id}`)
         .subscribe(() => {
-          this.getStudents();
+          this.ngOnInit();
+       
         });
+     }
+   
+    
+    
 
-
-      }
+      
+     
   
 
 }

@@ -33,18 +33,18 @@ namespace CRUD_Back.Controllers
             students.Add(student);
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteStudent(int id)
+        public void DeleteStudent(int id)
         {
             var student = students.FirstOrDefault(u => u.id == id);
-
-            if (student == null)
-            {
-                return NotFound();
-            }
-
             students.Remove(student);
 
-            return NoContent();
+           
+        }
+        [HttpPut]
+        public Student dajStudenta(int id)
+        {
+            var student = students.FirstOrDefault(u => u.id == id);
+            return student;
         }
 
 

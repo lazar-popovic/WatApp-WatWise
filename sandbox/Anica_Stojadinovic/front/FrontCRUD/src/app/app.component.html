@@ -12,10 +12,27 @@
         <td>{{student.name}}</td>
         <td>{{student.numberi}}</td>
         <td>
-            <button (click)="deleteStudent(student)">Delete</button>   
+            <button (click)="deleteStudent(student.id)">Delete</button>
+          
+
             </td>
         </tr>
 
     </table>
+    <form (submit)="createStudent(student)">
+      <label>
+        Name:
+        <input type="text">
+      </label>
+      <br>
+      <label>
+        Number index:
+        <input type="text">
+      </label>
+      <br>
+      <button type="submit">Add student</button>
+    </form>
+    
+   
 
     
