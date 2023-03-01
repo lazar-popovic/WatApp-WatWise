@@ -1,0 +1,38 @@
+<table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Number Index</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tr *ngFor="let student of students">
+        <td>{{student.id}}</td>
+        <td>{{student.name}}</td>
+        <td>{{student.numberi}}</td>
+        <td>
+            <button (click)="deleteStudent(student.id)">Delete</button>
+          
+
+            </td>
+        </tr>
+
+    </table>
+    <form (submit)="createStudent(student)">
+      <label>
+        Name:
+        <input type="text">
+      </label>
+      <br>
+      <label>
+        Number index:
+        <input type="text">
+      </label>
+      <br>
+      <button type="submit">Add student</button>
+    </form>
+    
+   
+
+    
