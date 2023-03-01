@@ -8,16 +8,11 @@ import { environment } from '../environments/environment';
   providedIn: 'root'
 })
 export class TodoService {
-  url = "Todo";
+  url = "todo";
 
   constructor(private http: HttpClient) { }
 
   public getTodos() : Observable<Todo[]> {
     return this.http.get<Todo[]>(`${environment.apiUrl}/${this.url}`);
-    /*let todo = new Todo();
-    todo.id = 1;
-    todo.title = "a";
-    todo.description = "b";
-    return [todo];*/
   }
 }
