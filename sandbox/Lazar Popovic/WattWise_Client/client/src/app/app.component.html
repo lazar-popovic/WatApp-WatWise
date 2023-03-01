@@ -1,0 +1,17 @@
+<button (click)="initNewActor()">Create New Actor</button>
+
+<table>
+  <thead>
+    <th>Name</th>
+    <th>Description</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let actor of actors">
+      <td>{{ actor.name }}</td>
+      <td>{{ actor.description }}</td>
+      <td><button (click)="editActor(actor)">Edit actor</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<app-edit-actor [actor]="actorToEdit" (actorsUpdated)="updateActorsList($event)"></app-edit-actor>
