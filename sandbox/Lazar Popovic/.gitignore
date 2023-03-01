@@ -1,0 +1,50 @@
+# Ignore Visual Studio files
+.vs/
+*.suo
+*.user
+*.ncb
+*.aps
+*.vcproj
+*.vcxproj
+*.pdb
+*.ilk
+*.obj
+*.log
+*.vspscc
+*.vssscc
+*.psess
+*.vsp
+*.bak
+
+# Ignore build output
+bin/
+obj/
+
+# Ignore Node.js dependencies
+node_modules/
+
+# Ignore the npm debug log
+npm-debug.log
+
+# Ignore .NET Core tools
+project.lock.json
+project.fragment.lock.json
+*.nuget.props
+*.nuget.targets
+*.dotnet-restore.log
+
+# Ignore packages
+*.nupkg
+*.snupkg
+*.vsix
+*.zip
+*.cache
+*.bak.*
+
+# Ignore Azure functions files
+.local/
+bin/
+obj/
+logs/
+GeneratedFunctions/
+.vscode/
