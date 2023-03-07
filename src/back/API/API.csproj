@@ -20,4 +20,21 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="API" />
+    <Folder Include="BL\Implementations" />
+    <Folder Include="BL\Interfaces" />
+    <Folder Include="DAL\Implementations" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="DAL\Implementations\README.md" />
+    <None Remove="BL\README.md" />
+    <None Remove="DAL\Interfaces\README.md" />
+    <None Remove="DAL\README.md" />
+    <None Remove="API\README.md" />
+    <None Remove="BL\Implementations\README.md" />
+    <None Remove="BL\Interfaces\README.md" />
+  </ItemGroup>
+
 </Project>
