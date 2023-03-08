@@ -1,8 +1,7 @@
 using API.Models.Entity;
-using Microsoft.AspNetCore.Builder;
+using API.Services.Geocoding.Implementations;
+using API.Services.Geocoding.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +15,11 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlite( builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+// INJECTIONS
+builder.Services.AddScoped<DataContext>();
+builder.Services.AddScoped<IGeocodingService, GeocodingService>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,6 +30,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+
+app.UseCors();
 
 app.UseAuthorization();
 
