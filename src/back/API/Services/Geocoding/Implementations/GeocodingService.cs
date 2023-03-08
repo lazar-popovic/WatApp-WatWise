@@ -1,17 +1,19 @@
 ﻿using System.Net;
+using API.Models.Entity;
+using API.Services.Geocoding.Interfaces;
 using Newtonsoft.Json.Linq;
 
-namespace API.Services.Geocoding;
+namespace API.Services.Geocoding.Implementations;
 
-public class GeocodingService
+public class GeocodingService : IGeocodingService
 {
     public static string Url = "https://dev.virtualearth.net/REST/v1/Locations";
-    
+
+
     public LongLat Geocode(string address)
     {
         LongLat result = new LongLat();
         string url = $"{Url}?q={address}&key={ApiKey.Key}";
-
         try
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);

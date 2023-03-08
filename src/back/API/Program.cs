@@ -1,9 +1,7 @@
 using API.Models.Entity;
-using API.Services.Geocoding;
-using Microsoft.AspNetCore.Builder;
+using API.Services.Geocoding.Implementations;
+using API.Services.Geocoding.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +17,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 // INJECTIONS
 builder.Services.AddScoped<DataContext>();
-builder.Services.AddScoped<GeocodingService>();
+builder.Services.AddScoped<IGeocodingService, GeocodingService>();
 
 
 var app = builder.Build();

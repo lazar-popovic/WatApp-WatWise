@@ -1,10 +1,9 @@
-﻿using API.Models;
-using API.Models.Entity;
+﻿using API.Models.Entity;
 using API.Services.Geocoding;
+using API.Services.Geocoding.Implementations;
+using API.Services.Geocoding.Interfaces;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 
 namespace API.API;
 
@@ -13,17 +12,17 @@ namespace API.API;
 [EnableCors]
 public class LocationController : ControllerBase
 {
-    private readonly GeocodingService _geocodingService;
+    private readonly IGeocodingService _geocodingService;
 
-    public LocationController(GeocodingService geocodingService)
+    public LocationController( IGeocodingService geocodingService)
     {
         _geocodingService = geocodingService;
     }
 
     [HttpGet]
-    public LongLat GetLongLat(string location)
+    public LongLat GetLongLat(string adress)
     {
-        LongLat response = _geocodingService.Geocode(location);
+        LongLat response = _geocodingService.Geocode(adress);
 
         return  response;
     }
