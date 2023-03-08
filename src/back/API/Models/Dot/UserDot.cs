@@ -1,4 +1,4 @@
-﻿namespace API.Models;
+﻿namespace API.Models.Dot;
 
 public class UserDot
 {
