@@ -21,6 +21,8 @@ public class DataContext : DbContext
             .HasOne(p => p.Location)
             .WithMany(c => c.Users)
             .HasForeignKey(p => p.LocationId);
+
+        
     }
     
     public DbSet<User> Users { get; set; }

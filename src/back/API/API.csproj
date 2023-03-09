@@ -8,6 +8,15 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+<<<<<<< HEAD
+=======
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+>>>>>>> 888054b (#13 Krenuti sa login i registracijom preko jwt-Dodat jwt token i DI kroz layer arhitekturu)
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0-preview.1.23111.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -20,14 +29,38 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
   </ItemGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
+=======
+    <Folder Include="DAL\Implementations" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="DAL\Implementations\README.md" />
+>>>>>>> 888054b (#13 Krenuti sa login i registracijom preko jwt-Dodat jwt token i DI kroz layer arhitekturu)
     <None Remove="BL\README.md" />
     <None Remove="DAL\README.md" />
     <None Remove="API\README.md" />
     <None Remove="BL\Implementations\README.md" />
     <None Remove="BL\Interfaces\README.md" />
+    <None Remove="DAL\Interfaces\README.md" />
+    <None Remove="DAL\Implementations\README.md" />
+    <None Remove="Migrations\README.md" />
+    <None Remove="Models\README.md" />
+    <None Remove="Models\Entity\README.md" />
+    <None Remove="README.md" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
+    <Folder Include="DAL\Implementations" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="DAL\Implementations\README.md" />
     <None Remove="DAL\Interfaces\README.md" />
     <None Remove="DAL\Implementations\README.md" />
     <None Remove="Migrations\README.md" />
