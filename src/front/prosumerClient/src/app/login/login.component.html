@@ -1,12 +1,32 @@
-<form>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-5EY9pN8WxEPx6pBwPdF+BOg2GJkpxeHvZUq3gU6fQ2FhhBNKx+Owif3LEf1noG0uZ+VpTw33kOZCg9+C4+maKw==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+ 
+
+
+  <div id="logo">
+  <img src="\assets\logo.png" alt="logo">
+  </div>
+
+  <div class="container">
+  <form>
+    <h2>Sign In</h2>
     <div>
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
+        <!-- <i class="fa fa-user icon"></i>-->
+        <input type="email" id="email" placeholder="username" name="email" required >
     </div>
     <div>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
+      <input type="password" id="password" placeholder="password" name="password" required >
+      <p id="forgot_pass" >Forgot password ?</p>
     </div>
     <button type="submit">Login</button>
-</form>
-  
+    <p id="dont_have_acc" >Dont't have an account ? <span id="register">SIGN UP</span></p>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js" integrity="sha512-lMz+BCF2J1eOb3Ciky7VnnDjK/n+7V9JEBPCEoK4+D4P+mBpV45Bw1yNf+kyS8tWJPTt9Xk+iZ2I4x4OzfyWzw==" crossorigin="anonymous"></script>
+
+  </form>
+  </div>
+</body>
