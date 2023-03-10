@@ -1,3 +1,7 @@
+using API.BL.Implementations;
+using API.BL.Interfaces;
+using API.DAL.Implementations;
+using API.DAL.Interfaces;
 using API.Models.Entity;
 using API.Services.Geocoding.Implementations;
 using API.Services.Geocoding.Interfaces;
@@ -18,6 +22,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 // INJECTIONS
 builder.Services.AddScoped<DataContext>();
 builder.Services.AddScoped<IGeocodingService, GeocodingService>();
+builder.Services.AddScoped<IProsumerBL, ProsumerBL>();
+builder.Services.AddScoped<IProsumerDAL, ProsumerDAL>();
 
 
 var app = builder.Build();
@@ -30,7 +36,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 
 app.UseCors();
 
