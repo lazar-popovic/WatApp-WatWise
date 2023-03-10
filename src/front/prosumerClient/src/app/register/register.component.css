@@ -169,21 +169,50 @@ form
     margin-top: 10px;
   }
   
-
-
-  .input-icons 
+  /* Logo za inpute */
+  #name
   {
-      width: 100%;
-      margin-bottom: 10px;
+    background-image: url(/assets/user.png);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 7px 7px;
   }
-    
-  .icon 
+
+  #password
   {
-      padding: 10px;
-      min-width: 40px;
+    background-image: url(/assets/lock.png);
+    background-size: 15px;
+    background-repeat: no-repeat;
+    background-position: 7px 7px;
+  }
+
+  #email
+  {
+    background-image: url(/assets/email.png);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 7px 7px;
+  }
+
+  #street
+  {
+    background-image: url(/assets/street.png);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 7px 7px;
+  }
+
+  #street_num
+  {
+    background-image: url(/assets/street_num.png);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 7px 7px;
   }
   
   
+
+
 
 
 
