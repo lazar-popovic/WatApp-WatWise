@@ -2,11 +2,11 @@
 
 namespace API.Models;
 
-public class Response
+public class Response<T> : ActionResult
 {
     public List<string> Errors { get; set; }
     public bool Success { get; set; }
-    public object Data { get; set; }
+    public List<T> Data { get; set; }
 
     public Response()
     {

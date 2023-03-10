@@ -1,4 +1,5 @@
-﻿using API.Models.Entity;
+﻿using API.Models;
+using API.Models.Entity;
 using API.Services.Geocoding;
 using API.Services.Geocoding.Implementations;
 using API.Services.Geocoding.Interfaces;
@@ -20,9 +21,9 @@ public class LocationController : ControllerBase
     }
 
     [HttpGet]
-    public LongLat GetLongLat(string adress)
+    public LongLat GetLongLat(string address)
     {
-        LongLat response = _geocodingService.Geocode(adress);
+        var response = _geocodingService.Geocode(address);
 
         return  response;
     }

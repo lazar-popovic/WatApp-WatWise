@@ -53,7 +53,7 @@ namespace API.Migrations
                     Authenticated = table.Column<bool>(type: "INTEGER", nullable: false),
                     Verified = table.Column<bool>(type: "INTEGER", nullable: false),
                     RoleId = table.Column<int>(type: "INTEGER", nullable: false),
-                    LocationId = table.Column<int>(type: "INTEGER", nullable: false)
+                    LocationId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -22,12 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BL\Implementations" />
-    <Folder Include="BL\Interfaces" />
-    <Folder Include="DAL\Implementations" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="DAL\Implementations\README.md" />
     <None Remove="BL\README.md" />
     <None Remove="DAL\Interfaces\README.md" />
@@ -35,6 +29,12 @@
     <None Remove="API\README.md" />
     <None Remove="BL\Implementations\README.md" />
     <None Remove="BL\Interfaces\README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="BL\Implementations" />
+    <Folder Include="DAL\Implementations" />
+    <Folder Include="DAL\Interfaces" />
   </ItemGroup>
 
 </Project>
