@@ -15,5 +15,20 @@ export class SidebarComponent {
     this.currentTime = currentDateTime;
   }
   
+  select(element: EventTarget | null) {
+    if(element == null) 
+      return;
+    let active = document.querySelector(".sidebar-item-active") as HTMLDivElement;
 
+    if(active!=null) {
+      active.className = "sidebar-item";
+    }
+
+    (element as HTMLDivElement).className = "sidebar-item-active";
+  }
+  
+
+  clickHandler(event: MouseEvent) {
+    this.select(event.target);
+  }
 }
