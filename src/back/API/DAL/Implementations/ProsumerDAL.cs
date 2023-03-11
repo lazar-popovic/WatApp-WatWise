@@ -19,7 +19,7 @@ public class ProsumerDAL : IProsumerDAL
         return _context.Users.Any(u => u.Email == email);
     }
 
-    public void RegisterUser(UserRegisterDot user)
+    public async void RegisterUser(UserRegisterDot user)
     {
         var newUser = new User
         {
@@ -31,7 +31,7 @@ public class ProsumerDAL : IProsumerDAL
             Verified = false
         };
 
-        _context.Users.Add(newUser);
-        _context.SaveChanges();
+        await _context.Users.AddAsync(newUser);
+        await _context.SaveChangesAsync();
     }
 }

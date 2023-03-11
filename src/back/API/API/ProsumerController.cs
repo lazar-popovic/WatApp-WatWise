@@ -16,7 +16,7 @@ public class ProsumerController : ControllerBase
     }
 
     [HttpPost("register")]
-    public IActionResult RegisterProsumer(UserRegisterDot request)
+    public async Task<IActionResult> RegisterProsumer(UserRegisterDot request)
     {
         var response = _prosumerBl.RegisterProsumer(request);
 
