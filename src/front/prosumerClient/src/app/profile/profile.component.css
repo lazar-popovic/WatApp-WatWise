@@ -92,35 +92,55 @@ form
   }
 
 
+
   #profile_user
   {
     
     background-image: url(/assets/user.png);
     background-size: 20px;
     background-repeat: no-repeat;
-    background-position: 15px 20px;
+    background-position: 15px 10px;
 
     padding-left : 50px;
-    padding-top: 15px;
-
+   
     text-align: left;
     vertical-align: middle;
     
     margin: 20px;
 
     width: 80%;
-    height: 40px;
+    height: 45px;
 
     border-radius: 30px;    
     background-color: #FFFFFF;
-    
+
+    text-align: center;
   }
 
-  span
+  #profile_user_name
   {
+    vertical-align: middle;
+    
+    margin-left: 12%;
+    height: 30px;
+
+    width: 55%;
+    background-color: #ccc;
+    border-radius: 30px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 29px;
   
-    height: 25px;
-    left: 906px;
+    color: #3E3E3E;
+  }
+
+  #profile_user_name1
+  {
+    margin-top: 2%;
+    height: 30px;
 
     font-family: 'Inter';
     font-style: normal;
@@ -129,6 +149,23 @@ form
    
     color: rgba(0, 0, 0, 0.5);
   }
+
+
+  span
+  {
+  
+    height: 25px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+   
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  
+
 
   /* Logo za inpute */
   #email
@@ -210,13 +247,6 @@ form
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
-  /*SIGN UP*/
-  #register
-  {
-    font-size: 15px;
-    font-weight: bold;
-  }
-
   a
   {
     color: #3E3E3E;
@@ -235,7 +265,6 @@ form
     margin-top: 10px;
   }
   
-
 
   .input-icons i 
     {
@@ -257,3 +286,27 @@ form
     padding: 10px;
     text-align: center;
   }
+
+
+
+
+
+  /*
+  .outer-div {
+    width: 400px;
+    height: 200px;
+    background-color: #f1f1f1;
+    border: 2px solid #ccc;
+    padding: 20px;
+  }
+  
+  .inner-div {
+    width: 200px;
+    height: 100px;
+    background-color: #fff;
+    border: 2px solid #aaa;
+    padding: 20px;
+    margin: 50px auto;
+  }
+  */
+  
