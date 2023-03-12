@@ -66,31 +66,27 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool?>("Authenticated")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Firstname")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Lastname")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("LocationId")
+                    b.Property<int?>("LocationId")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("RoleId")
+                    b.Property<int?>("RoleId")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Verified")
+                    b.Property<bool?>("Verified")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

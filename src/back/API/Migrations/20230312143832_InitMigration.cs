@@ -5,7 +5,7 @@
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigrationUserRoleLocation : Migration
+    public partial class InitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,9 +50,8 @@ namespace API.Migrations
                     PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
                     Firstname = table.Column<string>(type: "TEXT", nullable: true),
                     Lastname = table.Column<string>(type: "TEXT", nullable: true),
-                    Authenticated = table.Column<bool>(type: "INTEGER", nullable: true),
                     Verified = table.Column<bool>(type: "INTEGER", nullable: true),
-                    RoleId = table.Column<int>(type: "INTEGER", nullable: true),
+                    RoleId = table.Column<int>(type: "INTEGER", nullable: false),
                     LocationId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>

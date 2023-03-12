@@ -30,8 +30,7 @@ public class ProsumerDAL : IProsumerDAL
             Email = user.Email,
             RoleId = 3,
             LocationId = null,
-            Verified = false,
-            Authenticated = false
+            Verified = false
         };
 
         await _context.Users.AddAsync(newUser);
@@ -52,14 +51,8 @@ public class ProsumerDAL : IProsumerDAL
 
     public User LoginUser(UserLoginDto user)
     {
-        /*var userFromBase = _dataContext.Users.First(u => u.Email == user.Email);
-
-       if (BCrypt.Net.BCrypt.Verify(user.Password, userFromBase.PasswordHash))
-       {
-           return userFromBase;
-       }
-
-       return null;*/
+        /*var userFromBase = _context.Users.First(u => u.Email == user.Email);
+        return userFromBase;*/
         using (var command = new SqliteCommand())
         {
             command.Connection = (SqliteConnection?)_context.Database.GetDbConnection();
@@ -79,12 +72,13 @@ public class ProsumerDAL : IProsumerDAL
                         PasswordHash = reader.GetString(2),
                         Firstname = reader.IsDBNull(3) ? null : reader.GetString(3),
                         Lastname = reader.IsDBNull(4) ? null : reader.GetString(4),
-                        Authenticated = reader.IsDBNull(5) ? null : reader.GetBoolean(5),
-                        Verified = reader.IsDBNull(6) ? null : reader.GetBoolean(6),
-                        RoleId = reader.GetInt32(7),
-                        LocationId = reader.IsDBNull(8) ? null : reader.GetInt32(8)
+                        Verified = reader.IsDBNull(5) ? null : reader.GetBoolean(5),
+                        RoleId = reader.GetInt32(6),
+                        LocationId = reader.IsDBNull(7) ? null : reader.GetInt32(7)
                     };
 
+                    dbUser.Role = _context.Roles.First(r => r.Id == dbUser.RoleId);
+                    
                     return dbUser;
                 }
             }
