@@ -46,13 +46,13 @@ namespace API.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Email = table.Column<string>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: true),
                     PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
-                    Firstname = table.Column<string>(type: "TEXT", nullable: false),
-                    Lastname = table.Column<string>(type: "TEXT", nullable: false),
+                    Firstname = table.Column<string>(type: "TEXT", nullable: true),
+                    Lastname = table.Column<string>(type: "TEXT", nullable: true),
                     Authenticated = table.Column<bool>(type: "INTEGER", nullable: true),
-                    Verified = table.Column<bool>(type: "INTEGER", nullable: false),
-                    RoleId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Verified = table.Column<bool>(type: "INTEGER", nullable: true),
+                    RoleId = table.Column<int>(type: "INTEGER", nullable: true),
                     LocationId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>

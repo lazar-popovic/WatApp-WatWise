@@ -28,7 +28,8 @@ public class ProsumerDAL : IProsumerDAL
             Email = user.Email,
             RoleId = 3,
             LocationId = null,
-            Verified = false
+            Verified = false,
+            Authenticated = false
         };
 
         await _context.Users.AddAsync(newUser);

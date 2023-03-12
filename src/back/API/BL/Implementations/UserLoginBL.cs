@@ -3,6 +3,7 @@ using API.DAL.Implementations;
 using API.DAL.Interfaces;
 using API.Models;
 using API.Models.Dto;
+using API.Models.Entity;
 
 namespace API.BL.Implementations
 {
@@ -40,19 +41,30 @@ namespace API.BL.Implementations
 
             var verifiedUser = _loginDAL.LoginUser(user);
 
-            if (verifiedUser != null)
+            if ((bool)!verifiedUser.Verified)
             {
-                response.Data = verifiedUser;
-                response.Success = true;
+                response.Errors.Add("Your account is not verified");
+                response.Success = !response.Errors.Any();
                 return response;
             }
-            else 
+
+            if (verifiedUser.RoleId != 3)
+            {
+                response.Errors.Add("You are not authorized");
+                response.Success = !response.Errors.Any();
+                return response;
+            }
+
+            if ( !BCrypt.Net.BCrypt.Verify(user.Password, verifiedUser.PasswordHash))
             {
                 response.Errors.Add("Sorry, we couldn't verify your password. Please check and try again");
                 response.Success = !response.Errors.Any();
-
                 return response;
             }
+
+            response.Data = verifiedUser;
+            response.Success = true;
+            return response;
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using API.BL.Interfaces;
+using API.Models;
 using API.Models.Dto;
 using API.Models.Entity;
 using Microsoft.AspNetCore.Authorization;
@@ -35,23 +36,17 @@ namespace API.API
             if(response.Success == false)
                 return BadRequest(response);
 
-
             token = CreateToken((User)response.Data);
             return Ok(token);
-            
         }
 
         private string CreateToken(User request) 
         {
             List<Claim> claims = new List<Claim> {
-                /*
                 new Claim(ClaimTypes.Email, request.Email),
                 new Claim(ClaimTypes.Role, "User"),
-                new Claim(ClaimTypes.Role, "User")
-                */
                 new Claim("UserID", request.Id.ToString()),
-                new Claim("RoleID", request.RoleId.ToString()),
-                new Claim("Rolename", request.Role.RoleName)
+                new Claim("RoleID", request.RoleId.ToString())
             };
 
             ClaimsIdentity identity = new ClaimsIdentity(claims, "login claims");

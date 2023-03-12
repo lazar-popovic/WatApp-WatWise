@@ -55,54 +55,6 @@ builder.Services.AddScoped<IGeocodingService, GeocodingService>();
 builder.Services.AddScoped<IProsumerBL, ProsumerBL>();
 builder.Services.AddScoped<IProsumerDAL, ProsumerDAL>();
 
-
-var app = builder.Build();
-
-/*
-var Configuration = builder.Configuration;
-
-var key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("Jwt:Key"));
-
-var issuer = Configuration.GetValue<string>("Jwt:Issuer");
-var audience = Configuration.GetValue<string>("Jwt:Audience");
-
-builder.Services.AddAuthentication(auth =>
-{
-    auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.RequireHttpsMetadata = false;
-    options.SaveToken = true;
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = true,
-        ValidIssuer = issuer,
-        ValidateAudience = true,
-        ValidAudience = audience,
-        ClockSkew = TimeSpan.Zero
-    };
-});
-
-*/
-
-/*
-builder.Services.AddAuthentication().AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        ValidateAudience = false,
-        ValidateIssuer = false,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                builder.Configuration["Jwt:Key"]))
-    };
-});
-*/
-
 //JWT Authenthication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
     options.TokenValidationParameters = new TokenValidationParameters
