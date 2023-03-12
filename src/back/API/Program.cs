@@ -49,6 +49,8 @@ builder.Services.AddScoped<DataContext>();
 builder.Services.AddScoped<IGeocodingService, GeocodingService>();
 builder.Services.AddScoped<IProsumerBL, ProsumerBL>();
 builder.Services.AddScoped<IProsumerDAL, ProsumerDAL>();
+builder.Services.AddScoped<IDsoBL, DsoBL>();
+builder.Services.AddScoped<IDsoDAL, DsoDAL>();
 builder.Services.AddScoped<IBaseBL, BaseBL>();
 builder.Services.AddScoped<IBaseDAL, BaseDAL>();
 builder.Services.AddScoped<IJWTCreator, JWTCreator>();
