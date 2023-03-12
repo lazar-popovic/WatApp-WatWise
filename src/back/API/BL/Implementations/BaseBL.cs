@@ -1,18 +1,14 @@
 ﻿using API.BL.Interfaces;
 using API.DAL.Interfaces;
+using API.Models;
+using API.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.BL.Implementations
 {
-    public class BaseBL : IBaseBL
+    public  class BaseBL : IBaseBL
     {
-        private readonly IBaseDAL _baseDAL;
-
-        public BaseBL(IBaseDAL baseDAL) 
-        {
-            _baseDAL = baseDAL;
-        }
-
-        //public Vali
+       
+        
     }
 }

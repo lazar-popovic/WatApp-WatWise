@@ -1,16 +1,11 @@
 ﻿using API.DAL.Interfaces;
+using API.Models.Dto;
 using API.Models.Entity;
 
 namespace API.DAL.Implementations
 {
     public class BaseDAL : IBaseDAL
     {
-        private readonly DataContext _dataContext;
-
-        public BaseDAL(DataContext dataContext)
-        {
-            _dataContext = dataContext;
-        }
 
         public void Delete()
         {
@@ -26,6 +21,16 @@ namespace API.DAL.Implementations
         {
             throw new NotImplementedException();
         }
+        /*
+        public bool LoginEmailDoesentExists(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LoginUser(UserLoginDto user)
+        {
+            throw new NotImplementedException();
+        }*/
 
         public void Update()
         {

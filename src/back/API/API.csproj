@@ -43,6 +43,7 @@
     <None Remove="DAL\Implementations\README.md" />
 >>>>>>> 888054b (#13 Krenuti sa login i registracijom preko jwt-Dodat jwt token i DI kroz layer arhitekturu)
     <None Remove="BL\README.md" />
+    <None Remove="DAL\Interfaces\README.md" />
     <None Remove="DAL\README.md" />
     <None Remove="API\README.md" />
     <None Remove="BL\Implementations\README.md" />

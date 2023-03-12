@@ -1,4 +1,6 @@
-﻿namespace API.DAL.Interfaces;
+﻿using API.Models.Dto;
+
+namespace API.DAL.Interfaces;
 
 public interface IBaseDAL
 {
@@ -6,4 +8,7 @@ public interface IBaseDAL
     void Update();
     void Delete();
     void Get();
+
+    //bool LoginEmailDoesentExists(string email);
+    //void LoginUser(UserLoginDto user);
 }
