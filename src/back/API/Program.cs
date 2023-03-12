@@ -21,6 +21,8 @@ using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using API.Services.JWTCreation.Interfaces;
 using API.Services.JWTCreation.Implementations;
+using API.Services.E_mail.Interfaces;
+using API.Services.E_mail.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +56,7 @@ builder.Services.AddScoped<IDsoDAL, DsoDAL>();
 builder.Services.AddScoped<IBaseBL, BaseBL>();
 builder.Services.AddScoped<IBaseDAL, BaseDAL>();
 builder.Services.AddScoped<IJWTCreator, JWTCreator>();
+builder.Services.AddScoped<IMailService, MailService>();
 
 //JWT Authenthication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
