@@ -19,6 +19,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using API.Services.JWTCreation.Interfaces;
+using API.Services.JWTCreation.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,18 +44,14 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlite( builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IBaseBL, BaseBL>();
-//builder.Services.AddScoped<IConfiguration, UserLoginController>();
-builder.Services.AddScoped<IUserLoginBL, UserLoginBL>();
-builder.Services.AddScoped<ILoginDAL, UserLoginDAL>();
-builder.Services.AddScoped<IBaseDAL, BaseDAL>();
-builder.Services.AddScoped<IGeocodingService, GeocodingService>();
-
 // INJECTIONS
 builder.Services.AddScoped<DataContext>();
 builder.Services.AddScoped<IGeocodingService, GeocodingService>();
 builder.Services.AddScoped<IProsumerBL, ProsumerBL>();
 builder.Services.AddScoped<IProsumerDAL, ProsumerDAL>();
+builder.Services.AddScoped<IBaseBL, BaseBL>();
+builder.Services.AddScoped<IBaseDAL, BaseDAL>();
+builder.Services.AddScoped<IJWTCreator, JWTCreator>();
 
 //JWT Authenthication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
