@@ -2,6 +2,7 @@
 using API.Models.Dto;
 using API.Models.Entity;
 using API.Services.JWTCreation.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.API;

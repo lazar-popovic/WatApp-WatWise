@@ -4,6 +4,7 @@ using API.Models.Dto;
 using API.Models.Entity;
 using API.Services.JWTCreation.Implementations;
 using API.Services.JWTCreation.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -27,7 +28,7 @@ public class ProsumerController : ControllerBase
         _jwtCreator = jwtCreator;
     }
 
-    [HttpPost("register")]
+    [HttpPost("register"),Authorize(Roles = "Admin")]
     public async Task<IActionResult> RegisterProsumer(UserRegisterDot request)
     {
         var response = _prosumerBl.RegisterProsumer(request);

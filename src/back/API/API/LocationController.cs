@@ -2,6 +2,7 @@
 using API.Services.Geocoding;
 using API.Services.Geocoding.Implementations;
 using API.Services.Geocoding.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +20,7 @@ public class LocationController : ControllerBase
         _geocodingService = geocodingService;
     }
 
-    [HttpGet]
+    [HttpGet, Authorize(Roles = "User")]
     public LongLat GetLongLat(string adress)
     {
         LongLat response = _geocodingService.Geocode(adress);
