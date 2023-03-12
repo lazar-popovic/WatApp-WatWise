@@ -1,5 +1,4 @@
 ﻿using API.DAL.Interfaces;
-using API.Models.Dot;
 using API.Models.Dto;
 using API.Models.Entity;
 using Microsoft.Data.Sqlite;
@@ -7,36 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.DAL.Implementations;
 
-public class ProsumerDAL : IProsumerDAL
+public class DsoDAL : IDsoDAL
 {
     private readonly DataContext _context;
 
-    public ProsumerDAL( DataContext context)
+    public DsoDAL( DataContext context)
     {
         _context = context;
     }
-
-    public bool EmailExists(string email)
-    {
-        return _context.Users.Any(u => u.Email == email);
-    }
-
-    public async void RegisterUser(UserRegisterDot user)
-    {
-        var newUser = new User
-        {
-            Firstname = user.Firstname,
-            Lastname = user.Lastname,
-            Email = user.Email,
-            RoleId = 3,
-            LocationId = null,
-            Verified = false
-        };
-
-        await _context.Users.AddAsync(newUser);
-        await _context.SaveChangesAsync();
-    }
-
     public bool LoginEmailDoesentExists(string email)
     {
         bool emailExists = _context.Users.Any(u => u.Email == email);
@@ -79,6 +56,7 @@ public class ProsumerDAL : IProsumerDAL
 
                     dbUser.Role = _context.Roles.First(r => r.Id == dbUser.RoleId);
                     
+                    _context.Database.CloseConnection();
                     return dbUser;
                 }
             }
@@ -86,6 +64,5 @@ public class ProsumerDAL : IProsumerDAL
 
         _context.Database.CloseConnection();
         return null;
-
     }
 }

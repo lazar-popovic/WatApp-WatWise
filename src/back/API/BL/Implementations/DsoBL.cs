@@ -1,61 +1,18 @@
 ﻿using API.BL.Interfaces;
 using API.DAL.Interfaces;
 using API.Models;
-using API.Models.Dot;
 using API.Models.Dto;
 
 namespace API.BL.Implementations;
 
-public class ProsumerBL : IProsumerBL
+public class DsoBL : IDsoBL
 {
-    private readonly IProsumerDAL _prosumerDal;
+    private readonly IDsoDAL _dsoDal;
 
-    public ProsumerBL( IProsumerDAL prosumerDal)
+    public DsoBL( IDsoDAL dsoDal)
     {
-        _prosumerDal = prosumerDal;
+        _dsoDal = dsoDal;
     }
-
-    public Response<object> RegisterProsumer(UserRegisterDot user)
-    {
-        var response = new Response<object>();
-
-        user.Email = user.Email.Trim();
-        user.Firstname = user.Firstname.Trim();
-        user.Lastname = user.Lastname.Trim();
-
-        if (user.Firstname == "")
-        {
-            response.Errors.Add("First name is required");
-        }
-
-        if (user.Lastname == "")
-        {
-            response.Errors.Add("Last name is required");
-        }
-
-        if (user.Email == "")
-        {
-            response.Errors.Add("Email is required");
-        }
-        else if (_prosumerDal.EmailExists( user.Email))
-        {
-            response.Errors.Add("User with this email already exists");
-        }
-
-
-        response.Success = !response.Errors.Any();
-
-        if (!response.Success)
-        {
-            return response;
-        }
-        
-        _prosumerDal.RegisterUser( user);
-        response.Data = "Registration successful";
-
-        return response;
-    }
-
     public Response<object> CheckForLoginCredentials(UserLoginDto user)
     {
         var response = new Response<object>();
@@ -67,7 +24,7 @@ public class ProsumerBL : IProsumerBL
         {
             response.Errors.Add("Email is required");
         }
-        if (_prosumerDal.LoginEmailDoesentExists(user.Email))
+        if (_dsoDal.LoginEmailDoesentExists(user.Email))
         {
             response.Errors.Add("User with this email doesent exists");
         }
@@ -77,7 +34,7 @@ public class ProsumerBL : IProsumerBL
         if (!response.Success)
             return response;
 
-        var verifiedUser = _prosumerDal.LoginUser(user);
+        var verifiedUser = _dsoDal.LoginUser(user);
 
         if ((bool)!verifiedUser.Verified)
         {
@@ -86,7 +43,7 @@ public class ProsumerBL : IProsumerBL
             return response;
         }
 
-        if (verifiedUser.RoleId != 3)
+        if (verifiedUser.RoleId == 3)
         {
             response.Errors.Add("You are not authorized");
             response.Success = !response.Errors.Any();
@@ -104,5 +61,4 @@ public class ProsumerBL : IProsumerBL
         response.Success = true;
         return response;
     }
-
 }
