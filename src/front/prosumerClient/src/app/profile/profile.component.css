@@ -93,9 +93,8 @@ form
 
 
 
-  #profile_user
+  #profile_user,#profile_email,#profile_street
   {
-    
     background-image: url(/assets/user.png);
     background-size: 20px;
     background-repeat: no-repeat;
@@ -108,7 +107,7 @@ form
     
     margin: 20px;
 
-    width: 80%;
+    width: 90%;
     height: 45px;
 
     border-radius: 30px;    
@@ -121,10 +120,10 @@ form
   {
     vertical-align: middle;
     
-    margin-left: 12%;
+    margin-left: 5%;
     height: 30px;
 
-    width: 55%;
+    width: 60%;
     background-color: #ccc;
     border-radius: 30px;
 
@@ -142,6 +141,9 @@ form
     margin-top: 2%;
     height: 30px;
 
+    text-align: left;
+    width: 30%;
+
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
@@ -149,6 +151,8 @@ form
    
     color: rgba(0, 0, 0, 0.5);
   }
+
+
 
 
   span
@@ -164,53 +168,25 @@ form
     color: rgba(0, 0, 0, 0.5);
   }
 
-  
-
-
   /* Logo za inpute */
-  #email
+  #profile_email
   {
-    background-image: url(/assets/user.png);
+    background-image: url(/assets/email.png);
     background-size: 20px;
     background-repeat: no-repeat;
-    background-position: 7px 7px;
+    background-position: 15px 10px;
   }
 
-  #password
+  #profile_street
   {
-    background-image: url(/assets/lock.png);
-    background-size: 15px;
+    background-image: url(/assets/street.png);
+    background-size: 20px;
     background-repeat: no-repeat;
-    background-position: 7px 7px;
+    background-position: 15px 10px;
   }
 
 
 
-  input[type="text"]::placeholder {
-    margin-left: 50px !important;
-    padding-left: 50px !important;
-    text-align: left !important;
-  }
-
-  /*Forgot pass ?*/
-  #forgot_pass
-  {
-    margin-top: 0px;
-    text-align: right;
-    font-size: 12px;
-
-    padding: 0px;
-
-    font-family: 'Inter';
-    font-style: italic;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 8px;
-    text-decoration-line: underline;
-
-    color: #6F6F6F;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
-  }
 
   /*Login dugme*/
   button 
@@ -221,30 +197,18 @@ form
     border: none;
     border-radius: 15px;
     cursor: pointer;
-    font-size: 20px;
-    margin-top: 10px;
+    font-size: 15px;
+    margin-top: 0px;
 
-    width: 35%;
+    width: 40%;
+
   }
   
   button:hover 
   {
     background-color: #4f504f;
-    font-size: 20px;
-    width: 37%;
-  }
-
-  /*Dont't have an account ?*/
-  #dont_have_acc
-  {
-    margin-top: 3%;
-    font-family: 'Inter';
-    font-style: italic;
-    font-weight: 600;
-    font-size: 15px;
-    line-height: 8px;
-    color: #6F6F6F;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 17px;
+    width: 42%;
   }
 
   a
