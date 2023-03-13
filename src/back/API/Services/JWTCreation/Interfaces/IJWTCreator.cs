@@ -5,5 +5,8 @@ namespace API.Services.JWTCreation.Interfaces
     public interface IJWTCreator
     {
         string CreateToken(User request);
+
+        //string CreateVerificationToken(string email);
+        string CreateVerificationToken(string userEmail);
     }
 }

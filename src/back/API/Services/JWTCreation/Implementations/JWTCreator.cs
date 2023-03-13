@@ -47,5 +47,31 @@ namespace API.Services.JWTCreation.Implementations
             return jwt;
         }
 
+        public string CreateVerificationToken(string email)
+        {
+            List<Claim> claims = new List<Claim> {
+                new Claim(ClaimTypes.Email, email)
+            };
+
+            ClaimsIdentity identity = new ClaimsIdentity(claims, "verification claims");
+            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Issuer = "http://localhost:5226",
+                Audience = "http://localhost:5226",
+                Expires = DateTime.UtcNow.AddMinutes(5),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha512Signature)
+            };
+
+            JwtSecurityToken token = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
+            token.Payload.AddClaims(principal.Claims);
+
+            var jwt = tokenHandler.WriteToken(token);
+
+            return jwt;
+        }
     }
 }

@@ -1,17 +1,22 @@
 ﻿using API.BL.Interfaces;
 using API.DAL.Interfaces;
 using API.Models;
+using API.Models.Dot;
 using API.Models.Dto;
+using API.Models.Entity;
+using API.Services.E_mail.Interfaces;
 
 namespace API.BL.Implementations;
 
 public class DsoBL : IDsoBL
 {
     private readonly IDsoDAL _dsoDal;
+    private readonly IMailService _mailService;
 
-    public DsoBL( IDsoDAL dsoDal)
+    public DsoBL( IDsoDAL dsoDal, IMailService mailService)
     {
         _dsoDal = dsoDal;
+        _mailService = mailService;
     }
     public Response<object> CheckForLoginCredentials(UserLoginDto user)
     {
@@ -59,6 +64,50 @@ public class DsoBL : IDsoBL
 
         response.Data = verifiedUser;
         response.Success = true;
+        return response;
+    }
+
+    public Response<object> RegisterEmployee(UserRegisterDot user)
+    {
+        var response = new Response<object>();
+
+        user.Email = user.Email.Trim();
+        user.Firstname = user.Firstname.Trim();
+        user.Lastname = user.Lastname.Trim();
+
+        if (user.Firstname == "")
+        {
+            response.Errors.Add("First name is required");
+        }
+
+        if (user.Lastname == "")
+        {
+            response.Errors.Add("Last name is required");
+        }
+
+        if (user.Email == "")
+        {
+            response.Errors.Add("Email is required");
+        }
+        else if (_dsoDal.EmailExists( user.Email))
+        {
+            response.Errors.Add("User with this email already exists");
+        }
+
+
+        response.Success = !response.Errors.Any();
+
+        if (!response.Success)
+        {
+            return response;
+        }
+        
+        User newUser = _dsoDal.RegisterEmployee( user);
+        newUser.Role = new Role { Id = 2, RoleName = "Employee" };
+        _mailService.sendTokenEmployee( newUser);
+        
+        response.Data = "Registration successful";
+
         return response;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using API.DAL.Interfaces;
+using API.Models.Dot;
 using API.Models.Dto;
 using API.Models.Entity;
 using Microsoft.Data.Sqlite;
@@ -28,41 +29,34 @@ public class DsoDAL : IDsoDAL
 
     public User LoginUser(UserLoginDto user)
     {
-        /*var userFromBase = _context.Users.First(u => u.Email == user.Email);
-        return userFromBase;*/
-        using (var command = new SqliteCommand())
+        var userFromBase = _context.Users.First(u => u.Email == user.Email);
+        userFromBase.Role = _context.Roles.First(r => r.Id == userFromBase.RoleId);
+        return userFromBase;
+    }
+
+    public User RegisterEmployee(UserRegisterDot user)
+    {
+        var newUser = new User
         {
-            command.Connection = (SqliteConnection?)_context.Database.GetDbConnection();
-            command.CommandText = "SELECT * FROM Users WHERE Email = @Email";
-            command.Parameters.AddWithValue("@Email", user.Email);
+            Firstname = user.Firstname,
+            Lastname = user.Lastname,
+            Email = user.Email,
+            RoleId = 2,
+            LocationId = null,
+            Verified = false
+        };
 
-            _context.Database.OpenConnection();
+        _context.Users.Add(newUser);
+        _context.SaveChanges();
 
-            using (var reader = command.ExecuteReader())
-            {
-                if (reader.Read())
-                {
-                    var dbUser = new User
-                    {
-                        Id = reader.GetInt32(0),
-                        Email = reader.GetString(1),
-                        PasswordHash = reader.GetString(2),
-                        Firstname = reader.IsDBNull(3) ? null : reader.GetString(3),
-                        Lastname = reader.IsDBNull(4) ? null : reader.GetString(4),
-                        Verified = reader.IsDBNull(5) ? null : reader.GetBoolean(5),
-                        RoleId = reader.GetInt32(6),
-                        LocationId = reader.IsDBNull(7) ? null : reader.GetInt32(7)
-                    };
+        var newUserId = _context.Entry(newUser).Property(x => x.Id).CurrentValue;
+        newUser.Id = newUserId;
 
-                    dbUser.Role = _context.Roles.First(r => r.Id == dbUser.RoleId);
-                    
-                    _context.Database.CloseConnection();
-                    return dbUser;
-                }
-            }
-        }
+        return newUser;
+    }
 
-        _context.Database.CloseConnection();
-        return null;
+    public bool EmailExists(string email)
+    {
+        return _context.Users.Any(u => u.Email == email);
     }
 }

@@ -14,8 +14,8 @@ public class User
     public bool? Verified { get; set; }
     public int? RoleId { get; set; } = 3;
     [ForeignKey("RoleId")]
-    public Role Role { get; set; }
+    public Role? Role { get; set; }
     public int? LocationId { get; set; }
     [ForeignKey("LocationId")]
-    public Location Location { get; set; }
+    public Location? Location { get; set; }
 }

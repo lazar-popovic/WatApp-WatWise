@@ -21,7 +21,7 @@ public class ProsumerDAL : IProsumerDAL
         return _context.Users.Any(u => u.Email == email);
     }
 
-    public async void RegisterUser(UserRegisterDot user)
+    public User RegisterUser(UserRegisterDot user)
     {
         var newUser = new User
         {
@@ -33,8 +33,13 @@ public class ProsumerDAL : IProsumerDAL
             Verified = false
         };
 
-        await _context.Users.AddAsync(newUser);
-        await _context.SaveChangesAsync();
+        _context.Users.Add(newUser);
+        _context.SaveChanges();
+
+        var newUserId = _context.Entry(newUser).Property(x => x.Id).CurrentValue;
+        newUser.Id = newUserId;
+
+        return newUser;
     }
 
     public bool LoginEmailDoesentExists(string email)
@@ -51,41 +56,8 @@ public class ProsumerDAL : IProsumerDAL
 
     public User LoginUser(UserLoginDto user)
     {
-        /*var userFromBase = _context.Users.First(u => u.Email == user.Email);
-        return userFromBase;*/
-        using (var command = new SqliteCommand())
-        {
-            command.Connection = (SqliteConnection?)_context.Database.GetDbConnection();
-            command.CommandText = "SELECT * FROM Users WHERE Email = @Email";
-            command.Parameters.AddWithValue("@Email", user.Email);
-
-            _context.Database.OpenConnection();
-
-            using (var reader = command.ExecuteReader())
-            {
-                if (reader.Read())
-                {
-                    var dbUser = new User
-                    {
-                        Id = reader.GetInt32(0),
-                        Email = reader.GetString(1),
-                        PasswordHash = reader.GetString(2),
-                        Firstname = reader.IsDBNull(3) ? null : reader.GetString(3),
-                        Lastname = reader.IsDBNull(4) ? null : reader.GetString(4),
-                        Verified = reader.IsDBNull(5) ? null : reader.GetBoolean(5),
-                        RoleId = reader.GetInt32(6),
-                        LocationId = reader.IsDBNull(7) ? null : reader.GetInt32(7)
-                    };
-
-                    dbUser.Role = _context.Roles.First(r => r.Id == dbUser.RoleId);
-                    
-                    return dbUser;
-                }
-            }
-        }
-
-        _context.Database.CloseConnection();
-        return null;
-
+        var userFromBase = _context.Users.First(u => u.Email == user.Email);
+        userFromBase.Role = _context.Roles.First(r => r.Id == userFromBase.RoleId);
+        return userFromBase;
     }
 }

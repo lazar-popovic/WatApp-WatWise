@@ -3,16 +3,20 @@ using API.DAL.Interfaces;
 using API.Models;
 using API.Models.Dot;
 using API.Models.Dto;
+using API.Models.Entity;
+using API.Services.E_mail.Interfaces;
 
 namespace API.BL.Implementations;
 
 public class ProsumerBL : IProsumerBL
 {
     private readonly IProsumerDAL _prosumerDal;
+    private readonly IMailService _mailService;
 
-    public ProsumerBL( IProsumerDAL prosumerDal)
+    public ProsumerBL( IProsumerDAL prosumerDal, IMailService mailService)
     {
         _prosumerDal = prosumerDal;
+        _mailService = mailService;
     }
 
     public Response<object> RegisterProsumer(UserRegisterDot user)
@@ -50,7 +54,10 @@ public class ProsumerBL : IProsumerBL
             return response;
         }
         
-        _prosumerDal.RegisterUser( user);
+        User newUser = _prosumerDal.RegisterUser( user);
+        newUser.Role = new Role { Id = 3, RoleName = "User" };
+        _mailService.sendTokenProsumer( newUser);
+        
         response.Data = "Registration successful";
 
         return response;

@@ -1,4 +1,5 @@
 ﻿using API.BL.Interfaces;
+using API.Models.Dot;
 using API.Models.Dto;
 using API.Models.Entity;
 using API.Services.JWTCreation.Interfaces;
@@ -34,5 +35,20 @@ public class DsoController : ControllerBase
 
         token = _jwtCreator.CreateToken((User)response.Data);
         return Ok(token);
+    }
+    
+    [HttpPost("register-employee"),Authorize(Roles = "Admin")]
+    public async Task<IActionResult> RegisterProsumer(UserRegisterDot request)
+    {
+        var response = _dsoBl.RegisterEmployee(request);
+
+        if (response.Success)
+        {
+            return Ok(response);
+        }
+        else
+        {
+            return BadRequest(response);
+        }
     }
 }
