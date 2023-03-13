@@ -70,4 +70,10 @@ public class ProsumerDAL : IProsumerDAL
         userFromBase.Role = _context.Roles.First(r => r.Id == userFromBase.RoleId);
         return userFromBase;
     }
+
+    public void AddResetToken(ResetPasswordToken token)
+    {
+        _context.ResetPasswordTokens.Add(token);
+         _context.SaveChangesAsync();
+    }
 }

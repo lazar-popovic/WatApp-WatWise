@@ -5,8 +5,9 @@ namespace API.Services.E_mail.Interfaces
 {
     public interface IMailService
     {
-        public void sendTokenEmployee(User user);
-        public void sendTokenProsumer(User user);
+        void sendTokenEmployee(User user);
+        void sendTokenProsumer(User user);
+        void sendResetTokenProsumer(User user, string token);
        
     }
 }

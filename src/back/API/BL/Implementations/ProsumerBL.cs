@@ -154,4 +154,17 @@ public class ProsumerBL : IProsumerBL
         return response;
     }
 
+    public ResetPasswordToken GenerateNewResetPasswordToken(int userID)
+    {
+        var token = new ResetPasswordToken
+        {
+            Token = Guid.NewGuid().ToString(),
+            ExpiryTime = DateTime.UtcNow.AddMinutes(15),
+            UserId = userID
+        };
+
+        _prosumerDal.AddResetToken(token);
+
+        return token;
+    }
 }

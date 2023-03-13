@@ -11,4 +11,5 @@ public interface IProsumerDAL
     bool LoginEmailDoesentExists(string email);
     User LoginUser(UserLoginDto user);
     User UserForGivenEmail(string email);
+    void AddResetToken(ResetPasswordToken token);
 }

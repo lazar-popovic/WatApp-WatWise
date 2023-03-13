@@ -26,12 +26,14 @@ public class ProsumerController : ControllerBase
     private readonly IProsumerBL _prosumerBl;
     private readonly IConfiguration _configuration;
     private readonly IJWTCreator _jwtCreator;
+    private readonly IMailService _mailService;
    
-    public ProsumerController( IProsumerBL prosumerBl, IConfiguration configuration, IJWTCreator jwtCreator)
+    public ProsumerController( IProsumerBL prosumerBl, IConfiguration configuration, IJWTCreator jwtCreator, IMailService mailService)
     {
         _prosumerBl = prosumerBl;
         _configuration = configuration;
         _jwtCreator = jwtCreator;
+        _mailService = mailService;
        
     }
 
@@ -65,7 +67,25 @@ public class ProsumerController : ControllerBase
         return Ok(token);
     }
 
+    [HttpPost]
+    [Route("forgot-password")]
+    public async Task<IActionResult> ForgotPassword(ForgottenPasswordRequest request)
+    {
+        var response = _prosumerBl.CheckEmailForForgottenPassword(request);
+        var user = ((User)response.Data);
 
+
+        // Generate reset token
+        var resetToken = _prosumerBl.GenerateNewResetPasswordToken(user.Id);
+
+        var resetJwtToken = _jwtCreator.CreateResetToken(user.Id, user.Email);
+
+        //send token via email service
+        _mailService.sendResetTokenProsumer(user, resetJwtToken);
+
+        return Ok();
+    }
+    
 
 
 }
