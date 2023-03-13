@@ -10,19 +10,6 @@ public class DataContext : DbContext
         
     }
     
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<User>()
-            .HasOne(p => p.Role)
-            .WithMany(c => c.Users)
-            .HasForeignKey(p => p.RoleId);
-        
-        modelBuilder.Entity<User>()
-            .HasOne(p => p.Location)
-            .WithMany(c => c.Users)
-            .HasForeignKey(p => p.LocationId);
-    }
-    
     public DbSet<User> Users { get; set; }
     
     public DbSet<Role> Roles { get; set; }
