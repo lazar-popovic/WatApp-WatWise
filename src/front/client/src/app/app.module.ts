@@ -24,7 +24,8 @@ const routes: Routes = [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    SidebarComponent
+    ProfileComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,7 +9,7 @@ body
 img 
 {
     height: 100px;
-    width: 200px;  
+    width: 100px;  
 }
 
 #logo
@@ -26,7 +26,7 @@ img
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60vh;
+  height: 55vh;
 }
 
 
@@ -36,6 +36,8 @@ h2
   font-style: bold;
   font-size: 28px;
   color: #3E3E3E;
+
+  margin-bottom: 20px;
 }
 
 /*Forma (unutar div-a)*/
