@@ -7,6 +7,6 @@ namespace API.Services.JWTCreation.Interfaces
         string CreateToken(User request);
 
         //string CreateVerificationToken(string email);
-        string CreateVerificationToken(string userEmail);
+        string CreateVerificationToken(int userId);
     }
 }
