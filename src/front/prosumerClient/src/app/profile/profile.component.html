@@ -12,38 +12,65 @@
         </div>
     -->
     
-    <div class="container">
-    <form>
-      <h2>My Profile</h2>
-      
-            <div id="profile_user"> 
-              <div style="display: inline-block;" id="profile_user_name1"> first name </div>  
-              <div style="display: inline-block;" id="profile_user_name"> Petar </div>  
-            </div>
-            
-            <div id="profile_user"> 
-              <div style="display: inline-block;" id="profile_user_name1"> last name </div>  
-              <div style="display: inline-block;" id="profile_user_name"> Peric </div>  
-            </div>  
-            
-            <div id="profile_email"> 
-              <div style="display: inline-block;" id="profile_user_name1">email </div>  
-              <div style="display: inline-block;" id="profile_user_name"> pera@gmail.com </div>  
-            </div>  
-            
-            <div id="profile_street"> 
-              <div style="display: inline-block;" id="profile_user_name1"> address </div>  
-              <div style="display: inline-block;" id="profile_user_name"> Radoja Domanovica 7 </div>  
-            </div>
-            
-          
-            <button type="submit" routerLink="/profile">Change password</button>
-            
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js" integrity="sha512-lMz+BCF2J1eOb3Ciky7VnnDjK/n+7V9JEBPCEoK4+D4P+mBpV45Bw1yNf+kyS8tWJPTt9Xk+iZ2I4x4OzfyWzw==" crossorigin="anonymous"></script>
-  
-    </form>
+    <div *ngIf="showProfileForm">
+      <div class="container">
+        <form>
+              <h2>My Profile</h2>
+              
+                    <div id="profile_user"> 
+                      <div style="display: inline-block;" id="profile_user_name1"> first name </div>  
+                      <div style="display: inline-block;" id="profile_user_name"> Petar </div>  
+                    </div>
+                    
+                    <div id="profile_user"> 
+                      <div style="display: inline-block;" id="profile_user_name1"> last name </div>  
+                      <div style="display: inline-block;" id="profile_user_name"> Peric </div>  
+                    </div>  
+                    
+                    <div id="profile_email"> 
+                      <div style="display: inline-block;" id="profile_user_name1">email </div>  
+                      <div style="display: inline-block;" id="profile_user_name"> pera@gmail.com </div>  
+                    </div>  
+                    
+                    <div id="profile_street"> 
+                      <div style="display: inline-block;" id="profile_user_name1"> address </div>  
+                      <div style="display: inline-block;" id="profile_user_name"> Radoja Domanovica 7 </div>  
+                    </div>
+                    
+                    <br>
+                    <div class="button-container">
+                      <button (click)="showProfileForm = false"  type="submit" routerLink="/profile">Change password</button>
+                    </div>
+            </form>
+        </div>
+      </div>
 
-    
-    </div>
+      <div *ngIf="!showProfileForm">
+        <div class="container">   
+          <form style="width: 300px; height: 350px;">
+
+              <div (click)="showProfileForm = true" class="button-container" style="margin-bottom: 10px;">
+                <button type="submit">Cancel</button>
+              </div>
+              <br>
+
+              <div>
+                <input type="password" id="password" placeholder="old password" name="password" required >
+              </div>
+              <br>
+              <div>
+                <input type="password" id="password" placeholder="new password" name="password" required >
+              </div>
+              <div>
+                <input type="password" id="password" placeholder="repeat new password" name="password" required >
+              </div>
+            
+                <button style="width: 80%;" type="submit">Change password</button>
+
+          </form>
+          </div>
+      </div>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js" integrity="sha512-lMz+BCF2J1eOb3Ciky7VnnDjK/n+7V9JEBPCEoK4+D4P+mBpV45Bw1yNf+kyS8tWJPTt9Xk+iZ2I4x4OzfyWzw==" crossorigin="anonymous"></script>
   </body>
   

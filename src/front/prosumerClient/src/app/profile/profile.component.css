@@ -35,13 +35,6 @@ h2
   font-style: bold;
   font-size: 36px;
   color: #3E3E3E;
-
-/* 
-  font-family: 'Inter';
-  font-weight: 600;
-  font-size: 32px;
-  line-height: 39px;
-*/
 }
 
 /*Forma (unutar div-a)*/
@@ -59,7 +52,7 @@ form
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
 
     width: 450px;
-    height: 500px;
+    height: 400px;
   }
   
 
@@ -85,13 +78,11 @@ form
     font-family: 'Roboto';
     font-style: bold;
     font-weight: 500;
-    line-height: 25px;
+    line-height: 0px;
 
     height: 20px;
     color: #3E3E3E;
   }
-
-
 
   #profile_user,#profile_email,#profile_street
   {
@@ -105,10 +96,10 @@ form
     text-align: left;
     vertical-align: middle;
     
-    margin: 20px;
-
+    margin: 10px;
+    
     width: 90%;
-    height: 45px;
+    height: 50px;
 
     border-radius: 30px;    
     background-color: #FFFFFF;
@@ -131,14 +122,16 @@ form
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
-    line-height: 29px;
+    line-height: 30px;
   
     color: #3E3E3E;
   }
 
   #profile_user_name1
   {
-    margin-top: 2%;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    
     height: 30px;
 
     text-align: left;
@@ -153,11 +146,8 @@ form
   }
 
 
-
-
   span
   {
-  
     height: 25px;
 
     font-family: 'Inter';
@@ -185,92 +175,104 @@ form
     background-position: 15px 10px;
   }
 
-
-
-
   /*Login dugme*/
+  .button-container 
+  {
+    margin-left: 50%;
+    text-align: right;
+  }
+
   button 
   {
+    /*font-family: 'Inter';*/
+    font-style: normal;
+    font-size: 20px;
+   
     background-color: #3E3E3E;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 15px;
     cursor: pointer;
-    font-size: 15px;
-    margin-top: 0px;
-
-    width: 40%;
-
+   
   }
-  
+
   button:hover 
   {
     background-color: #4f504f;
-    font-size: 17px;
-    width: 42%;
+    font-size: 22px;
   }
 
-  a
+   /*Inputi username i password*/
+   input 
+   {
+     text-align: center;
+ 
+     width: 100%;
+     padding: 5px;
+     font-size: 24px;
+     border: 2px solid #ccc;
+     border-radius: 20px;
+     margin-bottom: 20px;
+ 
+     font-family: 'Roboto';
+     font-style: bold;
+     font-weight: 500;
+     line-height: 10px;
+ 
+     height: 20px;
+     color: #3E3E3E;
+   }
+ 
+   input[type="text"]::placeholder {
+     text-align: center !important;
+   }
+
+  /* Logo za inpute */
+  #name
   {
-    color: #3E3E3E;
+    background-image: url(/assets/user.png);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 7px 7px;
   }
 
-  #register:hover
+  #password
   {
-    font-size: 17px;
-    color: #3E3E3E;
-  }
-
-  .error 
-  {
-    color: red;
-    font-size: 16px;
-    margin-top: 10px;
-  }
-  
-
-  .input-icons i 
-    {
-    position: absolute;
-  }
-  
-  .input-icons {
+    height: 30px;
     width: 100%;
-    margin-bottom: 10px;
+
+    background-image: url(/assets/lock.png);
+    background-size: 15px;
+    background-repeat: no-repeat;
+    background-position: 7px 7px;
+  }
+
+  #email
+  {
+    background-image: url(/assets/email.png);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 7px 7px;
+  }
+
+  #street
+  {
+    background-image: url(/assets/street.png);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 7px 7px;
+  }
+
+  #street_num
+  {
+    background-image: url(/assets/street_num.png);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 7px 7px;
   }
   
-  .icon {
-    padding: 10px;
-    min-width: 40px;
-  }
   
-  .input-field {
-    width: 100%;
-    padding: 10px;
-    text-align: center;
-  }
 
 
-
-
-
-  /*
-  .outer-div {
-    width: 400px;
-    height: 200px;
-    background-color: #f1f1f1;
-    border: 2px solid #ccc;
-    padding: 20px;
-  }
-  
-  .inner-div {
-    width: 200px;
-    height: 100px;
-    background-color: #fff;
-    border: 2px solid #aaa;
-    padding: 20px;
-    margin: 50px auto;
-  }
-  */
   
