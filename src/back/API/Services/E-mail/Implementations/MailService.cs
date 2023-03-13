@@ -43,7 +43,7 @@ namespace API.Services.E_mail.Implementations
         }
         public void sendTokenProsumer(User user)
         {
-            var token = _jWTCreator.CreateToken(user);
+            var token = _jWTCreator.CreateVerificationToken(user.Id);
             var mail = new EmailModel("Verification token", token, user.Email);
 
             mail.Body =
@@ -55,7 +55,7 @@ namespace API.Services.E_mail.Implementations
         
         public void sendTokenEmployee(User user)
         {
-            var token = _jWTCreator.CreateToken(user);
+            var token = _jWTCreator.CreateVerificationToken(user.Id);
             var mail = new EmailModel("Verification token", token, user.Email);
 
             mail.Body =
