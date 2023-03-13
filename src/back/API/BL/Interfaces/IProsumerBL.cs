@@ -8,4 +8,5 @@ public interface IProsumerBL
 {
     Response<object> RegisterProsumer(UserRegisterDot user);
     Response<object> CheckForLoginCredentials(UserLoginDto user);
+    Response<object> CheckEmailForForgottenPassword(ForgottenPasswordRequest request);
 }

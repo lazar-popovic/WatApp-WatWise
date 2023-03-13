@@ -10,4 +10,5 @@ public interface IProsumerDAL
     User RegisterUser(UserRegisterDot user);
     bool LoginEmailDoesentExists(string email);
     User LoginUser(UserLoginDto user);
+    User UserForGivenEmail(string email);
 }

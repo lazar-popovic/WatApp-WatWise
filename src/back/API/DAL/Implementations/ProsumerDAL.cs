@@ -21,6 +21,16 @@ public class ProsumerDAL : IProsumerDAL
         return _context.Users.Any(u => u.Email == email);
     }
 
+    public User UserForGivenEmail(string email)
+    {
+        var userFromBase = _context.Users.FirstOrDefault(user => user.Email == email);
+
+        if (userFromBase == null)
+            return null;
+
+        return userFromBase;
+    }
+
     public User RegisterUser(UserRegisterDot user)
     {
         var newUser = new User

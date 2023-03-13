@@ -112,4 +112,46 @@ public class ProsumerBL : IProsumerBL
         return response;
     }
 
+    public Response<object> CheckEmailForForgottenPassword(ForgottenPasswordRequest request)
+    {
+        var response = new Response<Object>();
+
+        request.Email = request.Email.Trim();
+
+        if (request.Email == "")
+        {
+            response.Errors.Add("Email is required");
+        }
+        if (_prosumerDal.LoginEmailDoesentExists(request.Email))
+        {
+            response.Errors.Add("User with this email doesent exists");
+        }
+
+        var user = _prosumerDal.UserForGivenEmail(request.Email);
+
+        response.Success = !response.Errors.Any();
+
+        if (!response.Success)
+            return response;
+
+        if ((bool)!user.Verified)
+        {
+            response.Errors.Add("Your account is not verified");
+            response.Success = !response.Errors.Any();
+            return response;
+        }
+
+        if (user.RoleId != 3)
+        {
+            response.Errors.Add("You are not authorized");
+            response.Success = !response.Errors.Any();
+            return response;
+        }
+
+        response.Data = user;
+        response.Success = true;
+
+        return response;
+    }
+
 }

@@ -14,6 +14,8 @@ using System.Net.Mail;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using API.Models;
 
 namespace API.API;
 
@@ -62,11 +64,8 @@ public class ProsumerController : ControllerBase
         token = _jwtCreator.CreateToken((User)response.Data);
         return Ok(token);
     }
-     
 
 
-   
-     
-    
+
 
 }
