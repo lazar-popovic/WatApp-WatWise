@@ -4,14 +4,14 @@
         {{ this.currentTime }}
     </div>
     <div class="sidebar-nav">
-        <div class="sidebar-item-active" (click)="clickHandler($event)">Overview</div>
-        <div class="sidebar-item" (click)="clickHandler($event)">Devices</div>
-        <div class="sidebar-item" (click)="clickHandler($event)">Consumption</div>
-        <div class="sidebar-item" (click)="clickHandler($event)">Production</div>
-        <div class="sidebar-footer">
+        <div class="sidebar-item-active" (click)="clickHandler($event)" routerLink="" >Overview</div>
+        <div class="sidebar-item" (click)="clickHandler($event)" routerLink="pronsumer/devices">Devices</div>
+        <div class="sidebar-item" (click)="clickHandler($event)" routerLink="pronsumer/consumption">Consumption</div>
+        <div class="sidebar-item" (click)="clickHandler($event)" routerLink="pronsumer/production">Production</div>
+        
+        <div class="sidebar-footer" routerLink="/pronsumer/profile">
             <div class="sidebar-profile"><img src="\assets\profile.png"></div>
             {{this.user.firstName + " " + this.user.lastName}}
         </div>
     </div>
-
 </div>

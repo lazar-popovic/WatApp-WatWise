@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -10,6 +9,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   
 })
 export class LoginComponent {
+
+  showLoginPronsumer = true;
 
   imagePath: string = 'assets/logo.png';
   
