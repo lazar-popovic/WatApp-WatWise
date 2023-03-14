@@ -24,12 +24,12 @@ export class LoginComponent {
   }
 
   logIn() {
-      this.authService.login(this.login).subscribe((result: any) => {
+      this.authService.loginProsumer(this.login).subscribe((result: any) => {
         console.log(result.status);
         localStorage.setItem("token",result.token);
         this.route.navigateByUrl('/overview');
       },(error: any) => {
-        console.log("Error: email or password not valid.")   
+        console.log(error.error.errors)
       })
   }
 }
