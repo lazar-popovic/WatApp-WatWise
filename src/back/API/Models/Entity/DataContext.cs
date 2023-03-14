@@ -1,5 +1,4 @@
-﻿using API.Models.Entity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace API.Models.Entity;
 
@@ -15,4 +14,5 @@ public class DataContext : DbContext
     public DbSet<Role> Roles { get; set; }
 
     public DbSet<Location> Locations { get; set; }
+    public DbSet<ResetPasswordToken> ResetPasswordTokens { get; set; }
 }

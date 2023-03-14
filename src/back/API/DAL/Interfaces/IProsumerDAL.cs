@@ -10,4 +10,11 @@ public interface IProsumerDAL
     User RegisterUser(UserRegisterDot user);
     bool LoginEmailDoesentExists(string email);
     User LoginUser(UserLoginDto user);
+    User UserForGivenEmail(string email);
+    void AddResetToken(ResetPasswordToken token);
+    ResetPasswordToken GetResetTokenEntityFromBase(string type);
+    User FindUserByIdFromTokenEntityFromBase(int id);
+    void UpdateUserAfterPasswordReset(User user);
+    void RemovePasswordResetTokenFromBase(ResetPasswordToken resetPasswordToken);
+    User GetUserById(int id);
 }

@@ -70,5 +70,35 @@ namespace API.Services.JWTCreation.Implementations
 
             return encodedToken;
         }
+
+        public string CreateResetToken(int userId, string userEmail, ResetPasswordToken resetToken)
+        {
+            List<Claim> claims = new List<Claim> {
+                new Claim("userId", $"{userId}"),
+                new Claim("userEmail", $"{userEmail}"),
+                new Claim("purpose", "password reset"),
+                new Claim("resetToken", resetToken.Token)
+            };
+
+            ClaimsIdentity identity = new ClaimsIdentity(claims, "reset claims");
+            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Issuer = "http://localhost:5226",
+                Audience = "http://localhost:5226",
+                Expires = DateTime.UtcNow.AddMinutes(10),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha512Signature)
+            };
+
+            JwtSecurityToken token = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
+            token.Payload.AddClaims(principal.Claims);
+
+            var jwt = tokenHandler.WriteToken(token);
+
+            return jwt;
+        }
     }
 }

@@ -21,6 +21,16 @@ public class ProsumerDAL : IProsumerDAL
         return _context.Users.Any(u => u.Email == email);
     }
 
+    public User UserForGivenEmail(string email)
+    {
+        var userFromBase = _context.Users.FirstOrDefault(user => user.Email == email);
+
+        if (userFromBase == null)
+            return null;
+
+        return userFromBase;
+    }
+
     public User RegisterUser(UserRegisterDot user)
     {
         var newUser = new User
@@ -59,5 +69,43 @@ public class ProsumerDAL : IProsumerDAL
         var userFromBase = _context.Users.First(u => u.Email == user.Email);
         userFromBase.Role = _context.Roles.First(r => r.Id == userFromBase.RoleId);
         return userFromBase;
+    }
+
+    public void AddResetToken(ResetPasswordToken token)
+    {
+        _context.ResetPasswordTokens.Add(token);
+         _context.SaveChanges();
+    }
+
+    public ResetPasswordToken GetResetTokenEntityFromBase(string type)
+    {
+       var token =  _context.ResetPasswordTokens.SingleOrDefault(t => t.Token == type);
+
+        if (token != null)
+            return token;
+
+        return null;
+    }
+
+    public User FindUserByIdFromTokenEntityFromBase(int id)
+    {
+        return _context.Users.Find(id);
+    }
+
+    public void UpdateUserAfterPasswordReset(User user)
+    {
+        _context.Users.Update(user);
+        _context.SaveChanges();
+    }
+
+    public void RemovePasswordResetTokenFromBase(ResetPasswordToken resetPasswordToken)
+    {
+        _context.ResetPasswordTokens.Remove(resetPasswordToken);
+        _context.SaveChanges();
+    }
+
+    public User GetUserById(int id)
+    {
+        return _context.Users.FirstOrDefault(user => user.Id == id);
     }
 }

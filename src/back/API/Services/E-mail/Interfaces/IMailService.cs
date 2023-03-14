@@ -1,12 +1,14 @@
-﻿using API.Models.Entity;
+﻿using API.Models.Dto;
+using API.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Services.E_mail.Interfaces
 {
     public interface IMailService
     {
-        public void sendTokenEmployee(User user);
-        public void sendTokenProsumer(User user);
+        void sendTokenEmployee(User user);
+        void sendTokenProsumer(User user);
+        void sendResetTokenProsumer(User user, string token);
        
     }
 }
