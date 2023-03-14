@@ -12,4 +12,8 @@ public interface IProsumerDAL
     User LoginUser(UserLoginDto user);
     User UserForGivenEmail(string email);
     void AddResetToken(ResetPasswordToken token);
+    ResetPasswordToken GetResetTokenEntityFromBase(string type);
+    User FindUserByIdFromTokenEntityFromBase(int id);
+    void UpdateUserAfterPasswordReset(User user);
+    void RemovePasswordResetTokenFromBase(ResetPasswordToken resetPasswordToken);
 }

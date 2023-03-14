@@ -1,4 +1,5 @@
-﻿using API.Models.Entity;
+﻿using API.Models.Dto;
+using API.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Services.E_mail.Interfaces

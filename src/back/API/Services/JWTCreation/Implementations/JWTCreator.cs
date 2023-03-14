@@ -71,12 +71,13 @@ namespace API.Services.JWTCreation.Implementations
             return encodedToken;
         }
 
-        public string CreateResetToken(int userId, string userEmail)
+        public string CreateResetToken(int userId, string userEmail, ResetPasswordToken resetToken)
         {
             List<Claim> claims = new List<Claim> {
                 new Claim("userId", $"{userId}"),
                 new Claim("userEmail", $"{userEmail}"),
-                new Claim("purpose", "password reset")
+                new Claim("purpose", "password reset"),
+                new Claim("resetToken", resetToken.Token)
             };
 
             /*

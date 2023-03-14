@@ -74,6 +74,33 @@ public class ProsumerDAL : IProsumerDAL
     public void AddResetToken(ResetPasswordToken token)
     {
         _context.ResetPasswordTokens.Add(token);
-         _context.SaveChangesAsync();
+         _context.SaveChanges();
+    }
+
+    public ResetPasswordToken GetResetTokenEntityFromBase(string type)
+    {
+       var token =  _context.ResetPasswordTokens.SingleOrDefault(t => t.Token == type);
+
+        if (token != null)
+            return token;
+
+        return null;
+    }
+
+    public User FindUserByIdFromTokenEntityFromBase(int id)
+    {
+        return _context.Users.Find(id);
+    }
+
+    public void UpdateUserAfterPasswordReset(User user)
+    {
+        _context.Users.Update(user);
+        _context.SaveChanges();
+    }
+
+    public void RemovePasswordResetTokenFromBase(ResetPasswordToken resetPasswordToken)
+    {
+        _context.ResetPasswordTokens.Remove(resetPasswordToken);
+        _context.SaveChanges();
     }
 }

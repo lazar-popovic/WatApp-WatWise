@@ -1,6 +1,4 @@
-﻿using API.Models.Dto;
-using API.Models.Entity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace API.Models.Entity;
 

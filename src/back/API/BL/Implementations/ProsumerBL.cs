@@ -5,6 +5,8 @@ using API.Models.Dot;
 using API.Models.Dto;
 using API.Models.Entity;
 using API.Services.E_mail.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace API.BL.Implementations;
 
@@ -166,5 +168,26 @@ public class ProsumerBL : IProsumerBL
         _prosumerDal.AddResetToken(token);
 
         return token;
+    }
+
+    public ResetPasswordToken GetResetTokenEntity(string t)
+    {
+        return _prosumerDal.GetResetTokenEntityFromBase(t);
+    }
+
+    public User FindUserByIdFromTokenEntity(int id)
+    {
+        return _prosumerDal.FindUserByIdFromTokenEntityFromBase(id);
+    }
+
+    public void SetNewPasswordAfterResetting(User user, string password)
+    {
+        user.PasswordHash = BCrypt.Net.BCrypt.EnhancedHashPassword(password);
+        _prosumerDal.UpdateUserAfterPasswordReset(user);
+    }
+
+    public void RemovePasswordResetToken(ResetPasswordToken resetToken)
+    {
+        _prosumerDal.RemovePasswordResetTokenFromBase(resetToken);
     }
 }

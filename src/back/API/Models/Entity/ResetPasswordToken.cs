@@ -1,12 +1,12 @@
-﻿using API.Models.Entity;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace API.Models.Dto
+namespace API.Models.Entity
 {
     public class ResetPasswordToken
     {
+        [Key]
         public int Id { get; set; }
         public string? Token { get; set; }
         public DateTime ExpiryTime { get; set; }
