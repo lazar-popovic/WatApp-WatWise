@@ -8,7 +8,7 @@ body
 img 
 {
     height: 100px;
-    width: 200px;  
+    width: 100px;  
 }
 
 #logo
@@ -35,13 +35,7 @@ h2
   font-style: bold;
   font-size: 36px;
   color: #3E3E3E;
-
-/* 
-  font-family: 'Inter';
-  font-weight: 600;
-  font-size: 32px;
-  line-height: 39px;
-*/
+  margin-bottom: 30px;
 }
 
 /*Forma (unutar div-a)*/
@@ -59,7 +53,7 @@ form
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
 
     width: 350px;
-    height: 30  0px;
+    height: 330px;
   }
   
 
@@ -148,12 +142,29 @@ form
 
     width: 35%;
   }
+
   
   button:hover 
   {
     background-color: #4f504f;
     font-size: 20px;
     width: 37%;
+  }
+
+  
+  #loginDSO
+  {
+    background-color: #239F81;
+    color: white;
+    width: 60%;
+  }
+
+  #loginDSO:hover
+  {
+    font-size: 22px;
+    background-color: #115746;
+    color: white;
+    width: 60%;
   }
 
   /*Dont't have an account ?*/

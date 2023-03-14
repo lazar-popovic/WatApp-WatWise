@@ -9,22 +9,39 @@ import { LoginComponent } from './login/login.component';
 
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
-import { ProfileComponent } from './profile/profile.component';  
+import { ProfileComponent } from './profile/profile.component';
+import { LoginDSOComponent } from './login-dso/login-dso.component';
+import { RegisterDSOComponent } from './register-dso/register-dso.component';
+import { DevicesComponent } from './devices/devices.component';
+import { ConsumptionComponent } from './consumption/consumption.component';
+import { OverviewComponent } from './overview/overview.component';  
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'profile',  component:  ProfileComponent }
+  { path: '', redirectTo: 'pronsumer/login', pathMatch: 'full' },
+  { path: 'pronsumer/login', component: LoginComponent },
+  { path: 'pronsumer/register', component: RegisterComponent },
+  { path: 'dso/login', component: LoginDSOComponent },
+  { path: 'dso/register', component: RegisterDSOComponent },
+  
+  { path: 'overview',  component:  OverviewComponent },
+  { path: 'pronsumer/profile',  component:  ProfileComponent },
+  { path: 'pronsumer/devices', component : DevicesComponent},
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    LoginDSOComponent,
     RegisterComponent,
-    SidebarComponent
+    RegisterDSOComponent,
+
+    SidebarComponent,
+    ProfileComponent,
+    DevicesComponent,
+    ConsumptionComponent,
+    OverviewComponent,
   ],
   imports: [
     BrowserModule,
