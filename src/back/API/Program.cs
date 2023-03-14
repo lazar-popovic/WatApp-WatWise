@@ -57,6 +57,7 @@ builder.Services.AddScoped<IBaseBL, BaseBL>();
 builder.Services.AddScoped<IBaseDAL, BaseDAL>();
 builder.Services.AddScoped<IJWTCreator, JWTCreator>();
 builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.AddScoped<IUserDAL, UserDAL>();
 
 //JWT Authenthication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
