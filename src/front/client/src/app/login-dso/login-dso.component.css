@@ -1,8 +1,11 @@
 
+
 body
 {
-    background-color: #1676AC;
+    background-color: #239F81;
+    height: 100vh;
 }
+
 
 /*Logo*/
 img 
@@ -26,6 +29,7 @@ img
   justify-content: center;
   align-items: center;
   height: 60vh; /* sets container height to full viewport height */
+  background-color :  #239F81;
 }
 
 
@@ -147,24 +151,24 @@ form
   button:hover 
   {
     background-color: #4f504f;
-    font-size: 20px;
+    font-size: 18px;
     width: 37%;
   }
 
   
-  #loginDSO
+  #loginPronsumer
   {
-    background-color: #239F81;
+    background-color: #1676AC;
     color: white;
-    width: 60%;
+    width: 70%;
   }
 
-  #loginDSO:hover
+  #loginPronsumer:hover
   {
-    font-size: 22px;
-    background-color: #115746;
+    font-size: 20px;
+    background-color: #0e5b87;
     color: white;
-    width: 60%;
+    width: 70%;
   }
 
   /*Dont't have an account ?*/
@@ -203,23 +207,6 @@ form
     color: red;
     font-size: 16px;
     margin-top: 10px;
-  }
-  
-
-
-  .input-icons i 
-    {
-    position: absolute;
-  }
-  
-  .input-icons {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  
-  .icon {
-    padding: 10px;
-    min-width: 40px;
   }
   
   .input-field {
