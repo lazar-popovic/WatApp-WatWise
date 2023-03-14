@@ -1,4 +1,5 @@
 ﻿using API.BL.Interfaces;
+using API.Models;
 using API.Models.Dto;
 using API.Models.Entity;
 using API.Services.JWTCreation.Interfaces;
@@ -33,7 +34,8 @@ public class DsoController : ControllerBase
             return BadRequest(response);
 
         token = _jwtCreator.CreateToken((User)response.Data);
-        return Ok(token);
+
+        return Ok( new TokenDto{ Token = token});
     }
     
     [HttpPost("register-employee"),Authorize(Roles = "Admin")]

@@ -63,7 +63,8 @@ public class ProsumerController : ControllerBase
             return BadRequest(response);
 
         token = _jwtCreator.CreateToken((User)response.Data);
-        return Ok(token);
+        
+        return Ok( new TokenDto{ Token = token});
     }
 
     [HttpPost]
