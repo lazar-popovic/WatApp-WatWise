@@ -103,4 +103,9 @@ public class ProsumerDAL : IProsumerDAL
         _context.ResetPasswordTokens.Remove(resetPasswordToken);
         _context.SaveChanges();
     }
+
+    public User GetUserById(int id)
+    {
+        return _context.Users.FirstOrDefault(user => user.Id == id);
+    }
 }

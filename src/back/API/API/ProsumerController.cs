@@ -69,7 +69,7 @@ public class ProsumerController : ControllerBase
 
     [HttpPost]
     [Route("forgot-password")]
-    public async Task<IActionResult> ForgotPassword(ForgottenPasswordRequest request)
+    public async Task<IActionResult> ForgotPassword(ForgottenPasswordRequestDto request)
     {
         var response = _prosumerBl.CheckEmailForForgottenPassword(request);
         var user = ((User)response.Data);
@@ -98,9 +98,15 @@ public class ProsumerController : ControllerBase
 
     [HttpPost]
     [Route("reset-password")]
-    public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+    public async Task<IActionResult> ResetPassword(ResetPasswordRequestDto request)
     {
-        //ResetPasswordToken resetPasswordToken - isao je kao parametar zahteva
+        var response = new Response<object>();
+
+        if (request.NewPassword == "" || request.ConfirmedNewPassword == "")
+        {
+            //response.Errors.Add("Please enter new password and confirm it!");
+            return BadRequest("Please enter new password and confirm it!");
+        }
 
         var handler = new JwtSecurityTokenHandler();
         var token = handler.ReadJwtToken(request.Token);
@@ -109,6 +115,7 @@ public class ProsumerController : ControllerBase
 
         if (string.IsNullOrEmpty(resetToken))
         {
+            //response.Errors.Add("Token is null or empty!");
             return BadRequest("Invalid token");
         }
 
@@ -116,21 +123,36 @@ public class ProsumerController : ControllerBase
 
         if (tokenEntity == null)
         {
+            //response.Errors.Add("Invalid token!");
             return BadRequest("Invalid token");
         }
 
         if (DateTime.UtcNow > tokenEntity.ExpiryTime)
         {
+            //response.Errors.Add("Token expired!");
             return BadRequest("Token expired");
         }
 
         var user = _prosumerBl.FindUserByIdFromTokenEntity((int)tokenEntity.UserId);
 
+        response = _prosumerBl.CheckForOldPasswordWhenResettingPass(request.OldPassword, user);
+
         if (user == null)
         {
+            //response.Errors.Add("User not found!");
             return BadRequest("User not found");
         }
 
+        
+        response.Success = !response.Errors.Any();
+
+        if (response.Success == false)
+        {
+            response.Data = null;
+            return BadRequest(response);
+        }
+            
+        
         // Update password
         _prosumerBl.SetNewPasswordAfterResetting(user, request.NewPassword);
 

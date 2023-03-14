@@ -1,6 +1,6 @@
 ﻿namespace API.Models.Dto
 {
-    public class ForgottenPasswordRequest
+    public class ForgottenPasswordRequestDto
     {
         public string Email { get; set; } = string.Empty;
     }

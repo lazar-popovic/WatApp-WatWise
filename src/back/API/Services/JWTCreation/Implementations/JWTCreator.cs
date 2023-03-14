@@ -80,23 +80,6 @@ namespace API.Services.JWTCreation.Implementations
                 new Claim("resetToken", resetToken.Token)
             };
 
-            /*
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(10), // Token expires in 10 mins
-                SigningCredentials = signingCredentials,
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
-            var encodedToken = tokenHandler.WriteToken(token);
-
-            return encodedToken;
-            */
             ClaimsIdentity identity = new ClaimsIdentity(claims, "reset claims");
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 

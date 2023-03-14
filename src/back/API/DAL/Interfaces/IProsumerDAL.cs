@@ -16,4 +16,5 @@ public interface IProsumerDAL
     User FindUserByIdFromTokenEntityFromBase(int id);
     void UpdateUserAfterPasswordReset(User user);
     void RemovePasswordResetTokenFromBase(ResetPasswordToken resetPasswordToken);
+    User GetUserById(int id);
 }

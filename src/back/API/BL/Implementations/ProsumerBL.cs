@@ -114,7 +114,7 @@ public class ProsumerBL : IProsumerBL
         return response;
     }
 
-    public Response<object> CheckEmailForForgottenPassword(ForgottenPasswordRequest request)
+    public Response<object> CheckEmailForForgottenPassword(ForgottenPasswordRequestDto request)
     {
         var response = new Response<Object>();
 
@@ -182,12 +182,56 @@ public class ProsumerBL : IProsumerBL
 
     public void SetNewPasswordAfterResetting(User user, string password)
     {
-        user.PasswordHash = BCrypt.Net.BCrypt.EnhancedHashPassword(password);
+        user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
         _prosumerDal.UpdateUserAfterPasswordReset(user);
     }
 
     public void RemovePasswordResetToken(ResetPasswordToken resetToken)
     {
         _prosumerDal.RemovePasswordResetTokenFromBase(resetToken);
+    }
+
+    public Response<object> CheckForOldPasswordWhenResettingPass(string oldPassword, User user)
+    {
+        var response = new Response<object>();
+
+        oldPassword = oldPassword.Trim();
+
+        if (oldPassword == "")
+        {
+            response.Errors.Add("Old password is required!");
+        }
+
+        response.Success = !response.Errors.Any();
+
+        if (!response.Success)
+            return response;
+
+        var userFromBase = _prosumerDal.GetUserById(user.Id);
+
+        if (userFromBase == null)
+        {
+            response.Errors.Add("User with this password doesen't exists!");
+            response.Success = false;
+            return response;
+        }
+
+        if (userFromBase.RoleId != 3)
+        {
+            response.Errors.Add("You are not authorized");
+            response.Success = false;
+            return response;
+        }
+
+        if (!BCrypt.Net.BCrypt.Verify(oldPassword, user.PasswordHash))
+        {
+            response.Errors.Add("Sorry, we couldn't verify your password. Please check and try again!");
+            response.Success = false;
+            return response;
+        }
+
+        response.Data = userFromBase;
+        response.Success = true;
+        return response;
     }
 }
