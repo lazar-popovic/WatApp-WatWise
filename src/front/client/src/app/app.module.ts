@@ -15,6 +15,7 @@ import { RegisterDSOComponent } from './register-dso/register-dso.component';
 import { DevicesComponent } from './devices/devices.component';
 import { ConsumptionComponent } from './consumption/consumption.component';
 import { OverviewComponent } from './overview/overview.component';  
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   { path: '', redirectTo: 'pronsumer/login', pathMatch: 'full' },
@@ -22,7 +23,6 @@ const routes: Routes = [
   { path: 'pronsumer/register', component: RegisterComponent },
   { path: 'dso/login', component: LoginDSOComponent },
   { path: 'dso/register', component: RegisterDSOComponent },
-  
   { path: 'overview',  component:  OverviewComponent },
   { path: 'pronsumer/profile',  component:  ProfileComponent },
   { path: 'pronsumer/devices', component : DevicesComponent},
@@ -35,7 +35,7 @@ const routes: Routes = [
     LoginDSOComponent,
     RegisterComponent,
     SidebarComponent,
-    ProfileComponent
+    ProfileComponent,
     RegisterDSOComponent,
     DevicesComponent,
     ConsumptionComponent,
