@@ -1,7 +1,6 @@
 ﻿using API.BL.Interfaces;
 using API.DAL.Interfaces;
 using API.Models;
-using API.Models.Dot;
 using API.Models.Dto;
 using API.Models.Entity;
 using API.Services.E_mail.Interfaces;
@@ -21,7 +20,7 @@ public class ProsumerBL : IProsumerBL
         _mailService = mailService;
     }
 
-    public Response<object> RegisterProsumer(UserRegisterDot user)
+    public Response<object> RegisterProsumer(UserRegisterDto user)
     {
         var response = new Response<object>();
 

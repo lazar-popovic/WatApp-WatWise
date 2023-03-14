@@ -1,6 +1,6 @@
-﻿namespace API.Models.Dot;
+﻿namespace API.Models.Dto;
 
-public class UserRegisterDot
+public class UserRegisterDto
 {
     public string Email { get; set; } = string.Empty;
     public string Firstname { get; set; } = string.Empty;

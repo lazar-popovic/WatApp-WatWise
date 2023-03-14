@@ -1,5 +1,4 @@
 ﻿using API.BL.Interfaces;
-using API.Models.Dot;
 using API.Models.Dto;
 using API.Models.Entity;
 using API.Services.E_mail;
@@ -38,7 +37,7 @@ public class ProsumerController : ControllerBase
     }
 
     [HttpPost("register"),Authorize(Roles = "Admin")]
-    public async Task<IActionResult> RegisterProsumer(UserRegisterDot request)
+    public async Task<IActionResult> RegisterProsumer(UserRegisterDto request)
     {
         var response = _prosumerBl.RegisterProsumer(request);
 

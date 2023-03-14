@@ -1,5 +1,4 @@
 ﻿using API.DAL.Interfaces;
-using API.Models.Dot;
 using API.Models.Dto;
 using API.Models.Entity;
 using Microsoft.Data.Sqlite;
@@ -31,7 +30,7 @@ public class ProsumerDAL : IProsumerDAL
         return userFromBase;
     }
 
-    public User RegisterUser(UserRegisterDot user)
+    public User RegisterUser(UserRegisterDto user)
     {
         var newUser = new User
         {
