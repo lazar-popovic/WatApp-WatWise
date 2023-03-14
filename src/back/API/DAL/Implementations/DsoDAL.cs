@@ -1,5 +1,4 @@
 ﻿using API.DAL.Interfaces;
-using API.Models.Dot;
 using API.Models.Dto;
 using API.Models.Entity;
 using Microsoft.Data.Sqlite;
@@ -34,7 +33,7 @@ public class DsoDAL : IDsoDAL
         return userFromBase;
     }
 
-    public User RegisterEmployee(UserRegisterDot user)
+    public User RegisterEmployee(UserRegisterDto user)
     {
         var newUser = new User
         {

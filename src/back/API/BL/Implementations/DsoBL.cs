@@ -1,7 +1,6 @@
 ﻿using API.BL.Interfaces;
 using API.DAL.Interfaces;
 using API.Models;
-using API.Models.Dot;
 using API.Models.Dto;
 using API.Models.Entity;
 using API.Services.E_mail.Interfaces;
@@ -67,7 +66,7 @@ public class DsoBL : IDsoBL
         return response;
     }
 
-    public Response<object> RegisterEmployee(UserRegisterDot user)
+    public Response<object> RegisterEmployee(UserRegisterDto user)
     {
         var response = new Response<object>();
 

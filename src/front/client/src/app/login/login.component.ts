@@ -8,7 +8,8 @@ import { AuthService } from '../services/auth-service.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent{
+export class LoginComponent {
+
   imagePath: string = 'assets/logo.png';
   login: any = {
     username : '',
