@@ -1,4 +1,4 @@
-﻿# Visual Studio files
+# Visual Studio files
 .vscode
 .idea
 .vs/
@@ -78,3 +78,5 @@ Thumbs.db
 /src/back/API/database.db-shm
 /src/back/API/database.db-wal
 /src/back/API/database.db-wal
+database.db-shm
+database.db-wal
