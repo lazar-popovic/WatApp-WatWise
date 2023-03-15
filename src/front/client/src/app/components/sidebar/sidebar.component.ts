@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { User } from '../Models/User';
+import { User } from '../../Models/User';
 import { Router } from '@angular/router';
 
 @Component({
