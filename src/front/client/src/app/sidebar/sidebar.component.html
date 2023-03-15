@@ -4,10 +4,14 @@
         {{ this.currentTime }}
     </div>
     <div class="sidebar-nav">
-        <div class="sidebar-item-active" (click)="clickHandler($event)" routerLink="/overview" >Overview</div>
-        <div class="sidebar-item" (click)="clickHandler($event)" routerLink="/prosumer/devices">Devices</div>
-        <div class="sidebar-item" (click)="clickHandler($event)" routerLink="/prosumer/consumption">Consumption</div>
-        <div class="sidebar-item" (click)="clickHandler($event)" routerLink="/prosumer/production">Production</div>
+        <div *ngFor="let item of menu">
+            <div *ngIf="item.toLowerCase()== url">
+                <div class="sidebar-item-active" (click)="clickHandler($event)">{{item}}</div>
+            </div>
+            <div *ngIf="item.toLowerCase() !=url">
+                <div class="sidebar-item" (click)="clickHandler($event)">{{item}}</div>
+            </div>
+        </div>
         
         <div class="sidebar-footer" routerLink="/profile">
             <div class="sidebar-profile"><img src="\assets\profile.png"></div>

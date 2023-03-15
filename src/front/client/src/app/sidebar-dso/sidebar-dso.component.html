@@ -1,16 +1,19 @@
-<div class="sidebar-container"> 
-    <div class="sidebar-header">
-        <div class="sidebar-logo"><img src="\assets\logo.png"></div>
+<div class="sidebar-dso-container"> 
+    <div class="sidebar-dso-header">
+        <div class="sidebar-dso-logo"><img src="\assets\logo.png"></div>
         {{ this.currentTime }}
     </div>
-    <div class="sidebar-nav">
-        <div class="sidebar-item-active" (click)="clickHandler($event)" routerLink="/overview" >Overview</div>
-        <div class="sidebar-item" (click)="clickHandler($event)" routerLink="/dso/map">Map</div>
-        <div class="sidebar-item" (click)="clickHandler($event)" routerLink="/dso/users">Users</div>
-        <div class="sidebar-item" (click)="clickHandler($event)" routerLink="/dso/energy-usage">Energy usage</div>
-        
-        <div class="sidebar-footer" routerLink="/profile">
-            <div class="sidebar-profile"><img src="\assets\profile.png"></div>
+    <div class="sidebar-dso-nav">
+        <div *ngFor="let item of menu">
+            <div *ngIf="item.toLowerCase()== url">
+                <div class="sidebar-dso-item-active" (click)="clickHandler($event)">{{item}}</div>
+            </div>
+            <div *ngIf="item.toLowerCase() !=url">
+                <div class="sidebar-dso-item" (click)="clickHandler($event)">{{item}}</div>
+            </div>
+        </div>
+        <div class="sidebar-dso-footer" routerLink="/profile">
+            <div class="sidebar-dso-profile"><img src="\assets\profile.png"></div>
             {{this.user.firstName + " " + this.user.lastName}}
         </div>
     </div>

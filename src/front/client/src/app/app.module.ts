@@ -34,7 +34,8 @@ const routes: Routes = [
   { path: 'dso/verification', component : VerifyDsoComponent},
   { path: 'prosumer/verification', component : VerifyComponent},
 
-  { path: 'overview',  component:  OverviewComponent },
+  { path: 'prosumer/overview',  component:  OverviewComponent },
+  { path: 'dso/overview',  component:  OverviewComponent },
   { path: 'profile',  component:  ProfileComponent },
   
   { path: 'prosumer/devices', component : DevicesComponent},
@@ -43,7 +44,7 @@ const routes: Routes = [
 
   { path: 'dso/users', component : UsersComponent},
   { path: 'dso/map', component : MapComponent},
-  { path: 'dso/energy-usage', component : EnergyUsageComponent}
+  { path: 'dso/consumption', component : EnergyUsageComponent}
 
 ];
 
