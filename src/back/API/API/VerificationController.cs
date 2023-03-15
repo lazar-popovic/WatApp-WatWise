@@ -71,13 +71,11 @@ public class VerificationController : ControllerBase
     public async Task<IActionResult> VerifyAccount(VerifyAccountDto request)
     {
         var response = new Response<string>();
-        request.Email = request.Email.Trim();
+
+        var userId = this.GetUserIdFromToken(request.Token);
+        
         request.Password1 = request.Password1.Trim();
         request.Password2 = request.Password2.Trim();
-        if (string.IsNullOrEmpty(request.Email))
-        {
-            response.Errors.Add("Email is required");
-        }
         if (string.IsNullOrEmpty(request.Password1))
         {
             response.Errors.Add("Password is required");
@@ -90,21 +88,20 @@ public class VerificationController : ControllerBase
         {
             response.Errors.Add("Passwords need to match");
         }
-
-        var user = await _context.Users.FirstAsync(u => u.Email == request.Email);
-
-        if (user == null)
+        if (userId == null)
         {
-            response.Errors.Add("User with given email doesn't exist");
+            response.Errors.Add("Invalid token!");
         }
         
         response.Success = response.Errors.Count == 0;
 
         if (!response.Success)
         {
-            return BadRequest(response);
+            return BadRequest(response.Errors);
         }
-        
+
+        var user = await _context.Users.FirstAsync(u => u.Id == userId);
+
         user.Verified = true;
         user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password1);
 
@@ -112,6 +109,42 @@ public class VerificationController : ControllerBase
 
         response.Data = "Verification successful";
 
-        return Ok(response);
+        return Ok(response.Data);
+    }
+    
+    private int? GetUserIdFromToken(string token)
+    {
+        try
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = secretKey,
+                ValidateIssuer = false,
+                ValidateAudience = false,
+            };
+            SecurityToken validatedToken;
+            var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
+
+            var userIdClaim = claimsPrincipal.FindFirst("userId");
+            var userId = userIdClaim?.Value;
+
+            if (int.TryParse(userId, out int id))
+            {
+                return id;
+            }
+        }
+        catch (SecurityTokenException)
+        {
+            // Invalid token
+        }
+        catch (Exception)
+        {
+            // Other error
+        }
+    
+        return null;
     }
 }
