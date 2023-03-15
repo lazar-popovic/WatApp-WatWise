@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { AuthService } from '../services/auth-service.service';
 import { Router } from '@angular/router';
 
@@ -11,23 +9,18 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  imagePath: string = 'assets/logo.png';
   login: any = {
     username : '',
     password : ''
   };
 
-  imageUrl: SafeResourceUrl;
-  constructor(private sanitizer: DomSanitizer, private authService: AuthService, private route: Router) {
-    this.imageUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.imagePath);
-
-  }
+  constructor(private authService: AuthService, private route: Router) { }
 
   logIn() {
       this.authService.loginProsumer(this.login).subscribe((result: any) => {
         console.log(result.status);
         localStorage.setItem("token",result.token);
-        this.route.navigateByUrl('/overview');
+        this.route.navigateByUrl('/prosumer/overview');
       },(error: any) => {
         console.log(error.error.errors)
       })
