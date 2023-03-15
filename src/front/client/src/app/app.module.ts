@@ -8,7 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';  
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule} from '@angular/forms';
 import { LoginDSOComponent } from './login-dso/login-dso.component';
 import { RegisterDSOComponent } from './register-dso/register-dso.component';
@@ -23,6 +23,7 @@ import { EnergyUsageComponent } from './energy-usage/energy-usage.component';
 import { ProductionComponent } from './production/production.component';
 import { VerifyComponent } from './verify/verify.component';
 import { VerifyDsoComponent } from './verify-dso/verify-dso.component';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 const routes: Routes = [
   { path: '', redirectTo: 'pronsumer/login', pathMatch: 'full' },
@@ -76,7 +77,11 @@ const routes: Routes = [
     FormsModule,
     CommonModule
   ],
-  providers: [DatePipe],
+  providers: [{
+    provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
+    multi: true
+  },
+  DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

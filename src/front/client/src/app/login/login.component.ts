@@ -18,8 +18,7 @@ export class LoginComponent {
 
   logIn() {
       this.authService.loginProsumer(this.login).subscribe((result: any) => {
-        console.log(result.status);
-        localStorage.setItem("token",result.token);
+        localStorage.setItem("token",result.body.token);
         this.route.navigateByUrl('/prosumer/overview');
       },(error: any) => {
         console.log(error.error.errors)
