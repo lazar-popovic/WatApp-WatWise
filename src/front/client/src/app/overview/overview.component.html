@@ -1,7 +1,20 @@
 
 
 <body>
-    <app-sidebar>
+    
+    <div  *ngIf="!dsoShow">
+        <app-sidebar>
 
-    </app-sidebar>
+        </app-sidebar>
+    </div>
+
+    <div *ngIf="dsoShow">
+        
+        <div style="display: inline-block; width: 30%;">
+           <app-sidebar-dso>
+            
+           </app-sidebar-dso>
+        </div>
+
+    </div>
 </body>

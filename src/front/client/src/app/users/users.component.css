@@ -1,9 +1,5 @@
 
-body
-{
-    background-color: aliceblue;
-    height: 100vh;
-}
+
 
 
 /*Forma za login*/
@@ -12,8 +8,9 @@ body
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 10vh;
   
-  height: 100vh;
+  margin-bottom: 30%;
 }
 
 
@@ -42,7 +39,7 @@ form
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
 
     width: 450px;
-    height: 400px;
+    height: 53  0px;
   }
   
 
@@ -78,7 +75,26 @@ form
     text-align: center !important;
   }
 
-  
+  /*Forgot pass ?*/
+  #forgot_pass
+  {
+    margin-top: 0px;
+    text-align: right;
+    font-size: 12px;
+
+    padding: 0px;
+
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 8px;
+    text-decoration-line: underline;
+
+    color: #6F6F6F;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+  }
+
   /*Login dugme*/
   button 
   {
@@ -100,8 +116,45 @@ form
     font-size: 20px;
     width: 37%;
   }
- 
 
+  /*Dont't have an account ?*/
+  #dont_have_acc
+  {
+    margin-top: 3%;
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 8px;
+    color: #6F6F6F;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  /*SIGN UP*/
+  #register
+  {
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  a
+  {
+    color: #3E3E3E;
+  }
+
+  #register:hover
+  {
+    font-size: 17px;
+    color: #3E3E3E;
+  }
+
+  .error 
+  {
+    color: red;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
   /* Logo za inpute */
   #name
   {
@@ -142,3 +195,4 @@ form
     background-repeat: no-repeat;
     background-position: 7px 7px;
   }
+  
