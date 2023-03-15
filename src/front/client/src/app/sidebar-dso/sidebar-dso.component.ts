@@ -1,13 +1,14 @@
+import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
 import { User } from '../Models/User';
 
+
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  selector: 'app-sidebar-dso',
+  templateUrl: './sidebar-dso.component.html',
+  styleUrls: ['./sidebar-dso.component.css']
 })
-export class SidebarComponent {
+export class SidebarDsoComponent {
 
   currentTime;
   user = new User();

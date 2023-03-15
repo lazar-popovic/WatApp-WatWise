@@ -16,6 +16,11 @@ import { DevicesComponent } from './devices/devices.component';
 import { ConsumptionComponent } from './consumption/consumption.component';
 import { OverviewComponent } from './overview/overview.component';  
 import { CommonModule } from '@angular/common';
+import { SidebarDsoComponent } from './sidebar-dso/sidebar-dso.component';
+import { UsersComponent } from './users/users.component';
+import { MapComponent } from './map/map.component';
+import { EnergyUsageComponent } from './energy-usage/energy-usage.component';
+import { ProductionComponent } from './production/production.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'pronsumer/login', pathMatch: 'full' },
@@ -23,9 +28,19 @@ const routes: Routes = [
   { path: 'pronsumer/register', component: RegisterComponent },
   { path: 'dso/login', component: LoginDSOComponent },
   { path: 'dso/register', component: RegisterDSOComponent },
+  
   { path: 'overview',  component:  OverviewComponent },
-  { path: 'pronsumer/profile',  component:  ProfileComponent },
-  { path: 'pronsumer/devices', component : DevicesComponent},
+  { path: 'profile',  component:  ProfileComponent },
+  
+  { path: 'prosumer/devices', component : DevicesComponent},
+  { path: 'prosumer/consumption', component : ConsumptionComponent},
+  { path: 'prosumer/production', component : ProductionComponent},
+  
+
+  { path: 'dso/users', component : UsersComponent},
+  { path: 'dso/map', component : MapComponent},
+  { path: 'dso/energy-usage', component : EnergyUsageComponent}
+
 ];
 
 @NgModule({
@@ -40,6 +55,11 @@ const routes: Routes = [
     DevicesComponent,
     ConsumptionComponent,
     OverviewComponent,
+    SidebarDsoComponent,
+    UsersComponent,
+    MapComponent,
+    EnergyUsageComponent,
+    ProductionComponent,
   ],
   imports: [
     BrowserModule,
