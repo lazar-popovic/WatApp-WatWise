@@ -21,6 +21,8 @@ import { UsersComponent } from './users/users.component';
 import { MapComponent } from './map/map.component';
 import { EnergyUsageComponent } from './energy-usage/energy-usage.component';
 import { ProductionComponent } from './production/production.component';
+import { VerifyComponent } from './verify/verify.component';
+import { VerifyDsoComponent } from './verify-dso/verify-dso.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'pronsumer/login', pathMatch: 'full' },
@@ -29,13 +31,15 @@ const routes: Routes = [
   { path: 'dso/login', component: LoginDSOComponent },
   { path: 'dso/register', component: RegisterDSOComponent },
   
+  { path: 'dso/verification', component : VerifyDsoComponent},
+  { path: 'prosumer/verification', component : VerifyComponent},
+
   { path: 'overview',  component:  OverviewComponent },
   { path: 'profile',  component:  ProfileComponent },
   
   { path: 'prosumer/devices', component : DevicesComponent},
   { path: 'prosumer/consumption', component : ConsumptionComponent},
   { path: 'prosumer/production', component : ProductionComponent},
-  
 
   { path: 'dso/users', component : UsersComponent},
   { path: 'dso/map', component : MapComponent},
@@ -60,6 +64,8 @@ const routes: Routes = [
     MapComponent,
     EnergyUsageComponent,
     ProductionComponent,
+    VerifyComponent,
+    VerifyDsoComponent,
   ],
   imports: [
     BrowserModule,
