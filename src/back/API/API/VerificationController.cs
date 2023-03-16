@@ -24,8 +24,9 @@ public class VerificationController : ControllerBase
 
     [HttpPost]
     [Route("validate-token")]
-    public async Task<IActionResult> VerifyToken( string token)
+    public async Task<IActionResult> VerifyToken( TokenDto request)
     {
+        var token = request.Token;
         var response = new Response<string>();
         try
         {
