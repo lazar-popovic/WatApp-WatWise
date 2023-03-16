@@ -19,3 +19,5 @@ public class User
     [ForeignKey("LocationId")]
     public Location? Location { get; set; }
 }
+
+added migration,created table via DbSet,
