@@ -1,4 +1,4 @@
-﻿# Visual Studio files
+# Visual Studio files
 .vscode
 .idea
 .vs/
@@ -74,3 +74,9 @@ Thumbs.db
 
 # DATABASE
 *.db
+/src/front/prosumerClient/node_modules
+/src/back/API/database.db-shm
+/src/back/API/database.db-wal
+/src/back/API/database.db-wal
+database.db-shm
+database.db-wal

@@ -1,0 +1,21 @@
+<div class="sidebar-container"> 
+    <div class="sidebar-header">
+        <div class="sidebar-logo"><img src="\assets\logo.png"></div>
+        {{ this.currentTime }}
+    </div>
+    <div class="sidebar-nav">
+        <div *ngFor="let item of menu">
+            <div *ngIf="item.toLowerCase()== url">
+                <div class="sidebar-item-active" (click)="clickHandler($event)">{{item}}</div>
+            </div>
+            <div *ngIf="item.toLowerCase() !=url">
+                <div class="sidebar-item" (click)="clickHandler($event)">{{item}}</div>
+            </div>
+        </div>
+        
+        <div class="sidebar-footer" routerLink="/profile">
+            <div class="sidebar-profile"><img src="\assets\profile.png"></div>
+            {{this.user.firstName + " " + this.user.lastName}}
+        </div>
+    </div>
+</div>
