@@ -3,6 +3,7 @@ using API.Services.JWTCreation.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace API.Services.JWTCreation.Implementations
@@ -35,7 +36,7 @@ namespace API.Services.JWTCreation.Implementations
             {
                 Issuer = "http://localhost:5226",
                 Audience = "http://localhost:5226",
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha512Signature)
             };
 
@@ -99,6 +100,22 @@ namespace API.Services.JWTCreation.Implementations
             var jwt = tokenHandler.WriteToken(token);
 
             return jwt;
+        }
+
+        public string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[64];
+
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
+            }
+        }
+
+        public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+        {
+            throw new NotImplementedException();
         }
     }
 }
