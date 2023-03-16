@@ -71,7 +71,7 @@ public class VerificationController : ControllerBase
     [Route("verify-account")]
     public async Task<IActionResult> VerifyAccount(VerifyAccountDto request)
     {
-        var response = new Response<string>();
+        var response = new Response<MessageDot>();
 
         var userId = this.GetUserIdFromToken(request.Token);
         
@@ -98,7 +98,7 @@ public class VerificationController : ControllerBase
 
         if (!response.Success)
         {
-            return BadRequest(response.Errors);
+            return BadRequest(response);
         }
 
         var user = await _context.Users.FirstAsync(u => u.Id == userId);
@@ -107,8 +107,8 @@ public class VerificationController : ControllerBase
         user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password1);
 
         await _context.SaveChangesAsync();
-
-        response.Data = "Verification successful";
+        response.Data = new MessageDot();
+        response.Data.Message = "Verification successful";
 
         return Ok(response.Data);
     }
