@@ -39,8 +39,7 @@ for day in range(NUM_DAYS):
         production = round(random.uniform(SOLAR_PANEL_MIN_PRODUCTION, SOLAR_PANEL_MAX_PRODUCTION) * factor, 2)
         # Append the production value to the list
         production_data.append({
-            "date": start_date.strftime('%m/%d/%Y'),
-            "time": f"{str(hour).zfill(2)}:00",
+            "datetime": start_date.replace(hour=hour, minute=0, second=0, microsecond=0).strftime('%m/%d/%Y %H:%M:%S'),
             "production": production
         })
     # Increment the start_date to next day
