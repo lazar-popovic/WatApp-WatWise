@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230316183415_AddedRefreshTokenTable")]
+    [Migration("20230317001704_AddedRefreshTokenTable")]
     partial class AddedRefreshTokenTable
     {
         /// <inheritdoc />
@@ -58,6 +58,9 @@ namespace API.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsExpired")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Token")

@@ -9,7 +9,7 @@ namespace API.Models.Entity
         public int Id { get; set; }
         public string? Token { get; set; }
         public DateTime Expires { get; set; }
-        public bool IsExpired => DateTime.UtcNow >= Expires;
+        public bool IsExpired { get; set; }
         public bool IsActive { get; set; }
         public int? UserId { get; set; }
         [ForeignKey("UserId")]

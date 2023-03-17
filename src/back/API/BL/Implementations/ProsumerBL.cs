@@ -233,4 +233,9 @@ public class ProsumerBL : IProsumerBL
         response.Success = true;
         return response;
     }
+
+    public void SetRefreshToken(RefreshToken refreshToken)
+    {
+        _prosumerDal.SaveRefreshTokenInBase(refreshToken);
+    }
 }

@@ -51,11 +51,11 @@ public class ProsumerController : ControllerBase
         }
     }
 
-    //dodati autorizaciju
     [HttpPost("login")]
     public IActionResult Login(UserLoginDto request)
     {
         string token;
+        RefreshToken refreshToken = new RefreshToken();
 
         var response = _prosumerBl.CheckForLoginCredentials(request);
 
@@ -63,8 +63,20 @@ public class ProsumerController : ControllerBase
             return BadRequest(response);
 
         token = _jwtCreator.CreateToken((User)response.Data);
-        
-        return Ok( new TokenDto{ Token = token});
+
+        refreshToken.Token = _jwtCreator.GenerateRefreshToken();
+        refreshToken.Expires = DateTime.Now.AddDays(7);
+        refreshToken.user = (User)response.Data;
+        refreshToken.IsExpired = DateTime.UtcNow >= refreshToken.Expires;
+        refreshToken.IsActive = !refreshToken.IsExpired == true;
+
+        _prosumerBl.SetRefreshToken(refreshToken);
+
+        return Ok( new RefreshTokenDto
+        {
+            Token = token,
+            RefreshToken = refreshToken.Token
+        });
     }
 
     [HttpPost]

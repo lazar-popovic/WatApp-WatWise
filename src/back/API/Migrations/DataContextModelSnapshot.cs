@@ -57,6 +57,9 @@ namespace API.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsExpired")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Token")
                         .HasColumnType("TEXT");
 
