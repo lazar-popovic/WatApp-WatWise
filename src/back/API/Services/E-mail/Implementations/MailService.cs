@@ -47,7 +47,7 @@ namespace API.Services.E_mail.Implementations
             var mail = new EmailModel("Verification token", token, user.Email);
 
             mail.Body =
-                "You are successfully registered to the SSO system as prosumer. To activate your account and create a password, click on the activation link below:\n\n";
+                "\r\nHi,\r\n\r\nYou are successfully registered to the WattWise as prosumer. To activate your account and create a password, click on the activation link below:\n\n";
             mail.Body += $" http://localhost:4200/prosumer/verification?token={token}";
             
             this.sendEmail( mail);
@@ -59,7 +59,7 @@ namespace API.Services.E_mail.Implementations
             var mail = new EmailModel("Verification token", token, user.Email);
 
             mail.Body =
-                "You are successfully registered to the DSO system as employee. To activate your account and create a password, click on the activation link below:\n\n";
+                "\r\nHi,\r\n\r\nYou are successfully registered to the WattWise as employee. To activate your account and create a password, click on the activation link below:\n\n";
             mail.Body += $" http://localhost:4200/dso/verification?token={token}";
             
             this.sendEmail( mail);

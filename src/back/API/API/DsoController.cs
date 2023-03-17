@@ -45,11 +45,11 @@ public class DsoController : ControllerBase
 
         if (response.Success)
         {
-            return Ok(response);
+            return Ok(response.Data);
         }
         else
         {
-            return BadRequest(response);
+            return BadRequest(response.Errors);
         }
     }
 }

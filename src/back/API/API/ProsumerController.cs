@@ -36,18 +36,18 @@ public class ProsumerController : ControllerBase
        
     }
 
-    [HttpPost("register"),Authorize(Roles = "Admin")]
+    [HttpPost("register"),Authorize(Roles = "Admin,Employee")]
     public async Task<IActionResult> RegisterProsumer(UserRegisterDto request)
     {
         var response = _prosumerBl.RegisterProsumer(request);
 
         if (response.Success)
         {
-            return Ok(response);
+            return Ok(response.Data);
         }
         else
         {
-            return BadRequest(response);
+            return BadRequest(response.Errors);
         }
     }
 

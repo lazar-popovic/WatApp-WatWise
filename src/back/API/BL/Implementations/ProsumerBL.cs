@@ -59,7 +59,7 @@ public class ProsumerBL : IProsumerBL
         newUser.Role = new Role { Id = 3, RoleName = "User" };
         _mailService.sendTokenProsumer( newUser);
         
-        response.Data = "Registration successful";
+        response.Data = new MessageDot { Message = "Registration successful" };
 
         return response;
     }

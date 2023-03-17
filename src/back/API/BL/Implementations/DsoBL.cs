@@ -104,8 +104,8 @@ public class DsoBL : IDsoBL
         User newUser = _dsoDal.RegisterEmployee( user);
         newUser.Role = new Role { Id = 2, RoleName = "Employee" };
         _mailService.sendTokenEmployee( newUser);
-        
-        response.Data = "Registration successful";
+
+        response.Data = new MessageDot { Message = "Registration successful" };
 
         return response;
     }
