@@ -78,28 +78,29 @@ namespace API.API
             });
         }
 
-        /*
+        
         [HttpPost, Authorize]
         [Route("revoke")]
-        public IActionResult Revoke()
+        public IActionResult Revoke(string refreshToken)
         {
             var response = new Response<object>();
-            ClaimsPrincipal claimsPrincipal;
-            string emailClaim;
 
-            try
+            var token = _dataContext.RefreshTokens.FirstOrDefault(t => t.Token == refreshToken);
+
+            if(token == null)
             {
-                claimsPrincipal = _jwtCreator.GetPrincipalFromExpiredToken(accessToken);
-                emailClaim = claimsPrincipal.FindFirst(ClaimTypes.Email)?.Value;
-            }
-            catch (SecurityTokenValidationException invalidTokenExc)
-            {
-                response.Errors.Add(invalidTokenExc.Message);
-                response.Success = false;
+                response.Errors.Add("Token doesen't exist!");
+                response.Success = !response.Errors.Any();
 
                 return Ok(response);
             }
+
+            _dataContext.Remove(token);
+            _dataContext.SaveChanges();
+
+            return Ok("Token has been revoked!");
+
         }
-        */
+        
     }
 }

@@ -121,6 +121,7 @@ public class ProsumerDAL : IProsumerDAL
         foreach (var flag in flags)
         {
             flag.IsActive = false;
+            flag.IsExpired = true;
         }
 
         _context.SaveChanges();
