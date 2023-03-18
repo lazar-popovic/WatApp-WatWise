@@ -35,9 +35,8 @@ for day in range(NUM_DAYS):
         consumption = round(random.uniform(WATER_HEATER_MIN_CONSUMPTION * factor, WATER_HEATER_MAX_CONSUMPTION * factor), 2)
         # Append the consumption value to the list
         consumption_data.append({
-            "date": start_date.strftime('%m/%d/%Y'),
-            "time": f"{str(hour).zfill(2)}:00",
-            "usage": consumption
+            "datetime": start_date.replace(hour=hour, minute=0, second=0, microsecond=0).isoformat(),
+            "consumption": consumption
         })
     # Increment the start_date to next day
     start_date += timedelta(days=1)
