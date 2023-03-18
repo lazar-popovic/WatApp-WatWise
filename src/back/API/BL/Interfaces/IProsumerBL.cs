@@ -15,4 +15,6 @@ public interface IProsumerBL
     void SetNewPasswordAfterResetting(User user, string password);
     void RemovePasswordResetToken(ResetPasswordToken resetToken);
     Response<object> CheckForOldPasswordWhenResettingPass(string oldPassword, User user);
+    void SetRefreshToken(RefreshToken refreshToken);
+    void DeactivatePreviousRefreshTokensOnCreationOfNewRefreshTOken(int userId);
 }

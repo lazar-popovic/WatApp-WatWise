@@ -16,4 +16,6 @@ public interface IProsumerDAL
     void UpdateUserAfterPasswordReset(User user);
     void RemovePasswordResetTokenFromBase(ResetPasswordToken resetPasswordToken);
     User GetUserById(int id);
+    void SaveRefreshTokenInBase(RefreshToken refreshToken);
+    void DeactivateRefreshToken(int userId);
 }

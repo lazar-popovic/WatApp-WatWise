@@ -1,4 +1,6 @@
-﻿namespace API.Models.Dto;
+﻿using API.Models.Entity;
+
+namespace API.Models.Dto;
 
 public class TokenDto
 {
