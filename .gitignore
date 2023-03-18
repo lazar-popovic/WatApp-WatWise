@@ -80,3 +80,4 @@ Thumbs.db
 /src/back/API/database.db-wal
 database.db-shm
 database.db-wal
+/src/back/API/Migrations
