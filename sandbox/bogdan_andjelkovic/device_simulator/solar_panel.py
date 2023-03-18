@@ -1,6 +1,6 @@
 import json
 import random
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 # Define constants for the script
 NUM_DAYS = 365
@@ -37,10 +37,12 @@ for day in range(NUM_DAYS):
         factor = PRODUCTION_FACTORS[time_of_day]
         # Generate a random production value between the minimum and maximum, with a factor based on the time of day
         production = round(random.uniform(SOLAR_PANEL_MIN_PRODUCTION, SOLAR_PANEL_MAX_PRODUCTION) * factor, 2)
+        # Convert the datetime to epoch milliseconds
+        dt_epoch_milliseconds = int(start_date.replace(hour=hour, minute=0, second=0, microsecond=0, tzinfo=timezone.utc).timestamp() * 1000)
         # Append the production value to the list
         production_data.append({
-            "datetime": start_date.replace(hour=hour, minute=0, second=0, microsecond=0).strftime('%m/%d/%Y %H:%M:%S'),
-            "production": production
+            "datetime": start_date.replace(hour=hour, minute=0, second=0, microsecond=0).isoformat(),
+            "consumption": production
         })
     # Increment the start_date to next day
     start_date += timedelta(days=1)
