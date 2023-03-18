@@ -1,0 +1,68 @@
+
+
+body
+{
+    background-color: #E1E1E1;
+}
+
+h2
+{
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+#devices-container
+{
+    margin-top: 20px;
+    font-style: bold;
+    font-size: 20px;
+    color: #3E3E3E;
+
+    font-style: bold;
+    font-family: 'Inter';
+    font-style: normal;
+}
+
+
+#devices-categories {
+    height: 60px;
+    width: 250px;
+    background-color: #FFFFFF;
+    border: 1px solid #3E3E3E;
+    border-radius: 30px;
+    
+    vertical-align: middle;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#device-logo-consumer,#device-logo-prosumer,#device-logo-storage
+{
+    width: 100px;
+    height: 100px;
+
+    background-position: 20px 25px;
+    background-size: 30px;
+}
+
+#device-logo-consumer {
+    display: inline-block;
+    background-image: url(/assets/consumer.png);
+    background-repeat: no-repeat;
+}
+
+#device-logo-prosumer {
+    display: inline-block;
+    background-image: url(/assets/prosumer.png);
+    background-repeat: no-repeat;
+}
+
+#device-logo-storage {
+    display: inline-block;
+    background-image: url(/assets/storage.png);
+    background-repeat: no-repeat;
+
+    background-size: 23px;
+}
