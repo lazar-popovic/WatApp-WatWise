@@ -11,7 +11,9 @@ import { OnInit } from '@angular/core';
 })
 export class DevicesComponent implements OnInit
 {
-  
+
+    showDevices : boolean = true;
+
     devices: Device[] = [];
     newDevice: Device = new Device('', '', '');
 
@@ -41,6 +43,7 @@ export class DevicesComponent implements OnInit
      
       localStorage.setItem('devices', JSON.stringify(this.devices));
       this.newDevice = new Device('','','');
+      this.showDevices = true;
     }
 
     removeDevice(device: Device) {

@@ -7,7 +7,7 @@
         </app-sidebar>
     </div>
 
-    <div style="display: inline-block; vertical-align: top;">
+    <div style="display: inline-block; vertical-align: top;" *ngIf="showDevices">
         <div id="devices-container">
             <h2>Devices</h2>
             <div id="devices-categories" style="display: inline-block;">
@@ -17,7 +17,7 @@
             </div>
 
             <div id="devices-add-device" style="display: inline-block;">
-                <div id="devices-add" style="vertical-align: middle;">+ Add device</div>
+                <div (click)="showDevices = false" id="devices-add" style="vertical-align: middle;">+ Add device</div>
             </div>
         </div>
 
@@ -32,6 +32,8 @@
                         <div id="consumer-device" *ngIf="device.category === 'consumer'"> 
                             <li>{{device.name}}</li> 
                             <button (click)="removeDevice(device)">Remove Device</button>
+                            <br>
+                            <button class="activity"></button>
                         </div>
                     </ng-container>
                   </ul>
@@ -46,6 +48,8 @@
                         <div id="prosumer-device" *ngIf="device.category === 'prosumer'">
                             <li>{{device.name}}</li>
                             <button (click)="removeDevice(device)">Remove Device</button>
+                            <br>
+                            <button class="activity"></button>
                         </div>
               </ng-container>
             </ul>
@@ -59,34 +63,33 @@
                     <div id="storage-device" *ngIf="device.category === 'storage'">
                         <li>{{device.name}}</li>
                         <button (click)="removeDevice(device)">Remove Device</button>
+                        <br>
+                        <button class="activity"></button>
+                        
                     </div>
           </ng-container>
         </ul>
         </div>
-        
-        <div id="add-device">
-            <h2>Add Device</h2>
-            <form>
-              <label for="name">Name:</label>
-              <input type="text" id="name" name="name" [(ngModel)]="newDevice.name">
-              
-              <label for="type">Type:</label>
-              <input type="text" id="type" name="type" [(ngModel)]="newDevice.type">
-              
-              <label for="category">Category:</label>
-              <select id="category" name="category" [(ngModel)]="newDevice.category">
-                <option value="consumer">Consumer</option>
-                <option value="prosumer">Prosumer</option>
-                <option value="storage"> Storage</option>
-              </select>
-              
-              <button type="button" (click)="addDevice()">Add Device</button>
-            </form>
-          </div>
+    </div>
 
-          <br>
-          <br>
-
+    <div id="add-device" style="display: inline-block; vertical-align: top;" *ngIf="!showDevices">
+        <h2>Add Device</h2>
+        <form id="add-device-form">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" [(ngModel)]="newDevice.name">
+          
+          <label for="type">Type:</label>
+          <input type="text" id="type" name="type" [(ngModel)]="newDevice.type">
+          
+          <label for="category">Category:</label>
+          <select id="category" name="category" [(ngModel)]="newDevice.category">
+            <option value="consumer">Consumer</option>
+            <option value="prosumer">Prosumer</option>
+            <option value="storage"> Storage</option>
+          </select>
+          
+          <button type="button" (click)="addDevice()">Add Device</button>
+        </form>
     </div>
 
 </body>
