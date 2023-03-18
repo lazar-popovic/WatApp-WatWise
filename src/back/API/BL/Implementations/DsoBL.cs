@@ -1,4 +1,5 @@
 ﻿using API.BL.Interfaces;
+using API.Common;
 using API.DAL.Interfaces;
 using API.Models;
 using API.Models.Dto;
@@ -47,7 +48,7 @@ public class DsoBL : IDsoBL
             return response;
         }
 
-        if (verifiedUser.RoleId == 3)
+        if (verifiedUser.Role.RoleName == RoleEnum.Role.User.ToString())
         {
             response.Errors.Add("You are not authorized");
             response.Success = !response.Errors.Any();
