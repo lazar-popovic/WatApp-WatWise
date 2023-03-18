@@ -36,13 +36,13 @@ namespace API.Services.JWTCreation.Implementations
             {
                 Issuer = "http://localhost:5226",
                 Audience = "http://localhost:5226",
-                Expires = DateTime.UtcNow.AddDays(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha512Signature)
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha256Signature)
             };
 
             JwtSecurityToken token = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
             token.Payload.AddClaims(principal.Claims);
-
+ 
             var jwt = tokenHandler.WriteToken(token);
 
             return jwt;
@@ -61,7 +61,7 @@ namespace API.Services.JWTCreation.Implementations
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(10), // Token expires in 1 hour
+                Expires = DateTime.UtcNow.AddMinutes(10),
                 SigningCredentials = signingCredentials,
             };
 
@@ -91,12 +91,11 @@ namespace API.Services.JWTCreation.Implementations
                 Issuer = "http://localhost:5226",
                 Audience = "http://localhost:5226",
                 Expires = DateTime.UtcNow.AddMinutes(10),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha512Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha256Signature)
             };
 
             JwtSecurityToken token = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
             token.Payload.AddClaims(principal.Claims);
-
             var jwt = tokenHandler.WriteToken(token);
 
             return jwt;
@@ -120,7 +119,7 @@ namespace API.Services.JWTCreation.Implementations
                 ValidateAudience = false,
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345")),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])),
                 ValidateLifetime = false 
             };
 
@@ -130,7 +129,7 @@ namespace API.Services.JWTCreation.Implementations
             var jwtSecurityToken = securityToken as JwtSecurityToken;
 
             if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-                throw new SecurityTokenException("Invalid token");
+                throw new SecurityTokenValidationException("Invalid token");
 
             return principal;
         }

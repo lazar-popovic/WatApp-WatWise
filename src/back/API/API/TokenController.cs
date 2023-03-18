@@ -3,8 +3,11 @@ using API.Models;
 using API.Models.Dto;
 using API.Models.Entity;
 using API.Services.JWTCreation.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
 namespace API.API
@@ -22,25 +25,38 @@ namespace API.API
         }
 
         [HttpPost]
+        [Route("refresh")]
         public IActionResult Refresh(RefreshTokenDto refreshTokenDto)
         {
             var response = new Response<object>();
+            ClaimsPrincipal claimsPrincipal;
+            string emailClaim;
 
             if (refreshTokenDto is null)
                 return BadRequest("Invalid client request");
 
             string accessToken = refreshTokenDto.Token;
             string refreshToken = refreshTokenDto.RefreshToken;
+            
+            try
+            {
+                claimsPrincipal = _jwtCreator.GetPrincipalFromExpiredToken(accessToken);
+                emailClaim = claimsPrincipal.FindFirst(ClaimTypes.Email)?.Value;
+            }
+            catch(SecurityTokenValidationException invalidTokenExc)
+            {
+                response.Errors.Add(invalidTokenExc.Message);
+                response.Success = false;
 
-            var claimsPrincipal = _jwtCreator.GetPrincipalFromExpiredToken(accessToken);
-            var emailClaim = claimsPrincipal.FindFirst(ClaimTypes.Email)?.Value;
-
-
+                return Ok(response);
+            }
 
             var user = _dataContext.Users.SingleOrDefault(u => u.Email == emailClaim);
-            var refreshTokenFromBase = _dataContext.RefreshTokens.SingleOrDefault(rt => rt.UserId == user.Id);
+            user.Role = _dataContext.Roles.First(r => r.Id == user.RoleId);
 
-            if (user is null || refreshTokenFromBase.Token != refreshToken || refreshTokenFromBase.Expires <= DateTime.Now || (refreshTokenFromBase.IsActive == false))
+            var refreshTokenFromBase = _dataContext.RefreshTokens.SingleOrDefault(rt => rt.UserId == user.Id && rt.IsActive);
+
+            if (user == null || refreshTokenFromBase.Token != refreshToken || refreshTokenFromBase.Expires <= DateTime.Now || (refreshTokenFromBase.IsActive == false))
             {
                 response.Errors.Add("Token is invalid!");
                 response.Success = false;
@@ -61,5 +77,29 @@ namespace API.API
                 RefreshToken = newRefreshToken
             });
         }
+
+        /*
+        [HttpPost, Authorize]
+        [Route("revoke")]
+        public IActionResult Revoke()
+        {
+            var response = new Response<object>();
+            ClaimsPrincipal claimsPrincipal;
+            string emailClaim;
+
+            try
+            {
+                claimsPrincipal = _jwtCreator.GetPrincipalFromExpiredToken(accessToken);
+                emailClaim = claimsPrincipal.FindFirst(ClaimTypes.Email)?.Value;
+            }
+            catch (SecurityTokenValidationException invalidTokenExc)
+            {
+                response.Errors.Add(invalidTokenExc.Message);
+                response.Success = false;
+
+                return Ok(response);
+            }
+        }
+        */
     }
 }

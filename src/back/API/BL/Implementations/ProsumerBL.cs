@@ -238,4 +238,9 @@ public class ProsumerBL : IProsumerBL
     {
         _prosumerDal.SaveRefreshTokenInBase(refreshToken);
     }
+
+    public void DeactivatePreviousRefreshTokensOnCreationOfNewRefreshTOken(int userId)
+    {
+       _prosumerDal.DeactivateRefreshToken(userId);
+    }
 }

@@ -113,4 +113,16 @@ public class ProsumerDAL : IProsumerDAL
         _context.RefreshTokens.Add(refreshToken); 
         _context.SaveChanges();   
     }
+
+    public void DeactivateRefreshToken(int userId)
+    {
+        var flags = _context.RefreshTokens.Where(f => f.UserId == userId);
+
+        foreach (var flag in flags)
+        {
+            flag.IsActive = false;
+        }
+
+        _context.SaveChanges();
+    }
 }

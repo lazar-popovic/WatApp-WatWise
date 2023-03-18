@@ -64,12 +64,15 @@ public class ProsumerController : ControllerBase
 
         token = _jwtCreator.CreateToken((User)response.Data);
 
+        var user = (User)response.Data;
+
         refreshToken.Token = _jwtCreator.GenerateRefreshToken();
         refreshToken.Expires = DateTime.Now.AddDays(7);
-        refreshToken.user = (User)response.Data;
+        refreshToken.user = user;
         refreshToken.IsExpired = DateTime.UtcNow >= refreshToken.Expires;
-        refreshToken.IsActive = !refreshToken.IsExpired == true;
+        refreshToken.IsActive = true;
 
+        _prosumerBl.DeactivatePreviousRefreshTokensOnCreationOfNewRefreshTOken(user.Id);
         _prosumerBl.SetRefreshToken(refreshToken);
 
         return Ok( new RefreshTokenDto
