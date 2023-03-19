@@ -15,7 +15,7 @@ export class DevicesComponent implements OnInit
     showDevices : boolean = true;
 
     devices: Device[] = [];
-    newDevice: Device = new Device('', '', '');
+    newDevice: Device = new Device('',0,'', '');
 
    constructor() { }
 
@@ -38,11 +38,11 @@ export class DevicesComponent implements OnInit
     {
       console.log(this.newDevice.category);
       this.newDevice.id = this.devices.length + 1;
-      this.newDevice = new Device(this.newDevice.name,this.newDevice.type,this.newDevice.category);
+      this.newDevice = new Device(this.newDevice.name, this.newDevice.consumption,this.newDevice.type, this.newDevice.category);
       this.devices.push(this.newDevice);
      
       localStorage.setItem('devices', JSON.stringify(this.devices));
-      this.newDevice = new Device('','','');
+      this.newDevice = new Device('',0,'','');
       this.showDevices = true;
     }
 

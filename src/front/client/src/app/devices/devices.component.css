@@ -3,6 +3,8 @@
 body
 {
     background-color: #E1E1E1;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
 }
 
 h2
@@ -18,7 +20,7 @@ h2
     font-style: bold;
     font-size: 20px;
     color: #3E3E3E;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
 }
 
@@ -84,8 +86,6 @@ h2
     font-weight: bold;
     font-size: 25px;
     color: #3E3E3E;
-    font-family: 'Inter';
-    font-style: normal;
     text-align: center;
     
     height: 30px;
@@ -108,8 +108,6 @@ h2
 #consumer-devices,#prosumer-devices,#storage-devices
 {
     color: #3E3E3E;
-    font-family: 'Inter';
-    font-style: normal;
     font-size: 20px;
 
     margin-top: 30px;
@@ -121,6 +119,7 @@ h2
 
 #consumer-device,#prosumer-device,#storage-device
 {
+    font-weight: bold;
     background-position: 10px 15px;
     background-size: 20px;
 
@@ -142,13 +141,20 @@ h2
     margin-right: 30px;
 }
 
+#consumer-device:hover,#prosumer-device:hover,#storage-device:hover
+{
+    background-color: #1676AC;
+    color: #FFFFFF;
+}
+
 #prosumer-device{
     background-image: url(/assets/prosumer.png);
 }
 
 #storage-device{
-    background-size: 17px;
+    background-size: 15px;
     background-image: url(/assets/storage.png);
+    height: 80px;
 }
 
 .activity
@@ -165,48 +171,78 @@ h2
 
     background-image: url(/assets/active.png);
     background-repeat: no-repeat;
-
 }
 
 #add-device
 {
-    text-align: center;
+    margin-top: 20px;
+    color: #FFFFFF;
     vertical-align: middle;
-
-    padding: 10px;
 }
 
 #add-device-form
 {
     background-color: #1676AC;
+    border-radius : 20px;   
 
-    height: 500px;
-    width: 300px;
+    height: 480px;
+    width: 250px;
 
-    text-align: center;
     vertical-align: middle;
-
     padding: 10px;
 }
 
-
-input 
+#add-device-form label
 {
-    text-align: center;
+    text-align: left;
+}
 
-    width: 75%;
+form label {
+    text-align: left;
+  }
+
+label
+{
+    font-size: 20px;
+}
+
+input,select 
+{
+    text-align: left;
+
+    width: 95%;
     padding: 5px;
     font-size: 20px;
     border: 2px solid #ccc;
-    border-radius: 20px;
+    border-radius: 10px;
     margin-bottom: 20px;
 
-    font-family: 'Roboto';
-    font-style: bold;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 25px;
 
     height: 2 0px;
     color: #3E3E3E;
 }
+
+#connect-button
+{
+  background-color: #FFFFFF;
+  color: #3E3E3E;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+
+  width: 100%;
+}
+
+#connect-button:hover
+{
+    background-color: #3E3E3E;
+    color: #FFFFFF;
+}
+
 
