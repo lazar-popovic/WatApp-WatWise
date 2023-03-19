@@ -19,6 +19,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using API.Services.DeviceSimulatorService.Implementation;
+using API.Services.DeviceSimulatorService.Interfaces;
 using API.Services.JWTCreation.Interfaces;
 using API.Services.JWTCreation.Implementations;
 using API.Services.E_mail.Interfaces;
@@ -58,6 +60,7 @@ builder.Services.AddScoped<IBaseDAL, BaseDAL>();
 builder.Services.AddScoped<IJWTCreator, JWTCreator>();
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IUserDAL, UserDAL>();
+builder.Services.AddScoped<IDeviceSimulatorService, DeviceSimulatorService>();
 
 //JWT Authenthication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
