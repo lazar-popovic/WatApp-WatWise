@@ -31,7 +31,7 @@ namespace API.API
             return Ok(_authBL.RegisterUser(request));
         }
 
-        
+
         [HttpPost("register-employee"), Authorize(Roles = "Admin")]
         public IActionResult RegisterEmployee(RegisterEmployeeViewModel request)
         {
@@ -43,6 +43,11 @@ namespace API.API
         {
             return Ok(_authBL.ForgotPassword(request));
         }
-        
+
+        [HttpPost("reset-password")]
+        public IActionResult ResetPassword(ResetPasswordViewModel request)
+        {
+            return Ok(_authBL.ResetPassword(request));
+        }
     }
 }

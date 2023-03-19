@@ -9,5 +9,7 @@ namespace API.DAL.Interfaces
         User RegisterUser(RegisterUserViewModel user);
         User RegisterEmployee(RegisterEmployeeViewModel user);
         bool EmailExists(string email);
+        void AddResetToken(ResetPasswordToken token);
+        ResetPasswordToken GetResetTokenEntity(string type);
     }
 }

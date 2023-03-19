@@ -61,6 +61,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Obsolete\" />
   </ItemGroup>
 
 </Project>

@@ -70,5 +70,22 @@ namespace API.DAL.Implementations
 
             return newUser;
         }
+
+        
+        public void AddResetToken(ResetPasswordToken token)
+        {
+            _context.ResetPasswordTokens.Add(token);
+            _context.SaveChanges();
+        }
+
+        public ResetPasswordToken GetResetTokenEntity(string type)
+        {
+            var token = _context.ResetPasswordTokens.SingleOrDefault(t => t.Token == type);
+
+            if (token != null)
+                return token;
+
+            return null;
+        }
     }
 }

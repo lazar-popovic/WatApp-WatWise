@@ -114,7 +114,7 @@ public class ProsumerController : ControllerBase
 
     [HttpPost]
     [Route("reset-password")]
-    public async Task<IActionResult> ResetPassword(ResetPasswordRequestDto request)
+    public async Task<IActionResult> ResetPassword(ResetPasswordViewModel request)
     {
         var response = new Response<object>();
 

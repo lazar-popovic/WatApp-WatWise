@@ -8,6 +8,7 @@ using API.Models.ViewModels;
 using API.Services.E_mail.Interfaces;
 using API.Services.JWTCreation.Interfaces;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace API.BL.Implementations
 {
@@ -181,6 +182,13 @@ namespace API.BL.Implementations
             
         }
 
+
+        public Response<RegisterResponseViewModel> ResetPassword(ResetPasswordViewModel request)
+        {
+            
+
+        }
+
         #region private
 
         private Response<LoginResponseViewModel> ValidateUserWithRole(User? userWithRole)
@@ -202,6 +210,56 @@ namespace API.BL.Implementations
             return response;
         }
 
+        private Response<RegisterResponseViewModel> ValidatePasswordsAndResetToken(ResetPasswordViewModel request)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+
+            if (string.IsNullOrEmpty(request.NewPassword) || string.IsNullOrEmpty(request.ConfirmedNewPassword))
+            {
+                response.Errors.Add("Password is empty or passwords don't match!");
+            }
+
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(request.Token);
+
+            if (token == null)
+            {
+                response.Errors.Add("Error with reset token!");
+                response.Success = response.Errors.Count() == 0;
+
+                return response;
+            }
+        
+            var resetToken = token!.Claims.FirstOrDefault(c => c.Type == "resetToken")?.Value;
+
+            if (string.IsNullOrEmpty(resetToken))
+            {
+                response.Errors.Add("Token is null or empty!");
+            }
+
+
+            var tokenEntity = _authDAL.GetResetTokenEntity(resetToken);
+
+            if (tokenEntity == null)
+            {
+                //response.Errors.Add("Invalid token!");
+                response.Errors.Add("Token is null or empty!");
+                response.Success = false;
+
+                return response;
+            }
+
+            if (DateTime.UtcNow > tokenEntity.ExpiryTime)
+            {
+                //response.Errors.Add("Token expired!");
+                response.Errors.Add("Token expired");
+                response.Success = false;
+
+                return response;
+            }
+
+            return response;
+        }
 
         private Response<LoginResponseViewModel> GenerateToken(User userWithRole)
         {
@@ -246,7 +304,7 @@ namespace API.BL.Implementations
                 UserId = userID
             };
 
-            //_prosumerDal.AddResetToken(token);
+            _authDAL.AddResetToken(token);
 
             return token;
         }
