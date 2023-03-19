@@ -2,12 +2,13 @@
 using API.Models.Dto;
 using API.Models.Entity;
 using API.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.API
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -23,5 +24,19 @@ namespace API.API
         {
             return Ok(_authBL.Login(request));
         }
+
+        [HttpPost("register-user"), Authorize(Roles = "Admin, Employee")]
+        public IActionResult RegisterUser(RegisterUserViewModel request)
+        {
+            return Ok(_authBL.RegisterUser(request));
+        }
+
+        
+        [HttpPost("register-employee"), Authorize(Roles = "Admin")]
+        public IActionResult RegisterEmployee(RegisterEmployeeViewModel request)
+        {
+            return Ok(_authBL.RegisterEmployee(request));
+        }
+        
     }
 }

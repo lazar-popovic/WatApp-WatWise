@@ -7,5 +7,6 @@ namespace API.BL.Interfaces
     public interface IAuthBL
     {
         Response<LoginResponseViewModel> Login(LoginViewModel user);
+        Response<RegisterResponseViewModel> RegisterUser(RegisterUserViewModel user);
     }
 }

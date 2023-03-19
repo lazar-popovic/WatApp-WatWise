@@ -33,5 +33,23 @@ namespace API.DAL.Implementations
         
             return query.AsNoTracking().FirstOrDefault();
         }
+
+        public User RegisterUser(RegisterUserViewModel user)
+        {
+            var newUser = new User
+            {
+                Firstname = user.Firstname,
+                Lastname = user.Lastname,
+                Email = user.Email,
+                RoleId = 3,
+                LocationId = null,
+                Verified = false
+            };
+
+            _context.Users.Add(newUser);
+            _context.SaveChanges();
+
+            return newUser;
+        }
     }
 }

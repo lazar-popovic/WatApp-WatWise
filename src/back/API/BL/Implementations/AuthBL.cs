@@ -2,8 +2,10 @@
 using API.DAL.Implementations;
 using API.DAL.Interfaces;
 using API.Models;
+using API.Models.Dto;
 using API.Models.Entity;
 using API.Models.ViewModels;
+using API.Services.E_mail.Interfaces;
 using API.Services.JWTCreation.Interfaces;
 
 namespace API.BL.Implementations
@@ -12,11 +14,13 @@ namespace API.BL.Implementations
     {
         private readonly IAuthDAL _authDAL;
         private readonly IJWTCreator _jwtCreator;
+        private readonly IMailService _mailService;
 
-        public AuthBL(IAuthDAL authDAL, IJWTCreator jwtCreator)
+        public AuthBL(IAuthDAL authDAL, IJWTCreator jwtCreator, IMailService mailService)
         {
             _authDAL = authDAL;
             _jwtCreator = jwtCreator;
+            _mailService = mailService;
         }
 
         public Response<LoginResponseViewModel> Login(LoginViewModel loginRequest)
@@ -50,7 +54,46 @@ namespace API.BL.Implementations
             return response;
         }
 
-       
+        public Response<RegisterResponseViewModel> RegisterUser(RegisterUserViewModel userRegisterRequest)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+
+            if (string.IsNullOrEmpty(userRegisterRequest.Email.Trim()))
+            {
+                response.Errors.Add("Email is required");
+            }
+
+            if (string.IsNullOrEmpty(userRegisterRequest.Firstname.Trim()))
+            {
+                response.Errors.Add("Firstname is required");
+            }
+
+            if (string.IsNullOrEmpty(userRegisterRequest.Lastname.Trim()))
+            {
+                response.Errors.Add("Lastname is required");
+            }
+
+            if (_authDAL.EmailExists(userRegisterRequest.Email))
+                response.Errors.Add("User with this email already exists");
+
+            response.Success = response.Errors.Count == 0;
+
+            if (!response.Success)
+            {
+                return response;
+            }
+
+
+            User newUser = _authDAL.RegisterUser(userRegisterRequest);
+            newUser.Role = new Role { Id = 3, RoleName = "User" };
+
+            _mailService.sendTokenProsumer(newUser);
+
+            response.Data = new RegisterResponseViewModel { Message = "Registration successful" };
+
+            return response;
+
+        }
 
         #region private
 
@@ -92,6 +135,7 @@ namespace API.BL.Implementations
             response.Success = response.Errors.Count == 0;
             return response;
         }
+
         #endregion
     }
 }
