@@ -1,0 +1,248 @@
+
+
+body
+{
+    background-color: #E1E1E1;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+}
+
+h2
+{
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+
+#devices-container
+{
+    margin-top: 20px;
+    font-style: bold;
+    font-size: 20px;
+    color: #3E3E3E;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+}
+
+
+#devices-categories {
+    height: 30px;
+    width: 200px;
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    
+    vertical-align: middle;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 5px;
+}
+
+#device-logo-consumer,#device-logo-prosumer,#device-logo-storage
+{
+    width: 25px;
+    height: 25px;
+    
+    padding-top: 2px;
+    padding-bottom: 2px;
+    
+    margin-left: 20px;
+    margin-right: 10px;
+    
+    background-position: 5px;
+    background-size: 15px;
+}
+
+#device-logo-consumer {
+    display: inline-block;
+    background-image: url(/assets/consumer.png);
+    background-repeat: no-repeat;
+}
+
+#device-logo-consumer:hover,#device-logo-prosumer:hover,#device-logo-storage:hover {
+    background-color: #1676AC;
+    border-radius: 20px;
+}
+
+#device-logo-prosumer {
+    display: inline-block;
+    background-image: url(/assets/prosumer.png);
+    background-repeat: no-repeat;
+}
+
+#device-logo-storage {
+    display: inline-block;
+    background-image: url(/assets/storage.png);
+    background-repeat: no-repeat;
+    background-size: 13px;
+
+    margin-right: 0px;
+}
+
+#devices-add-device
+{
+    font-weight: bold;
+    font-size: 25px;
+    color: #3E3E3E;
+    text-align: center;
+    
+    height: 30px;
+    width: 200px;
+    margin-left: 600px;
+
+    background-color: #FFFFFF;
+    border-radius: 20px;
+
+    padding: 5px;
+}
+
+#devices-add-device:hover
+{
+    color: #FFFFFF;
+    background-color: #1676AC;
+}
+
+
+#consumer-devices,#prosumer-devices,#storage-devices
+{
+    color: #3E3E3E;
+    font-size: 20px;
+
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 30px;
+    
+
+}
+
+#consumer-device,#prosumer-device,#storage-device
+{
+    font-weight: bold;
+    background-position: 10px 15px;
+    background-size: 20px;
+
+    background-image: url(/assets/consumer.png);
+    background-repeat: no-repeat;
+
+    height: 100px;
+    width: 200px;
+    
+    padding-top: 10px;
+    text-align: center;
+    display: inline-block;
+    width: 200px;
+
+    background-color: #FFFFFF;
+    border-radius: 20px;
+
+    list-style: none;
+    margin-right: 30px;
+}
+
+#consumer-device:hover,#prosumer-device:hover,#storage-device:hover
+{
+    background-color: #1676AC;
+    color: #FFFFFF;
+}
+
+#prosumer-device{
+    background-image: url(/assets/prosumer.png);
+}
+
+#storage-device{
+    background-size: 15px;
+    background-image: url(/assets/storage.png);
+    height: 80px;
+}
+
+.activity
+{
+    margin-right: 160px;
+    background-color : #31AE3E;
+    
+    height: 20px;
+    width: 20px;
+
+    background-position: 10px 15px;
+    background-size: 20px;
+    border-radius: 20px;
+
+    background-image: url(/assets/active.png);
+    background-repeat: no-repeat;
+}
+
+#add-device
+{
+    margin-top: 20px;
+    color: #FFFFFF;
+    vertical-align: middle;
+}
+
+#add-device-form
+{
+    background-color: #1676AC;
+    border-radius : 20px;   
+
+    height: 480px;
+    width: 250px;
+
+    vertical-align: middle;
+    padding: 10px;
+}
+
+#add-device-form label
+{
+    text-align: left;
+}
+
+form label {
+    text-align: left;
+  }
+
+label
+{
+    font-size: 20px;
+}
+
+input,select 
+{
+    text-align: left;
+
+    width: 95%;
+    padding: 5px;
+    font-size: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+
+    font-weight: bold;
+    line-height: 25px;
+
+    height: 2 0px;
+    color: #3E3E3E;
+}
+
+#connect-button
+{
+  background-color: #FFFFFF;
+  color: #3E3E3E;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+
+  width: 100%;
+}
+
+#connect-button:hover
+{
+    background-color: #3E3E3E;
+    color: #FFFFFF;
+}
+
+
