@@ -7,6 +7,7 @@ using API.Models.Entity;
 using API.Models.ViewModels;
 using API.Services.E_mail.Interfaces;
 using API.Services.JWTCreation.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API.BL.Implementations
 {
@@ -85,14 +86,99 @@ namespace API.BL.Implementations
 
 
             User newUser = _authDAL.RegisterUser(userRegisterRequest);
-            newUser.Role = new Role { Id = 3, RoleName = "User" };
 
-            _mailService.sendTokenProsumer(newUser);
+            _mailService.sendToken(newUser);
 
-            response.Data = new RegisterResponseViewModel { Message = "Registration successful" };
+            response.Data = new RegisterResponseViewModel { Message = "User registration successful!Check your email to complete registration." };
 
             return response;
 
+        }
+
+        public Response<RegisterResponseViewModel> RegisterEmployee(RegisterEmployeeViewModel employeeRegisterRequest)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+
+            if (string.IsNullOrEmpty(employeeRegisterRequest.Email.Trim()))
+            {
+                response.Errors.Add("Email is required");
+            }
+
+            if (string.IsNullOrEmpty(employeeRegisterRequest.Firstname.Trim()))
+            {
+                response.Errors.Add("Firstname is required");
+            }
+
+            if (string.IsNullOrEmpty(employeeRegisterRequest.Lastname.Trim()))
+            {
+                response.Errors.Add("Lastname is required");
+            }
+
+            if (_authDAL.EmailExists(employeeRegisterRequest.Email))
+                response.Errors.Add("Employee with this email already exists");
+
+            response.Success = response.Errors.Count == 0;
+
+            if (!response.Success)
+            {
+                return response;
+            }
+
+            User newEmployee = _authDAL.RegisterEmployee(employeeRegisterRequest);
+
+            _mailService.sendToken(newEmployee);
+
+            response.Data = new RegisterResponseViewModel { Message = "Employee registration successful!Check your email to complete registration." };
+
+            return response;
+        }
+
+        public Response<RegisterResponseViewModel> ForgotPassword(ForgottenPasswordViewModel request)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+
+            if (string.IsNullOrEmpty(request.Email.Trim()))
+            {
+                response.Errors.Add("Email is required");
+            }
+
+            var userWithRole = _authDAL.GetUserWithRoleForEmail(request.Email);
+
+            if (userWithRole == null)
+            {
+                response.Errors.Add("User with this email does not exists");
+            }
+
+            if (userWithRole?.Verified == false)
+            {
+                response.Errors.Add("This user is not verified. Please check your e-mail.");
+            }
+
+            response.Success = response.Errors.Count == 0;
+            if (!response.Success)
+            {
+                return response;
+            }
+
+            var resetToken = GenerateNewResetPasswordToken(userWithRole!.Id);
+
+            var resetJwtToken = GenerateJWTResetToken(userWithRole, resetToken);
+
+            if (string.IsNullOrEmpty(resetJwtToken))
+            {
+                response.Errors.Add("Reset jwt token is not valid!");
+                response.Success = response.Errors.Count == 0;
+
+                return response;
+            }  
+            else
+            {
+                _mailService.sendResetToken(userWithRole, resetJwtToken);
+
+                response.Data = new RegisterResponseViewModel { Message = "Verification mail has been sent to your email adress!" };
+                return response;
+            }
+            
         }
 
         #region private
@@ -116,6 +202,7 @@ namespace API.BL.Implementations
             return response;
         }
 
+
         private Response<LoginResponseViewModel> GenerateToken(User userWithRole)
         {
             var response = new Response<LoginResponseViewModel>();
@@ -134,6 +221,34 @@ namespace API.BL.Implementations
 
             response.Success = response.Errors.Count == 0;
             return response;
+        }
+
+        private string GenerateJWTResetToken(User user, ResetPasswordToken resetToken)
+        {
+            var token = _jwtCreator.CreateResetToken(user.Id, user.Email!, resetToken);
+
+            if (string.IsNullOrEmpty(token))
+            {
+               return null;
+            }
+            else
+            {
+                return token;
+            }
+        }
+
+        private ResetPasswordToken GenerateNewResetPasswordToken(int userID)
+        {
+            var token = new ResetPasswordToken
+            {
+                Token = Guid.NewGuid().ToString(),
+                ExpiryTime = DateTime.UtcNow.AddMinutes(15),
+                UserId = userID
+            };
+
+            //_prosumerDal.AddResetToken(token);
+
+            return token;
         }
 
         #endregion

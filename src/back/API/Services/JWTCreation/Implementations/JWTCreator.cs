@@ -45,7 +45,10 @@ namespace API.Services.JWTCreation.Implementations
  
             var jwt = tokenHandler.WriteToken(token);
 
-            return jwt;
+            if (jwt != null)
+                return jwt;
+            else
+                return null;
         }
 
         public string CreateVerificationToken(int userId)
@@ -98,7 +101,10 @@ namespace API.Services.JWTCreation.Implementations
             token.Payload.AddClaims(principal.Claims);
             var jwt = tokenHandler.WriteToken(token);
 
-            return jwt;
+            if (jwt != null)
+                return jwt;
+            else
+                return null;
         }
 
         public string GenerateRefreshToken()

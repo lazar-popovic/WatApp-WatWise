@@ -7,6 +7,7 @@ namespace API.DAL.Interfaces
     {
         User? GetUserWithRoleForEmail(string email);
         User RegisterUser(RegisterUserViewModel user);
+        User RegisterEmployee(RegisterEmployeeViewModel user);
         bool EmailExists(string email);
     }
 }

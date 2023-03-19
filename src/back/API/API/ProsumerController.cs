@@ -15,6 +15,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
+using API.Models.ViewModels;
 
 namespace API.API;
 
@@ -84,7 +85,7 @@ public class ProsumerController : ControllerBase
 
     [HttpPost]
     [Route("forgot-password")]
-    public async Task<IActionResult> ForgotPassword(ForgottenPasswordRequestDto request)
+    public async Task<IActionResult> ForgotPassword(ForgottenPasswordViewModel request)
     {
         var response = _prosumerBl.CheckEmailForForgottenPassword(request);
         var user = ((User)response.Data);
@@ -104,7 +105,7 @@ public class ProsumerController : ControllerBase
         var resetJwtToken = _jwtCreator.CreateResetToken(user.Id, user.Email,resetToken);
 
         //send token via email service
-        _mailService.sendResetTokenProsumer(user, resetJwtToken);
+        _mailService.sendResetToken(user, resetJwtToken);
 
         responseForFront.Success = !responseForFront.Errors.Any();
 

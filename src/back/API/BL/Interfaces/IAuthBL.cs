@@ -8,5 +8,8 @@ namespace API.BL.Interfaces
     {
         Response<LoginResponseViewModel> Login(LoginViewModel user);
         Response<RegisterResponseViewModel> RegisterUser(RegisterUserViewModel user);
+        Response<RegisterResponseViewModel> RegisterEmployee(RegisterEmployeeViewModel user);
+        Response<RegisterResponseViewModel> ForgotPassword(ForgottenPasswordViewModel request);
+
     }
 }

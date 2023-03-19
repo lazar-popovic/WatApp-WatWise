@@ -3,6 +3,7 @@ using API.DAL.Interfaces;
 using API.Models;
 using API.Models.Dto;
 using API.Models.Entity;
+using API.Models.ViewModels;
 using API.Services.E_mail.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
@@ -57,7 +58,7 @@ public class ProsumerBL : IProsumerBL
         
         User newUser = _prosumerDal.RegisterUser( user);
         newUser.Role = new Role { Id = 3, RoleName = "User" };
-        _mailService.sendTokenProsumer( newUser);
+        _mailService.sendToken( newUser);
         
         response.Data = new MessageDot { Message = "Registration successful" };
 
@@ -113,7 +114,7 @@ public class ProsumerBL : IProsumerBL
         return response;
     }
 
-    public Response<object> CheckEmailForForgottenPassword(ForgottenPasswordRequestDto request)
+    public Response<object> CheckEmailForForgottenPassword(ForgottenPasswordViewModel request)
     {
         var response = new Response<Object>();
 

@@ -37,6 +37,12 @@ namespace API.API
         {
             return Ok(_authBL.RegisterEmployee(request));
         }
+
+        [HttpPost("forgot-password")]
+        public IActionResult ForgotPassword(ForgottenPasswordViewModel request)
+        {
+            return Ok(_authBL.ForgotPassword(request));
+        }
         
     }
 }
