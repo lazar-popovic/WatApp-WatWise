@@ -1,6 +1,6 @@
 ﻿using API.Models.Entity;
 
-namespace API.Models.Dto
+namespace API.Obsolete
 {
     public class RefreshTokenDto
     {

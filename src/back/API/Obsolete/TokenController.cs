@@ -1,6 +1,5 @@
 ﻿using API.DAL.Interfaces;
 using API.Models;
-using API.Models.Dto;
 using API.Models.Entity;
 using API.Services.JWTCreation.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
-namespace API.API
+namespace API.Obsolete
 {
     [Route("api/token")]
     [ApiController]
@@ -37,13 +36,13 @@ namespace API.API
 
             string accessToken = refreshTokenDto.Token;
             string refreshToken = refreshTokenDto.RefreshToken;
-            
+
             try
             {
                 claimsPrincipal = _jwtCreator.GetPrincipalFromExpiredToken(accessToken);
                 emailClaim = claimsPrincipal.FindFirst(ClaimTypes.Email)?.Value;
             }
-            catch(SecurityTokenValidationException invalidTokenExc)
+            catch (SecurityTokenValidationException invalidTokenExc)
             {
                 response.Errors.Add(invalidTokenExc.Message);
                 response.Success = false;
@@ -56,19 +55,19 @@ namespace API.API
 
             var refreshTokenFromBase = _dataContext.RefreshTokens.SingleOrDefault(rt => rt.UserId == user.Id && rt.IsActive);
 
-            if (user == null || refreshTokenFromBase.Token != refreshToken || refreshTokenFromBase.Expires <= DateTime.Now || (refreshTokenFromBase.IsActive == false))
+            if (user == null || refreshTokenFromBase.Token != refreshToken || refreshTokenFromBase.Expires <= DateTime.Now || refreshTokenFromBase.IsActive == false)
             {
                 response.Errors.Add("Token is invalid!");
                 response.Success = false;
 
                 return Ok(response);
-            }    
-                
+            }
+
 
             var newAccessToken = _jwtCreator.CreateToken(user);
             var newRefreshToken = _jwtCreator.GenerateRefreshToken();
 
-           refreshTokenFromBase.Token = newRefreshToken;
+            refreshTokenFromBase.Token = newRefreshToken;
             _dataContext.SaveChanges();
 
             return Ok(new RefreshTokenDto()
@@ -78,7 +77,7 @@ namespace API.API
             });
         }
 
-        
+
         [HttpPost, Authorize]
         [Route("revoke")]
         public IActionResult Revoke(string refreshToken)
@@ -87,7 +86,7 @@ namespace API.API
 
             var token = _dataContext.RefreshTokens.FirstOrDefault(t => t.Token == refreshToken);
 
-            if(token == null)
+            if (token == null)
             {
                 response.Errors.Add("Token doesen't exist!");
                 response.Success = !response.Errors.Any();
@@ -101,6 +100,6 @@ namespace API.API
             return Ok("Token has been revoked!");
 
         }
-        
+
     }
 }

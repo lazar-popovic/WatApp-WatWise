@@ -1,7 +1,5 @@
-﻿using API.BL.Interfaces;
-using API.Common;
+﻿using API.Common;
 using API.Models;
-using API.Models.Dto;
 using API.Models.Entity;
 using API.Services.E_mail.Interfaces;
 

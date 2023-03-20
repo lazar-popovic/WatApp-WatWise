@@ -2,7 +2,6 @@
 using API.DAL.Implementations;
 using API.DAL.Interfaces;
 using API.Models;
-using API.Models.Dto;
 using API.Models.Entity;
 using API.Models.ViewModels;
 using API.Services.E_mail.Interfaces;
@@ -183,7 +182,6 @@ namespace API.BL.Implementations
             
         }
 
-
         public Response<RegisterResponseViewModel> ResetPassword(ResetPasswordViewModel request)
         {
 
@@ -192,7 +190,190 @@ namespace API.BL.Implementations
             return response;
         }
 
+        public Response<LoginResponseViewModel> RefreshToken(LoginResponseViewModel request)
+        {
+            var response = new Response<LoginResponseViewModel>();
+            ClaimsPrincipal claimsPrincipal;
+            //User user;
+            string emailClaim;
+
+            if(string.IsNullOrEmpty(request.Token.Trim()))
+            {
+                response.Errors.Add("Please provide access token!");
+            }
+
+            if (string.IsNullOrEmpty(request.RefreshToken.Trim()))
+            {
+                response.Errors.Add("Please provide refresh token!");
+            }
+
+            try
+            {
+                claimsPrincipal = _jwtCreator.GetPrincipalFromExpiredToken(request.Token);
+                emailClaim = claimsPrincipal.FindFirst(ClaimTypes.Email)?.Value;
+            }
+            catch (SecurityTokenValidationException invalidTokenExc)
+            {
+                response.Errors.Add(invalidTokenExc.Message);
+                response.Success = false;
+
+                return response;
+            }
+            if (emailClaim == null)
+            {
+                response.Errors.Add("Error with expired access token!");
+                response.Success = false;
+
+                return response;
+            }
+               
+            var user = _authDAL.GetUserWithRoleForEmail(emailClaim);
+
+            if (user == null)
+            {
+                response.Errors.Add("User for given credentials doesen't exist!");
+                response.Success = false;
+
+                return response;
+            }
+
+            var refreshTokenFromBase = _authDAL.GetRefreshToken(user.Id);
+
+            if (refreshTokenFromBase == null ||  refreshTokenFromBase.Token != request.RefreshToken || refreshTokenFromBase.Expires <= DateTime.Now || (refreshTokenFromBase.IsActive == false))
+            {
+                response.Errors.Add("Token is invalid!");
+                response.Success = false;
+
+                return response;
+            }
+
+            var newAccessToken = _jwtCreator.CreateToken(user);
+            var newRefreshToken = _jwtCreator.GenerateRefreshToken();
+
+             _authDAL.DeactivatePreviousRefreshTokensAndSaveNewToBase(user.Id, newRefreshToken);
+            
+
+            response.Data = new LoginResponseViewModel
+            { 
+                Token = newAccessToken,
+                RefreshToken = newRefreshToken
+            };
+
+            response.Success = response.Errors.Count() == 0;
+
+            return response;
+        }
+
+        public Response<RegisterResponseViewModel> VerifyToken(VerifyTokenViewModel request)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+            int userId = 0;
+
+            if (string.IsNullOrEmpty(request.Token))
+            {
+                response.Errors.Add("Token is empty!");
+                response.Success = false;
+
+                return response;
+            }
+
+            try
+            {
+                userId = _jwtCreator.GetUserIdFromToken(request.Token);
+            }
+            catch(SecurityTokenException se)
+            {
+                response.Errors.Add("Invalid token!" + se.InnerException?.Message);
+            }
+            catch(Exception e)
+            {
+                response.Errors.Add("An error occurred while verifying the email");
+            }
+            
+            if(userId == -1) 
+            {
+                response.Errors.Add("Can not find user id!");
+                response.Success = false;
+
+                return response;
+            }
+
+            var user = _authDAL.FindUserById(userId);
+
+            if(user == null)
+            {
+                response.Errors.Add("User doesen't exist!");
+                response.Success = false;
+
+                return response;
+            }
+
+            response.Data = new RegisterResponseViewModel { Message = user.Email! };
+            response.Success = response.Errors.Count() == 0;
+
+            return response;
+        }
+
+        public Response<RegisterResponseViewModel> VerifyAccount(VerifyAccountViewModel request)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+            int userId = 0;
+
+            userId = _jwtCreator.GetUserIdFromToken(request.Token);
+
+            if (string.IsNullOrEmpty(request.Password1.Trim()))
+            {
+                response.Errors.Add("Password is required");
+            }
+            if (string.IsNullOrEmpty(request.Password2.Trim()))
+            {
+                response.Errors.Add("Repeat password is required");
+            }
+            if (request.Password1 != request.Password2)
+            {
+                response.Errors.Add("Passwords need to match");
+            }
+            if (userId == -1)
+            {
+                response.Errors.Add("Invalid token!");
+            }
+
+            response.Success = response.Errors.Count == 0;
+
+            if (!response.Success)
+            {
+                return response;
+            }
+
+            var user = _authDAL.FindUserById(userId);
+
+            if(user == null)
+            {
+                response.Errors.Add("User doesen't exist!");
+                response.Success = false;
+
+                return response;
+            }
+
+            user!.Verified = true;
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password1);
+
+            //name may not be appropriate,but its just updating user nevermind the changes
+            _authDAL.UpdateUserAfterPasswordReset(user);
+
+            response.Data = new RegisterResponseViewModel
+            {
+                Message = "Verification successful!"
+            };
+
+            response.Success = response.Errors.Count() == 0; 
+            return response;
+        }
+
+
         #region private
+
+
 
         private Response<LoginResponseViewModel> ValidateUserWithRole(User? userWithRole)
         {
@@ -344,6 +525,18 @@ namespace API.BL.Implementations
             }
             else
             {
+                try
+                {
+                    _authDAL.DeactivatePreviousRefreshTokensAndSaveNewToBase(userWithRole.Id, refreshToken);
+                }
+                catch(Exception ex)
+                {
+                    response.Errors.Add(token + " " + ex.Message);
+                    response.Success = false;
+
+                    return response;
+                }
+
                 var responseToken = new LoginResponseViewModel { RefreshToken = refreshToken, Token = token };
                 response.Data = responseToken;
             }
@@ -379,6 +572,7 @@ namespace API.BL.Implementations
 
             return token;
         }
+
 
         #endregion
     }

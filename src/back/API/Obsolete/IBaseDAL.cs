@@ -1,6 +1,4 @@
-﻿using API.Models.Dto;
-
-namespace API.Obsolete;
+﻿namespace API.Obsolete;
 
 public interface IBaseDAL
 {

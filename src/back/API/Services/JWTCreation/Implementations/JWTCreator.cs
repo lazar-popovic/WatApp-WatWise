@@ -36,7 +36,7 @@ namespace API.Services.JWTCreation.Implementations
             {
                 Issuer = "http://localhost:5226",
                 Audience = "http://localhost:5226",
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddMinutes(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -138,6 +138,42 @@ namespace API.Services.JWTCreation.Implementations
                 throw new SecurityTokenValidationException("Invalid token");
 
             return principal;
+        }
+
+        public int GetUserIdFromToken(string token)
+        {
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                var validationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = secretKey,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                };
+                SecurityToken validatedToken;
+                var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
+
+                var userIdClaim = claimsPrincipal.FindFirst("userId");
+                var userId = userIdClaim?.Value;
+
+                if (int.TryParse(userId, out int id))
+                {
+                    return id;
+                }
+            }
+            catch (SecurityTokenException se)
+            {
+                throw se;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return -1;
         }
     }
 }

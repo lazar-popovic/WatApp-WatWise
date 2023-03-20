@@ -14,5 +14,7 @@ namespace API.DAL.Interfaces
         User? FindUserById(int userId);
         void UpdateUserAfterPasswordReset(User user);
         void RemoveResetToken(ResetPasswordToken token);
+        RefreshToken GetRefreshToken(int userID);
+        void DeactivatePreviousRefreshTokensAndSaveNewToBase(int userId, string token);
     }
 }

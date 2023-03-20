@@ -1,31 +1,34 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using API.BL.Interfaces;
 using API.Models;
-using API.Models.Dto;
 using API.Models.Entity;
+using API.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-namespace API.API;
+namespace API.Obsolete;
 
 [ApiController]
 [Route("api/verify")]
 public class VerificationController : ControllerBase
 {
-    private readonly IConfiguration _configuration;
-    private readonly DataContext _context;
+    private readonly IAuthBL _authBL;
 
-    public VerificationController(IConfiguration configuration, DataContext context)
+    public VerificationController(IAuthBL authBL)
     {
-        _configuration = configuration;
-        _context = context;
+        _authBL = authBL;
     }
 
+    /*
     [HttpPost]
     [Route("validate-token")]
-    public async Task<IActionResult> VerifyToken( TokenDto request)
+    public async Task<IActionResult> VerifyToken( VerifyTokenViewModel request)
     {
+        
+        //return Ok(_authBL.VerifyToken(request));
+
         var token = request.Token;
         var response = new Response<string>();
         try
@@ -65,11 +68,12 @@ public class VerificationController : ControllerBase
             return BadRequest(response);
             //return StatusCode(500, "An error occurred while verifying the email");
         }
+        
     }
-
+    
     [HttpPost]
     [Route("verify-account")]
-    public async Task<IActionResult> VerifyAccount(VerifyAccountDto request)
+    public async Task<IActionResult> VerifyAccount(VerifyAccountViewModel request)
     {
         var response = new Response<MessageDot>();
 
@@ -148,4 +152,5 @@ public class VerificationController : ControllerBase
     
         return null;
     }
+    */
 }

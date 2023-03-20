@@ -1,21 +1,18 @@
-﻿using API.BL.Interfaces;
-using API.Models;
-using API.Models.Dto;
+﻿using API.Models;
 using API.Models.Entity;
 using API.Models.ViewModels;
-using API.Obsolete;
 using API.Services.E_mail.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace API.BL.Implementations;
+namespace API.Obsolete;
 
 public class ProsumerBL : IProsumerBL
 {
     private readonly IProsumerDAL _prosumerDal;
     private readonly IMailService _mailService;
 
-    public ProsumerBL( IProsumerDAL prosumerDal, IMailService mailService)
+    public ProsumerBL(IProsumerDAL prosumerDal, IMailService mailService)
     {
         _prosumerDal = prosumerDal;
         _mailService = mailService;
@@ -43,7 +40,7 @@ public class ProsumerBL : IProsumerBL
         {
             response.Errors.Add("Email is required");
         }
-        else if (_prosumerDal.EmailExists( user.Email))
+        else if (_prosumerDal.EmailExists(user.Email))
         {
             response.Errors.Add("User with this email already exists");
         }
@@ -55,11 +52,11 @@ public class ProsumerBL : IProsumerBL
         {
             return response;
         }
-        
-        User newUser = _prosumerDal.RegisterUser( user);
+
+        User newUser = _prosumerDal.RegisterUser(user);
         newUser.Role = new Role { Id = 3, RoleName = "User" };
-        _mailService.sendToken( newUser);
-        
+        _mailService.sendToken(newUser);
+
         response.Data = new MessageDot { Message = "Registration successful" };
 
         return response;
@@ -116,7 +113,7 @@ public class ProsumerBL : IProsumerBL
 
     public Response<object> CheckEmailForForgottenPassword(ForgottenPasswordViewModel request)
     {
-        var response = new Response<Object>();
+        var response = new Response<object>();
 
         request.Email = request.Email.Trim();
 
@@ -242,6 +239,6 @@ public class ProsumerBL : IProsumerBL
 
     public void DeactivatePreviousRefreshTokensOnCreationOfNewRefreshTOken(int userId)
     {
-       _prosumerDal.DeactivateRefreshToken(userId);
+        _prosumerDal.DeactivateRefreshToken(userId);
     }
 }

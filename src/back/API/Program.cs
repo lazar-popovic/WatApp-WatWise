@@ -24,6 +24,10 @@ using API.Services.JWTCreation.Implementations;
 using API.Services.E_mail.Interfaces;
 using API.Services.E_mail.Implementations;
 using API.Obsolete;
+using Microsoft.AspNetCore.Authentication;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 

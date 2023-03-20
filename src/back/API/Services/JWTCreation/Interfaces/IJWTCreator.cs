@@ -12,5 +12,6 @@ namespace API.Services.JWTCreation.Interfaces
         string CreateResetToken(int userId, string userEmail, ResetPasswordToken resetToken);
         string GenerateRefreshToken();
         ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
+        int GetUserIdFromToken(string token);
     }
 }

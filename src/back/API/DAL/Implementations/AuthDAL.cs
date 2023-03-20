@@ -105,5 +105,52 @@ namespace API.DAL.Implementations
             _context.ResetPasswordTokens.Remove(token);
             _context.SaveChanges();
         }
+
+        public RefreshToken GetRefreshToken(int userID)
+        {
+            return _context.RefreshTokens.SingleOrDefault(rt => rt.UserId == userID && rt.IsActive);
+        }
+
+        public async void DeactivatePreviousRefreshTokensAndSaveNewToBase(int userId, string token)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    // Deactivate previous refresh tokens
+                    var previousTokens = await _context.RefreshTokens
+                        .Where(t => t.UserId == userId && t.IsActive)
+                        .ToListAsync();
+
+                    foreach (var t in previousTokens)
+                    {
+                        t.IsActive = false;
+                        t.IsExpired = true;
+                    }
+
+                    // Save new refresh token
+                    var newToken = new RefreshToken
+                    {
+                        UserId = userId,
+                        Token = token,
+                        Expires = DateTime.UtcNow.AddDays(7),
+                        IsActive = true,
+                        IsExpired = false
+                    };
+
+                    await _context.RefreshTokens.AddAsync(newToken);
+                    await _context.SaveChangesAsync();
+
+                    // Commit the transaction
+                    await transaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    // Rollback the transaction in case of any error
+                    await transaction.RollbackAsync();
+                    throw ex;
+                }
+            }
+        }
     }
 }

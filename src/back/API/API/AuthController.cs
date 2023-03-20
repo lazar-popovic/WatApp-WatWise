@@ -1,5 +1,4 @@
 ﻿using API.BL.Interfaces;
-using API.Models.Dto;
 using API.Models.Entity;
 using API.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +18,7 @@ namespace API.API
             _authBL = authBL;
         }
 
-        [HttpPost("login")]
+        [HttpPost("login"),AllowAnonymous]
         public IActionResult Login(LoginViewModel request)
         {
             return Ok(_authBL.Login(request));
@@ -38,6 +37,7 @@ namespace API.API
             return Ok(_authBL.RegisterEmployee(request));
         }
 
+        [AllowAnonymous]
         [HttpPost("forgot-password")]
         public IActionResult ForgotPassword(ForgottenPasswordViewModel request)
         {
@@ -48,6 +48,24 @@ namespace API.API
         public IActionResult ResetPassword(ResetPasswordViewModel request)
         {
             return Ok(_authBL.ResetPassword(request));
+        }
+
+        [HttpPost("refresh-token")]
+        public IActionResult RefreshToken(LoginResponseViewModel request)
+        {
+            return Ok(_authBL.RefreshToken(request));
+        }
+
+        [HttpPost("verify-token")]
+        public IActionResult VerifyToken(VerifyTokenViewModel request) 
+        {
+            return Ok(_authBL.VerifyToken(request));
+        }
+
+        [HttpPost("verify-account")]
+        public IActionResult VerifyAccount(VerifyAccountViewModel request)
+        {
+            return Ok(_authBL.VerifyAccount(request));
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using API.Models.Dto;
-using API.Models.Entity;
+﻿using API.Models.Entity;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 

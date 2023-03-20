@@ -1,5 +1,4 @@
-﻿using API.Models.Dto;
-using API.Models;
+﻿using API.Models;
 using API.Models.ViewModels;
 
 namespace API.BL.Interfaces
@@ -11,6 +10,9 @@ namespace API.BL.Interfaces
         Response<RegisterResponseViewModel> RegisterEmployee(RegisterEmployeeViewModel user);
         Response<RegisterResponseViewModel> ForgotPassword(ForgottenPasswordViewModel request);
         Response<RegisterResponseViewModel> ResetPassword(ResetPasswordViewModel request);
+        Response<LoginResponseViewModel> RefreshToken(LoginResponseViewModel request);
+        Response<RegisterResponseViewModel> VerifyToken(VerifyTokenViewModel request);
+        Response<RegisterResponseViewModel> VerifyAccount(VerifyAccountViewModel request);
 
     }
 }

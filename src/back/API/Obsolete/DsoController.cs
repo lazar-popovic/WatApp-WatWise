@@ -1,6 +1,6 @@
 ﻿using API.Models;
-using API.Models.Dto;
 using API.Models.Entity;
+using API.Models.ViewModels;
 using API.Services.JWTCreation.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +34,7 @@ public class DsoController : ControllerBase
 
         token = _jwtCreator.CreateToken((User)response.Data);
 
-        return Ok(new TokenDto { Token = token });
+        return Ok(new VerifyTokenViewModel { Token = token });
     }
 
     [HttpPost("register-employee"), Authorize(Roles = "Admin")]
