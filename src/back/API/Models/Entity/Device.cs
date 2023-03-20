@@ -10,6 +10,10 @@ namespace API.Models.Entity
         public string? Name { get; set; } = string.Empty;
         public string? Type { get; set; } = string.Empty;
         public DateTime PurchaseDate { get; set; }
+        public int? UserId { get; set; }
+        [ForeignKey("UserId")]
+        public bool? ActivityStatus { get; set; }
+
 
 
 

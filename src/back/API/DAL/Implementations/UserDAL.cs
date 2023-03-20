@@ -15,7 +15,7 @@ namespace API.DAL.Implementations
 
         public async Task<User> GetByIdAsync(int id)
         {
-            var users = await _dbContext.Users.Where(u => u.RoleId == id)
+            var users = await _dbContext.Users.Where(u => u.Id == id)
                                    .Select(u => new User
                                    {
                                        Id = u.Id,
