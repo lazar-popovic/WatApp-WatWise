@@ -5,8 +5,8 @@ namespace API.BL.Interfaces
 {
     public interface IUserBL
     {
-        Response<Task<User>> GetByIdAsync(int id);
-        Response<Task<List<User>>> GetUsersBasedOnRoleAsync(int id);
-        Response<Task<List<User>>> GetUsers();
+        Task<Response<User>> GetByIdAsync(int id);
+        Task<Response<List<User>>> GetUsersBasedOnRoleAsync(int id);
+        Task<Response<List<User>>> GetUsers();
     }
 }

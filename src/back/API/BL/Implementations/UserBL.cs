@@ -15,11 +15,11 @@ namespace API.BL.Implementations
             _userDal = userDal;
         }
 
-        public Response<Task<User>> GetByIdAsync(int id)
+        public async Task<Response<User>> GetByIdAsync(int id)
         {
-            var response = new Response<Task<User>>();
+            var response = new Response<User>();
 
-            var user =  _userDal.GetByIdAsync(id);
+            var user =  await _userDal.GetByIdAsync(id);
 
             if(user == null)
             {
@@ -35,11 +35,11 @@ namespace API.BL.Implementations
             return response;
         }
 
-        public Response<Task<List<User>>> GetUsers()
+        public async Task<Response<List<User>>> GetUsers()
         {
-            var response = new Response<Task<List<User>>>();
+            var response = new Response<List<User>>();
 
-            var users = _userDal.GetUsers();
+            var users = await _userDal.GetUsers();
 
             if (users == null)
             {
@@ -55,11 +55,11 @@ namespace API.BL.Implementations
             return response;
         }
 
-        public Response<Task<List<User>>> GetUsersBasedOnRoleAsync(int id)
+        public async Task<Response<List<User>>> GetUsersBasedOnRoleAsync(int id)
         {
-            var response = new Response<Task<List<User>>>();
+            var response = new Response<List<User>>();
 
-            var users = _userDal.GetUsersBasedOnRoleAsync(id);
+            var users = await _userDal.GetUsersBasedOnRoleAsync(id);
 
             if (users == null)
             {

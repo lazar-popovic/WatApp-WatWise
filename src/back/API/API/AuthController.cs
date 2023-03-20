@@ -50,19 +50,19 @@ namespace API.API
             return Ok(_authBL.ResetPassword(request));
         }
 
-        [HttpPost("refresh-token")]
+        [HttpPost("refresh-token"),Authorize]
         public IActionResult RefreshToken(LoginResponseViewModel request)
         {
             return Ok(_authBL.RefreshToken(request));
         }
-
-        [HttpPost("verify-token")]
+        
+        [HttpPost("verify-token"),AllowAnonymous]
         public IActionResult VerifyToken(VerifyTokenViewModel request) 
         {
             return Ok(_authBL.VerifyToken(request));
         }
 
-        [HttpPost("verify-account")]
+        [HttpPost("verify-account"),AllowAnonymous]
         public IActionResult VerifyAccount(VerifyAccountViewModel request)
         {
             return Ok(_authBL.VerifyAccount(request));

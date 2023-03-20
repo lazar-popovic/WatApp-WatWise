@@ -20,15 +20,15 @@ namespace API.API
         }
 
         [HttpGet("{id}")]
-        public Task<IActionResult> GetUserById(int id)
+        public async Task<IActionResult> GetUserById(int id)
         {
-            return Task.FromResult<IActionResult>(Ok(_userBL.GetByIdAsync(id)));
+            return Ok(await _userBL.GetByIdAsync(id));
         }
 
         [HttpGet("all")]
         public async Task<IActionResult> GetAllUsers()
         {
-            return Ok(_userBL.GetUsers());
+            return Ok(await _userBL.GetUsers());
          
         }
 
@@ -36,14 +36,14 @@ namespace API.API
         [HttpGet("employees")]
         public async Task<IActionResult> GetAllEmployees()
         {
-            return Ok(_userBL.GetUsersBasedOnRoleAsync((int)RoleEnum.Role.Employee));
+            return Ok(await _userBL.GetUsersBasedOnRoleAsync((int)RoleEnum.Role.Employee));
         }
 
         //Role = 3 => Prosumers
         [HttpGet("prosumers")]
         public async  Task<IActionResult> GetAllProsumers()
         {
-            return Ok(_userBL.GetUsersBasedOnRoleAsync((int)RoleEnum.Role.User));
+            return Ok(await _userBL.GetUsersBasedOnRoleAsync((int)RoleEnum.Role.User));
         }
 
 

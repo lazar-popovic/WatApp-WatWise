@@ -23,7 +23,6 @@ using API.Services.JWTCreation.Interfaces;
 using API.Services.JWTCreation.Implementations;
 using API.Services.E_mail.Interfaces;
 using API.Services.E_mail.Implementations;
-using API.Obsolete;
 using Microsoft.AspNetCore.Authentication;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
@@ -54,12 +53,6 @@ builder.Services.AddDbContext<DataContext>(options =>
 // INJECTIONS
 builder.Services.AddScoped<DataContext>();
 builder.Services.AddScoped<IGeocodingService, GeocodingService>();
-builder.Services.AddScoped<IProsumerBL, ProsumerBL>();
-builder.Services.AddScoped<IProsumerDAL, ProsumerDAL>();
-builder.Services.AddScoped<IDsoBL, DsoBL>();
-builder.Services.AddScoped<IDsoDAL, DsoDAL>();
-builder.Services.AddScoped<IBaseBL, BaseBL>();
-builder.Services.AddScoped<IBaseDAL, BaseDAL>();
 builder.Services.AddScoped<IJWTCreator, JWTCreator>();
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IUserDAL, UserDAL>();
