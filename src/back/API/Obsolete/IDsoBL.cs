@@ -1,7 +1,7 @@
 ﻿using API.Models;
 using API.Models.Dto;
 
-namespace API.BL.Interfaces;
+namespace API.Obsolete;
 
 public interface IDsoBL
 {

@@ -1,19 +1,18 @@
 ﻿using API.BL.Interfaces;
 using API.Common;
-using API.DAL.Interfaces;
 using API.Models;
 using API.Models.Dto;
 using API.Models.Entity;
 using API.Services.E_mail.Interfaces;
 
-namespace API.BL.Implementations;
+namespace API.Obsolete;
 
 public class DsoBL : IDsoBL
 {
     private readonly IDsoDAL _dsoDal;
     private readonly IMailService _mailService;
 
-    public DsoBL( IDsoDAL dsoDal, IMailService mailService)
+    public DsoBL(IDsoDAL dsoDal, IMailService mailService)
     {
         _dsoDal = dsoDal;
         _mailService = mailService;
@@ -89,7 +88,7 @@ public class DsoBL : IDsoBL
         {
             response.Errors.Add("Email is required");
         }
-        else if (_dsoDal.EmailExists( user.Email))
+        else if (_dsoDal.EmailExists(user.Email))
         {
             response.Errors.Add("User with this email already exists");
         }
@@ -101,10 +100,10 @@ public class DsoBL : IDsoBL
         {
             return response;
         }
-        
-        User newUser = _dsoDal.RegisterEmployee( user);
+
+        User newUser = _dsoDal.RegisterEmployee(user);
         newUser.Role = new Role { Id = 2, RoleName = "Employee" };
-        _mailService.sendToken( newUser);
+        _mailService.sendToken(newUser);
 
         response.Data = new MessageDot { Message = "Registration successful" };
 

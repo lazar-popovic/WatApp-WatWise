@@ -1,16 +1,15 @@
-﻿using API.DAL.Interfaces;
-using API.Models.Dto;
+﻿using API.Models.Dto;
 using API.Models.Entity;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.DAL.Implementations;
+namespace API.Obsolete;
 
 public class ProsumerDAL : IProsumerDAL
 {
     private readonly DataContext _context;
 
-    public ProsumerDAL( DataContext context)
+    public ProsumerDAL(DataContext context)
     {
         _context = context;
     }
@@ -73,12 +72,12 @@ public class ProsumerDAL : IProsumerDAL
     public void AddResetToken(ResetPasswordToken token)
     {
         _context.ResetPasswordTokens.Add(token);
-         _context.SaveChanges();
+        _context.SaveChanges();
     }
 
     public ResetPasswordToken GetResetTokenEntityFromBase(string type)
     {
-       var token =  _context.ResetPasswordTokens.SingleOrDefault(t => t.Token == type);
+        var token = _context.ResetPasswordTokens.SingleOrDefault(t => t.Token == type);
 
         if (token != null)
             return token;
@@ -110,8 +109,8 @@ public class ProsumerDAL : IProsumerDAL
 
     public void SaveRefreshTokenInBase(RefreshToken refreshToken)
     {
-        _context.RefreshTokens.Add(refreshToken); 
-        _context.SaveChanges();   
+        _context.RefreshTokens.Add(refreshToken);
+        _context.SaveChanges();
     }
 
     public void DeactivateRefreshToken(int userId)

@@ -4,11 +4,11 @@ using API.Models;
 using API.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.BL.Implementations
+namespace API.Obsolete
 {
-    public  class BaseBL : IBaseBL
+    public class BaseBL : IBaseBL
     {
-       
-        
+
+
     }
 }

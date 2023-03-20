@@ -23,8 +23,7 @@ public class LocationController : ControllerBase
     [HttpGet, Authorize(Roles = "User")]
     public LongLat GetLongLat(string adress)
     {
-        LongLat response = _geocodingService.Geocode(adress);
+       return _geocodingService.Geocode(adress);
 
-        return  response;
     }
 }

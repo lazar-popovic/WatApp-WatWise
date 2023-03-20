@@ -23,6 +23,7 @@ using API.Services.JWTCreation.Interfaces;
 using API.Services.JWTCreation.Implementations;
 using API.Services.E_mail.Interfaces;
 using API.Services.E_mail.Implementations;
+using API.Obsolete;
 
 var builder = WebApplication.CreateBuilder(args);
 

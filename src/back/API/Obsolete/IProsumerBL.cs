@@ -3,7 +3,7 @@ using API.Models.Dto;
 using API.Models.Entity;
 using API.Models.ViewModels;
 
-namespace API.BL.Interfaces;
+namespace API.Obsolete;
 
 public interface IProsumerBL
 {

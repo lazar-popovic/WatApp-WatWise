@@ -1,16 +1,15 @@
-﻿using API.DAL.Interfaces;
-using API.Models.Dto;
+﻿using API.Models.Dto;
 using API.Models.Entity;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.DAL.Implementations;
+namespace API.Obsolete;
 
 public class DsoDAL : IDsoDAL
 {
     private readonly DataContext _context;
 
-    public DsoDAL( DataContext context)
+    public DsoDAL(DataContext context)
     {
         _context = context;
     }

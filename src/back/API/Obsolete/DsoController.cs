@@ -1,12 +1,11 @@
-﻿using API.BL.Interfaces;
-using API.Models;
+﻿using API.Models;
 using API.Models.Dto;
 using API.Models.Entity;
 using API.Services.JWTCreation.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.API;
+namespace API.Obsolete;
 
 [ApiController]
 [Route("api/dso")]
@@ -15,14 +14,14 @@ public class DsoController : ControllerBase
     private readonly IConfiguration _configuration;
     private readonly IJWTCreator _jwtCreator;
     private readonly IDsoBL _dsoBl;
-    
-    public DsoController( IDsoBL dsoBl, IConfiguration configuration, IJWTCreator jwtCreator)
+
+    public DsoController(IDsoBL dsoBl, IConfiguration configuration, IJWTCreator jwtCreator)
     {
         _dsoBl = dsoBl;
         _configuration = configuration;
         _jwtCreator = jwtCreator;
     }
-    
+
     [HttpPost("login")]
     public IActionResult Login(UserLoginDto request)
     {
@@ -35,10 +34,10 @@ public class DsoController : ControllerBase
 
         token = _jwtCreator.CreateToken((User)response.Data);
 
-        return Ok( new TokenDto{ Token = token});
+        return Ok(new TokenDto { Token = token });
     }
-    
-    [HttpPost("register-employee"),Authorize(Roles = "Admin")]
+
+    [HttpPost("register-employee"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> RegisterProsumer(UserRegisterDto request)
     {
         var response = _dsoBl.RegisterEmployee(request);

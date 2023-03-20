@@ -1,6 +1,6 @@
 ﻿using API.Models.Dto;
 
-namespace API.DAL.Interfaces;
+namespace API.Obsolete;
 
 public interface IBaseDAL
 {

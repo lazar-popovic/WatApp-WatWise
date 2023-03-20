@@ -1,7 +1,7 @@
 ﻿using API.Models.Dto;
 using API.Models.Entity;
 
-namespace API.DAL.Interfaces;
+namespace API.Obsolete;
 
 public interface IProsumerDAL
 {

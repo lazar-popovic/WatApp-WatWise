@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace API.API;
 
 [ApiController]
-[Route("api/auth")]
+[Route("api/verify")]
 public class VerificationController : ControllerBase
 {
     private readonly IConfiguration _configuration;

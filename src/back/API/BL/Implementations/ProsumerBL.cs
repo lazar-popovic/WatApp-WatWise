@@ -1,9 +1,9 @@
 ﻿using API.BL.Interfaces;
-using API.DAL.Interfaces;
 using API.Models;
 using API.Models.Dto;
 using API.Models.Entity;
 using API.Models.ViewModels;
+using API.Obsolete;
 using API.Services.E_mail.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;

@@ -1,5 +1,4 @@
-﻿using API.BL.Interfaces;
-using API.Models.Dto;
+﻿using API.Models.Dto;
 using API.Models.Entity;
 using API.Services.E_mail;
 using API.Services.E_mail.Interfaces;
@@ -17,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using API.Models;
 using API.Models.ViewModels;
 
-namespace API.API;
+namespace API.Obsolete;
 
 [ApiController]
 [Route("api/prosumer")]
@@ -27,17 +26,17 @@ public class ProsumerController : ControllerBase
     private readonly IConfiguration _configuration;
     private readonly IJWTCreator _jwtCreator;
     private readonly IMailService _mailService;
-   
-    public ProsumerController( IProsumerBL prosumerBl, IConfiguration configuration, IJWTCreator jwtCreator, IMailService mailService)
+
+    public ProsumerController(IProsumerBL prosumerBl, IConfiguration configuration, IJWTCreator jwtCreator, IMailService mailService)
     {
         _prosumerBl = prosumerBl;
         _configuration = configuration;
         _jwtCreator = jwtCreator;
         _mailService = mailService;
-       
+
     }
 
-    [HttpPost("register"),Authorize(Roles = "Admin,Employee")]
+    [HttpPost("register"), Authorize(Roles = "Admin,Employee")]
     public async Task<IActionResult> RegisterProsumer(UserRegisterDto request)
     {
         var response = _prosumerBl.RegisterProsumer(request);
@@ -76,7 +75,7 @@ public class ProsumerController : ControllerBase
         _prosumerBl.DeactivatePreviousRefreshTokensOnCreationOfNewRefreshTOken(user.Id);
         _prosumerBl.SetRefreshToken(refreshToken);
 
-        return Ok( new RefreshTokenDto
+        return Ok(new RefreshTokenDto
         {
             Token = token,
             RefreshToken = refreshToken.Token
@@ -88,7 +87,7 @@ public class ProsumerController : ControllerBase
     public async Task<IActionResult> ForgotPassword(ForgottenPasswordViewModel request)
     {
         var response = _prosumerBl.CheckEmailForForgottenPassword(request);
-        var user = ((User)response.Data);
+        var user = (User)response.Data;
 
         if (response == null || user == null)
             return BadRequest("User with this email doesen't exist!");
@@ -98,11 +97,11 @@ public class ProsumerController : ControllerBase
             Errors = response.Errors,
             Success = response.Success
         };
-            
+
         // Generate reset token
         var resetToken = _prosumerBl.GenerateNewResetPasswordToken(user.Id);
 
-        var resetJwtToken = _jwtCreator.CreateResetToken(user.Id, user.Email,resetToken);
+        var resetJwtToken = _jwtCreator.CreateResetToken(user.Id, user.Email, resetToken);
 
         //send token via email service
         _mailService.sendResetToken(user, resetJwtToken);
@@ -159,7 +158,7 @@ public class ProsumerController : ControllerBase
             return BadRequest("User not found");
         }
 
-        
+
         response.Success = !response.Errors.Any();
 
         if (response.Success == false)
@@ -167,8 +166,8 @@ public class ProsumerController : ControllerBase
             response.Data = null;
             return BadRequest(response);
         }
-            
-        
+
+
         // Update password
         _prosumerBl.SetNewPasswordAfterResetting(user, request.NewPassword);
 

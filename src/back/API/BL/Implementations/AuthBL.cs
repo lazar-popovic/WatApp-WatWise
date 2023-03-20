@@ -9,6 +9,7 @@ using API.Services.E_mail.Interfaces;
 using API.Services.JWTCreation.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace API.BL.Implementations
 {
@@ -185,8 +186,10 @@ namespace API.BL.Implementations
 
         public Response<RegisterResponseViewModel> ResetPassword(ResetPasswordViewModel request)
         {
-            
 
+            var response = ValidatePasswordsAndResetToken(request);
+
+            return response;
         }
 
         #region private
@@ -213,14 +216,25 @@ namespace API.BL.Implementations
         private Response<RegisterResponseViewModel> ValidatePasswordsAndResetToken(ResetPasswordViewModel request)
         {
             var response = new Response<RegisterResponseViewModel>();
+            JwtSecurityToken token; 
 
             if (string.IsNullOrEmpty(request.NewPassword) || string.IsNullOrEmpty(request.ConfirmedNewPassword))
             {
                 response.Errors.Add("Password is empty or passwords don't match!");
             }
 
-            var handler = new JwtSecurityTokenHandler();
-            var token = handler.ReadJwtToken(request.Token);
+            try
+            {
+                var handler = new JwtSecurityTokenHandler();
+                token = handler.ReadJwtToken(request.Token);
+            }
+            catch(Exception ex) 
+            {
+                response.Errors.Add("Error while validating token!");
+                response.Success = false;
+
+                return response;
+            }
 
             if (token == null)
             {
@@ -229,12 +243,15 @@ namespace API.BL.Implementations
 
                 return response;
             }
-        
+
             var resetToken = token!.Claims.FirstOrDefault(c => c.Type == "resetToken")?.Value;
 
             if (string.IsNullOrEmpty(resetToken))
             {
                 response.Errors.Add("Token is null or empty!");
+                response.Success = false;
+
+                return response;
             }
 
 
@@ -258,7 +275,61 @@ namespace API.BL.Implementations
                 return response;
             }
 
+            var user = _authDAL.FindUserById((int)tokenEntity.UserId);
+
+            if (user == null)
+            {
+                response.Errors.Add("User not found!");
+                response.Success = false;
+
+                return response;
+            }
+
+            if (user.Verified == false)
+            {
+                response.Errors.Add("User not verified!");
+                response.Success = false;
+
+                return response;
+            }
+
+            if (!ValidateOldPasswordOnPasswordReset(request.OldPassword, user.PasswordHash!)) 
+            {
+                response.Errors.Add("Wrong old password!");
+                response.Success = false;
+
+                return response;
+            }
+
+            SetNewPasswordAfterResetting(user, request.NewPassword);
+            RemovePasswordResetTokenFromBase(tokenEntity);
+
+            response.Success = response.Errors.Count() == 0;
+            response.Data = new RegisterResponseViewModel { Message = "Password has been changed successfully!" };
+
             return response;
+        }
+
+        private void RemovePasswordResetTokenFromBase(ResetPasswordToken token)
+        {
+            _authDAL.RemoveResetToken(token);
+        }
+
+        private void SetNewPasswordAfterResetting(User user, string password)
+        {
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
+            _authDAL.UpdateUserAfterPasswordReset(user);
+        }
+
+        private bool ValidateOldPasswordOnPasswordReset(string oldPassword, string hash)
+        {
+
+            if (!BCrypt.Net.BCrypt.Verify(oldPassword, hash))
+            {
+                return false;
+            }
+            else
+                return true;
         }
 
         private Response<LoginResponseViewModel> GenerateToken(User userWithRole)

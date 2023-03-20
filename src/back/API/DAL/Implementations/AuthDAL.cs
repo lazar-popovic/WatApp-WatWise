@@ -87,5 +87,23 @@ namespace API.DAL.Implementations
 
             return null;
         }
+
+        public User? FindUserById(int userId)
+        {
+
+            return _context.Users.SingleOrDefault(u => u.Id == userId);
+        }
+
+        public void UpdateUserAfterPasswordReset(User user)
+        {
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
+
+        public void RemoveResetToken(ResetPasswordToken token)
+        {
+            _context.ResetPasswordTokens.Remove(token);
+            _context.SaveChanges();
+        }
     }
 }

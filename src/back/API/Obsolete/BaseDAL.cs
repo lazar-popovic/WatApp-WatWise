@@ -1,8 +1,7 @@
-﻿using API.DAL.Interfaces;
-using API.Models.Dto;
+﻿using API.Models.Dto;
 using API.Models.Entity;
 
-namespace API.DAL.Implementations
+namespace API.Obsolete
 {
     public class BaseDAL : IBaseDAL
     {
