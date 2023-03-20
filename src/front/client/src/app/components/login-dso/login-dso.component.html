@@ -1,6 +1,6 @@
 
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-5EY9pN8WxEPx6pBwPdF+BOg2GJkpxeHvZUq3gU6fQ2FhhBNKx+Owif3LEf1noG0uZ+VpTw33kOZCg9+C4+maKw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
   
@@ -13,14 +13,14 @@
             <form>
             <h2>Sign In</h2>
             <div>
-                    <input type="email" id="email" placeholder="username" name="email" required > 
+                    <input type="email" id="email" placeholder="username" name="email" required [(ngModel)]="login.email"> 
             </div>
             <div>
                 
-                <input type="password" id="password" placeholder="password" name="password" required >
+                <input type="password" id="password" placeholder="password" name="password" required [(ngModel)]="login.password">
                 <p id="forgot_pass" >Forgot password ?</p>
             </div>
-            <button type="submit" routerLink="/profile">Login</button>
+            <button type="submit" (click)="logIn()">Login</button>
             <!--
                 <p id="dont_have_acc" >Dont't have an account ? <a routerLink="/register"><span id="register">SIGN UP</span></a></p>
             -->

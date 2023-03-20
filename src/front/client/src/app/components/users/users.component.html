@@ -15,13 +15,13 @@
               <h2>Add new prosumer</h2>
         
                 <div>
-                    <input type="name" id="name" placeholder="firstname" name="firstname" required > 
+                    <input type="name" id="name" placeholder="firstname" name="firstname" required [(ngModel)]="user.firstname"> 
                 </div> 
                 <div>
-                    <input type="name" id="name" placeholder="lastname" name="lastname" required > 
+                    <input type="name" id="name" placeholder="lastname" name="lastname" required [(ngModel)]="user.lastname">
                 </div>
                 <div>
-                    <input type="email" id="email" placeholder="email" name="email" required > 
+                    <input type="email" id="email" placeholder="email" name="email" required [(ngModel)]="user.email"> 
                 </div>
                 <div>
                   <input type="name" id="street" placeholder="street" name="street" required > 
@@ -30,7 +30,7 @@
                   <input type="number" id="street_num" placeholder="street number" name="streetnumber" required > 
                 </div>
              
-            <button type="submit">Register</button>
+            <button type="submit" (click)="storeUser()">Register</button>
         </form>
         </div>
     </div>

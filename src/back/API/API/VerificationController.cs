@@ -24,8 +24,9 @@ public class VerificationController : ControllerBase
 
     [HttpPost]
     [Route("validate-token")]
-    public async Task<IActionResult> VerifyToken( string token)
+    public async Task<IActionResult> VerifyToken( TokenDto request)
     {
+        var token = request.Token;
         var response = new Response<string>();
         try
         {
@@ -70,14 +71,12 @@ public class VerificationController : ControllerBase
     [Route("verify-account")]
     public async Task<IActionResult> VerifyAccount(VerifyAccountDto request)
     {
-        var response = new Response<string>();
-        request.Email = request.Email.Trim();
+        var response = new Response<MessageDot>();
+
+        var userId = this.GetUserIdFromToken(request.Token);
+        
         request.Password1 = request.Password1.Trim();
         request.Password2 = request.Password2.Trim();
-        if (string.IsNullOrEmpty(request.Email))
-        {
-            response.Errors.Add("Email is required");
-        }
         if (string.IsNullOrEmpty(request.Password1))
         {
             response.Errors.Add("Password is required");
@@ -90,12 +89,9 @@ public class VerificationController : ControllerBase
         {
             response.Errors.Add("Passwords need to match");
         }
-
-        var user = await _context.Users.FirstAsync(u => u.Email == request.Email);
-
-        if (user == null)
+        if (userId == null)
         {
-            response.Errors.Add("User with given email doesn't exist");
+            response.Errors.Add("Invalid token!");
         }
         
         response.Success = response.Errors.Count == 0;
@@ -104,14 +100,52 @@ public class VerificationController : ControllerBase
         {
             return BadRequest(response);
         }
-        
+
+        var user = await _context.Users.FirstAsync(u => u.Id == userId);
+
         user.Verified = true;
         user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password1);
 
         await _context.SaveChangesAsync();
+        response.Data = new MessageDot();
+        response.Data.Message = "Verification successful";
 
-        response.Data = "Verification successful";
+        return Ok(response.Data);
+    }
+    
+    private int? GetUserIdFromToken(string token)
+    {
+        try
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = secretKey,
+                ValidateIssuer = false,
+                ValidateAudience = false,
+            };
+            SecurityToken validatedToken;
+            var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
 
-        return Ok(response);
+            var userIdClaim = claimsPrincipal.FindFirst("userId");
+            var userId = userIdClaim?.Value;
+
+            if (int.TryParse(userId, out int id))
+            {
+                return id;
+            }
+        }
+        catch (SecurityTokenException)
+        {
+            // Invalid token
+        }
+        catch (Exception)
+        {
+            // Other error
+        }
+    
+        return null;
     }
 }
