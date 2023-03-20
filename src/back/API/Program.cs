@@ -61,6 +61,7 @@ builder.Services.AddScoped<IJWTCreator, JWTCreator>();
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IUserDAL, UserDAL>();
 builder.Services.AddScoped<IDeviceSimulatorService, DeviceSimulatorService>();
+builder.Services.AddScoped<IDeviceDAL, DeviceDAL>();
 
 //JWT Authenthication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
