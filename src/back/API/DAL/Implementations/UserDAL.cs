@@ -13,7 +13,7 @@ namespace API.DAL.Implementations
             _dbContext = dbContext;
         }
 
-        public async Task<User> GetByIdAsync(int id)
+        public async Task<User?> GetByIdAsync(int id)
         {
             var users = await _dbContext.Users.Where(u => u.Id == id)
                                    .Select(u => new User
@@ -32,7 +32,7 @@ namespace API.DAL.Implementations
 
             return users;
         }
-        public async Task<List<User>> GetUsers()
+        public async Task<List<User>?> GetUsers()
         {
             var users = await _dbContext.Users
                                    .Select(u => new User
@@ -52,7 +52,7 @@ namespace API.DAL.Implementations
             return users;
         }
         //Depend on RoleId that method return list of prosumer, 
-        public async Task<List<User>> GetUsersByIdAsync(int id)
+        public async Task<List<User>?> GetUsersBasedOnRoleAsync(int id)
         {
             var users = await _dbContext.Users.Where(u => u.RoleId == id)
                                    .Select(u => new User

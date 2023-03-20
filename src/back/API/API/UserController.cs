@@ -1,4 +1,8 @@
-﻿using API.DAL.Interfaces;
+﻿using API.BL.Interfaces;
+using API.Common;
+using API.DAL.Implementations;
+using API.DAL.Interfaces;
+using API.Models.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,43 +12,38 @@ namespace API.API
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserDAL _iuserDAL;
+        private readonly IUserBL _userBL;
 
-        public UserController(IUserDAL userDAL)
+        public UserController(IUserBL userBL)
         {
-            _iuserDAL = userDAL;
+            _userBL = userBL;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
-            var user = await _iuserDAL.GetByIdAsync(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return Ok(user);
+            return Ok(await _userBL.GetByIdAsync(id));
         }
+
         [HttpGet("all")]
         public async Task<IActionResult> GetAllUsers()
         {
-            var user = await _iuserDAL.GetUsers();
-            return Ok(user);
+            return Ok(await _userBL.GetUsers());
+         
         }
+
         //Role = 2 => Employees
         [HttpGet("employees")]
         public async Task<IActionResult> GetAllEmployees()
         {
-            var user = await _iuserDAL.GetByIdAsync(2);
-            return Ok(user);
+            return Ok(await _userBL.GetUsersBasedOnRoleAsync((int)RoleEnum.Role.Employee));
         }
+
         //Role = 3 => Prosumers
         [HttpGet("prosumers")]
-        public async Task<IActionResult> GetAllProsumers()
+        public async  Task<IActionResult> GetAllProsumers()
         {
-            var prosumer = await _iuserDAL.GetByIdAsync(3);
-            return Ok(prosumer);
+            return Ok(await _userBL.GetUsersBasedOnRoleAsync((int)RoleEnum.Role.User));
         }
 
 

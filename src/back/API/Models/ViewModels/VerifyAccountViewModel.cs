@@ -1,6 +1,6 @@
-﻿namespace API.Models.Dto;
+﻿namespace API.Models.ViewModels;
 
-public class VerifyAccountDto
+public class VerifyAccountViewModel
 {
     public string Token { get; set; } = string.Empty;
     public string Password1 { get; set; } = string.Empty;
