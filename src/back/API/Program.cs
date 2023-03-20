@@ -63,6 +63,7 @@ builder.Services.AddScoped<IBaseDAL, BaseDAL>();
 builder.Services.AddScoped<IJWTCreator, JWTCreator>();
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IUserDAL, UserDAL>();
+builder.Services.AddScoped<IUserBL, UserBL>();
 builder.Services.AddScoped<IAuthDAL, AuthDAL>();
 builder.Services.AddScoped<IAuthBL, AuthBL>();
 
