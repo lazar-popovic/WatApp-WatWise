@@ -3,6 +3,7 @@ using System;
 using API.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230320204704_CreatedTableDevices")]
+    partial class CreatedTableDevices
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0-preview.1.23111.4");
@@ -26,13 +29,10 @@ namespace API.Migrations
                     b.Property<bool?>("ActivityStatus")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Category")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("PurchaseDate")
+                    b.Property<DateTime>("PurchaseDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Type")
