@@ -1,4 +1,4 @@
-﻿namespace API.Models.Dto;
+﻿namespace API.Models.ViewModels;
 
 public class ElectricalUsage
 {
