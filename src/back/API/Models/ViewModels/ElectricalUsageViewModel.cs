@@ -1,6 +1,6 @@
 ﻿namespace API.Models.ViewModels;
 
-public class ElectricalUsage
+public class ElectricalUsageViewModel
 {
     public DateTime Timestamp { get; set; }
     public double Value { get; set; }

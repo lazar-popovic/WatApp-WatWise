@@ -1,4 +1,4 @@
-﻿using API.Models.Dto;
+﻿using API.Models.ViewModels;
 using API.Services.DeviceSimulatorService.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -16,7 +16,7 @@ public class DeviceSimulatorService : IDeviceSimulatorService
         _devices = _client.GetDatabase("devices");
     }
     
-    public async Task<List<ElectricalUsage>> GetUsageForDeviceBetweenDates(string device, DateTime startingDate, DateTime endingDate)
+    public async Task<List<ElectricalUsageViewModel>> GetUsageForDeviceBetweenDates(string device, DateTime startingDate, DateTime endingDate)
     {
         var collection = _devices.GetCollection<BsonDocument>(device);
         var filterBuilder = Builders<BsonDocument>.Filter;
@@ -25,12 +25,12 @@ public class DeviceSimulatorService : IDeviceSimulatorService
             filterBuilder.Lt("timestamp", endingDate)
         );
         var consumptionData = collection.Find(query).ToList();
-        var usageList = new List<ElectricalUsage>();
+        var usageList = new List<ElectricalUsageViewModel>();
         foreach (BsonDocument doc in consumptionData)
         {
             DateTime timestamp = doc["timestamp"].ToUniversalTime();
             double value = doc["value"].ToDouble();
-            var usage = new ElectricalUsage { Timestamp = timestamp, Value = value };
+            var usage = new ElectricalUsageViewModel { Timestamp = timestamp, Value = value };
             usageList.Add(usage);
         }
         return usageList;
