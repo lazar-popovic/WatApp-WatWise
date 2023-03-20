@@ -13,9 +13,5 @@ namespace API.Models.Entity
         public int? UserId { get; set; }
         [ForeignKey("UserId")]
         public bool? ActivityStatus { get; set; }
-
-
-
-
     }
 }
