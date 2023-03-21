@@ -1,6 +1,4 @@
-﻿using API.Models.Entity;
-using API.Services.Geocoding;
-using API.Services.Geocoding.Implementations;
+﻿using API.Services.Geocoding;
 using API.Services.Geocoding.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -21,9 +19,9 @@ public class LocationController : ControllerBase
     }
 
     [HttpGet, Authorize(Roles = "User")]
-    public LongLat GetLongLat(string adress)
+    public LongLat GetLongLat(string address)
     {
-       return _geocodingService.Geocode(adress);
+       return _geocodingService.Geocode(address);
 
     }
 }
