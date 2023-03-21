@@ -102,9 +102,12 @@
     }
 
     .sidebar-nav-mobile {
-        display: inline-block;
         align-items: center;
         justify-content: flex-end;
+
+        float: right;
+        margin-top: 0px;
+        margin-right: 30px;
       }
 
 
@@ -119,7 +122,9 @@
     .burger-menu 
     {
 
-        margin-left: 600%;
+        top: 0;
+        right: 0;
+
         display: inline-block; 
         
         flex-direction: column;
@@ -157,8 +162,8 @@
     /* Open menu styles */
     .menu-list {
         position: absolute;
-        top: 100px;
-        right: 10px;
+        top: 85px;
+        right: 5px;
         width: 50%;
         max-height: 0;
         overflow: hidden;
@@ -166,6 +171,8 @@
         background-color: #fff;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
         transition: all 0.3s ease-in-out;
+
+        padding-bottom: 10px;
     }
     
     .menu-list li {
@@ -177,7 +184,7 @@
         color: #333;
         font-size: 16px;
     }
-    
+
     .menu-list.open {
         max-height: 200px;
     }
