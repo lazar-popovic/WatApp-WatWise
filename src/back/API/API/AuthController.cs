@@ -67,5 +67,11 @@ namespace API.API
         {
             return Ok(_authBL.VerifyAccount(request));
         }
+
+        [HttpPost("resend-verify-email")]
+        public IActionResult ResendVerifyEmail(ResendVerifyEmailViewModel request)
+        {
+            return Ok(_authBL.ResendVerifyEmail(request));
+        }
     }
 }

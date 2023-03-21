@@ -152,5 +152,12 @@ namespace API.DAL.Implementations
                 }
             }
         }
+
+        /*
+        public User RegisterUser(RegisterUserViewModel user)
+        {
+            throw new NotImplementedException();
+        }
+        */
     }
 }
