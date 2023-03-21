@@ -65,10 +65,10 @@
                 <ng-container *ngFor="let device of devices">
                     <div id="storage-device" *ngIf="device.category === 'storage'">
                         <li>{{device.name}}</li>
-                        <!-- <button (click)="removeDevice(device)">Remove Device</button> -->
                         <br>
                         <!-- <button class="activity"></button> -->
                         <li style="font-weight: lighter;"> 2400/100000 mAh</li>
+                         <!-- <button (click)="removeDevice(device)">Remove Device</button> -->
                         
                     </div>
           </ng-container>
