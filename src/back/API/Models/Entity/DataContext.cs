@@ -15,4 +15,6 @@ public class DataContext : DbContext
 
     public DbSet<Location> Locations { get; set; }
     public DbSet<ResetPasswordToken> ResetPasswordTokens { get; set; }
+    public DbSet<RefreshToken> RefreshTokens{ get; set; }
+    public DbSet<Device> Devices { get; set; }
 }
