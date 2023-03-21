@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Device } from './device';
+import { Device } from '../../devices/device';
 import { OnInit } from '@angular/core';
 
 
