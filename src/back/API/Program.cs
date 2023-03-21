@@ -63,6 +63,7 @@ builder.Services.AddScoped<IDeviceDAL, DeviceDAL>();
 builder.Services.AddScoped<IUserBL, UserBL>();
 builder.Services.AddScoped<IAuthDAL, AuthDAL>();
 builder.Services.AddScoped<IAuthBL, AuthBL>();
+builder.Services.AddScoped<ILocationDAL, LocationDAL>();
 
 //JWT Authenthication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
