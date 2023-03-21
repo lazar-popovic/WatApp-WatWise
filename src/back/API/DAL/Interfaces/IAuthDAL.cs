@@ -6,7 +6,7 @@ namespace API.DAL.Interfaces
     public interface IAuthDAL
     {
         User? GetUserWithRoleForEmail(string email);
-        User RegisterUser(RegisterUserViewModel user);
+        User RegisterUser(RegisterUserViewModel user, int locationId);
         User RegisterEmployee(RegisterEmployeeViewModel user);
         bool EmailExists(string email);
         void AddResetToken(ResetPasswordToken token);

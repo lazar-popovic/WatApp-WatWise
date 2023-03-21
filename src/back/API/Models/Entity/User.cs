@@ -18,4 +18,6 @@ public class User
     public int? LocationId { get; set; }
     [ForeignKey("LocationId")]
     public Location? Location { get; set; }
+
+    public List<Device>? Devices { get; set; }
 }

@@ -9,6 +9,7 @@ using API.Services.JWTCreation.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using API.Services.Geocoding.Interfaces;
 
 namespace API.BL.Implementations
 {
@@ -17,12 +18,16 @@ namespace API.BL.Implementations
         private readonly IAuthDAL _authDAL;
         private readonly IJWTCreator _jwtCreator;
         private readonly IMailService _mailService;
+        private readonly ILocationDAL _locationDal;
+        private readonly IGeocodingService _geocodingService;
 
-        public AuthBL(IAuthDAL authDAL, IJWTCreator jwtCreator, IMailService mailService)
+        public AuthBL(IAuthDAL authDAL, IJWTCreator jwtCreator, IMailService mailService, ILocationDAL locationDal, IGeocodingService geocodingService)
         {
             _authDAL = authDAL;
             _jwtCreator = jwtCreator;
             _mailService = mailService;
+            _locationDal = locationDal;
+            _geocodingService = geocodingService;
         }
 
         public Response<LoginResponseViewModel> Login(LoginViewModel loginRequest)
@@ -75,6 +80,21 @@ namespace API.BL.Implementations
                 response.Errors.Add("Lastname is required");
             }
 
+            if (string.IsNullOrEmpty(userRegisterRequest.Location.Address.Trim()))
+            {
+                response.Errors.Add("Address is required");
+            }
+
+            if (string.IsNullOrEmpty(userRegisterRequest.Location.City.Trim()))
+            {
+                response.Errors.Add("City is required");
+            }
+            
+            if (userRegisterRequest.Location.Number==null)
+            {
+                response.Errors.Add("Number is required");
+            }
+
             if (_authDAL.EmailExists(userRegisterRequest.Email))
                 response.Errors.Add("User with this email already exists");
 
@@ -84,9 +104,16 @@ namespace API.BL.Implementations
             {
                 return response;
             }
-
-
-            User newUser = _authDAL.RegisterUser(userRegisterRequest);
+            ///// MAYBE MOVE TO LOCATION BL
+            ///// BEGIN
+            var cords = _geocodingService.Geocode(userRegisterRequest.Location);
+            var locationId = _locationDal.GetLocationByLatLongAsync(cords);
+            if (locationId == 0)
+            {
+                locationId = _locationDal.InsertLocation(userRegisterRequest.Location, cords);
+            }
+            ///// END
+            var newUser = _authDAL.RegisterUser(userRegisterRequest, locationId);
 
             _mailService.sendToken(newUser);
 
