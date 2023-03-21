@@ -53,7 +53,7 @@ namespace API.DAL.Implementations
             return newUser;
         }
 
-        public User RegisterUser(RegisterUserViewModel user)
+        public User RegisterUser(RegisterUserViewModel user, int locationId)
         {
             var newUser = new User
             {
@@ -61,7 +61,7 @@ namespace API.DAL.Implementations
                 Lastname = user.Lastname,
                 Email = user.Email,
                 RoleId = 3,
-                LocationId = null,
+                LocationId = locationId,
                 Verified = false
             };
 
@@ -152,5 +152,12 @@ namespace API.DAL.Implementations
                 }
             }
         }
+
+        /*
+        public User RegisterUser(RegisterUserViewModel user)
+        {
+            throw new NotImplementedException();
+        }
+        */
     }
 }

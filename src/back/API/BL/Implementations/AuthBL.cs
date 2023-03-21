@@ -9,6 +9,7 @@ using API.Services.JWTCreation.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using API.Services.Geocoding.Interfaces;
 
 namespace API.BL.Implementations
 {
@@ -17,12 +18,16 @@ namespace API.BL.Implementations
         private readonly IAuthDAL _authDAL;
         private readonly IJWTCreator _jwtCreator;
         private readonly IMailService _mailService;
+        private readonly ILocationDAL _locationDal;
+        private readonly IGeocodingService _geocodingService;
 
-        public AuthBL(IAuthDAL authDAL, IJWTCreator jwtCreator, IMailService mailService)
+        public AuthBL(IAuthDAL authDAL, IJWTCreator jwtCreator, IMailService mailService, ILocationDAL locationDal, IGeocodingService geocodingService)
         {
             _authDAL = authDAL;
             _jwtCreator = jwtCreator;
             _mailService = mailService;
+            _locationDal = locationDal;
+            _geocodingService = geocodingService;
         }
 
         public Response<LoginResponseViewModel> Login(LoginViewModel loginRequest)
@@ -75,6 +80,21 @@ namespace API.BL.Implementations
                 response.Errors.Add("Lastname is required");
             }
 
+            if (string.IsNullOrEmpty(userRegisterRequest.Location.Address.Trim()))
+            {
+                response.Errors.Add("Address is required");
+            }
+
+            if (string.IsNullOrEmpty(userRegisterRequest.Location.City.Trim()))
+            {
+                response.Errors.Add("City is required");
+            }
+            
+            if (userRegisterRequest.Location.Number == null)
+            {
+                response.Errors.Add("Number is required");
+            }
+
             if (_authDAL.EmailExists(userRegisterRequest.Email))
                 response.Errors.Add("User with this email already exists");
 
@@ -84,9 +104,16 @@ namespace API.BL.Implementations
             {
                 return response;
             }
-
-
-            User newUser = _authDAL.RegisterUser(userRegisterRequest);
+            ///// MAYBE MOVE TO LOCATION BL
+            ///// BEGIN
+            var cords = _geocodingService.Geocode(userRegisterRequest.Location);
+            var locationId = _locationDal.GetLocationByLatLongAsync(cords);
+            if (locationId == 0)
+            {
+                locationId = _locationDal.InsertLocation(userRegisterRequest.Location, cords);
+            }
+            ///// END
+            var newUser = _authDAL.RegisterUser(userRegisterRequest, locationId);
 
             _mailService.sendToken(newUser);
 
@@ -370,6 +397,36 @@ namespace API.BL.Implementations
             return response;
         }
 
+        public Response<RegisterResponseViewModel> ResendVerifyEmail(ResendVerifyEmailViewModel request)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+
+            if (string.IsNullOrEmpty(request.Email.Trim()))
+            {
+                response.Errors.Add("Email is required");
+            }
+
+            var user = _authDAL.GetUserWithRoleForEmail(request.Email);
+
+            if (user == null)
+            {
+                response.Errors.Add("User doesen't exist!");
+            }
+
+            response.Success = response.Errors.Count() == 0;
+
+            if (response.Success == false)
+                return response;
+            else
+            {
+
+                _mailService.resendToken(user!);
+
+                response.Data = new RegisterResponseViewModel { Message = "New verfication mail has been sent!Check your email to complete registration." };
+
+                return response;
+            }
+        }
 
         #region private
 
@@ -440,7 +497,6 @@ namespace API.BL.Implementations
 
             if (tokenEntity == null)
             {
-                //response.Errors.Add("Invalid token!");
                 response.Errors.Add("Token is null or empty!");
                 response.Success = false;
 
@@ -449,14 +505,13 @@ namespace API.BL.Implementations
 
             if (DateTime.UtcNow > tokenEntity.ExpiryTime)
             {
-                //response.Errors.Add("Token expired!");
                 response.Errors.Add("Token expired");
                 response.Success = false;
 
                 return response;
             }
 
-            var user = _authDAL.FindUserById((int)tokenEntity.UserId);
+            var user = _authDAL.FindUserById((int)tokenEntity.UserId!);
 
             if (user == null)
             {
@@ -469,14 +524,6 @@ namespace API.BL.Implementations
             if (user.Verified == false)
             {
                 response.Errors.Add("User not verified!");
-                response.Success = false;
-
-                return response;
-            }
-
-            if (!ValidateOldPasswordOnPasswordReset(request.OldPassword, user.PasswordHash!)) 
-            {
-                response.Errors.Add("Wrong old password!");
                 response.Success = false;
 
                 return response;
@@ -500,17 +547,6 @@ namespace API.BL.Implementations
         {
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
             _authDAL.UpdateUserAfterPasswordReset(user);
-        }
-
-        private bool ValidateOldPasswordOnPasswordReset(string oldPassword, string hash)
-        {
-
-            if (!BCrypt.Net.BCrypt.Verify(oldPassword, hash))
-            {
-                return false;
-            }
-            else
-                return true;
         }
 
         private Response<LoginResponseViewModel> GenerateToken(User userWithRole)
@@ -572,7 +608,6 @@ namespace API.BL.Implementations
 
             return token;
         }
-
 
         #endregion
     }

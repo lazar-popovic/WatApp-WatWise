@@ -1,6 +1,5 @@
-﻿using API.Models.Entity;
+﻿using API.Models.ViewModels;
 using API.Services.Geocoding;
-using API.Services.Geocoding.Implementations;
 using API.Services.Geocoding.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -20,10 +19,10 @@ public class LocationController : ControllerBase
         _geocodingService = geocodingService;
     }
 
-    [HttpGet, Authorize(Roles = "User")]
-    public LongLat GetLongLat(string adress)
+    [HttpPost, Authorize(Roles = "User")]
+    public LongLat GetLongLat( LocationViewModel locationViewModel)
     {
-       return _geocodingService.Geocode(adress);
+       return _geocodingService.Geocode( locationViewModel);
 
     }
 }

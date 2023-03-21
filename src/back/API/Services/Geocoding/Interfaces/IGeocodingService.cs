@@ -1,6 +1,8 @@
-﻿namespace API.Services.Geocoding.Interfaces;
+﻿using API.Models.ViewModels;
+
+namespace API.Services.Geocoding.Interfaces;
 
 public interface IGeocodingService
 {
-    LongLat Geocode(string address);
+    LongLat Geocode( LocationViewModel location);
 }

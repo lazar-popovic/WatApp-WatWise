@@ -13,6 +13,6 @@ namespace API.BL.Interfaces
         Response<LoginResponseViewModel> RefreshToken(LoginResponseViewModel request);
         Response<RegisterResponseViewModel> VerifyToken(VerifyTokenViewModel request);
         Response<RegisterResponseViewModel> VerifyAccount(VerifyAccountViewModel request);
-
+        Response<RegisterResponseViewModel> ResendVerifyEmail(ResendVerifyEmailViewModel request);
     }
 }
