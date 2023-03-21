@@ -63,6 +63,7 @@ builder.Services.AddScoped<IDeviceDAL, DeviceDAL>();
 builder.Services.AddScoped<IUserBL, UserBL>();
 builder.Services.AddScoped<IAuthDAL, AuthDAL>();
 builder.Services.AddScoped<IAuthBL, AuthBL>();
+builder.Services.AddScoped<IDeviceBL, DeviceBL>();
 builder.Services.AddScoped<ILocationDAL, LocationDAL>();
 
 //JWT Authenthication

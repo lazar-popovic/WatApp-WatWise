@@ -1,0 +1,14 @@
+﻿using API.Models.Entity;
+using API.Models;
+
+namespace API.BL.Interfaces
+{
+    public interface IDeviceBL
+    {
+        Task<Response<List<Device>>> GetDevice();
+        Task<Response<String>> AddDevice(Device device);
+        Task<Response<Device>> GetByIdAsync(int id);
+        Task<Response<String>> UpdateDevice(int id, Device device);
+        Task<Response<String>> DeleteDevice(int id);
+    }
+}
