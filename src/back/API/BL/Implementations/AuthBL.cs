@@ -440,7 +440,6 @@ namespace API.BL.Implementations
 
             if (tokenEntity == null)
             {
-                //response.Errors.Add("Invalid token!");
                 response.Errors.Add("Token is null or empty!");
                 response.Success = false;
 
@@ -449,14 +448,13 @@ namespace API.BL.Implementations
 
             if (DateTime.UtcNow > tokenEntity.ExpiryTime)
             {
-                //response.Errors.Add("Token expired!");
                 response.Errors.Add("Token expired");
                 response.Success = false;
 
                 return response;
             }
 
-            var user = _authDAL.FindUserById((int)tokenEntity.UserId);
+            var user = _authDAL.FindUserById((int)tokenEntity.UserId!);
 
             if (user == null)
             {
@@ -469,14 +467,6 @@ namespace API.BL.Implementations
             if (user.Verified == false)
             {
                 response.Errors.Add("User not verified!");
-                response.Success = false;
-
-                return response;
-            }
-
-            if (!ValidateOldPasswordOnPasswordReset(request.OldPassword, user.PasswordHash!)) 
-            {
-                response.Errors.Add("Wrong old password!");
                 response.Success = false;
 
                 return response;
@@ -500,17 +490,6 @@ namespace API.BL.Implementations
         {
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
             _authDAL.UpdateUserAfterPasswordReset(user);
-        }
-
-        private bool ValidateOldPasswordOnPasswordReset(string oldPassword, string hash)
-        {
-
-            if (!BCrypt.Net.BCrypt.Verify(oldPassword, hash))
-            {
-                return false;
-            }
-            else
-                return true;
         }
 
         private Response<LoginResponseViewModel> GenerateToken(User userWithRole)
