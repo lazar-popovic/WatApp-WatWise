@@ -1,4 +1,4 @@
-<div class="sidebar-container"> 
+<div class="sidebar-container" *ngIf="!isMobile()"> 
     <div class="sidebar-header">
         <div class="sidebar-logo"><img src="\assets\logo.png"></div>
         {{ this.currentTime }}
@@ -19,5 +19,37 @@
         </div>
     </div>
 </div>
+
+
+<div class="sidebar-container-mobile">
+
+    <div class="sidebar-header-mobile">
+      <div class="sidebar-logo-mobile"><img id="logoMobile" src="\assets\logo.png"></div>
+      <div class="sidebar-nav-mobile">
+        <button class="burger-menu" (click)="toggleMenu()">
+          <!--
+          <span></span>
+          <span></span>
+          <span></span>
+          -->
+          
+        </button>
+        <ul class="menu-list" [class.open]="menuOpen">
+          <li routerLink="/prosumer/overview"   ><a>Overview   </a></li>
+          <li routerLink="/prosumer/devices"    ><a>Devices    </a></li>
+          <li routerLink="/prosumer/consumption"><a>Consumption</a></li>
+          <li routerLink="/prosumer/production" ><a>Production </a></li>
+          <br>
+          <li routerLink="/profile"><a>Profile</a></li>
+        </ul>
+      </div>
+      <br>
+      {{ this.currentTime }}
+    </div>
+  
+  </div>
+  
+  
+  
 
 

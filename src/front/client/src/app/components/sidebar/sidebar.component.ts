@@ -41,4 +41,24 @@ export class SidebarComponent {
   clickHandler(event: MouseEvent) {
     this.select(event.target);
   }
+
+ 
+  
+  isMobile():boolean
+  {
+    if(window.innerWidth < 800){
+      console.log("Telefon")
+      return true;
+    }
+      console.log("Nije Telefon")
+      return false;
+  }
+
+  
+  menuOpen = false;
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
 }
+
+

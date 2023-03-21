@@ -8,7 +8,9 @@ import { Component } from '@angular/core';
 export class ProfileComponent {
 
   showProfileForm = true;
-  dsoShow = true;
+  
+  //dsoShow = true;
+  dsoShow = false;
 
   constructor() { }
 
