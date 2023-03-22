@@ -44,31 +44,32 @@ public class DeviceSimulatorService : IDeviceSimulatorService
     {
         var timestamp = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
 
-        var types = await _context.Devices.Select(d => d.Type).Distinct().ToListAsync();
+        var devices = await _context.Devices
+            .GroupBy(d => d.Type)
+            .Select(g => new { Type = g.Key, Devices = g.Select( d => new { d.Id, d.ActivityStatus }).ToList() })
+            .ToListAsync();
 
-        foreach (var type in types)
-        {
-            await UpdateForType(type, timestamp);
-        }
-        await _context.SaveChangesAsync();
-    }
+        var deviceEnergyUsageList = new List<DeviceEnergyUsage>();
 
-    public async Task UpdateForType(string type, DateTime timestamp)
-    {
-        var collection = _devices.GetCollection<BsonDocument>(type);
-        var filter = Builders<BsonDocument>.Filter.Eq("timestamp", timestamp);
-        var result = await collection.Find(filter).FirstOrDefaultAsync();
-        var dvcs = await _context.Devices.Where(d => d.Type == type).Select(d => new { d.Id, d.ActivityStatus}).ToListAsync();
-        Console.WriteLine(result);
-        var value = result["value"].ToDouble();
-        foreach (var dvc in dvcs)
+        foreach (var deviceType in devices)
         {
-            var insertValue = 0.0;
-            if (dvc.ActivityStatus == true)
+            var collection = _devices.GetCollection<BsonDocument>(deviceType.Type);
+            var filter = Builders<BsonDocument>.Filter.Eq("timestamp", timestamp);
+            var result = await collection.Find(filter).FirstOrDefaultAsync();
+
+            if (result != null)
             {
-                insertValue = value;
+                var value = result["value"].ToDouble();
+
+                foreach (var device in deviceType.Devices)
+                {
+                    var insertValue = device.ActivityStatus == true ? value : 0.0;
+                    deviceEnergyUsageList.Add(new DeviceEnergyUsage { DeviceId = device.Id, Value = insertValue, Timestamp = timestamp });
+                }
             }
-            await _context.DeviceEnergyUsage.AddAsync(new DeviceEnergyUsage { DeviceId = dvc.Id, Value = insertValue, Timestamp = timestamp });
         }
+
+        await _context.DeviceEnergyUsage.AddRangeAsync(deviceEnergyUsageList);
+        await _context.SaveChangesAsync();
     }
 }

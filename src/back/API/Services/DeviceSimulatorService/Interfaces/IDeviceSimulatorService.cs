@@ -7,5 +7,4 @@ public interface IDeviceSimulatorService
 {
     Task<List<ElectricalUsageViewModel>> GetUsageForDeviceBetweenDates(string device, DateTime startingDate, DateTime endingDate);
     Task HourlyUpdate();
-    Task UpdateForType(string type, DateTime timestamp);
 }
