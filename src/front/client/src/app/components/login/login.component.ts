@@ -17,8 +17,8 @@ export class LoginComponent {
   constructor(private authService: AuthService, private route: Router) { }
 
   logIn() {
-      this.authService.loginProsumer(this.login).subscribe((result: any) => {
-        localStorage.setItem("token",result.body.token);
+      this.authService.login(this.login).subscribe((result: any) => {
+        localStorage.setItem("token", result.body.data.token);
         this.route.navigateByUrl('/prosumer/overview');
       },(error: any) => {
         console.log(error.error.errors)

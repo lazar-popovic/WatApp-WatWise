@@ -31,7 +31,7 @@ export class VerifyComponent implements OnInit {
     this.password.token = this.data.token;
     console.log(this.data);
     this.authService.verifyToken(this.data).subscribe((result: any) => {
-      document.getElementById('verify-prosumer-mail')!.innerText=result.body.data;
+      document.getElementById('verify-prosumer-mail')!.innerText=result.body.data.message;
     }, (error: any) => {
       console.log(error)
     });

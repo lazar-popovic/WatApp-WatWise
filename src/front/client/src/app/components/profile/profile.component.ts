@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from 'src/app/Models/User';
 
 @Component({
   selector: 'app-profile',
@@ -8,10 +9,10 @@ import { Component } from '@angular/core';
 export class ProfileComponent {
 
   showProfileForm = true;
-  
-  //dsoShow = true;
-  dsoShow = false;
-
-  constructor() { }
+  dsoShow = true;
+  user: User;
+  constructor() {
+    this.user = new User();
+  }
 
 }

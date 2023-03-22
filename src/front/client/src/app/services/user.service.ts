@@ -12,6 +12,6 @@ export class UserService {
 
   createUser(data: any) : Observable<any>
   {
-    return this.http.post(`${environment.apiUrl}prosumer/register`,data, {observe: 'response'});
+    return this.http.post(`${environment.apiUrl}auth/register-user`,data, {observe: 'response'});
   }
 }
