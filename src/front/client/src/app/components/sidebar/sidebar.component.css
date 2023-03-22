@@ -1,9 +1,10 @@
 * {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 24;
+    font-size: 20px;
     color: white;
 }
+
 .sidebar-container {
     width: 302px;
     height: 100vh;
@@ -70,18 +71,16 @@
 }
 
 
-/*Responsive*/
+/* Responsive*/
 
-/* @media (min-width: 599px)
+@media (min-width: 599px)
 {
     .sidebar-container-mobile
     {
         display: none;
     }
 }
-  */
-
-
+ 
 /* Maximum width */
 @media (max-width: 600px) 
 {
@@ -122,7 +121,7 @@
       }
 
 
-    /*   Buger */
+    /* Buger */
       
     /* Burger menu styles */
     button.burger-menu
@@ -149,17 +148,17 @@
         padding: 0;
         
         background-image: url(/assets/burger.png);
-        background-size: 40px;
+        background-size: 50px;
         background-repeat: no-repeat;
-        background-position: 7px 7px;        
-       
+        background-position: 7px 10px;
+      
     }
   
     .burger-menu span {
         width: 50%;
         height: 3px;
         background-color: #1676AC;
-        transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;        
     }
   
     .burger-menu span:first-child {
@@ -196,10 +195,23 @@
         font-size: 16px;
     }
 
+    .menu-list
+    {
+        background-color: #1676AC;
+
+        box-shadow: none;
+        padding-bottom: 5px;
+    }
+
     .menu-list.open {
+        background-color: #fff;
         max-height: 300px;
         border-radius: 10px;
         border: 1px solid #1676AC;
+
+          
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+
     }
     
     .sidebar-item-active-mobile,.sidebar-item-mobile
@@ -230,18 +242,20 @@
         background-color: #1676AC;
     }
     
-
-
-
     #devices-mobile     {   background-image: url(/assets/devices.png);}
     #consumption-mobile {   background-image: url(/assets/consumption.png);}
     #production-mobile  {   background-image: url(/assets/production.png);}
-    #profile-mobile     {   background-image: url(/assets/user.png);}
-
-
-
     
+    #profile-mobile     
+    {   
+        background-image: url(/assets/user.png);
 
-   
+        margin-left: 10px;
+        margin-right: 10px;
+        
+        border-top: 1px solid #333;
+        border-top-width: 50%;
+        
+    }
 
 }
