@@ -38,7 +38,8 @@ const routes: Routes = [
   { path: 'test/component', component : ChangePasswordComponent},
   { path: 'dso/users', component : UsersComponent},
   { path: 'dso/map', component : MapComponent},
-  { path: 'dso/consumption', component : EnergyUsageComponent}
+  { path: 'dso/consumption', component : EnergyUsageComponent},
+  { path: 'prosumer/reset-password', component: PasswordInputComponent}
 ];
 
 @NgModule({

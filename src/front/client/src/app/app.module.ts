@@ -26,6 +26,7 @@ import { VerifyDsoComponent } from './components/verify-dso/verify-dso.component
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { PasswordInputComponent } from './components/password-input/password-input.component';
+import { LogoHolderComponent } from './components/logo-holder/logo-holder.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +48,8 @@ import { PasswordInputComponent } from './components/password-input/password-inp
     VerifyDsoComponent,
     ChangePasswordComponent,
     ForgotPasswordComponent,
-    PasswordInputComponent
+    PasswordInputComponent,
+    LogoHolderComponent
   ],
   imports: [
     BrowserModule,
