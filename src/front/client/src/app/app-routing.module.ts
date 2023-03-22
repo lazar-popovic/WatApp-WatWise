@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'prosumer/overview',  component:  OverviewComponent },
   { path: 'dso/overview',  component:  OverviewComponent },
   { path: 'profile',  component:  ProfileComponent },
-  { path: 'test/forgot', component: ForgotPasswordComponent},
+  { path: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'prosumer/devices', component : DevicesComponent},
   { path: 'prosumer/consumption', component : ConsumptionComponent},
   { path: 'prosumer/production', component : ProductionComponent},
