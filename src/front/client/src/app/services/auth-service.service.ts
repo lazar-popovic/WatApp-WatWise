@@ -11,11 +11,11 @@ export class AuthService {
 
   constructor(private http:HttpClient) { }
 
-  loginProsumer(data : any) : Observable<any> {
+  loginProsumer(data: any) : Observable<any> {
     return this.http.post(`${environment.apiUrl}prosumer/login`, data, {observe: 'response'});
   }
 
-  loginDso(data : any) : Observable<any> {
+  loginDso(data: any) : Observable<any> {
     return this.http.post(`${environment.apiUrl}dso/login`, data, {observe: 'response'});
   }
 
@@ -25,5 +25,13 @@ export class AuthService {
 
   verifyToken(data: any) : Observable<any> {
     return this.http.post(`${environment.apiUrl}auth/validate-token`, data, {observe: 'response'});
+  }
+
+  forgotPassword(data: any) : Observable<any> {
+    return this.http.post(`${environment.apiUrl}auth/forgot-password`, data, { observe: 'response'});
+  }
+
+  resetPassword(data: any) : Observable<any> {
+    return this.http.post(`${environment.apiUrl}auth/reset-password`, data, {observe : 'response'});
   }
 }

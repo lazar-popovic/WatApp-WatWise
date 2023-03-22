@@ -8,6 +8,8 @@
     width: 302px;
     height: 100vh;
     background-color: #1676AC;
+    position: sticky;
+    top: 0;
 }
 
 .sidebar-header {

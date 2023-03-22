@@ -1,10 +1,115 @@
 
 <body>
     
-    <div style="display: inline-block; width: 30%;">
+    <div style="display: inline-block; width: 25%;">
         <app-sidebar>
         
         </app-sidebar>
+    </div>
+
+    <div style="display: inline-block; vertical-align: top;" *ngIf="showDevices">
+        <div id="devices-container">
+            <h2>Devices</h2>
+            <div id="devices-categories" style="display: inline-block;">
+                <div id="device-logo-consumer" ></div>
+                <div id="device-logo-prosumer" ></div> 
+                <div id="device-logo-storage"  ></div>
+            </div>
+
+            <div id="devices-add-device" style="display: inline-block;">
+                <div (click)="showDevices = false" id="devices-add" style="vertical-align: middle;">+ Add device</div>
+            </div>
+        </div>
+
+        <br>
+
+        <!-- Consumer devices container -->
+        <div id="consumer-devices">
+            <h2>Consumer Devices</h2>
+            <div>
+                 <ul>
+                    <ng-container *ngFor="let device of devices">
+                        <div id="consumer-device" *ngIf="device.category === 'consumer'"> 
+                            <li>{{device.name}} </li> 
+                            <br><br>
+                            <div style="width: 40%; display: inline-block;"> <button class="activity"></button> </div>
+                            <div style="width: 50%; display: inline-block;"> <li>{{device.consumption}} kWh</li> </div>
+                            <!-- <button (click)="removeDevice(device)">Remove Device</button> -->
+                        </div>
+                    </ng-container>
+                  </ul>
+            </div>
+        </div>          
+        
+        <!-- Prosumer devices container -->
+        <div id="prosumer-devices">
+            <h2>Prosumer Devices</h2>
+            <ul>
+                    <ng-container *ngFor="let device of devices">
+                        <div id="prosumer-device" *ngIf="device.category === 'prosumer'">
+                            <li>{{device.name}}</li>
+                            
+                            <br><br>
+                            <div style="width: 40%; display: inline-block;"> <button class="activity"></button> </div>
+                            <div style="width: 50%; display: inline-block;"> <li> +{{device.consumption}} kWh</li> </div>
+                            <!-- <button (click)="removeDevice(device)">Remove Device</button> -->
+                        </div>
+              </ng-container>
+            </ul>
+        </div>
+
+        <!-- Storage devices container -->
+        <div id="storage-devices">
+            <h2>Storage Devices</h2>
+            <ul>
+                <ng-container *ngFor="let device of devices">
+                    <div id="storage-device" *ngIf="device.category === 'storage'">
+                        <li>{{device.name}}</li>
+                        <br>
+                        <!-- <button class="activity"></button> -->
+                        <li style="font-weight: lighter;"> 2400/100000 mAh</li>
+                         <!-- <button (click)="removeDevice(device)">Remove Device</button> -->
+                        
+                    </div>
+          </ng-container>
+        </ul>
+        </div>
+    </div>
+
+    <div id="add-device" style="display: inline-block; vertical-align: top;" *ngIf="!showDevices">
+       
+        <h2 style="color: #3E3E3E;">Add Device</h2>
+        <form id="add-device-form">
+          <label for="name">Device name:</label><br>
+          <input type="text" id="name" name="name" [(ngModel)]="newDevice.name">
+          <br>
+
+          <label for="ip"> IP address </label><br>
+          <input type="text" id="name" name="name" placeholder="192.168.1.15">
+          <br>
+
+          <label for="category">Device category:</label><br>
+          <select id="category" name="category" [(ngModel)]="newDevice.category">
+            <option value="consumer">Consumer</option>
+            <option value="prosumer">Prosumer</option>
+            <option value="storage"> Storage</option>
+          </select>
+          <br>
+
+          <label for="type">Device type:</label><br>
+          <select type="text" id="type" name="type" [(ngModel)]="newDevice.type">
+            <option value="type1">Type1</option>
+            <option value="type2">Type2</option>
+            <option value="type3">Type3</option>
+          </select>
+          <br>
+          
+          <label for="type">Hourly consumption (kWh)</label><br>
+          <input type="text" id="consumption" name="consumption" [(ngModel)]="newDevice.consumption">
+          <br> 
+          
+          <button id="connect-button" type="button" (click)="addDevice()">Connect</button>
+        </form>
     </div>
 
 </body>
