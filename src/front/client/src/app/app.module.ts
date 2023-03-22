@@ -26,9 +26,9 @@ import { VerifyDsoComponent } from './components/verify-dso/verify-dso.component
 import { AuthInterceptor } from './services/auth.interceptor';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'pronsumer/login', pathMatch: 'full' },
-  { path: 'pronsumer/login', component: LoginComponent },
-  { path: 'pronsumer/register', component: RegisterComponent },
+  { path: '', redirectTo: 'prosumer/login', pathMatch: 'full' },
+  { path: 'prosumer/login', component: LoginComponent },
+  { path: 'prosumer/register', component: RegisterComponent },
   { path: 'dso/login', component: LoginDSOComponent },
   { path: 'dso/register', component: RegisterDSOComponent },
   

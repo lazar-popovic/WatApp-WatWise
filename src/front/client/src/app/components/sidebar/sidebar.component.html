@@ -28,12 +28,12 @@
       <div class="sidebar-nav-mobile">
         <button class="burger-menu" (click)="toggleMenu()"></button>
           <ul class="menu-list" [class.open]="menuOpen">
-            <li routerLink="/prosumer/overview"   ><a>Overview   </a></li>
-            <li routerLink="/prosumer/devices"    ><a>Devices    </a></li>
-            <li routerLink="/prosumer/consumption"><a>Consumption</a></li>
-            <li routerLink="/prosumer/production" ><a>Production </a></li>
+            <li id="overview-mobile"    routerLink="/prosumer/overview"   ><a>Overview   </a></li>
+            <li id="devices-mobile"     routerLink="/prosumer/devices"    ><a>Devices    </a></li>
+            <li id="consumption-mobile" routerLink="/prosumer/consumption"><a>Consumption</a></li>
+            <li id="production-mobile"  routerLink="/prosumer/production" ><a>Production </a></li>
             <br>
-            <li routerLink="/profile"><a>Profile</a></li>
+            <li id="profile-mobile"  routerLink="/profile"><a>Profile</a></li>
           </ul>
       </div>
       <br>
