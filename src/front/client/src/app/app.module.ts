@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthInterceptor } from './services/auth.interceptor';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LoginComponent } from './components/login/login.component';
@@ -26,8 +25,8 @@ import { VerifyDsoComponent } from './components/verify-dso/verify-dso.component
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { PasswordInputComponent } from './components/password-input/password-input.component';
-import { LogoHolderComponent } from './components/logo-holder/logo-holder.component';
 import { AuthInterceptor } from './services/auth.interceptor';
+import {Routes} from "@angular/router";
 
 const routes: Routes = [
   { path: '', redirectTo: 'prosumer/login', pathMatch: 'full' },
@@ -74,8 +73,7 @@ const routes: Routes = [
     VerifyDsoComponent,
     ChangePasswordComponent,
     ForgotPasswordComponent,
-    PasswordInputComponent,
-    LogoHolderComponent
+    PasswordInputComponent
   ],
   imports: [
     BrowserModule,
