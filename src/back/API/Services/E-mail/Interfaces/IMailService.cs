@@ -7,6 +7,6 @@ namespace API.Services.E_mail.Interfaces
     {
         void sendToken(User user);
         void sendResetToken(User user, string token);
-       
+        void resendToken(User user);
     }
 }

@@ -90,7 +90,7 @@ namespace API.BL.Implementations
                 response.Errors.Add("City is required");
             }
             
-            if (userRegisterRequest.Location.Number==null)
+            if (userRegisterRequest.Location.Number == null)
             {
                 response.Errors.Add("Number is required");
             }
@@ -397,6 +397,36 @@ namespace API.BL.Implementations
             return response;
         }
 
+        public Response<RegisterResponseViewModel> ResendVerifyEmail(ResendVerifyEmailViewModel request)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+
+            if (string.IsNullOrEmpty(request.Email.Trim()))
+            {
+                response.Errors.Add("Email is required");
+            }
+
+            var user = _authDAL.GetUserWithRoleForEmail(request.Email);
+
+            if (user == null)
+            {
+                response.Errors.Add("User doesen't exist!");
+            }
+
+            response.Success = response.Errors.Count() == 0;
+
+            if (response.Success == false)
+                return response;
+            else
+            {
+
+                _mailService.resendToken(user!);
+
+                response.Data = new RegisterResponseViewModel { Message = "New verfication mail has been sent!Check your email to complete registration." };
+
+                return response;
+            }
+        }
 
         #region private
 
@@ -578,7 +608,6 @@ namespace API.BL.Implementations
 
             return token;
         }
-
 
         #endregion
     }

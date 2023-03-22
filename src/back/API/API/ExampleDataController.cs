@@ -18,6 +18,7 @@ public class ExampleDataController : ControllerBase
     [Route("device-between-dates")]
     public async Task<IActionResult> GetUsageForDeviceBetweenDates(string device, DateTime startingDate, DateTime endingDate)
     {
+        await _simulator.HourlyUpdate();
         return Ok(await _simulator.GetUsageForDeviceBetweenDates(device, startingDate, endingDate));
     }
 }

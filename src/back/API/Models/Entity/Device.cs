@@ -15,5 +15,6 @@ namespace API.Models.Entity
         [ForeignKey("UserId")] 
         public User? User { get; set; }
         public bool? ActivityStatus { get; set; }
+        public List<DeviceEnergyUsage>? DeviceEnergyUsages { get; set; }
     }
 }

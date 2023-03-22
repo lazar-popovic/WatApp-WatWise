@@ -1,4 +1,3 @@
-using API.API;
 using API.BL.Implementations;
 using API.BL.Interfaces;
 using API.DAL.Implementations;
@@ -7,14 +6,7 @@ using API.Models.Entity;
 using API.Services.Geocoding.Implementations;
 using API.Services.Geocoding.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using API.Services.Geocoding.Implementations;
-using API.Services.Geocoding.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
@@ -63,6 +55,7 @@ builder.Services.AddScoped<IDeviceDAL, DeviceDAL>();
 builder.Services.AddScoped<IUserBL, UserBL>();
 builder.Services.AddScoped<IAuthDAL, AuthDAL>();
 builder.Services.AddScoped<IAuthBL, AuthBL>();
+builder.Services.AddScoped<IDeviceBL, DeviceBL>();
 builder.Services.AddScoped<ILocationDAL, LocationDAL>();
 
 //JWT Authenthication

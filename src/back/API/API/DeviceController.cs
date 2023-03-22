@@ -1,4 +1,5 @@
-﻿using API.DAL.Implementations;
+﻿using API.BL.Interfaces;
+using API.DAL.Implementations;
 using API.DAL.Interfaces;
 using API.Models.Entity;
 using Microsoft.AspNetCore.Http;
@@ -10,52 +11,37 @@ namespace API.API
     [ApiController]
     public class DeviceController : ControllerBase
     {
-        private readonly IDeviceDAL _ideviceDAL;
+        private readonly IDeviceBL _deviceBL;
 
-        public DeviceController(IDeviceDAL deviceDAL)
+        public DeviceController(IDeviceBL deviceBL)
         {
-            _ideviceDAL = deviceDAL;
+            _deviceBL = deviceBL;
         }
-
         [HttpGet("all")]
         public async Task<IActionResult> GetAllDevices()
         {
-            var devices = await _ideviceDAL.GetAllDevicesAsync();
-            return Ok(devices);
+            return Ok(await _deviceBL.GetDevice());
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDeviceById(int id)
         {
-            var device = await _ideviceDAL.GetDeviceByIdAsync(id);
-
-            if (device == null)
-            {
-                return NotFound();
-            }
-            return Ok(device);
+            return Ok(await _deviceBL.GetByIdAsync(id));
         }
         [HttpPost("add")]
         public async Task<IActionResult> AddDevice(Device device)
         {
-            await _ideviceDAL.AddDeviceAsync(device);
-            return CreatedAtAction(nameof(GetDeviceById), new { id = device.Id }, device);
+            return Ok(await _deviceBL.AddDevice(device));
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDevice(int id, Device device)
         {
-            if (id != device.Id)
-            {
-                return BadRequest();
-            }
-            await _ideviceDAL.UpdateDeviceAsync(device);
-            return NoContent();
+            return Ok(await _deviceBL.UpdateDevice(id, device));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDevice(int id)
         {
-            await _ideviceDAL.DeleteDeviceAsync(id);
-            return NoContent();
+            return Ok(await _deviceBL.DeleteDevice(id));
         }
 
 

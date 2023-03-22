@@ -3,6 +3,7 @@ using System;
 using API.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,65 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230318191013_migration1")]
+    partial class migration1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0-preview.1.23111.4");
-
-            modelBuilder.Entity("API.Models.Entity.Device", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool?>("ActivityStatus")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("Category")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("PurchaseDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Devices");
-                });
-
-            modelBuilder.Entity("API.Models.Entity.DeviceEnergyUsage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("DeviceId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime?>("Timestamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<double?>("Value")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DeviceId");
-
-                    b.ToTable("DeviceEnergyUsage");
-                });
 
             modelBuilder.Entity("API.Models.Entity.Location", b =>
                 {
@@ -77,18 +27,20 @@ namespace API.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("AddressNumber")
+                    b.Property<int>("AddressNumber")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<double?>("Latitude")
+                    b.Property<double>("Latitude")
                         .HasColumnType("REAL");
 
-                    b.Property<double?>("Longitude")
+                    b.Property<double>("Longitude")
                         .HasColumnType("REAL");
 
                     b.HasKey("Id");
@@ -197,24 +149,6 @@ namespace API.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("API.Models.Entity.Device", b =>
-                {
-                    b.HasOne("API.Models.Entity.User", "User")
-                        .WithMany("Devices")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("API.Models.Entity.DeviceEnergyUsage", b =>
-                {
-                    b.HasOne("API.Models.Entity.Device", "Device")
-                        .WithMany("DeviceEnergyUsages")
-                        .HasForeignKey("DeviceId");
-
-                    b.Navigation("Device");
-                });
-
             modelBuilder.Entity("API.Models.Entity.RefreshToken", b =>
                 {
                     b.HasOne("API.Models.Entity.User", "user")
@@ -248,11 +182,6 @@ namespace API.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("API.Models.Entity.Device", b =>
-                {
-                    b.Navigation("DeviceEnergyUsages");
-                });
-
             modelBuilder.Entity("API.Models.Entity.Location", b =>
                 {
                     b.Navigation("Users");
@@ -261,11 +190,6 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.Entity.Role", b =>
                 {
                     b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("API.Models.Entity.User", b =>
-                {
-                    b.Navigation("Devices");
                 });
 #pragma warning restore 612, 618
         }
