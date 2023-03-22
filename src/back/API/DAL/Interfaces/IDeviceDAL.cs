@@ -1,4 +1,5 @@
 ﻿using API.Models.Entity;
+using API.Models.ViewModels;
 
 namespace API.DAL.Interfaces
 {
@@ -9,6 +10,7 @@ namespace API.DAL.Interfaces
         Task AddDeviceAsync(Device device);
         Task UpdateDeviceAsync(Device device);
         Task DeleteDeviceAsync(int id);
+        Task AddDeviceViewModel(DeviceViewModel device);
 
 
 

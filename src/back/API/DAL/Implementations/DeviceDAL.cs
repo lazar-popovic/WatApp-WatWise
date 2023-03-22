@@ -1,5 +1,7 @@
 ﻿using API.DAL.Interfaces;
 using API.Models.Entity;
+using API.Models.ViewModels;
+using API.Services.JWTCreation.Implementations;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.DAL.Implementations
@@ -7,6 +9,7 @@ namespace API.DAL.Implementations
     public class DeviceDAL:IDeviceDAL
     {
         private readonly DataContext _dbContext;
+        private readonly JWTCreator jWTCreator;
 
         public DeviceDAL(DataContext dbContext)
         {
@@ -39,6 +42,21 @@ namespace API.DAL.Implementations
         {
             Device device = await GetDeviceByIdAsync(id);
             _dbContext.Devices.Remove(device);
+            await _dbContext.SaveChangesAsync();
+        }
+        public async Task AddDeviceViewModel(DeviceViewModel devicee)
+        {
+
+            var device = new Device
+            {
+                UserId = jWTCreator.GetUserIdFromToken("Nesto"),
+                ActivityStatus = false,
+                PurchaseDate = DateTime.Now,
+                Type = devicee.Type,
+                Category = devicee.Category,
+                Name = devicee.Name
+            };
+            await _dbContext.Devices.AddAsync(device);
             await _dbContext.SaveChangesAsync();
         }
     }

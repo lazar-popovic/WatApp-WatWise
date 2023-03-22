@@ -3,6 +3,7 @@ using API.DAL.Interfaces;
 using API.Models.Entity;
 using API.Models;
 using API.BL.Interfaces;
+using API.Models.ViewModels;
 
 namespace API.BL.Implementations
 {
@@ -111,6 +112,29 @@ namespace API.BL.Implementations
                 return response;
             }
             await _ideviceDal.UpdateDeviceAsync(device);
+
+            response.Data = "Pass";
+
+            response.Success = response.Errors.Count() == 0;
+
+            return response;
+
+
+
+        }
+
+        public async Task<Response<String>> AddDeviceViewModel(DeviceViewModel device)
+        {
+            var response = new Response<String>();
+            var dev = device;
+            await _ideviceDal.AddDeviceViewModel(device);
+            if (dev == null)
+            {
+                response.Errors.Add("Device is null");
+                response.Success = false;
+
+                return response;
+            }
 
             response.Data = "Pass";
 
