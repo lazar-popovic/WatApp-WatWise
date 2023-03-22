@@ -1,11 +1,10 @@
 <div class="verify-container">
-  <app-logo-holder></app-logo-holder>
   <div class="container">
   <form>
     <h2>Verify account</h2>
     <h3 id="verify-prosumer-mail"> prosumer@gmail.com </h3>
     <br>
-    
+
     <input type="password" id="password" placeholder="password" name="password" [(ngModel)]="password.password1">
     <input type="password" id="password" placeholder="password" name="password" [(ngModel)]="password.password2">
     <button type="submit" (click)="verify()">Verify</button>
