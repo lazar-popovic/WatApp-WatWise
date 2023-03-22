@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VerifyDsoComponent } from './verify-dso.component';
+import { LogoHolderComponent } from './logo-holder.component';
 
-describe('VerifyDsoComponent', () => {
-  let component: VerifyDsoComponent;
-  let fixture: ComponentFixture<VerifyDsoComponent>;
+describe('LogoHolderComponent', () => {
+  let component: LogoHolderComponent;
+  let fixture: ComponentFixture<LogoHolderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VerifyDsoComponent ]
+      declarations: [ LogoHolderComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(VerifyDsoComponent);
+    fixture = TestBed.createComponent(LogoHolderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

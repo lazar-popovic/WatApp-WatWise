@@ -9,10 +9,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';  
-import { LoginDSOComponent } from './components/login-dso/login-dso.component';
-import { RegisterDSOComponent } from './components/register-dso/register-dso.component';
 import { DevicesComponent } from './components/devices/devices.component';
 import { ConsumptionComponent } from './components/consumption/consumption.component';
 import { OverviewComponent } from './components/overview/overview.component';  
@@ -22,7 +19,6 @@ import { MapComponent } from './components/map/map.component';
 import { EnergyUsageComponent } from './components/energy-usage/energy-usage.component';
 import { ProductionComponent } from './components/production/production.component';
 import { VerifyComponent } from './components/verify/verify.component';
-import { VerifyDsoComponent } from './components/verify-dso/verify-dso.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { PasswordInputComponent } from './components/password-input/password-input.component';
@@ -31,11 +27,8 @@ import { LogoHolderComponent } from './components/logo-holder/logo-holder.compon
   declarations: [
     AppComponent,
     LoginComponent,
-    LoginDSOComponent,
-    RegisterComponent,
     SidebarComponent,
     ProfileComponent,
-    RegisterDSOComponent,
     DevicesComponent,
     ConsumptionComponent,
     OverviewComponent,
@@ -45,7 +38,6 @@ import { LogoHolderComponent } from './components/logo-holder/logo-holder.compon
     EnergyUsageComponent,
     ProductionComponent,
     VerifyComponent,
-    VerifyDsoComponent,
     ChangePasswordComponent,
     ForgotPasswordComponent,
     PasswordInputComponent,

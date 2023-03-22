@@ -1,31 +1,17 @@
-
-body
+.verify-container
 {
     background-color: #1676AC;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-
-/*Logo*/
-img 
-{
-    height: 100px;
-    width: 100px;  
-}
-
-#logo
-{
-    margin-bottom: 0px;
-    padding-top: 50px;
-    text-align: center;
-}
-
 
 /*Forma za login*/
 .container 
 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  
   height: 60vh; /* sets container height to full viewport height */
 }
 

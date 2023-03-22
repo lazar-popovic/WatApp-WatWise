@@ -11,6 +11,11 @@ export class UsersComponent {
     email: '',
     firstname: '',
     lastname: '',
+    location: {
+      address: 'bb',
+      city: 'none',
+      number: 0
+    }
   };
 
   constructor(private userService: UserService,private router: Router) { }
