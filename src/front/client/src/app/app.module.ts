@@ -27,6 +27,32 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { PasswordInputComponent } from './components/password-input/password-input.component';
 import { LogoHolderComponent } from './components/logo-holder/logo-holder.component';
+import { AuthInterceptor } from './services/auth.interceptor';
+
+const routes: Routes = [
+  { path: '', redirectTo: 'prosumer/login', pathMatch: 'full' },
+  { path: 'prosumer/login', component: LoginComponent },
+  { path: 'prosumer/register', component: RegisterComponent },
+  { path: 'dso/login', component: LoginDSOComponent },
+  { path: 'dso/register', component: RegisterDSOComponent },
+
+  { path: 'dso/verification', component : VerifyDsoComponent},
+  { path: 'prosumer/verification', component : VerifyComponent},
+
+  { path: 'prosumer/overview',  component:  OverviewComponent },
+  { path: 'dso/overview',  component:  OverviewComponent },
+  { path: 'profile',  component:  ProfileComponent },
+
+  { path: 'prosumer/devices', component : DevicesComponent},
+  { path: 'prosumer/consumption', component : ConsumptionComponent},
+  { path: 'prosumer/production', component : ProductionComponent},
+
+  { path: 'dso/users', component : UsersComponent},
+  { path: 'dso/map', component : MapComponent},
+  { path: 'dso/consumption', component : EnergyUsageComponent}
+
+];
+
 @NgModule({
   declarations: [
     AppComponent,
