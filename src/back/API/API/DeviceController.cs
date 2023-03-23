@@ -2,6 +2,8 @@
 using API.DAL.Implementations;
 using API.DAL.Interfaces;
 using API.Models.Entity;
+using API.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,6 +44,11 @@ namespace API.API
         public async Task<IActionResult> DeleteDevice(int id)
         {
             return Ok(await _deviceBL.DeleteDevice(id));
+        }
+        [HttpPost("insert-device"), Authorize(Roles = "User")]
+        public async Task<IActionResult> AddDeviceViewModel(DeviceViewModel device)
+        {
+            return Ok(await _deviceBL.AddDeviceViewModel(device));
         }
 
 

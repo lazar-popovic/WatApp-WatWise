@@ -58,7 +58,6 @@ namespace API.BL.Implementations
         {
             var response = new Response<String>();
             var dev = device;
-            await _ideviceDal.AddDeviceAsync(device);
             if (dev == null)
             {
                 response.Errors.Add("Device is null");
@@ -66,7 +65,7 @@ namespace API.BL.Implementations
 
                 return response;
             }
-
+            await _ideviceDal.AddDeviceAsync(device);
             response.Data = "Pass";
 
             response.Success = response.Errors.Count() == 0;
@@ -127,7 +126,7 @@ namespace API.BL.Implementations
         {
             var response = new Response<String>();
             var dev = device;
-            await _ideviceDal.AddDeviceViewModel(device);
+            
             if (dev == null)
             {
                 response.Errors.Add("Device is null");
@@ -135,6 +134,7 @@ namespace API.BL.Implementations
 
                 return response;
             }
+            await _ideviceDal.AddDeviceViewModel(device);
 
             response.Data = "Pass";
 

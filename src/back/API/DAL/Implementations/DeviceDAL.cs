@@ -49,7 +49,7 @@ namespace API.DAL.Implementations
 
             var device = new Device
             {
-                UserId = jWTCreator.GetUserIdFromToken("Nesto"),
+                UserId = devicee.UserId,
                 ActivityStatus = false,
                 PurchaseDate = DateTime.Now,
                 Type = devicee.Type,
