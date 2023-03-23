@@ -17,14 +17,9 @@ using API.Services.JWTCreation.Interfaces;
 using API.Services.JWTCreation.Implementations;
 using API.Services.E_mail.Interfaces;
 using API.Services.E_mail.Implementations;
-using MongoDB.Driver;
 using Hangfire;
-using Microsoft.AspNetCore.Mvc;
-using API.API;
-using System.Net.Http;
-using Hangfire.SqlServer;
-using System.Configuration;
 using Hangfire.Storage.SQLite;
+using AspNetCoreRateLimit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +57,13 @@ builder.Services.AddHangfireServer();
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlite( builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
+builder.Services.AddOptions();
+builder.Services.AddMemoryCache();
+builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
+builder.Services.Configure<IpRateLimitPolicies>(builder.Configuration.GetSection("IpRateLimitPolicies"));
+builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
 
 // INJECTIONS
 builder.Services.AddScoped<DataContext>();
@@ -108,6 +110,7 @@ app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseIpRateLimiting();
 
 app.MapControllers();
 

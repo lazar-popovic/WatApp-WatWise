@@ -1,9 +1,12 @@
-﻿using API.BL.Interfaces;
+﻿using Amazon.Runtime.Internal;
+using API.BL.Interfaces;
 using API.Models.Entity;
 using API.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
+using AspNetCoreRateLimit;
 
 namespace API.API
 {
@@ -19,6 +22,7 @@ namespace API.API
         }
 
         [HttpPost("login"),AllowAnonymous]
+        [RateLimit(Name = "LoginThrottle", Seconds = 60, Requests = 3)]
         public IActionResult Login(LoginViewModel request)
         {
             return Ok(_authBL.Login(request));
