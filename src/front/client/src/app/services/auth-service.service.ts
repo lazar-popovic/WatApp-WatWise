@@ -11,12 +11,8 @@ export class AuthService {
 
   constructor(private http:HttpClient) { }
 
-  loginProsumer(data : any) : Observable<any> {
-    return this.http.post(`${environment.apiUrl}prosumer/login`, data, {observe: 'response'});
-  }
-
-  loginDso(data : any) : Observable<any> {
-    return this.http.post(`${environment.apiUrl}dso/login`, data, {observe: 'response'});
+  login(data: any) : Observable<any> {
+    return this.http.post(`${environment.apiUrl}auth/login`, data, {observe: 'response'});
   }
 
   verify(data: any) : Observable<any> {
@@ -24,6 +20,14 @@ export class AuthService {
   }
 
   verifyToken(data: any) : Observable<any> {
-    return this.http.post(`${environment.apiUrl}auth/validate-token`, data, {observe: 'response'});
+    return this.http.post(`${environment.apiUrl}auth/verify-token`, data, {observe: 'response'});
+  }
+
+  forgotPassword(data: any) : Observable<any> {
+    return this.http.post(`${environment.apiUrl}auth/forgot-password`, data, { observe: 'response'});
+  }
+
+  resetPassword(data: any) : Observable<any> {
+    return this.http.post(`${environment.apiUrl}auth/reset-password`, data, {observe : 'response'});
   }
 }

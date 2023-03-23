@@ -1,7 +1,10 @@
 ﻿using API.Data;
 using API.Model;
+using API.Services.DevicesDataGenerator.Implementation;
+using API.Services.DevicesDataGenerator.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson;
 
 namespace API.Controller;
 
@@ -10,10 +13,12 @@ namespace API.Controller;
 public class DevicesController : ControllerBase
 {
     private DataContext _connection;
+    private IDevicesDataGenerator _devicesDataGenerator;
     
-    public DevicesController(DataContext connection)
+    public DevicesController(DataContext connection, IDevicesDataGenerator devicesDataGenerator)
     {
         this._connection = connection;
+        _devicesDataGenerator = devicesDataGenerator;
     }
     
     
@@ -74,5 +79,21 @@ public class DevicesController : ControllerBase
         await _connection.SaveChangesAsync();
 
         return Ok(existingProduct);
+    }
+    
+    [HttpGet]
+    [Route("consumption")]
+    public async Task<IActionResult> getDevice( DateTime startingDate, DateTime endingDate)
+    {
+        var result = await _devicesDataGenerator.GetUsageBetweenDates("fridge", startingDate, endingDate);
+        return Ok(result);
+    }
+
+    [HttpGet]
+    [Route("proba")]
+    public async Task<IActionResult> proba()
+    {
+        BsonDateTime bsonDateTime = new BsonDateTime(DateTime.UtcNow);
+        return Ok(bsonDateTime.ToUniversalTime());
     }
 }

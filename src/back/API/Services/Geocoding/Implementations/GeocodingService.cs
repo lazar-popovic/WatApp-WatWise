@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using API.Models.Entity;
+using API.Models.ViewModels;
 using API.Services.Geocoding.Interfaces;
 using Newtonsoft.Json.Linq;
 
@@ -10,32 +11,29 @@ public class GeocodingService : IGeocodingService
     public static string Url = "https://dev.virtualearth.net/REST/v1/Locations";
 
 
-    public LongLat Geocode(string address)
+    public LongLat Geocode( LocationViewModel location)
     {
-        LongLat result = new LongLat();
-        string url = $"{Url}?q={address}&key={ApiKey.Key}";
+        var address = $"{location.Address} {location.Number}, {location.City}";
+        var result = new LongLat();
+        var url = $"{Url}?q={address}&key={ApiKey.Key}";
         try
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            using var response = (HttpWebResponse)request.GetResponse();
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-                    {
-                        string responseText = reader.ReadToEnd();
-                        JObject responseJson = JObject.Parse(responseText);
+                using var reader = new StreamReader(response.GetResponseStream());
+                var responseText = reader.ReadToEnd();
+                var responseJson = JObject.Parse(responseText);
 
-                        JToken resourceSet = responseJson["resourceSets"][0];
-                        JToken resource = resourceSet["resources"][0];
-                        JToken point = resource["point"];
-                        double latitude = (double)point["coordinates"][0];
-                        double longitude = (double)point["coordinates"][1];
+                var resourceSet = responseJson["resourceSets"][0];
+                var resource = resourceSet["resources"][0];
+                var point = resource["point"];
+                var latitude = (double)point["coordinates"][0];
+                var longitude = (double)point["coordinates"][1];
 
-                        result.Latitude = latitude;
-                        result.Longitude = longitude;
-                    }
-                }
+                result.Latitude = latitude;
+                result.Longitude = longitude;
             }
         }
         catch (Exception ex)

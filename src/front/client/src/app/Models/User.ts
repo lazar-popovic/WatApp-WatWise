@@ -4,7 +4,9 @@ export class User {
     lastName = "Petrovic";
     mail = "petarpetrovic@gmail.com";
     password = "asdas";
-    role = "User"
-    longitude ?: number;
-    latitude ?: number;
+    role = 1;
+    address = "Radoja Domanovica";
+    num = 1;
+    city = "Kragujevac";
+
 }

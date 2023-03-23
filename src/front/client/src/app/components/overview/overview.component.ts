@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
 })
 export class OverviewComponent 
 {
-    dsoShow = true;
+    //dsoShow = true;
+    dsoShow = false;
+
 }

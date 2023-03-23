@@ -3,6 +3,7 @@ using API.Services.JWTCreation.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace API.Services.JWTCreation.Implementations
@@ -35,16 +36,19 @@ namespace API.Services.JWTCreation.Implementations
             {
                 Issuer = "http://localhost:5226",
                 Audience = "http://localhost:5226",
-                Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha512Signature)
+                Expires = DateTime.UtcNow.AddMinutes(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha256Signature)
             };
 
             JwtSecurityToken token = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
             token.Payload.AddClaims(principal.Claims);
-
+ 
             var jwt = tokenHandler.WriteToken(token);
 
-            return jwt;
+            if (jwt != null)
+                return jwt;
+            else
+                return null;
         }
 
         public string CreateVerificationToken(int userId)
@@ -60,7 +64,7 @@ namespace API.Services.JWTCreation.Implementations
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddHours(1), // Token expires in 1 hour
+                Expires = DateTime.UtcNow.AddMinutes(10),
                 SigningCredentials = signingCredentials,
             };
 
@@ -90,15 +94,86 @@ namespace API.Services.JWTCreation.Implementations
                 Issuer = "http://localhost:5226",
                 Audience = "http://localhost:5226",
                 Expires = DateTime.UtcNow.AddMinutes(10),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha512Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha256Signature)
             };
 
             JwtSecurityToken token = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
             token.Payload.AddClaims(principal.Claims);
-
             var jwt = tokenHandler.WriteToken(token);
 
-            return jwt;
+            if (jwt != null)
+                return jwt;
+            else
+                return null;
+        }
+
+        public string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[64];
+
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
+            }
+        }
+
+        public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+        {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])),
+                ValidateLifetime = false 
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken securityToken;
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenValidationException("Invalid token");
+
+            return principal;
+        }
+
+        public int GetUserIdFromToken(string token)
+        {
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                var validationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = secretKey,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                };
+                SecurityToken validatedToken;
+                var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
+
+                var userIdClaim = claimsPrincipal.FindFirst("userId");
+                var userId = userIdClaim?.Value;
+
+                if (int.TryParse(userId, out int id))
+                {
+                    return id;
+                }
+            }
+            catch (SecurityTokenException se)
+            {
+                throw se;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return -1;
         }
     }
 }

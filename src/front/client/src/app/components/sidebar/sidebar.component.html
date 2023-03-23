@@ -19,3 +19,30 @@
         </div>
     </div>
 </div>
+
+
+<div class="sidebar-container-mobile">
+
+    <div class="sidebar-header-mobile">
+      <div class="sidebar-logo-mobile"><img id="logoMobile" src="\assets\logo.png"></div>
+      <div class="sidebar-nav-mobile">
+        <button class="burger-menu" (click)="toggleMenu()"></button>
+          <ul class="menu-list" [class.open]="menuOpen">
+            <li id="overview-mobile"    routerLink="/prosumer/overview"   ><a>Overview   </a></li>
+            <li id="devices-mobile"     routerLink="/prosumer/devices"    ><a>Devices    </a></li>
+            <li id="consumption-mobile" routerLink="/prosumer/consumption"><a>Consumption</a></li>
+            <li id="production-mobile"  routerLink="/prosumer/production" ><a>Production </a></li>
+            <br>
+            <li id="profile-mobile"  routerLink="/profile"><a>Profile</a></li>
+          </ul>
+      </div>
+      <br>
+      {{ this.currentTime }}
+    </div>
+  
+</div>
+  
+  
+  
+
+

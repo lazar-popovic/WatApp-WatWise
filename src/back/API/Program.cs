@@ -1,4 +1,3 @@
-using API.API;
 using API.BL.Implementations;
 using API.BL.Interfaces;
 using API.DAL.Implementations;
@@ -7,22 +6,21 @@ using API.Models.Entity;
 using API.Services.Geocoding.Implementations;
 using API.Services.Geocoding.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using API.Services.Geocoding.Implementations;
-using API.Services.Geocoding.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using API.Services.DeviceSimulatorService.Implementation;
+using API.Services.DeviceSimulatorService.Interfaces;
 using API.Services.JWTCreation.Interfaces;
 using API.Services.JWTCreation.Implementations;
 using API.Services.E_mail.Interfaces;
 using API.Services.E_mail.Implementations;
+using Microsoft.AspNetCore.Authentication;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,15 +47,16 @@ builder.Services.AddDbContext<DataContext>(options =>
 // INJECTIONS
 builder.Services.AddScoped<DataContext>();
 builder.Services.AddScoped<IGeocodingService, GeocodingService>();
-builder.Services.AddScoped<IProsumerBL, ProsumerBL>();
-builder.Services.AddScoped<IProsumerDAL, ProsumerDAL>();
-builder.Services.AddScoped<IDsoBL, DsoBL>();
-builder.Services.AddScoped<IDsoDAL, DsoDAL>();
-builder.Services.AddScoped<IBaseBL, BaseBL>();
-builder.Services.AddScoped<IBaseDAL, BaseDAL>();
 builder.Services.AddScoped<IJWTCreator, JWTCreator>();
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IUserDAL, UserDAL>();
+builder.Services.AddScoped<IDeviceSimulatorService, DeviceSimulatorService>();
+builder.Services.AddScoped<IDeviceDAL, DeviceDAL>();
+builder.Services.AddScoped<IUserBL, UserBL>();
+builder.Services.AddScoped<IAuthDAL, AuthDAL>();
+builder.Services.AddScoped<IAuthBL, AuthBL>();
+builder.Services.AddScoped<IDeviceBL, DeviceBL>();
+builder.Services.AddScoped<ILocationDAL, LocationDAL>();
 
 //JWT Authenthication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {

@@ -1,13 +1,16 @@
 * {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 24;
+    font-size: 20px;
     color: white;
 }
+
 .sidebar-container {
     width: 302px;
     height: 100vh;
     background-color: #1676AC;
+    position: sticky;
+    top: 0;
 }
 
 .sidebar-header {
@@ -67,4 +70,194 @@
     bottom: 24px;
     display: flex;
     align-items: center;
+}
+
+
+/* Responsive*/
+
+@media (min-width: 599px)
+{
+    .sidebar-container-mobile
+    {
+        display: none;
+    }
+}
+ 
+/* Maximum width */
+@media (max-width: 600px) 
+{
+    .sidebar-container
+    {
+        display: none;
+    }
+
+    .sidebar-container-mobile
+    {
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 100vw;
+        background-color: #1676AC;
+    }
+
+    #logoMobile
+    {
+        height: 50px;
+        margin-left: 40px;
+    }
+
+    .sidebar-logo-mobile
+    {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+    }
+
+    .sidebar-nav-mobile {
+        align-items: center;
+        justify-content: flex-end;
+
+        float: right;
+        margin-top: 0px;
+        margin-right: 30px;
+      }
+
+
+    /* Buger */
+      
+    /* Burger menu styles */
+    button.burger-menu
+    {
+        background-color: transparent;
+    }
+    
+    .burger-menu 
+    {
+
+        top: 0;
+        right: 0;
+
+        display: inline-block; 
+        
+        flex-direction: column;
+        justify-content: space-between;
+        width: 50px;
+        height: 50px;
+        margin-bottom: 20px;
+        margin-right: 10px;
+        cursor: pointer;
+        border: none;
+        padding: 0;
+        
+        background-image: url(/assets/burger.png);
+        background-size: 50px;
+        background-repeat: no-repeat;
+        background-position: 7px 10px;
+      
+    }
+  
+    .burger-menu span {
+        width: 50%;
+        height: 3px;
+        background-color: #1676AC;
+        transition: all 0.3s ease-in-out;        
+    }
+  
+    .burger-menu span:first-child {
+        transform-origin: top left;
+    }
+    
+    .burger-menu span:last-child {
+        transform-origin: bottom left;
+    }
+    
+    /* Open menu styles */
+    .menu-list {
+        position: absolute;
+        top: 80 px;
+        right: 5px;
+        width: 50%;
+        max-height: 0;
+        overflow: hidden;
+        list-style: none;
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease-in-out;
+
+        padding-bottom: 10px;
+    }
+    
+    .menu-list li {
+        padding: 10px 20px;
+    }
+    
+    .menu-list a {
+        text-decoration: none;
+        color: #333;
+        font-size: 16px;
+    }
+
+    .menu-list
+    {
+        background-color: #1676AC;
+
+        box-shadow: none;
+        padding-bottom: 5px;
+    }
+
+    .menu-list.open {
+        background-color: #fff;
+        max-height: 300px;
+        border-radius: 10px;
+        border: 1px solid #1676AC;
+
+          
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    }
+    
+    .sidebar-item-active-mobile,.sidebar-item-mobile
+    {
+        color: #0C4869;
+    }
+    
+
+
+    #overview-mobile a,#devices-mobile a,#consumption-mobile a,#production-mobile a,#profile-mobile a
+    {
+        margin-left: 35px;
+        font-size: 25px;
+    }
+
+    #overview-mobile,#devices-mobile, #consumption-mobile,#production-mobile,#profile-mobile
+    {
+        background-image: url(/assets/overview.png);
+        background-size: 30px;
+        background-repeat: no-repeat;
+        background-position: 7px 7px;
+    }
+
+    #overview-mobile:hover,#devices-mobile:hover,#consumption-mobile:hover,
+    #production-mobile:hover,#profile-mobile:hover
+    {
+        color: #fff;
+        background-color: #1676AC;
+    }
+    
+    #devices-mobile     {   background-image: url(/assets/devices.png);}
+    #consumption-mobile {   background-image: url(/assets/consumption.png);}
+    #production-mobile  {   background-image: url(/assets/production.png);}
+    
+    #profile-mobile     
+    {   
+        background-image: url(/assets/user.png);
+
+        margin-left: 10px;
+        margin-right: 10px;
+        
+        border-top: 1px solid #333;
+        border-top-width: 50%;
+        
+    }
+
 }

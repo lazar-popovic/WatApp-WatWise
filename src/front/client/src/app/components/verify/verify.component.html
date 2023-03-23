@@ -1,28 +1,13 @@
+<div class="verify-container">
+  <div class="container">
+  <form>
+    <h2>Verify account</h2>
+    <h3 id="verify-prosumer-mail"> prosumer@gmail.com </h3>
+    <br>
 
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  </head>
-  
-  <body>
-        <div id="logo">
-          <img src="\assets\logo.png" alt="logo">
-        </div>
-  
-        <div class="container">
-        <form>
-          <h2>Verify account</h2>
-          <h3 id="verify-prosumer-mail"> prosumer@gmail.com </h3>
-          <br>
-          <div>
-            <input type="password" id="password" placeholder="password" name="password" [(ngModel)]="password.password1">
-          </div>
-          
-          <div>
-            <input type="password" id="password" placeholder="password" name="password" [(ngModel)]="password.password2">
-          </div>
-            <button type="submit" (click)="verify()">Verify</button>
-        </form>
-        </div>
-  </body>
-  
+    <input type="password" id="password" placeholder="password" name="password" [(ngModel)]="password.password1">
+    <input type="password" id="password" placeholder="password" name="password" [(ngModel)]="password.password2">
+    <button type="submit" (click)="verify()">Verify</button>
+  </form>
+  </div>
+</div>

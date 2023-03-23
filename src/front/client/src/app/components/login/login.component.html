@@ -1,32 +1,11 @@
-
-<head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-
-<body>
-      <div id="logo">
-        <img src="\assets\logo.png" alt="logo">
-      </div>
-
-      <div class="container">
-      <form>
-        <h2>Sign In</h2>
-        <div>
-              <input type="email" id="email" placeholder="username" name="email" required [(ngModel)]="login.email">
-        </div>
-        <div>
-
-          <input type="password" id="password" placeholder="password" name="password" required [(ngModel)]="login.password">
-          <p id="forgot_pass" >Forgot password ?</p>
-        </div>
-        <button type="submit" (click)="logIn()">Login</button>
-        <p id="dont_have_acc" >Dont't have an account ? <a routerLink="/pronsumer/register"><span id="register">SIGN UP</span></a></p>
-
-          <br>
-          <!--(click)="showLoginPronsumer = false"-->
-          <button routerLink="/dso/login" id="loginDSO" type="submit" >Login as DSO</button>
-
-      </form>
-      </div>
-</body>
+<div class="login-holder">
+  <div class="login-container">
+    <form>
+      <h2>Sign In</h2>
+      <input type="email" id="login-email" placeholder="username" name="email" required [(ngModel)]="login.email">
+      <input type="password" id="login-password" placeholder="password" name="password" required [(ngModel)]="login.password">
+      <p id="login-forgot-pass"><a href="forgot-password">Forgot password ?</a></p>
+      <button type="submit" (click)="logIn()">Login</button>
+    </form>
+  </div>
+</div>
