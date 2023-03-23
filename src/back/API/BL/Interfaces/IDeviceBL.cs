@@ -1,5 +1,6 @@
 ﻿using API.Models.Entity;
 using API.Models;
+using API.Models.ViewModels;
 
 namespace API.BL.Interfaces
 {
@@ -10,5 +11,6 @@ namespace API.BL.Interfaces
         Task<Response<Device>> GetByIdAsync(int id);
         Task<Response<String>> UpdateDevice(int id, Device device);
         Task<Response<String>> DeleteDevice(int id);
+        Task<Response<String>> AddDeviceViewModel(DeviceViewModel devicee);
     }
 }
