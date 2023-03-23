@@ -18,12 +18,18 @@ using API.Services.JWTCreation.Implementations;
 using API.Services.E_mail.Interfaces;
 using API.Services.E_mail.Implementations;
 using MongoDB.Driver;
+using Hangfire;
+using Microsoft.AspNetCore.Mvc;
+using API.API;
+using System.Net.Http;
+using Hangfire.SqlServer;
+using System.Configuration;
+using Hangfire.Storage.SQLite;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -38,6 +44,20 @@ builder.Services.AddSwaggerGen(options =>
 
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
+
+builder.Services.AddHangfire(hangfire => 
+{
+    hangfire.SetDataCompatibilityLevel(CompatibilityLevel.Version_170);
+    hangfire.UseSimpleAssemblyNameTypeSerializer();
+    hangfire.UseRecommendedSerializerSettings();
+    hangfire.UseColouredConsoleLogProvider();
+    hangfire.UseSQLiteStorage(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+    RecurringJob.AddOrUpdate<IDeviceSimulatorService>(x => x.HourlyUpdate(), "0 0 * ? * *");
+});
+
+builder.Services.AddHangfireServer();
+
 
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlite( builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -56,7 +76,7 @@ builder.Services.AddScoped<IAuthDAL, AuthDAL>();
 builder.Services.AddScoped<IAuthBL, AuthBL>();
 builder.Services.AddScoped<IDeviceBL, DeviceBL>();
 builder.Services.AddScoped<ILocationDAL, LocationDAL>();
-
+builder.Services.AddTransient<IRecurringJobManager, RecurringJobManager>();
 //JWT Authenthication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -68,6 +88,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
+
+
+
 
 var app = builder.Build();
 
@@ -87,5 +110,9 @@ app.UseAuthorization();
 
 
 app.MapControllers();
+
+app.UseHangfireDashboard();
+app.MapHangfireDashboard();
+
 
 app.Run();
