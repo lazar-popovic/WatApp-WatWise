@@ -36,7 +36,7 @@ namespace API.Services.JWTCreation.Implementations
             {
                 Issuer = "http://localhost:5226",
                 Audience = "http://localhost:5226",
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddHours(3),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha256Signature)
             };
 
