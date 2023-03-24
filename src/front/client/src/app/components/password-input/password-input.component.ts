@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service.service';
+import {ToastrNotifService} from "../../services/toastr-notif.service";
 
 @Component({
   selector: 'app-password-input',
@@ -18,7 +19,7 @@ export class PasswordInputComponent implements OnInit {
     token: ''
   }
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private toastrNotifService: ToastrNotifService) { }
 
   ngOnInit()
   {
@@ -37,11 +38,18 @@ export class PasswordInputComponent implements OnInit {
 
   restartPassword()
   {
+    console.log( this.data);
     this.authService.resetPassword(this.data).subscribe((result: any) => {
-      this.router.navigateByUrl('');
+      if( result.body.success) {
+        this.toastrNotifService.showSuccess( result.body.data.message);
+        this.router.navigateByUrl('');
+      }
+      else {
+        this.toastrNotifService.showErrors( result.body.errors);
+      }
     }, (error: any) => {
       console.log(error);
     })
   }
-  
+
 }
