@@ -74,5 +74,24 @@ namespace API.BL.Implementations
 
             return response;
         }
+        public async Task<Response<List<User>>> GetUsersWithLocationId(int id)
+        {
+            var response = new Response<List<User>>();
+
+            var users = await _userDal.GetUsersWithLocationId(id);
+
+            if (users == null)
+            {
+                response.Errors.Add("Error with displaying users from base!");
+                response.Success = false;
+
+                return response;
+            }
+
+            response.Data = users!;
+            response.Success = response.Errors.Count() == 0;
+
+            return response;
+        }
     }
 }
