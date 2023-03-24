@@ -1,7 +1,6 @@
 ﻿using API.DAL.Interfaces;
 using API.Models.Entity;
 using API.Models.ViewModels;
-using API.Services.JWTCreation.Implementations;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.DAL.Implementations
@@ -9,7 +8,6 @@ namespace API.DAL.Implementations
     public class DeviceDAL:IDeviceDAL
     {
         private readonly DataContext _dbContext;
-        private readonly JWTCreator jWTCreator;
 
         public DeviceDAL(DataContext dbContext)
         {

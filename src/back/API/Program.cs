@@ -14,7 +14,6 @@ using System.Text;
 using API.Services.DeviceSimulatorService.Implementation;
 using API.Services.DeviceSimulatorService.Interfaces;
 using API.Services.JWTCreation.Interfaces;
-using API.Services.JWTCreation.Implementations;
 using API.Services.E_mail.Interfaces;
 using API.Services.E_mail.Implementations;
 using MongoDB.Driver;
@@ -24,6 +23,7 @@ using API.API;
 using System.Net.Http;
 using Hangfire.SqlServer;
 using System.Configuration;
+using API.Services.JWTCreation.Implementations;
 using Hangfire.Storage.SQLite;
 
 var builder = WebApplication.CreateBuilder(args);
