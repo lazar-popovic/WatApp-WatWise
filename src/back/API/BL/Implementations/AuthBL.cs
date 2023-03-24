@@ -458,8 +458,17 @@ namespace API.BL.Implementations
 
             if (string.IsNullOrEmpty(request.NewPassword) || string.IsNullOrEmpty(request.ConfirmedNewPassword))
             {
-                response.Errors.Add("Password is empty or passwords don't match!");
+                response.Errors.Add("Passwords are empty");
             }
+            if(request.NewPassword != request.ConfirmedNewPassword)
+            {
+                response.Errors.Add("Passwords doesen't match!");
+            }
+
+            response.Success = response.Errors.Count() == 0;
+
+            if (!response.Success)
+                return response;
 
             try
             {

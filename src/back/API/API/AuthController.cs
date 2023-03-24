@@ -22,7 +22,7 @@ namespace API.API
         }
 
         [HttpPost("login"),AllowAnonymous]
-        [RateLimit(Name = "LoginThrottle", Seconds = 60, Requests = 3)]
+        //[RateLimit(Name = "LoginThrottle", Seconds = 60, Requests = 3)]
         public IActionResult Login(LoginViewModel request)
         {
             return Ok(_authBL.Login(request));
