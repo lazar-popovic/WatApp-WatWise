@@ -25,4 +25,11 @@ export class ToastrNotifService {
       enableHtml: true
     });*/
   }
+
+  showSuccess( message: string)
+  {
+    this.toastr.success(message, 'Successful', {
+      positionClass: 'toast-bottom-center'
+    });
+  }
 }

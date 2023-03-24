@@ -25,6 +25,7 @@ export class UsersComponent {
   {
     this.userService.createUser(this.user).subscribe((result: any) => {
       if( result.body.success) {
+        this.toastrNotifService.showSuccess( result.body.data.message);
         this.router.navigateByUrl('/dso/users');
       }
       else {
