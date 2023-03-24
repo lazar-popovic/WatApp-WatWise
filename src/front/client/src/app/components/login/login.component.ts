@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth-service.service';
 import { Router } from '@angular/router';
+import { ToastrNotifService} from "../../services/toastr-notif.service";
 
 @Component({
   selector: 'app-login',
@@ -14,12 +15,17 @@ export class LoginComponent {
     password : ''
   };
 
-  constructor(private authService: AuthService, private route: Router) { }
+  constructor(private authService: AuthService, private route: Router, private toastrNotifService: ToastrNotifService) { }
 
   logIn() {
       this.authService.login(this.login).subscribe((result: any) => {
-        localStorage.setItem("token", result.body.data.token);
-        this.route.navigateByUrl('/prosumer/overview');
+        if( result.body.success) {
+          localStorage.setItem("token", result.body.data.token);
+          this.route.navigateByUrl('/prosumer/overview');
+        }
+        else {
+          this.toastrNotifService.showErrors( result.body.errors);
+        }
       },(error: any) => {
         console.log(error.error.errors)
       })
