@@ -12,12 +12,13 @@ public class DeviceSimulatorService : IDeviceSimulatorService
     private readonly MongoClient _client;
     private readonly DataContext _context;
     private readonly IMongoDatabase _devices;
-
+    private readonly IMongoCollection<BsonDocument> _collection;
     public DeviceSimulatorService( DataContext context)
     {
         _context = context;
         _client = new MongoClient("mongodb://localhost:27017");
-        _devices = _client.GetDatabase("devices");
+        _devices = _client.GetDatabase("database");
+        _collection = _devices.GetCollection<BsonDocument>("devices");
     }
     
     public async Task<List<ElectricalUsageViewModel>> GetUsageForDeviceBetweenDates(string device, DateTime startingDate, DateTime endingDate)
@@ -53,13 +54,16 @@ public class DeviceSimulatorService : IDeviceSimulatorService
 
         foreach (var deviceType in devices)
         {
-            var collection = _devices.GetCollection<BsonDocument>(deviceType.Type);
-            var filter = Builders<BsonDocument>.Filter.Eq("timestamp", timestamp);
-            var result = await collection.Find(filter).FirstOrDefaultAsync();
+            var filter = Builders<BsonDocument>.Filter.Eq("type", deviceType.Type);
+            var result = await _collection.Find(filter).FirstOrDefaultAsync();
+            Console.WriteLine($"{result}");
 
             if (result != null)
             {
-                var value = result["value"].ToDouble();
+                var usageList = result["usage"].AsBsonArray;
+                var usageData = usageList.FirstOrDefault(u => u["timestamp"].ToUniversalTime() == timestamp.ToUniversalTime());
+                var value = usageData?["value"].ToDouble();
+                Console.WriteLine($"{value}");
 
                 foreach (var device in deviceType.Devices)
                 {

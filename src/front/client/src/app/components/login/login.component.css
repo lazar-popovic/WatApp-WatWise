@@ -1,6 +1,10 @@
-.login-holder  
+.login-holder
 {
-    background-color: #1676AC;
+    background: -webkit-linear-gradient(60deg, #239F81 30%, #1676AC 70%);
+    background: -moz-linear-gradient(60deg, #239F81 30%, #1676AC 70%);
+    background: -ms-linear-gradient(60deg, #239F81 30%, #1676AC 70%);
+    background: -o-linear-gradient(60deg, #239F81 30%, #1676AC 70%);
+    background: linear-gradient(60deg, #239F81 30%, #1676AC 70%);
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -9,7 +13,7 @@
 }
 
 /*Forma za login*/
-.login-container 
+.login-container
 {
   height: 50vh; /* sets container height to full viewport height */
 }
@@ -24,7 +28,7 @@
 }
 
 /*Forma (unutar div-a)*/
-.login-container form 
+.login-container form
 {
     display: flex;
     flex-direction: column;
@@ -34,22 +38,22 @@
     font-family: Arial, sans-serif;
     background-color: #D9D9D9;
     padding: 30px;
-    border-radius: 30px; 
+    border-radius: 30px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
     width: 350px;
     height: 250px;
   }
-  
 
-.login-container label 
+
+.login-container label
   {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
   }
-  
+
   /*Inputi username i password*/
-.login-container input 
+.login-container input
   {
     text-align: center;
     width: 100%;
@@ -99,10 +103,10 @@
   line-height: 8px;
   text-decoration-line: underline;
   color: #6F6F6F;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 /*Login dugme*/
-.login-container button 
+.login-container button
 {
   background-color: #3E3E3E;
   color: white;
@@ -115,7 +119,7 @@
   width: 35%;
 }
 
-.login-container button:hover 
+.login-container button:hover
 {
   background-color: #4f504f;
   font-size: 20px;
