@@ -24,7 +24,7 @@ namespace API.Services.JWTCreation.Implementations
                 new Claim(ClaimTypes.Email, request.Email),
                 new Claim(ClaimTypes.Role, request.Role.RoleName),
                 new Claim("UserID", request.Id.ToString()),
-                new Claim("RoleID", request.RoleId.ToString())
+                new Claim("RoleID", request.Role.Id.ToString())
             };
 
             ClaimsIdentity identity = new ClaimsIdentity(claims, "login claims");
