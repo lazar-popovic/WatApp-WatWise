@@ -12,7 +12,7 @@ public class User
     public string? Firstname { get; set; } = string.Empty;
     public string? Lastname { get; set; } = string.Empty;
     public bool? Verified { get; set; }
-    public int? RoleId { get; set; } = 3;
+    public int? RoleId { get; set; }
     [ForeignKey("RoleId")]
     public Role? Role { get; set; }
     public int? LocationId { get; set; }
