@@ -12,6 +12,8 @@ export class JWTService {
 
   get data()
   {
+    if(this.token == null)
+      return false;
     return JSON.parse(atob(this.token!.split('.')[1]));
   }
 
@@ -29,6 +31,6 @@ export class JWTService {
   {
     this.date = new Date(0);
     this.date.setUTCSeconds(this.data['exp']);
-    return this.date > (new Date());
+    return this.date < (new Date());
   }
 }
