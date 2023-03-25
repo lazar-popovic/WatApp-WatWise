@@ -21,7 +21,8 @@ export class ProfileIDComponent{
 
   getUser(id: string | null) {
     this.userService.getUser(id).subscribe((result: any) => {
-      if(result.errors) {
+      console.log(this.authService.roleId);
+      if(result.errors.length > 0) {
         this.router.navigateByUrl("profile");
       } else {
         this.user.firstName = result.data.firstname;
