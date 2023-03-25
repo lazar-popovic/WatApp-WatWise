@@ -1,7 +1,7 @@
 import pymongo
-import json
 from datetime import datetime, timedelta
 import random
+import json
 
 NUM_DAYS = 365
 NUM_HOURS_PER_DAY = 24
@@ -13,24 +13,28 @@ consumption_data = []
 start_date = datetime(2023, 1, 1)
 
 for day in range(NUM_DAYS):
+    daily_data = []
     for hour in range(NUM_HOURS_PER_DAY):
         if hour >= 8 and hour <= 17: # Assuming the computer is used for 8-10 hours between 8am and 6pm
             consumption = round(random.uniform(COMPUTER_MIN_CONSUMPTION, COMPUTER_MAX_CONSUMPTION), 3)
         else:
             consumption = 0.0 # Assuming the computer is not used outside of working hours
         timestamp = start_date + timedelta(hours=hour)
-        consumption_data.append({
-            "timestamp": timestamp,
+        daily_data.append({
+            "timestamp": timestamp.isoformat(),
             "value": consumption
         })
+    consumption_data.extend(daily_data)
     start_date += timedelta(days=1)
 
 client = pymongo.MongoClient("mongodb://localhost:27017")
-db = client["devices"]
+db = client["database"]
 
-db.drop_collection("desktop_computer")
-db.create_collection("desktop_computer", timeseries={"timeField": "timestamp"})
-
-db.desktop_computer.insert_many(consumption_data)
+# Create a new device with the usage data
+device_data = {
+    "type": "desktop_computer",
+    "usage": consumption_data
+}
+db.devices.insert_one(device_data)
 
 client.close()

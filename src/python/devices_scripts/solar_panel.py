@@ -38,10 +38,12 @@ for day in range(NUM_DAYS):
     start_date += timedelta(days=1)
 
 client = pymongo.MongoClient("mongodb://localhost:27017")
-db = client["devices"]
+db = client["database"]
 
-db.create_collection("solar_panel", timeseries={"timeField": "timestamp"})
-
-db.solar_panel.insert_many(production_data)
+device_data = {
+    "type": "solar_panel",
+    "usage": production_data
+}
+db.devices.insert_one(device_data)
 
 client.close()
