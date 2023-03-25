@@ -24,6 +24,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers(); 
-app.MapHub<UserHub>("/usertHub");
+app.MapHub<UserHub>("/userHub");
 
 app.Run();
