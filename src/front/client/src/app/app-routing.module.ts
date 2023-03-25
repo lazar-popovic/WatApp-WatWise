@@ -17,6 +17,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { PasswordInputComponent } from './components/password-input/password-input.component';
 import { UserGuard } from './guards/user.guard';
 import { EmployeeGuard } from './guards/employee.guard';
+import { ProfileIDComponent } from './components/profile-id/profile-id.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'prosumer/overview',  component:  OverviewComponent, canActivate: [UserGuard]},
   { path: 'dso/overview',  component:  OverviewComponent },
   { path: 'profile',  component:  ProfileComponent, canActivate: [UserGuard]},
+  { path: 'profile/:id',  component:  ProfileIDComponent, canActivate: [EmployeeGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'prosumer/devices', component : DevicesComponent, canActivate: [UserGuard]},
   { path: 'prosumer/consumption', component : ConsumptionComponent, canActivate: [UserGuard]},
