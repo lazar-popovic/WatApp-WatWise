@@ -45,6 +45,12 @@ namespace API.API
         {
             return Ok(await _userBL.GetUsersBasedOnRoleAsync((int)RoleEnum.Role.User));
         }
+        [HttpGet("users-with-locationId")]
+        public async Task<IActionResult> GetAllUsersWithLocationId(int id)
+        {
+            return Ok(await _userBL.GetUsersWithLocationId(id));
+        }
+
 
 
 

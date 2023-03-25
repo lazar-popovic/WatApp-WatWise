@@ -36,4 +36,9 @@ public class LocationDAL : ILocationDAL
 
         return location.Id;
     }
+
+    public async Task<List<Location>> GetAllLocationsAsync()
+    {
+        return await _context.Locations.ToListAsync();
+    }
 }

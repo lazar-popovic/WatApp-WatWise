@@ -90,6 +90,7 @@ builder.Services.AddScoped<IAuthDAL, AuthDAL>();
 builder.Services.AddScoped<IAuthBL, AuthBL>();
 builder.Services.AddScoped<IDeviceBL, DeviceBL>();
 builder.Services.AddScoped<ILocationDAL, LocationDAL>();
+builder.Services.AddScoped<ILocationBL, LocationBL>();
 builder.Services.AddTransient<IRecurringJobManager, RecurringJobManager>();
 
 //JWT Authenthication
