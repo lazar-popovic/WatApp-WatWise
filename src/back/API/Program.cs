@@ -16,7 +16,6 @@ using API.Services.DeviceSimulatorService.Interfaces;
 using API.Services.JWTCreation.Interfaces;
 using API.Services.E_mail.Interfaces;
 using API.Services.E_mail.Implementations;
-using MongoDB.Driver;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using API.API;
@@ -25,6 +24,7 @@ using Hangfire.SqlServer;
 using System.Configuration;
 using API.Services.JWTCreation.Implementations;
 using Hangfire.Storage.SQLite;
+using AspNetCoreRateLimit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +62,20 @@ builder.Services.AddHangfireServer();
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlite( builder.Configuration.GetConnectionString("DefaultConnection")));
 
+var ipRateLimitingSection = builder.Configuration.GetSection("IpRateLimiting");
+var ipRateLimitPoliciesSection = builder.Configuration.GetSection("IpRateLimitPolicies");
+
+
+//RATE LIMITING
+builder.Services.AddOptions();
+builder.Services.AddMemoryCache();
+builder.Services.Configure<IpRateLimitOptions>(ipRateLimitingSection);
+builder.Services.Configure<IpRateLimitPolicies>(ipRateLimitPoliciesSection);
+builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+
 
 // INJECTIONS
 builder.Services.AddScoped<DataContext>();
@@ -77,6 +91,7 @@ builder.Services.AddScoped<IAuthBL, AuthBL>();
 builder.Services.AddScoped<IDeviceBL, DeviceBL>();
 builder.Services.AddScoped<ILocationDAL, LocationDAL>();
 builder.Services.AddTransient<IRecurringJobManager, RecurringJobManager>();
+
 //JWT Authenthication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -93,6 +108,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 
 var app = builder.Build();
+
+app.UseIpRateLimiting();
 
 if (app.Environment.IsDevelopment())
 {

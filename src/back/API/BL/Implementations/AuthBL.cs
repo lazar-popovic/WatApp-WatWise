@@ -456,18 +456,20 @@ namespace API.BL.Implementations
             var response = new Response<RegisterResponseViewModel>();
             JwtSecurityToken token; 
 
-            if (string.IsNullOrEmpty(request.NewPassword))
+            if (string.IsNullOrEmpty(request.NewPassword) || string.IsNullOrEmpty(request.ConfirmedNewPassword))
             {
-                response.Errors.Add("Password is empty");
-            } 
-            if (string.IsNullOrEmpty(request.ConfirmedNewPassword))
-            {
-                response.Errors.Add("Please repeat password");
+                response.Errors.Add("Passwords are empty");
             }
-            if (request.ConfirmedNewPassword != request.NewPassword)
+            if(request.NewPassword != request.ConfirmedNewPassword)
             {
-                response.Errors.Add("Passwords need to match");
+                response.Errors.Add("Passwords doesen't match!");
             }
+
+            response.Success = response.Errors.Count() == 0;
+
+            if (!response.Success)
+                return response;
+
             try
             {
                 var handler = new JwtSecurityTokenHandler();
