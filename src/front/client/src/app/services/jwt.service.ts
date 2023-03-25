@@ -29,6 +29,6 @@ export class JWTService {
   {
     this.date = new Date(0);
     this.date.setUTCSeconds(this.data['exp']);
-    return this.date > (new Date());
+    return this.date < (new Date());
   }
 }

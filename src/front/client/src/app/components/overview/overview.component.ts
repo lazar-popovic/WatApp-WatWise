@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { JWTService } from 'src/app/services/jwt.service';
 
 @Component({
   selector: 'app-overview',
@@ -9,5 +10,5 @@ export class OverviewComponent
 {
     //dsoShow = true;
     dsoShow = false;
-
+    constructor () { }
 }
