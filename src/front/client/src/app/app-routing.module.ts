@@ -21,12 +21,12 @@ import { ProfileIDComponent } from './components/profile-id/profile-id.component
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent},
   { path: 'verification', component : VerifyComponent},
   { path: 'prosumer/overview',  component:  OverviewComponent, canActivate: [UserGuard]},
-  { path: 'dso/overview',  component:  OverviewComponent },
+  { path: 'dso/overview',  component:  OverviewComponent, canActivate: [UserGuard]},
   { path: 'profile',  component:  ProfileComponent, canActivate: [UserGuard]},
-  { path: 'profile/:id',  component:  ProfileIDComponent, canActivate: [EmployeeGuard]},
+  { path: 'profile/:id', component: ProfileIDComponent, canActivate: [EmployeeGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'prosumer/devices', component : DevicesComponent, canActivate: [UserGuard]},
   { path: 'prosumer/consumption', component : ConsumptionComponent, canActivate: [UserGuard]},

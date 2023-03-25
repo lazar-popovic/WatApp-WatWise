@@ -31,6 +31,7 @@ import { ProfileIDComponent } from './components/profile-id/profile-id.component
     LoginComponent,
     SidebarComponent,
     ProfileComponent,
+    ProfileIDComponent,
     DevicesComponent,
     ConsumptionComponent,
     OverviewComponent,
@@ -42,8 +43,7 @@ import { ProfileIDComponent } from './components/profile-id/profile-id.component
     VerifyComponent,
     ChangePasswordComponent,
     ForgotPasswordComponent,
-    PasswordInputComponent,
-    ProfileIDComponent
+    PasswordInputComponent
   ],
   imports: [
     BrowserModule,

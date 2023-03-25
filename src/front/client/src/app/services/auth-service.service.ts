@@ -33,9 +33,8 @@ export class AuthService {
   }
 
   get isLogged() {
-    if(localStorage.getItem("token") == null) {
+    if(this.jwtService.data == false)
       return false;
-    }
     if(this.jwtService.expiredStatus)
       return false;
     return true;
