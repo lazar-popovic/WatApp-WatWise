@@ -39,11 +39,12 @@ for day in range(NUM_DAYS):
     start_date += timedelta(days=1)
 
 client = pymongo.MongoClient("mongodb://localhost:27017")
-db = client["devices"]
+db = client["database"]
 
-db.drop_collection("water_heater")
-db.create_collection("water_heater", timeseries={"timeField": "timestamp"})
-
-db.water_heater.insert_many(consumption_data)
+device_data = {
+    "type": "water_heater",
+    "usage": consumption_data
+}
+db.devices.insert_one(device_data)
 
 client.close()
