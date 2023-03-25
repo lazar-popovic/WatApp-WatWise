@@ -10,10 +10,15 @@ export class JWTService {
     this.token = localStorage.getItem("token");
   }
 
-  get data()
+  get checkToken()
   {
     if(this.token == null)
       return false;
+    return true;
+  }
+
+  get data()
+  {
     return JSON.parse(atob(this.token!.split('.')[1]));
   }
 

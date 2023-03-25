@@ -18,10 +18,11 @@ import { PasswordInputComponent } from './components/password-input/password-inp
 import { UserGuard } from './guards/user.guard';
 import { EmployeeGuard } from './guards/employee.guard';
 import { ProfileIDComponent } from './components/profile-id/profile-id.component';
+import { LoggedGuard } from './guards/logged.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent},
+  { path: 'login', component: LoginComponent, canActivate: [LoggedGuard]},
   { path: 'verification', component : VerifyComponent},
   { path: 'prosumer/overview',  component:  OverviewComponent, canActivate: [UserGuard]},
   { path: 'dso/overview',  component:  OverviewComponent, canActivate: [UserGuard]},

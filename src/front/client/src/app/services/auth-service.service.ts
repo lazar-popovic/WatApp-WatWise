@@ -33,8 +33,9 @@ export class AuthService {
   }
 
   get isLogged() {
-    if(this.jwtService.data == false)
+    if(this.jwtService.checkToken == false){
       return false;
+    }
     if(this.jwtService.expiredStatus)
       return false;
     return true;
