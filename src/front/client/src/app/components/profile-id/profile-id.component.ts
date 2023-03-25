@@ -21,7 +21,6 @@ export class ProfileIDComponent{
 
   getUser(id: string | null) {
     this.userService.getUser(id).subscribe((result: any) => {
-      console.log(this.authService.roleId);
       if(result.errors.length > 0) {
         this.router.navigateByUrl("profile");
       } else {
