@@ -6,9 +6,11 @@
 }
 
 .sidebar-dso-container {
-    width: 302px;
+    width: 100%;
     height: 100vh;
     background-color: #239F81;
+  margin-right: 0px;
+  min-width: 302px;
 }
 
 .sidebar-dso-header {
