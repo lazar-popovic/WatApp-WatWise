@@ -205,6 +205,7 @@
         box-shadow: none;
         padding-bottom: 0px;
       margin-top: 10px;
+      z-index: 2;
     }
 
     .menu-list.open {
@@ -212,6 +213,7 @@
         max-height: 330px;
         border-radius: 10px;
         border: 1px solid #1676AC;
+        z-index: 2;
 
 
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);

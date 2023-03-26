@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {LocationService} from "../../services/location.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-map-component',
@@ -12,9 +13,10 @@ export class MapComponentComponent implements OnInit {
   private map: any;
 
   locations: any[] = [];
+  selectedLocation: any;
   users: any[] = [];
   showOverlay = false;
-  constructor( private locationService: LocationService) { }
+  constructor( private locationService: LocationService, private router: Router) { }
   ngOnInit(): void {
     this.map = L.map('map').setView([44.0128, 20.9114], 14);
 
@@ -49,8 +51,14 @@ export class MapComponentComponent implements OnInit {
   }
 
   placeMarkers() {
+    const customIcon = L.icon({
+      iconUrl: 'assets/pin.png',
+      iconSize: [26, 40],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
+    });
     for (const location of this.locations) {
-      const marker = L.marker([location.latitude, location.longitude])
+      const marker = L.marker([location.latitude, location.longitude], { icon: customIcon })
         .bindPopup(`<strong>Address:</strong> ${location.address} ${location.addressNumber}, ${location.city}`)
         .addTo(this.map);
 
@@ -62,6 +70,8 @@ export class MapComponentComponent implements OnInit {
   }
 
   getUsersForLocation(locationId: number) {
+    this.selectedLocation = this.locations.find( l => l.id == locationId)
+    console.log( this.selectedLocation);
     this.locationService.getUsersForLocationId( locationId).subscribe(
       ( result: any) => {
         if( result.success) {
@@ -79,5 +89,9 @@ export class MapComponentComponent implements OnInit {
 
   closeOverlay(): void {
     this.showOverlay = false;
+  }
+
+  goToUser( userId: number) {
+    this.router.navigate(['/profile', userId]);
   }
 }

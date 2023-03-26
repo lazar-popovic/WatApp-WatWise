@@ -1,8 +1,14 @@
-<div id="map" style="height: 100vh; width: 85%; float: left;"></div>
+
+<div id="map"></div>
 
 <div id="user-overlay"  [ngClass]="{'show': showOverlay}">
-  <button id="close-overlay-btn" (click)="closeOverlay()">Close</button>
-  <ul>
-    <li *ngFor="let user of users">{{user.firstname}} {{user.lastname}} - {{user.email}}</li>
-  </ul>
+
+  <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" (click)="closeOverlay()" style="font-size: 30px; margin: 10px; float: right;"></i>
+
+  <h3>{{selectedLocation.address}} {{selectedLocation.addressNumber}}, {{selectedLocation.city}}</h3>
+  <div id="user-div" *ngFor="let user of users">
+    <h4 style="margin-bottom: 5px">{{user.firstname}} {{user.lastname}}</h4>
+    <p style="margin-bottom: 5px;">{{user.email}}</p>
+    <button class="btn-grad" (click)="goToUser(user.id)">Details</button>
+  </div>
 </div>
