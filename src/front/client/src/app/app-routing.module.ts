@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LoginComponent } from './components/login/login.component';
-import { ProfileComponent } from './components/profile/profile.component';  
+import { ProfileComponent } from './components/profile/profile.component';
 import { DevicesComponent } from './components/devices/devices.component';
 import { ConsumptionComponent } from './components/consumption/consumption.component';
-import { OverviewComponent } from './components/overview/overview.component';  
+import { OverviewComponent } from './components/overview/overview.component';
 import { SidebarDsoComponent } from './components/sidebar-dso/sidebar-dso.component';
 import { UsersComponent } from './components/users/users.component';
 import { MapComponent } from './components/map/map.component';
@@ -18,6 +18,7 @@ import { PasswordInputComponent } from './components/password-input/password-inp
 import { UserGuard } from './guards/user.guard';
 import { EmployeeGuard } from './guards/employee.guard';
 import { ProfileIDComponent } from './components/profile-id/profile-id.component';
+import { LoggedGuard } from './guards/logged.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
