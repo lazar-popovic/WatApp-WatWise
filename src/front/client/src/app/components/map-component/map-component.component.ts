@@ -11,8 +11,9 @@ export class MapComponentComponent implements OnInit {
 
   private map: any;
 
-  private locations: any[] = [];
-  private users: any[] = [];
+  locations: any[] = [];
+  users: any[] = [];
+  showOverlay = false;
   constructor( private locationService: LocationService) { }
   ngOnInit(): void {
     this.map = L.map('map').setView([44.0128, 20.9114], 14);
@@ -54,6 +55,7 @@ export class MapComponentComponent implements OnInit {
         .addTo(this.map);
 
       marker.on('click', () => {
+        this.showOverlay = true;
         this.getUsersForLocation(location.id);
       });
     }
@@ -75,4 +77,7 @@ export class MapComponentComponent implements OnInit {
     );
   }
 
+  closeOverlay(): void {
+    this.showOverlay = false;
+  }
 }
