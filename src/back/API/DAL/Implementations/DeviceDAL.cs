@@ -50,8 +50,6 @@ namespace API.DAL.Implementations
                 UserId = devicee.UserId,
                 ActivityStatus = false,
                 PurchaseDate = DateTime.Now,
-                Type = devicee.Type,
-                Category = devicee.Category,
                 Name = devicee.Name
             };
             await _dbContext.Devices.AddAsync(device);

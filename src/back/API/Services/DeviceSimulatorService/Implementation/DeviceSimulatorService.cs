@@ -46,24 +46,22 @@ public class DeviceSimulatorService : IDeviceSimulatorService
         var timestamp = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
 
         var devices = await _context.Devices
-            .GroupBy(d => d.Type)
-            .Select(g => new { Type = g.Key, Devices = g.Select( d => new { d.Id, d.ActivityStatus }).ToList() })
+            .GroupBy(d => d.DeviceTypeId)
+            .Select(g => new { DeviceTypeId = g.Key, Devices = g.Select( d => new { d.Id, d.ActivityStatus }).ToList() })
             .ToListAsync();
 
         var deviceEnergyUsageList = new List<DeviceEnergyUsage>();
 
         foreach (var deviceType in devices)
         {
-            var filter = Builders<BsonDocument>.Filter.Eq("type", deviceType.Type);
+            var filter = Builders<BsonDocument>.Filter.Eq("type", deviceType.DeviceTypeId);
             var result = await _collection.Find(filter).FirstOrDefaultAsync();
-            Console.WriteLine($"{result}");
 
             if (result != null)
             {
                 var usageList = result["usage"].AsBsonArray;
                 var usageData = usageList.FirstOrDefault(u => u["timestamp"].ToUniversalTime() == timestamp.ToUniversalTime());
                 var value = usageData?["value"].ToDouble();
-                Console.WriteLine($"{value}");
 
                 foreach (var device in deviceType.Devices)
                 {
