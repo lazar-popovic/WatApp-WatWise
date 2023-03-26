@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.DAL.Implementations
 {
-    public class DeviceDAL:IDeviceDAL
+    public class DeviceDAL : IDeviceDAL
     {
         private readonly DataContext _dbContext;
 
@@ -38,7 +38,7 @@ namespace API.DAL.Implementations
 
         public async Task DeleteDeviceAsync(int id)
         {
-            Device device = await GetDeviceByIdAsync(id);
+            var device = await GetDeviceByIdAsync(id);
             _dbContext.Devices.Remove(device);
             await _dbContext.SaveChangesAsync();
         }
@@ -50,6 +50,7 @@ namespace API.DAL.Implementations
                 UserId = devicee.UserId,
                 ActivityStatus = false,
                 PurchaseDate = DateTime.Now,
+                DeviceTypeId = devicee.DeviceTypeId,
                 Name = devicee.Name
             };
             await _dbContext.Devices.AddAsync(device);
