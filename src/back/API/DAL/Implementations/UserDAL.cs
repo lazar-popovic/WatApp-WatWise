@@ -73,19 +73,13 @@ namespace API.DAL.Implementations
         }
         public async Task<List<User>?> GetUsersWithLocationId(int id)
         {
-            var users = await _dbContext.Users.Where(u => u.LocationId == id)
+            var users = await _dbContext.Users.Where(u => u.LocationId == id && u.Verified == true)
                                    .Select(u => new User
                                    {
                                        Id = u.Id,
                                        Email = u.Email,
                                        Firstname = u.Firstname,
-                                       Lastname = u.Lastname,
-                                       Verified = u.Verified,
-                                       RoleId = u.RoleId,
-                                       Role = u.Role,
-                                       LocationId = u.LocationId,
-                                       Location = u.Location
-
+                                       Lastname = u.Lastname
                                    }).ToListAsync();
 
             return users;

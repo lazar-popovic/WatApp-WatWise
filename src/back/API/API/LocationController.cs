@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.API;
 
 [ApiController]
-[Route("geocoding/[controller]")]
+[Route("api/location")]
 [EnableCors]
 public class LocationController : ControllerBase
 {
@@ -29,7 +29,7 @@ public class LocationController : ControllerBase
        return _geocodingService.Geocode( locationViewModel);
 
     }
-    [HttpGet("all-location")]
+    [HttpGet("all-locations")]
     public async Task<IActionResult> GetAllLocation()
     {
         return Ok(await locationBL.GetAllLocation());
