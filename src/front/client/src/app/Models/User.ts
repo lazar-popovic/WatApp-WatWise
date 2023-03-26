@@ -1,12 +1,12 @@
 export class User {
     id ?: number;
-    firstName = "Petar";
-    lastName = "Petrovic";
-    mail = "petarpetrovic@gmail.com";
-    password = "asdas";
+    firstName = "";
+    lastName = "";
+    mail = "";
+    password = "";
     role = 1;
-    address = "Radoja Domanovica";
+    address = "";
     num = 1;
-    city = "Kragujevac";
+    city = "";
 
 }

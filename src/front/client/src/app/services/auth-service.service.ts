@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable} from 'rxjs';
 import { environment } from '../environments/environment';
 import { enableDebugTools } from '@angular/platform-browser';
+import { JWTService } from './jwt.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private jwtService: JWTService) { }
 
   login(data: any) : Observable<any> {
     return this.http.post(`${environment.apiUrl}auth/login`, data, {observe: 'response'});
@@ -29,5 +30,21 @@ export class AuthService {
 
   resetPassword(data: any) : Observable<any> {
     return this.http.post(`${environment.apiUrl}auth/reset-password`, data, {observe : 'response'});
+  }
+
+  get isLogged() {
+    if(this.jwtService.data == false)
+      return false;
+    if(this.jwtService.expiredStatus)
+      return false;
+    return true;
+  }
+
+  get roleId() {
+    return this.jwtService.roleId;
+  }
+
+  get userId() {
+    return this.jwtService.userId;
   }
 }
