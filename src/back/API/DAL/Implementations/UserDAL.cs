@@ -52,9 +52,12 @@ namespace API.DAL.Implementations
             return users;
         }
         //Depend on RoleId that method return list of prosumer, 
-        public async Task<List<User>?> GetUsersBasedOnRoleAsync(int id)
+        public async Task<List<User>?> GetUsersBasedOnRoleAsync(int id, int pageSize, int pageNumber)
         {
             var users = await _dbContext.Users.Where(u => u.RoleId == id)
+                                   .OrderBy(u => u.Id)
+                                   .Skip((pageNumber - 1) * pageSize)
+                                   .Take(pageSize)
                                    .Select(u => new User
                                    {
                                        Id = u.Id,
