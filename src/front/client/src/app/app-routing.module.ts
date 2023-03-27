@@ -6,7 +6,6 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { DevicesComponent } from './components/devices/devices.component';
 import { ConsumptionComponent } from './components/consumption/consumption.component';
 import { OverviewComponent } from './components/overview/overview.component';
-import { SidebarDsoComponent } from './components/sidebar-dso/sidebar-dso.component';
 import { UsersComponent } from './components/users/users.component';
 import { MapComponent } from './components/map/map.component';
 import { EnergyUsageComponent } from './components/energy-usage/energy-usage.component';
