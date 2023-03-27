@@ -14,9 +14,9 @@ export class ProfileIDComponent{
   dsoShow = true;
   user = new User();
   id : any = '' ;
-  
-  constructor(private authService:AuthService, private userService: UserService, private route: ActivatedRoute, private router: Router) { 
-    this.getUser(this.route.snapshot.paramMap.get('id')); 
+
+  constructor(private authService:AuthService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
+    this.getUser(this.route.snapshot.paramMap.get('id'));
   }
 
   getUser(id: string | null) {

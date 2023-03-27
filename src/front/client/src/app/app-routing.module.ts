@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LoginComponent } from './components/login/login.component';
-import { ProfileComponent } from './components/profile/profile.component';  
+import { ProfileComponent } from './components/profile/profile.component';
 import { DevicesComponent } from './components/devices/devices.component';
 import { ConsumptionComponent } from './components/consumption/consumption.component';
 import { OverviewComponent } from './components/overview/overview.component';

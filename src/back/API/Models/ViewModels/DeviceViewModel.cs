@@ -3,8 +3,7 @@
     public class DeviceViewModel
     {
         public string? Name { get; set; } = string.Empty;
-        public string? Type { get; set; } = string.Empty;
-        public int? Category { get; set; }
+        public int? DeviceTypeId { get; set; }
         public int? UserId { get; set; }
     }
 }

@@ -19,6 +19,8 @@ export class JWTService {
 
   get data()
   {
+    if(this.token == null)
+      return false;
     return JSON.parse(atob(this.token!.split('.')[1]));
   }
 
