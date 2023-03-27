@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.SignalR.Hubs
 {
-    [Authorize(Roles = "Admin", "Employee")]
+    [Authorize(Roles = "Admin, Employee")]
     public class MapHub : Hub
     {
         private readonly DataContext _dataContext;
