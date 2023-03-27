@@ -1,7 +1,7 @@
 #map {
   height: 100vh;
+  width: 100%;
   float: left;
-  z-index: 1;
 }
 /* PHONE */
 @media only screen and (max-width: 600px) {
@@ -16,7 +16,6 @@
     left: 10%;
     top: 100px;
     background-color: rgba(235,235,235,0.9);
-    z-index: 9999;
     transition: right 0.3s ease-in-out;
     box-sizing: border-box;
     font-family: Arial, serif;
@@ -25,7 +24,7 @@
 /* DESKTOP */
 @media only screen and (min-width: 601px) {
   #map {
-    width: 85%;
+    width: 100vw;
   }
   #user-overlay.show {
     display: block;
@@ -35,7 +34,6 @@
     border-radius: 20px;
     width: 300px;
     background-color: rgba(235,235,235,0.9);
-    z-index: 9999;
     transition: right 0.3s ease-in-out;
     box-sizing: border-box;
     font-family: Arial, serif;
@@ -51,7 +49,6 @@
   border-radius: 20px;
   position: absolute;
   background-color: rgba(235,235,235,0.9);
-  z-index: 9999;
   transition: right 0.3s ease-in-out;
   box-sizing: border-box;
   font-family: Arial, serif;

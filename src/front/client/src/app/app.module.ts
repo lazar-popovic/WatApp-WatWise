@@ -26,6 +26,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ProfileIDComponent } from './components/profile-id/profile-id.component';
 import { MapComponentComponent } from './components/map-component/map-component.component';
 import { LeafletModule} from "@asymmetrik/ngx-leaflet";
+import { UsersOverviewComponent } from './components/users-overview/users-overview.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { LeafletModule} from "@asymmetrik/ngx-leaflet";
     ChangePasswordComponent,
     ForgotPasswordComponent,
     PasswordInputComponent,
-    MapComponentComponent
+    MapComponentComponent,
+    UsersOverviewComponent
   ],
   imports: [
     BrowserModule,
