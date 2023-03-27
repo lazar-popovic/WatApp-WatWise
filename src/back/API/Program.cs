@@ -20,7 +20,7 @@ using Hangfire;
 using API.Services.JWTCreation.Implementations;
 using Hangfire.Storage.SQLite;
 using AspNetCoreRateLimit;
-using API.Hubs;
+using API.SignalR.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -125,7 +125,7 @@ app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapHub<MapHub>("hubs/map");
+app.MapHub<MapHub>("/mapHub");
 app.MapControllers();
 
 app.UseHangfireDashboard();
