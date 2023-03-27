@@ -24,6 +24,9 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ProfileIDComponent } from './components/profile-id/profile-id.component';
+import { MapComponentComponent } from './components/map-component/map-component.component';
+import { LeafletModule} from "@asymmetrik/ngx-leaflet";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +45,7 @@ import { ProfileIDComponent } from './components/profile-id/profile-id.component
     ChangePasswordComponent,
     ForgotPasswordComponent,
     PasswordInputComponent,
+    MapComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,8 @@ import { ProfileIDComponent } from './components/profile-id/profile-id.component
     FormsModule,
     CommonModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    LeafletModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,

@@ -14,8 +14,8 @@ export class ProfileComponent {
   showProfileForm = true;
   dsoShow = true;
   user = new User();
-  constructor(private authService:AuthService, private userService: UserService, private route: ActivatedRoute, private router: Router) { 
-    this.getUser(); 
+  constructor(private authService:AuthService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
+    this.getUser();
   }
 
   getUser() {

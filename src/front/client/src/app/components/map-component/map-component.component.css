@@ -1,0 +1,101 @@
+#map {
+  height: 100vh;
+  float: left;
+  z-index: 1;
+}
+/* PHONE */
+@media only screen and (max-width: 600px) {
+  #map {
+    width: 100%;
+  }
+  #user-overlay.show {
+    display: block;
+    margin: auto;
+    border-radius: 20px;
+    width: 80%;
+    left: 10%;
+    top: 100px;
+    background-color: rgba(235,235,235,0.9);
+    z-index: 9999;
+    transition: right 0.3s ease-in-out;
+    box-sizing: border-box;
+    font-family: Arial, serif;
+  }
+}
+/* DESKTOP */
+@media only screen and (min-width: 601px) {
+  #map {
+    width: 85%;
+  }
+  #user-overlay.show {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    border-radius: 20px;
+    width: 300px;
+    background-color: rgba(235,235,235,0.9);
+    z-index: 9999;
+    transition: right 0.3s ease-in-out;
+    box-sizing: border-box;
+    font-family: Arial, serif;
+  }
+}
+#user-overlay {
+  display: none;
+}
+
+
+#user-overlay.show {
+  display: block;
+  border-radius: 20px;
+  position: absolute;
+  background-color: rgba(235,235,235,0.9);
+  z-index: 9999;
+  transition: right 0.3s ease-in-out;
+  box-sizing: border-box;
+  font-family: Arial, serif;
+}
+
+#close-overlay-btn {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+#user-overlay h3 {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+#user-overlay ul {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+#user-div {
+  padding: 10px;
+  width: 85%;
+  margin: 15px auto;
+  position: relative;
+  background-color: white;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+#user-div h3 {
+  margin: 0px;
+}
+
+.btn-grad {
+  background-color: #239F81;
+  padding: 5px 20px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 10px;
+  display: block;
+  border: 0px solid #239F81;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}

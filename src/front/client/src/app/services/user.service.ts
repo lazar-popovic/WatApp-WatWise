@@ -8,7 +8,6 @@ import { User } from '../Models/User';
   providedIn: 'root'
 })
 export class UserService {
-
   constructor(private http:HttpClient) { }
 
   createUser(data: any) : Observable<any>

@@ -55,11 +55,11 @@ namespace API.BL.Implementations
             return response;
         }
 
-        public async Task<Response<List<User>>> GetUsersBasedOnRoleAsync(int id)
+        public async Task<Response<List<User>>> GetUsersBasedOnRoleAsync(int id, int pageSize, int pageNumber)
         {
             var response = new Response<List<User>>();
 
-            var users = await _userDal.GetUsersBasedOnRoleAsync(id);
+            var users = await _userDal.GetUsersBasedOnRoleAsync(id, pageSize, pageNumber);
 
             if (users == null)
             {

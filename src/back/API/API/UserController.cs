@@ -34,16 +34,16 @@ namespace API.API
 
         //Role = 2 => Employees
         [HttpGet("employees")]
-        public async Task<IActionResult> GetAllEmployees()
+        public async Task<IActionResult> GetAllEmployees(int pageSize, int pageNumber)
         {
-            return Ok(await _userBL.GetUsersBasedOnRoleAsync((int)RoleEnum.Role.Employee));
+            return Ok(await _userBL.GetUsersBasedOnRoleAsync((int)RoleEnum.Role.Employee, pageSize, pageNumber));
         }
 
         //Role = 3 => Prosumers
         [HttpGet("prosumers")]
-        public async  Task<IActionResult> GetAllProsumers()
+        public async  Task<IActionResult> GetAllProsumers(int pageSize, int pageNumber)
         {
-            return Ok(await _userBL.GetUsersBasedOnRoleAsync((int)RoleEnum.Role.User));
+            return Ok(await _userBL.GetUsersBasedOnRoleAsync((int)RoleEnum.Role.User, pageSize, pageNumber));
         }
         [HttpGet("users-with-locationId")]
         public async Task<IActionResult> GetAllUsersWithLocationId(int id)

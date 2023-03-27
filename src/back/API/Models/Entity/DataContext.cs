@@ -16,4 +16,5 @@ public class DataContext : DbContext
     public DbSet<RefreshToken> RefreshTokens{ get; set; }
     public DbSet<Device> Devices { get; set; }
     public DbSet<DeviceEnergyUsage> DeviceEnergyUsage { get; set; }
+    public DbSet<DeviceType> DeviceTypes { get; set; }
 }
