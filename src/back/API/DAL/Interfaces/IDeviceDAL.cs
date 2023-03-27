@@ -13,6 +13,6 @@ namespace API.DAL.Interfaces
         Task AddDeviceViewModel(DeviceViewModel device);
         Task<List<DeviceType>> GetDeviceTypesByCategory(int id);
 
-
+        object GetDevicesByUserId( int userId);
     }
 }

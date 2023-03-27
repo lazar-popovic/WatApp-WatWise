@@ -63,5 +63,19 @@ namespace API.DAL.Implementations
                                                .Select(dt => new DeviceType { Id = dt.Id, Type = dt.Type })
                                                .ToListAsync();
         }
+
+        public object GetDevicesByUserId(int userId)
+        {
+            var timestamp = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+            var result = from device in _dbContext.Devices
+                join deviceType in _dbContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
+                join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty() on device.Id equals usage.DeviceId into usageGroup
+                group new { device.Id, device.Name, device.ActivityStatus, Value = usageGroup.FirstOrDefault().Value } by deviceType.Category into grouped
+                select new {
+                    Category = grouped.Key,
+                    Devices = grouped.ToList()
+                };
+            return result;
+        }
     }
 }

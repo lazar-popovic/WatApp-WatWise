@@ -171,5 +171,13 @@ namespace API.BL.Implementations
 
             return response;
         }
+
+        public Response<object> GetDevicesByUserId(int userId)
+        {
+            var response = new Response<object>();
+            response.Success = true;
+            response.Data = _ideviceDal.GetDevicesByUserId(userId);
+            return response;
+        }
     }
 }

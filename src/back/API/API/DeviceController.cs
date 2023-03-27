@@ -62,5 +62,11 @@ namespace API.API
         {
             return Ok(await _deviceBL.GetDeviceTypesByCategory( category));
         }
+        
+        [HttpGet("get-devices-by-user-id")]
+        public IActionResult GetDevicesByUserId(int userId)
+        {
+            return Ok( _deviceBL.GetDevicesByUserId( userId));
+        }
     }
 }

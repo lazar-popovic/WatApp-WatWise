@@ -1,103 +1,92 @@
 <div id="container">
-  <div style="display: inline-block; width: 25%;">
+  <div>
     <app-sidebar>
 
     </app-sidebar>
   </div>
-  <div id="sub-container">
+  <div id="sub-container" style="box-sizing: border-box;">
     <div style="display: inline-block; vertical-align: top;" *ngIf="showDevices">
-            <div id="devices-container">
-                <h2>Devices</h2>
-                <div id="devices-categories" style="display: inline-block;">
-                    <div id="device-logo-consumer" ></div>
-                    <div id="device-logo-prosumer" ></div>
-                    <div id="device-logo-storage"  ></div>
-                </div>
-
-                <div id="devices-add-device" style="display: inline-block;">
-                    <div (click)="showDevices = false" id="devices-add" style="vertical-align: middle;">+ Add device</div>
-                </div>
-            </div>
-
-            <br>
-
-            <!-- Consumer devices container -->
-            <div id="consumer-devices">
-                <h2>Consumer Devices</h2>
-                <div>
-                     <ul>
-                        <ng-container *ngFor="let device of devices">
-                            <div id="consumer-device" *ngIf="device.category === 'consumer'">
-                                <li>{{device.name}} </li>
-                                <br><br>
-                                <div style="width: 40%; display: inline-block;"> <button class="activity"></button> </div>
-                                <div style="width: 50%; display: inline-block;"> <li>{{device.consumption}} kWh</li> </div>
-                                <!-- <button (click)="removeDevice(device)">Remove Device</button> -->
-                            </div>
-                        </ng-container>
-                      </ul>
-                </div>
-            </div>
-
-            <!-- Prosumer devices container -->
-            <div id="prosumer-devices">
-                <h2>Prosumer Devices</h2>
-                <ul>
-                        <ng-container *ngFor="let device of devices">
-                            <div id="prosumer-device" *ngIf="device.category === 'prosumer'">
-                                <li>{{device.name}}</li>
-
-                                <br><br>
-                                <div style="width: 40%; display: inline-block;"> <button class="activity"></button> </div>
-                                <div style="width: 50%; display: inline-block;"> <li> +{{device.consumption}} kWh</li> </div>
-                                <!-- <button (click)="removeDevice(device)">Remove Device</button> -->
-                            </div>
-                  </ng-container>
-                </ul>
-            </div>
-
-            <!-- Storage devices container -->
-            <div id="storage-devices">
-                <h2>Storage Devices</h2>
-                <ul>
-                    <ng-container *ngFor="let device of devices">
-                        <div id="storage-device" *ngIf="device.category === 'storage'">
-                            <li>{{device.name}}</li>
-                            <br>
-                            <!-- <button class="activity"></button> -->
-                            <li style="font-weight: lighter;"> 2400/100000 mAh</li>
-                             <!-- <button (click)="removeDevice(device)">Remove Device</button> -->
-
-                        </div>
-              </ng-container>
-            </ul>
-            </div>
+      <div id="devices-container">
+        <h2>Devices</h2>
+        <div id="devices-categories" style="display: inline-block;">
+          <div id="device-logo-consumer" ></div>
+          <div id="device-logo-prosumer" ></div>
+          <div id="device-logo-storage"  ></div>
         </div>
-      <div class="wrapper" *ngIf="!showDevices">
-        <div style="display: flex; justify-content: right;">
-          <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;" (click)="showDevices = true"></i>
+
+        <div id="devices-add-device" style="display: inline-block;">
+          <div (click)="showDevices = false" id="devices-add" style="vertical-align: middle;">+ Add device</div>
         </div>
-        <h2>Connect device</h2>
-        <form action="#">
-          <div class="input-box">
-            <input type="text" name="name" [(ngModel)]="newDevice.name" placeholder="Device name">
-          </div>
-          <div class="input-box">
-            <select name="category" [(ngModel)]="category" (change)="fillTypes()">
-              <option value=-1 selected>Consumer</option>
-              <option value=1>Producer</option>
-              <option value=0> Storage</option>
-            </select>
-          </div>
-          <div class="input-box">
-            <select type="text" name="type" [(ngModel)]="newDevice.deviceTypeId">
-              <option *ngFor=" let type of types" [value]="type.id">{{type.type}}</option>
-            </select>
-          </div>
-          <div class="input-box button">
-            <button type="button" (click)="addDevice()">Connect</button>
-          </div>
-        </form>
       </div>
+
+      <br>
+      <!-- Consumer devices container -->
+      <div class="devices-by-categories">
+        <h2>Consumer Devices</h2>
+        <div class="devices-div">
+              <div id="consumer-device" *ngFor="let device of userDevices.consumers">
+                {{device.name}}
+                <br><br>
+                <div  style="width: 40%; display: inline-block;">
+                  <button *ngIf="device.activityStatus" class="activity"></button>
+                  <button *ngIf="!device.activityStatus" class="activity" style="background-color: darkred;"></button>
+                </div>
+                <div *ngIf="device.activityStatus" style="width: 50%; display: inline-block;">-{{device.value}}kW</div>
+              </div>
+        </div>
+      </div>
+
+      <!-- Prosumer devices container -->
+      <div class="devices-by-categories">
+        <h2>Prosumer Devices</h2>
+            <div id="prosumer-device" *ngFor="let device of userDevices.producers">
+              {{device.name}}
+              <br><br>
+              <div  style="width: 40%; display: inline-block;">
+                <button *ngIf="device.activityStatus" class="activity"></button>
+                <button *ngIf="!device.activityStatus" class="activity" style="background-color: darkred;"></button>
+              </div>
+              <div *ngIf="device.activityStatus" style="width: 50%; display: inline-block;">+{{device.value}}kW</div>
+            </div>
+      </div>
+
+      <!-- Storage devices container -->
+      <div class="devices-by-categories">
+        <h2>Storage Devices</h2>
+        <ul>
+            <div id="storage-device" *ngFor="let device of userDevices.storages">
+              <li>{{device.name}}</li>
+              <br>
+              <li style="font-weight: lighter;"> 2400/100000 mAh</li>
+            </div>
+        </ul>
+      </div>
+    </div>
+    <div class="wrapper" *ngIf="!showDevices">
+      <div style="display: flex; justify-content: right;">
+        <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;" (click)="showDevices = true"></i>
+      </div>
+      <h2>Connect device</h2>
+      <form action="#">
+        <div class="input-box">
+          <input type="text" name="name" [(ngModel)]="newDevice.name" placeholder="Device name">
+        </div>
+        <div class="input-box">
+          <select name="category" [(ngModel)]="category" (change)="fillTypes()">
+            <option value=-1 selected>Consumer</option>
+            <option value=1>Producer</option>
+            <option value=0> Storage</option>
+          </select>
+        </div>
+        <div class="input-box">
+          <select type="text" name="type" [(ngModel)]="newDevice.deviceTypeId">
+            <option *ngFor=" let type of types" [value]="type.id">{{type.type}}</option>
+          </select>
+        </div>
+        <div class="input-box button">
+          <button type="button" (click)="addDevice()">Connect</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

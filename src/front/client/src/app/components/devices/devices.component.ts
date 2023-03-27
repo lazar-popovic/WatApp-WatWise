@@ -25,6 +25,12 @@ export class DevicesComponent implements OnInit
     }
     category: number = -1;
     types: any[] = [];
+
+    userDevices = {
+      consumers: [] as any[],
+      storages: [] as any[],
+      producers: [] as any[]
+    }
    constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService) { }
 
     ngOnInit(): void {
@@ -32,6 +38,23 @@ export class DevicesComponent implements OnInit
       if (savedDevices) {
         this.devices = JSON.parse(savedDevices);
       }
+      this.deviceService.getDevicesByUserId( this.jwtService.userId).subscribe(
+        result => {
+          if( result.success) {
+            this.userDevices.consumers = result.data.filter((obj:any) => obj.category === -1).map((obj:any) => obj.devices)[0];
+            this.userDevices.producers = result.data.filter((obj:any) => obj.category === 1).map((obj:any) => obj.devices)[0];
+            this.userDevices.storages = result.data.filter((obj:any) => obj.category === 0).map((obj:any) => obj.devices)[0];
+            console.log(this.userDevices.consumers[0].name);
+            console.log(this.userDevices.producers[0]);
+            console.log(this.userDevices.storages[0]);
+          }
+          else {
+            console.log( result.errors);
+          }
+        }, error => {
+          console.log( error);
+        }
+      );
       this.fillTypes();
     }
 

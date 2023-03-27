@@ -13,8 +13,10 @@ constructor( private http: HttpClient) { }
   {
     return this.http.get(`${environment.apiUrl}device/get-types-by-category?category=${category}`);
   }
-
   insertDevice( data: any) : Observable<any> {
     return this.http.post(`${environment.apiUrl}device/insert-device`, data, {observe: 'response'});
+  }
+  getDevicesByUserId(userId: number) : Observable<any> {
+    return this.http.get(`${environment.apiUrl}device/get-devices-by-user-id?userId=${userId}`);
   }
 }

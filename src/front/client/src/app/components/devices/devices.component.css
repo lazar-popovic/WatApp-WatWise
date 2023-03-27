@@ -3,15 +3,12 @@
 body
 {
     background-color: #E1E1E1;
-    font-family: 'Inter', sans-serif;
     font-style: normal;
 }
 
 h2
 {
     margin-left: 10px;
-    margin-bottom: 5px;
-    border-bottom: 2px solid #3E3E3E ;
 
 }
 
@@ -95,7 +92,6 @@ h2
 
     height: 30px;
     width: 200px;
-    margin-left: 600px;
 
     background-color: #FFFFFF;
     border-radius: 20px;
@@ -120,9 +116,7 @@ h2
     color: #3E3E3E;
     font-size: 20px;
 
-    margin-top: 30px;
-    margin-bottom: 30px;
-    margin-left: 30px;
+    margin: 10px;
 
 
 
@@ -137,21 +131,20 @@ h2
     background-image: url(/assets/consumer.png);
     background-repeat: no-repeat;
 
-    height: 100px;
-    width: 200px;
+    height: 70px;
 
     padding-top: 10px;
     text-align: center;
     display: inline-block;
-    width: 200px;
+    width: 160px;
 
     background-color: #FFFFFF;
     border-radius: 20px;
 
     list-style: none;
-    margin-right: 30px;
+    margin: 10px;
 
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
 }
 
 #consumer-device:hover,#prosumer-device:hover,#storage-device:hover
@@ -190,10 +183,9 @@ h2
 
 
 
+
 #container {
   display: flex;
-}
-#sub-container {
 }
 
 
@@ -208,11 +200,12 @@ h2
   #container {
     flex-direction: row;
   }
+
+  #sub-container {
+    position: absolute;
+    left: 304px;
+  }
 }
-
-
-
-
 
 
 
@@ -306,7 +299,7 @@ form h3{
 }
 form .text h3{
   color: #333;
-  width: 100%;
+  width: 80%;
   text-align: center;
 }
 form .text h3 a{
@@ -335,6 +328,7 @@ select{
 
 
 
-
-
-
+.devices-div {
+  align-items: center;
+  justify-content: center;
+}
