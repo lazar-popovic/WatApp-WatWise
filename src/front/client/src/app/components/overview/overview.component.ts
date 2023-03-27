@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth-service.service';
 
 @Component({
   selector: 'app-overview',
@@ -7,7 +8,4 @@ import { Component } from '@angular/core';
 })
 export class OverviewComponent 
 {
-    //dsoShow = true;
-    dsoShow = false;
-
 }
