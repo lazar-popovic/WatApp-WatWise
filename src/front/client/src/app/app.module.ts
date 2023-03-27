@@ -47,7 +47,7 @@ import { DeviceDetailsComponent } from './components/device-details/device-detai
     ForgotPasswordComponent,
     PasswordInputComponent,
     MapComponentComponent,
-    DeviceDetailsComponent
+    DeviceDetailsComponent,
   ],
   imports: [
     BrowserModule,
