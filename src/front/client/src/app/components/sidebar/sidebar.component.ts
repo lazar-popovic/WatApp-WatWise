@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { User } from '../../Models/User';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth-service.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,21 +11,32 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent {
   url = 'Overview';
-  menu = [
+  menuProsumer = [
     'Overview',
     'Devices',
     'Consumption',
     'Production'
   ];
+  menuEmployee = [
+    'Overview',
+    'Map',
+    'Users',
+    'Consumption'
+  ];
+  menuAdmin = [
+    'Employees'
+  ];
   currentTime;
   user = new User();
-  constructor (public datepipe: DatePipe, private route: Router){
+  role = 3;
+  constructor (public datepipe: DatePipe, private route: Router, authService: AuthService){
     let currentDateTime = this.datepipe.transform((new Date), 'h:mm dd/MM/yyyy');
     this.currentTime = currentDateTime;
     this.url = this.route.url.split('/')[2];
+    this.role = authService.roleId;
   }
   
-  select(element: EventTarget | null) {
+  select(element: EventTarget | null, role: number) {
     if(element == null) 
       return;
     let active = document.querySelector(".sidebar-item-active") as HTMLDivElement;
@@ -34,12 +46,15 @@ export class SidebarComponent {
     }
     
     (element as HTMLDivElement).className = "sidebar-item-active";
-    this.route.navigateByUrl(`/prosumer/${(element as HTMLDivElement).innerHTML.toLowerCase()}`);
+    if(role == 1)
+      this.route.navigateByUrl(`/prosumer/${(element as HTMLDivElement).innerHTML.toLowerCase()}`);
+    else if(role == 2)
+      this.route.navigateByUrl(`/dso/${(element as HTMLDivElement).innerHTML.toLowerCase()}`);
   }
   
 
-  clickHandler(event: MouseEvent) {
-    this.select(event.target);
+  clickHandler(event: MouseEvent, role: number) {
+    this.select(event.target, role);
   }
 
  
