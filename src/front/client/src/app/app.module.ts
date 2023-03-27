@@ -27,6 +27,7 @@ import { ProfileIDComponent } from './components/profile-id/profile-id.component
 import { MapComponentComponent } from './components/map-component/map-component.component';
 import { LeafletModule} from "@asymmetrik/ngx-leaflet";
 import { DeviceDetailsComponent } from './components/device-details/device-details.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { DeviceDetailsComponent } from './components/device-details/device-detai
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    LeafletModule
+    LeafletModule,
+    NgChartsModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,

@@ -19,12 +19,22 @@
   
       <div id="graph-container">
         
-        
+        <!-- <canvas baseChart
+          [data]="barChartData"
+          [options]="barChartOptions"
+          [type]="'bar'">
+        </canvas> -->
+
+        <div id="lineChartDiv">
+          <canvas id="lineChart" baseChart
+          [data]="podaci"
+          [type]="'line'"
+          [options]="chartOptions">
+          </canvas>
+        </div>
       
       </div>
       
-     
-  
     </div>
   </div>
   
