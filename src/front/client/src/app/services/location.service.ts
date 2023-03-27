@@ -12,7 +12,7 @@ export class LocationService {
 
   getLocations() : Observable<any>
   {
-    return this.http.get(`http://localhost:5226/geocoding/Location/all-location`);
+    return this.http.get(`${environment.apiUrl}location/all-locations`);
   }
 
   getUsersForLocationId( locationId: number)
