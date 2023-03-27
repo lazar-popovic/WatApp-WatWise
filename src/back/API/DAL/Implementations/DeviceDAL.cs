@@ -56,5 +56,12 @@ namespace API.DAL.Implementations
             await _dbContext.Devices.AddAsync(device);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<List<DeviceType>> GetDeviceTypesByCategory(int id)
+        {
+            return await _dbContext.DeviceTypes.Where(dt => dt.Category == id)
+                                               .Select(dt => new DeviceType { Id = dt.Id, Type = dt.Type })
+                                               .ToListAsync();
+        }
     }
 }

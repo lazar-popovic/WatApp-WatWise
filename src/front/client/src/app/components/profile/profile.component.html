@@ -1,29 +1,30 @@
+
+<app-sidebar></app-sidebar>
 <div class="profile-container">
-  <app-sidebar></app-sidebar>
 
   <div *ngIf="showProfileForm">
     <form>
-      <h2>My Profile</h2> 
-      <div class="profile-user"> 
-        <div class="profile-user-info">first name</div>  
-        <div class="profile-user-name">{{user.firstName}}</div>  
+      <h2>My Profile</h2>
+      <div class="profile-user">
+        <div class="profile-user-info">first name</div>
+        <div class="profile-user-name">{{user.firstName}}</div>
       </div>
-      <div class="profile-user"> 
-        <div class="profile-user-info">last name</div>  
-        <div class="profile-user-name">{{user.lastName}}</div>  
+      <div class="profile-user">
+        <div class="profile-user-info">last name</div>
+        <div class="profile-user-name">{{user.lastName}}</div>
       </div>
-      <div class="profile-email"> 
-        <div class="profile-user-info">email</div>  
-        <div class="profile-user-name">{{user.mail}}</div>  
+      <div class="profile-email">
+        <div class="profile-user-info">email</div>
+        <div class="profile-user-name">{{user.mail}}</div>
       </div>
-      <div class="profile-street"> 
-        <div class="profile-user-info">address</div>  
-        <div class="profile-user-name">{{user.address}} {{user.num}}</div>  
+      <div class="profile-street">
+        <div class="profile-user-info">address</div>
+        <div class="profile-user-name">{{user.address}} {{user.num}}</div>
       </div>
       <button (click)="showProfileForm = false" class="button-container" type="submit" routerLink="/profile">Change password</button>
     </form>
   </div>
-        
+
   <div *ngIf="!showProfileForm" class="profile-change-password-holder">
     <app-change-password></app-change-password>
   </div>

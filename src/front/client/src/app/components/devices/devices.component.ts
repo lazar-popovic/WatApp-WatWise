@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Device } from '../../Models/device';
 import { OnInit } from '@angular/core';
+import {DeviceService} from "../../services/device.service";
+import {JWTService} from "../../services/jwt.service";
+import {ToastrNotifService} from "../../services/toastr-notif.service";
 
 
 
@@ -15,43 +18,50 @@ export class DevicesComponent implements OnInit
     showDevices : boolean = true;
 
     devices: Device[] = [];
-    newDevice: Device = new Device('',0,'', '');
-
-   constructor() { }
-
-    /*
-    devices: Device[] = [
-      { id: 1, name: "Fridge", type: "Type 1", category: "consumer" },
-      { id: 2, name: "Device 2", type: "Type 2", category: "prosumer" },
-      { id: 3, name: "Device 3", type: "Type 3", category: "storage" }
-    ];+
-    */
+    newDevice = {
+      userId: 0,
+      name: "",
+      deviceTypeId: 0
+    }
+    category: number = -1;
+    types: any[] = [];
+   constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService) { }
 
     ngOnInit(): void {
       const savedDevices = localStorage.getItem('devices');
       if (savedDevices) {
         this.devices = JSON.parse(savedDevices);
       }
+      this.fillTypes();
     }
 
-    addDevice() 
+    fillTypes() {
+      this.deviceService.getDeviceTypesByCategory( this.category).subscribe(
+        result => {
+          this.types = result.data;
+          this.newDevice.deviceTypeId = 0;
+          this.newDevice.deviceTypeId = this.types[0].id;
+        }, error => {
+          console.log( error.errors);
+        }
+      )
+    }
+
+    addDevice()
     {
-      console.log(this.newDevice.category);
-      this.newDevice.id = this.devices.length + 1;
-      this.newDevice = new Device(this.newDevice.name, this.newDevice.consumption,this.newDevice.type, this.newDevice.category);
-      this.devices.push(this.newDevice);
-     
-      localStorage.setItem('devices', JSON.stringify(this.devices));
-      this.newDevice = new Device('',0,'','');
-      this.showDevices = true;
-    }
-
-    removeDevice(device: Device) {
-      const index = this.devices.indexOf(device);
-      if (index !== -1) {
-        this.devices.splice(index, 1);
-        localStorage.setItem('devices', JSON.stringify(this.devices));
-      }
+      this.newDevice.userId = this.jwtService.userId;
+      this.deviceService.insertDevice( this.newDevice).subscribe(
+        result => {
+          if( result.body.success)
+          {
+            this.toastrService.showSuccess( result.body.data);
+          }
+          else
+          {
+            this.toastrService.showErrors( result.body.errors);
+          }
+        }
+      )
     }
 }
 
