@@ -22,7 +22,7 @@ import { LoggedGuard } from './guards/logged.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent, canActivate: [LoggedGuard]},
+  { path: 'login', component: LoginComponent},
   { path: 'verification', component : VerifyComponent},
   { path: 'prosumer/overview',  component:  OverviewComponent, canActivate: [UserGuard]},
   { path: 'dso/overview',  component:  OverviewComponent, canActivate: [UserGuard]},
