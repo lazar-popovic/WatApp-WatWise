@@ -54,7 +54,8 @@ namespace API.DAL.Implementations
                 ActivityStatus = false,
                 PurchaseDate = DateTime.Now,
                 DeviceTypeId = devicee.DeviceTypeId,
-                Name = devicee.Name
+                Name = devicee.Name,
+                DataShare = false
             };
             await _dbContext.Devices.AddAsync(device);
             await _dbContext.SaveChangesAsync();
