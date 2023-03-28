@@ -1,10 +1,10 @@
-<div class="sidebar-container"> 
+<div class="sidebar-container">
     <div class="sidebar-header">
         <div class="sidebar-logo"><img src="\assets\logo.png"></div>
         {{ this.currentTime }}
     </div>
     <div class="sidebar-nav">
-        
+
         <div *ngIf="role == 3">
             <div *ngFor="let item of menuProsumer">
                 <div *ngIf="item.toLowerCase()== url">
@@ -13,9 +13,9 @@
                 <div *ngIf="item.toLowerCase() !=url">
                     <div class="sidebar-item" (click)="clickHandler($event, 1)">{{item}}</div>
                 </div>
-            </div>    
+            </div>
         </div>
-        
+
         <div *ngIf="role <= 2">
             <div *ngFor="let item of menuEmployee">
                 <div *ngIf="item.toLowerCase()== url">
@@ -34,11 +34,11 @@
                     <div *ngIf="item.toLowerCase() !=url">
                         <div class="sidebar-item" (click)="clickHandler($event, 2)">{{item}}</div>
                     </div>
-                </div>        
+                </div>
             </div>
         </div>
-        
-        
+
+
         <div class="sidebar-footer" routerLink="/profile">
             <div class="sidebar-profile"><img src="\assets\profile.png"></div>
             {{this.user.firstName + " " + this.user.lastName}}
@@ -65,10 +65,10 @@
       <br>
       {{ this.currentTime }}
     </div>
-  
+
 </div>
-  
-  
-  
+
+
+
 
 

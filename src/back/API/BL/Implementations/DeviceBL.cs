@@ -127,18 +127,24 @@ namespace API.BL.Implementations
             var response = new Response<String>();
             var dev = device;
             
-            if (dev == null)
+            if (string.IsNullOrWhiteSpace( dev.Name.Trim()))
             {
-                response.Errors.Add("Device is null");
-                response.Success = false;
-
-                return response;
+                response.Errors.Add("Name is required!");
             }
+            if ( dev.DeviceTypeId <= 0)
+            {
+                response.Errors.Add("Type must be selected!");
+            }
+            
+            response.Success = !response.Errors.Any();
+
+            if (response.Success == false)
+                return response;
+            
             await _ideviceDal.AddDeviceViewModel(device);
 
-            response.Data = "Pass";
+            response.Data = $"Device {dev.Name} connected successfully!";
 
-            response.Success = response.Errors.Count() == 0;
 
             return response;
 
@@ -146,5 +152,32 @@ namespace API.BL.Implementations
 
         }
 
+        public async Task<Response<List<DeviceType>>> GetDeviceTypesByCategory(int id)
+        {
+            var response = new Response<List<DeviceType>>();
+
+            var devices = await _ideviceDal.GetDeviceTypesByCategory(id);
+
+            if (devices == null)
+            {
+                response.Errors.Add("Error with displaying device from base!");
+                response.Success = false;
+
+                return response;
+            }
+
+            response.Data = devices!;
+            response.Success = response.Errors.Count() == 0;
+
+            return response;
+        }
+
+        public Response<object> GetDevicesByUserId(int userId)
+        {
+            var response = new Response<object>();
+            response.Success = true;
+            response.Data = _ideviceDal.GetDevicesByUserId(userId);
+            return response;
+        }
     }
 }
