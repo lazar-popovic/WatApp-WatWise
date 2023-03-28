@@ -1,1 +1,60 @@
-<p>users-overview works!</p>
+<div class="overview-container">
+    <app-sidebar></app-sidebar>
+    <div class="overview-tab">
+        <div class="overview-filter-holder">
+            <form>
+                <div class="search-input">
+                    <input>
+                    <button>Search by name</button>
+                </div>
+                <div class="search-input">
+                    <input>
+                    <button>Search by Address</button>
+                </div>
+                <button id="add-user-btn">+Add Prosumer</button>
+            </form>
+        </div>
+
+        <div class="overview-users-table">
+            <table>
+                <tr>
+                    <td>First Name</td>
+                    <td>Last Name</td>
+                    <td>Mail</td>
+                    <td>Address</td>
+                    <td><button id="overview-filter">Usage UP   </button></td>
+                </tr>
+                <tr *ngFor="let user of users">
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.mail}}</td>
+                    <td>{{user.address}} {{user.num}} - {{user.city}}</td>
+                    <td><button routerLink="/profile">View</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="overview-pagination">
+            <form>
+                <div class="page-size-holder">
+                    <label for="page-size">Select page size:</label>
+                    <select name="page-size" [selectedIndex]="0">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                    </select>
+                </div>
+                <div class="overview-pagination-pages">
+                    <div *ngFor="let item of dynamicList">
+                        <div *ngIf="currentIndex == item" class="overview-pagination-page-active">
+                            {{item}}
+                        </div>
+                        <div *ngIf="currentIndex != item" class="overview-pagination-page">
+                            {{item}}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
