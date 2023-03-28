@@ -1,228 +1,103 @@
-
-
-body
-{
-    background-color: #E1E1E1;
-    font-style: normal;
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: left;
+  margin: 20px 10px;
 }
-
-h2
-{
-    margin-left: 10px;
-
+.container {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: 10px;
+  box-sizing: border-box;
 }
-
-
-#devices-container
-{
-    margin-top: 20px;
-    font-style: bold;
-    font-size: 20px;
-    color: #3E3E3E;
-    font-family: 'Inter', sans-serif;
-    font-style: normal;
+.card {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 15px;
+  flex: 0 0 calc(33.33% - 20px);
+  box-sizing: border-box;
+  position: relative;
 }
-
-
-#devices-categories {
-    height: 30px;
-    width: 200px;
-    background-color: #FFFFFF;
-    border-radius: 30px;
-
-    vertical-align: middle;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 5px;
-
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-
+.card h2 {
+  font-size: 18px;
+  margin-top: 0;
 }
-
-#device-logo-consumer,#device-logo-prosumer,#device-logo-storage
-{
-    width: 25px;
-    height: 25px;
-
-    padding-top: 2px;
-    padding-bottom: 2px;
-
-    margin-left: 20px;
-    margin-right: 10px;
-
-    background-position: 5px;
-    background-size: 15px;
+.circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 10px;
+  position: absolute;
+  bottom: 10px;
+  right: 5px;
 }
-
-#device-logo-consumer {
-    display: inline-block;
-    background-image: url(/assets/consumer.png);
-    background-repeat: no-repeat;
+.circle.on {
+  background-color: #0f0;
 }
-
-#device-logo-consumer:hover,#device-logo-prosumer:hover,#device-logo-storage:hover {
-    background-color: #1676AC;
-    border-radius: 20px;
+.circle.off {
+  background-color: #f00;
 }
-
-#device-logo-prosumer {
-    display: inline-block;
-    background-image: url(/assets/prosumer.png);
-    background-repeat: no-repeat;
+.details {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
-
-#device-logo-storage {
-    display: inline-block;
-    background-image: url(/assets/storage.png);
-    background-repeat: no-repeat;
-    background-size: 13px;
-
-    margin-right: 0px;
+.details:hover {
+  background-color: #3e8e41;
 }
-
-#devices-add-device
-{
-    font-weight: bold;
-    font-size: 25px;
-    color: #3E3E3E;
-    text-align: center;
-
-    height: 30px;
-    width: 200px;
-
-    background-color: #FFFFFF;
-    border-radius: 20px;
-
-    padding: 5px;
-
-    border: 2px solid #3E3E3E;
-
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-
+.category {
+  flex-basis: 100%;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: #eeeeee;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  padding: 10px;
 }
-
-#devices-add-device:hover
-{
-    color: #FFFFFF;
-    background-color: #1676AC;
+.category h2 {
+  font-size: 16px;
+  margin: 10px 0;
 }
-
-
-#consumer-devices,#prosumer-devices,#storage-devices
-{
-    color: #3E3E3E;
-    font-size: 20px;
-
-    margin: 10px;
-
-
-
+.category .card {
+  flex: 0 0 calc(50% - 20px);
 }
-
-#consumer-device,#prosumer-device,#storage-device
-{
-    font-weight: bold;
-    background-position: 10px 15px;
-    background-size: 20px;
-
-    background-image: url(/assets/consumer.png);
-    background-repeat: no-repeat;
-
-    height: 70px;
-
-    padding-top: 10px;
-    text-align: center;
-    display: inline-block;
-    width: 160px;
-
-    background-color: #FFFFFF;
-    border-radius: 20px;
-
-    list-style: none;
-    margin: 10px;
-
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+.card {
+  display: inline-block;
+  width: 18%;
 }
-
-#consumer-device:hover,#prosumer-device:hover,#storage-device:hover
-{
-    background-color: #1676AC;
-    color: #FFFFFF;
-
-}
-
-#prosumer-device{
-
-    background-image: url(/assets/prosumer.png);
-}
-
-#storage-device{
-    background-size: 15px;
-    background-image: url(/assets/storage.png);
-    height: 80px;
-}
-
-.activity
-{
-    margin-right: 160px;
-    background-color : #31AE3E;
-
-    height: 20px;
-    width: 20px;
-
-    background-position: 10px 15px;
-    background-size: 20px;
-    border-radius: 20px;
-
-    background-image: url(/assets/active.png);
-    background-repeat: no-repeat;
-}
-
-
-
-
-#container {
+#main {
   display: flex;
 }
-
-
-@media ( max-width: 599px) {
-
-  #container {
-    flex-direction: column;
-  }
+.card:hover {
+  background-color: #f0f0f0;
 }
-@media ( min-width: 600px) {
-
-  #container {
-    flex-direction: row;
-  }
-
-  #sub-container {
-    position: absolute;
-    left: 304px;
-  }
+#sub-container {
+  width: fit-content;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
+#devices-list {
+  width: fit-content;
+}
+.example-card {
+  width: 180px;
+  margin-bottom: 8px;
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+  background-color: white;
+}
 .wrapper * {
   box-sizing: border-box;
 }
-
 .wrapper{
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -309,8 +184,6 @@ form .text h3 a{
 form .text h3 a:hover{
   text-decoration: underline;
 }
-
-
 select{
   height: 100%;
   width: 100%;
@@ -325,10 +198,32 @@ select{
   transition: all 0.3s ease;
 }
 
-
-
-
 .devices-div {
   align-items: center;
   justify-content: center;
+}
+@media ( max-width: 599px) {
+  .card {
+    width: 44%;
+    margin: 3%;
+    min-width: 140px;
+  }
+  #main {
+    flex-direction: column;
+  }
+}
+@media ( min-width: 600px) {
+  .card {
+    min-width: 250px;
+    margin: 10px;
+  }
+  #main {
+    flex-direction: row;
+  }
+
+  #sub-container {
+    position: absolute;
+    left: 304px;
+    width: 100%;
+  }
 }

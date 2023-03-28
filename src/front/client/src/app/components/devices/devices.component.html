@@ -1,67 +1,49 @@
-<div id="container">
+<div id="main">
   <div>
     <app-sidebar>
 
     </app-sidebar>
   </div>
   <div id="sub-container" style="box-sizing: border-box;">
-    <div style="display: inline-block; vertical-align: top;" *ngIf="showDevices">
-      <div id="devices-container">
-        <h2>Devices</h2>
-        <div id="devices-categories" style="display: inline-block;">
-          <div id="device-logo-consumer" ></div>
-          <div id="device-logo-prosumer" ></div>
-          <div id="device-logo-storage"  ></div>
+    <div id="devices-list" style="display: inline-block; vertical-align: top;" *ngIf="showDevices">
+
+      <h1>Devices List</h1>
+      <div class="container">
+        <div class="category consumers">
+          <h2>Consumers</h2>
+          <div class="card" *ngFor="let device of userDevices.consumers">
+            <h2>{{device.name}}</h2>
+            <div *ngIf="device.activityStatus" class="circle on"></div>
+            <div *ngIf="!device.activityStatus" class="circle off"></div>
+            <p *ngIf="device.activityStatus">-{{device.value}}kW</p>
+            <p *ngIf="!device.activityStatus"><br></p>
+          </div>
         </div>
-
-        <div id="devices-add-device" style="display: inline-block;">
-          <div (click)="showDevices = false" id="devices-add" style="vertical-align: middle;">+ Add device</div>
+        <div class="category producers">
+          <h2>Consumers</h2>
+          <div class="card" *ngFor="let device of userDevices.producers">
+            <h2>{{device.name}}</h2>
+            <div *ngIf="device.activityStatus" class="circle on"></div>
+            <div *ngIf="!device.activityStatus" class="circle off"></div>
+            <p *ngIf="device.activityStatus">+{{device.value}}kW</p>
+            <p *ngIf="!device.activityStatus"><br></p>
+          </div>
+        </div>
+        <div class="category storages">
+          <h2>Consumers</h2>
+          <div class="card" *ngFor="let device of userDevices.storages">
+            <h2>{{device.name}}</h2>
+            <div *ngIf="device.activityStatus" class="circle on"></div>
+            <div *ngIf="!device.activityStatus" class="circle off"></div>
+            <p><br></p>
+          </div>
         </div>
       </div>
+  </div>
 
-      <br>
-      <!-- Consumer devices container -->
-      <div class="devices-by-categories">
-        <h2>Consumer Devices</h2>
-        <div class="devices-div">
-              <div id="consumer-device" *ngFor="let device of userDevices.consumers">
-                {{device.name}}
-                <br><br>
-                <div  style="width: 40%; display: inline-block;">
-                  <button *ngIf="device.activityStatus" class="activity"></button>
-                  <button *ngIf="!device.activityStatus" class="activity" style="background-color: darkred;"></button>
-                </div>
-                <div *ngIf="device.activityStatus" style="width: 50%; display: inline-block;">-{{device.value}}kW</div>
-              </div>
-        </div>
-      </div>
 
-      <!-- Prosumer devices container -->
-      <div class="devices-by-categories">
-        <h2>Prosumer Devices</h2>
-            <div id="prosumer-device" *ngFor="let device of userDevices.producers">
-              {{device.name}}
-              <br><br>
-              <div  style="width: 40%; display: inline-block;">
-                <button *ngIf="device.activityStatus" class="activity"></button>
-                <button *ngIf="!device.activityStatus" class="activity" style="background-color: darkred;"></button>
-              </div>
-              <div *ngIf="device.activityStatus" style="width: 50%; display: inline-block;">+{{device.value}}kW</div>
-            </div>
-      </div>
 
-      <!-- Storage devices container -->
-      <div class="devices-by-categories">
-        <h2>Storage Devices</h2>
-        <ul>
-            <div id="storage-device" *ngFor="let device of userDevices.storages">
-              <li>{{device.name}}</li>
-              <br>
-              <li style="font-weight: lighter;"> 2400/100000 mAh</li>
-            </div>
-        </ul>
-      </div>
-    </div>
+
     <div class="wrapper" *ngIf="!showDevices">
       <div style="display: flex; justify-content: right;">
         <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;" (click)="showDevices = true"></i>
@@ -88,5 +70,7 @@
         </div>
       </form>
     </div>
+
+
   </div>
 </div>
