@@ -18,23 +18,31 @@
       </div>
   
       
-        <div id="graph-container" *ngIf="todayFlag==true">
+        <div id="today-graph-container" *ngIf="todayFlag==true">
 
-          <canvas id="barChartDay" style="max-width: 800px; height: auto;"></canvas> 
-
+          <canvas id="barChartDay" style="max-width: 800px; height: auto;"></canvas>
+          
         </div>
 
-        <div  id="graph-container1" *ngIf="monthFlag==true">
+        <div  id="month-graph-container" *ngIf="monthFlag==true">
 
           <canvas id="barChartMonth" style="max-width: 800px; height: auto;"></canvas> 
 
         </div>
 
-        <div  id="graph-container2" *ngIf="yearFlag==true">
+        <div  id="year-graph-container" *ngIf="yearFlag==true">
 
           <canvas id="barChartYear" style="max-width: 800px; height: auto;"></canvas> 
 
         </div>
+
+        <button id="export"> EXPORT TO CSV</button>
+
+        
+        <div class = "tableContainer_today">
+          
+        </div>
+      
 
 
 
