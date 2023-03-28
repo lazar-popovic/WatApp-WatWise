@@ -7,34 +7,39 @@
   <div id="sub-container" style="box-sizing: border-box;">
     <div id="devices-list" style="display: inline-block; vertical-align: top;" *ngIf="showDevices">
 
-      <h1>Devices List</h1>
+      <h1>Devices</h1>
+      <div id="buttons">
+        <div id="filter">
+        </div>
+        <div id="add-new-device-div">
+          <button (click)="showDevices = false;" class="add-to-cart"><span class="plus-sign">+  </span>Add device</button>
+        </div>
+      </div>
       <div class="container">
-        <div class="category consumers">
+        <div class="category consumers" *ngIf="userDevices.consumers.length > 0">
           <h2>Consumers</h2>
           <div class="card" *ngFor="let device of userDevices.consumers">
             <h2>{{device.name}}</h2>
-            <div *ngIf="device.activityStatus" class="circle on"></div>
-            <div *ngIf="!device.activityStatus" class="circle off"></div>
+            <div *ngIf="device.activityStatus" class="status on"></div>
+            <div *ngIf="!device.activityStatus" class="status off"></div>
             <p *ngIf="device.activityStatus">-{{device.value}}kW</p>
             <p *ngIf="!device.activityStatus"><br></p>
           </div>
         </div>
-        <div class="category producers">
-          <h2>Consumers</h2>
+        <div class="category producers" *ngIf="userDevices.producers.length > 0">
+          <h2>Producers</h2>
           <div class="card" *ngFor="let device of userDevices.producers">
             <h2>{{device.name}}</h2>
-            <div *ngIf="device.activityStatus" class="circle on"></div>
-            <div *ngIf="!device.activityStatus" class="circle off"></div>
+            <div *ngIf="device.activityStatus" class="status on"></div>
+            <div *ngIf="!device.activityStatus" class="status off"></div>
             <p *ngIf="device.activityStatus">+{{device.value}}kW</p>
             <p *ngIf="!device.activityStatus"><br></p>
           </div>
         </div>
-        <div class="category storages">
+        <div class="category storages" *ngIf="userDevices.storages.length > 0">
           <h2>Consumers</h2>
           <div class="card" *ngFor="let device of userDevices.storages">
             <h2>{{device.name}}</h2>
-            <div *ngIf="device.activityStatus" class="circle on"></div>
-            <div *ngIf="!device.activityStatus" class="circle off"></div>
             <p><br></p>
           </div>
         </div>

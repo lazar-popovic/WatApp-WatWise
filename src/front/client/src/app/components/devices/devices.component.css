@@ -1,3 +1,28 @@
+@media ( max-width: 599px) {
+  .card {
+    width: 44%;
+    margin: 3%;
+    min-width: 140px;
+  }
+  #main {
+    flex-direction: column;
+  }
+}
+@media ( min-width: 600px) {
+  .card {
+    min-width: 250px;
+    margin: 10px;
+  }
+  #main {
+    flex-direction: row;
+  }
+
+  #sub-container {
+    position: absolute;
+    left: 304px;
+    width: fit-content;
+  }
+}
 h1 {
   font-size: 24px;
   font-weight: bold;
@@ -28,20 +53,20 @@ h1 {
   font-size: 18px;
   margin-top: 0;
 }
-.circle {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
+.status {
+  width: 10px;
+  height: 100%;
   display: inline-block;
-  margin-right: 10px;
   position: absolute;
-  bottom: 10px;
-  right: 5px;
+  bottom: 0;
+  right: 0;
+  border-bottom-right-radius: 4px;
+  border-top-right-radius: 4px;
 }
-.circle.on {
+.status.on {
   background-color: #0f0;
 }
-.circle.off {
+.status.off {
   background-color: #f00;
 }
 .details {
@@ -68,7 +93,6 @@ h1 {
 }
 .category h2 {
   font-size: 16px;
-  margin: 10px 0;
 }
 .category .card {
   flex: 0 0 calc(50% - 20px);
@@ -83,8 +107,12 @@ h1 {
 .card:hover {
   background-color: #f0f0f0;
 }
+.card p {
+}
 #sub-container {
-  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #devices-list {
   width: fit-content;
@@ -102,7 +130,6 @@ h1 {
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   position: relative;
-  max-width: 430px;
   width: 100%;
   background: #fff;
   padding: 34px;
@@ -202,28 +229,43 @@ select{
   align-items: center;
   justify-content: center;
 }
-@media ( max-width: 599px) {
-  .card {
-    width: 44%;
-    margin: 3%;
-    min-width: 140px;
-  }
-  #main {
-    flex-direction: column;
-  }
-}
-@media ( min-width: 600px) {
-  .card {
-    min-width: 250px;
-    margin: 10px;
-  }
-  #main {
-    flex-direction: row;
-  }
 
-  #sub-container {
-    position: absolute;
-    left: 304px;
-    width: 100%;
-  }
+#buttons {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 10px 0 10px;
+  display: flex;
+  flex-direction: row;
+}
+#filter {
+  width: 50%;
+  display: flex;
+  justify-content: left;
+}
+#add-new-device-div {
+  width: 50%;
+  display: flex;
+  justify-content: right;
+}
+
+
+.add-to-cart {
+  background-color: #eeeeee; /* green background */
+  border: none;
+  color: black;
+  font-weight: bold;
+  padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.plus-sign {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 5px;
 }
