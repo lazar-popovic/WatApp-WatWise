@@ -69,7 +69,9 @@ namespace API.DAL.Implementations
             var timestamp = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
             var result = from device in _dbContext.Devices
                 join deviceType in _dbContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
-                join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty() on device.Id equals usage.DeviceId into usageGroup
+                join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty() on
+                    device.Id equals usage.DeviceId into usageGroup
+                where device.UserId == userId
                 group new { device.Id, device.Name, device.ActivityStatus, Value = usageGroup.FirstOrDefault().Value } by deviceType.Category into grouped
                 select new {
                     Category = grouped.Key,

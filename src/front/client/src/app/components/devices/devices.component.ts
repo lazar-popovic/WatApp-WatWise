@@ -4,6 +4,7 @@ import { OnInit } from '@angular/core';
 import {DeviceService} from "../../services/device.service";
 import {JWTService} from "../../services/jwt.service";
 import {ToastrNotifService} from "../../services/toastr-notif.service";
+import {Router} from "@angular/router";
 
 
 
@@ -14,10 +15,8 @@ import {ToastrNotifService} from "../../services/toastr-notif.service";
 })
 export class DevicesComponent implements OnInit
 {
-
     showDevices : boolean = true;
 
-    devices: Device[] = [];
     newDevice = {
       userId: 0,
       name: "",
@@ -31,22 +30,16 @@ export class DevicesComponent implements OnInit
       storages: [] as any[],
       producers: [] as any[]
     }
-   constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService) { }
+   constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService, private route: Router) { }
 
     ngOnInit(): void {
-      const savedDevices = localStorage.getItem('devices');
-      if (savedDevices) {
-        this.devices = JSON.parse(savedDevices);
-      }
+      console.log( this.jwtService.roleId + " " + this.jwtService.userId);
       this.deviceService.getDevicesByUserId( this.jwtService.userId).subscribe(
         result => {
           if( result.success) {
             this.userDevices.consumers = result.data.filter((obj:any) => obj.category === -1).map((obj:any) => obj.devices)[0];
             this.userDevices.producers = result.data.filter((obj:any) => obj.category === 1).map((obj:any) => obj.devices)[0];
             this.userDevices.storages = result.data.filter((obj:any) => obj.category === 0).map((obj:any) => obj.devices)[0];
-            console.log(this.userDevices.consumers[0].name);
-            console.log(this.userDevices.producers[0]);
-            console.log(this.userDevices.storages[0]);
           }
           else {
             console.log( result.errors);
@@ -85,6 +78,10 @@ export class DevicesComponent implements OnInit
           }
         }
       )
+    }
+
+    refresh() {
+      this.route.navigateByUrl('/prosumer/devices');
     }
 }
 
