@@ -95,6 +95,24 @@ h3
     margin-top: 30px;
     margin-left: 50px;
     background-color: #ccc;
-    height: 100px;
-    width: 800px;
+    height: 420px;
+    width: 820px;
+}
+
+#graph-container1
+{
+    margin-top: 30px;
+    margin-left: 50px;
+    background-color: #ccc;
+    height: 420px;
+    width: 820px;
+}
+
+#graph-container2
+{
+    margin-top: 30px;
+    margin-left: 50px;
+    background-color: #ccc;
+    height: 420px;
+    width: 820px;
 }

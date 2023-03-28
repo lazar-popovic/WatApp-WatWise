@@ -12,19 +12,33 @@
       <h3 style="display: inline-block;">History</h3> <h3 style="display: inline-block; margin-left: 10px; color: gray;">Prediction</h3><br>
     
       <div id="today-month-year" style="display: inline-block;">
-        <div id="today" (click)="todayClick()">Today</div>
+        <div id="today" (click)="todayClick()">Today </div>
         <div id="month" (click)="monthClick()">Month</div> 
         <div id="year"  (click)="yearClick()">Year</div>
       </div>
   
       
-        <div id="graph-container">
+        <div id="graph-container" *ngIf="todayFlag==true">
 
           <canvas id="barChartDay" style="max-width: 800px; height: auto;"></canvas> 
+
+        </div>
+
+        <div  id="graph-container1" *ngIf="monthFlag==true">
 
           <canvas id="barChartMonth" style="max-width: 800px; height: auto;"></canvas> 
 
         </div>
+
+        <div  id="graph-container2" *ngIf="yearFlag==true">
+
+          <canvas id="barChartYear" style="max-width: 800px; height: auto;"></canvas> 
+
+        </div>
+
+
+
+
 
     </div>
   </div>
