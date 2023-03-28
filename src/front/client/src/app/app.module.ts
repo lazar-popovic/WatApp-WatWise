@@ -26,7 +26,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { ProfileIDComponent } from './components/profile-id/profile-id.component';
 import { MapComponentComponent } from './components/map-component/map-component.component';
 import { LeafletModule} from "@asymmetrik/ngx-leaflet";
-import { MatCardModule } from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -56,8 +55,7 @@ import { MatCardModule } from "@angular/material/card";
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    LeafletModule,
-    MatCardModule
+    LeafletModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
