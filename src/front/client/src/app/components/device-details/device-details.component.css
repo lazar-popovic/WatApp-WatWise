@@ -84,9 +84,11 @@ h3
     color: #ffff;
     margin-top: 0px;
     padding: 5px;
-    background-color: #1676AC;
+    background-color: #1676AC!important;
     border-radius: 10px;
 }
+
+
 
 #graph-container
 {
