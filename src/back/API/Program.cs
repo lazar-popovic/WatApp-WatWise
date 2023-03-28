@@ -121,8 +121,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 
 
-
-
 var app = builder.Build();
 
 app.UseIpRateLimiting();
@@ -142,7 +140,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHub<MapHub>("hubs/mapHub");//.RequireAuthorization();
+app.MapHub<MapHub>("mapHub");//.RequireAuthorization();
 
 app.UseHangfireDashboard();
 app.MapHangfireDashboard();

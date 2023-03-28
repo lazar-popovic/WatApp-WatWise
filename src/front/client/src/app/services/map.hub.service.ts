@@ -31,6 +31,7 @@ export class MapHubService {
       toastr.info("Loaded up initial locations");
     });
 
+
     this.connection.on('UpdateUserLocation', (userId, latitude, longitude, address, addressNumber, city, locationId) => {
       const locations = this.locationsSubject.getValue();
       const index = locations.findIndex(l => l.userId === userId);
@@ -40,6 +41,7 @@ export class MapHubService {
       }
       toastr.info(userId + "has changed adress");
     });
+
 
     this.connection.on('GetInitialLocationsError', (error) => {
 
