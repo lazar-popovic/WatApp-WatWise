@@ -1,6 +1,7 @@
 ﻿using API.DAL.Interfaces;
 using API.Models.Entity;
 using API.Models.ViewModels;
+using API.Services.DeviceSimulatorService.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.DAL.Implementations
@@ -8,10 +9,12 @@ namespace API.DAL.Implementations
     public class DeviceDAL : IDeviceDAL
     {
         private readonly DataContext _dbContext;
+        private readonly IDeviceSimulatorService _deviceSimulatorService;
 
-        public DeviceDAL(DataContext dbContext)
+        public DeviceDAL(DataContext dbContext, IDeviceSimulatorService deviceSimulatorService)
         {
             _dbContext = dbContext;
+            _deviceSimulatorService = deviceSimulatorService;
         }
 
         public async Task<List<Device>> GetAllDevicesAsync()
@@ -55,6 +58,8 @@ namespace API.DAL.Implementations
             };
             await _dbContext.Devices.AddAsync(device);
             await _dbContext.SaveChangesAsync();
+
+            await _deviceSimulatorService.FillDataSinceJanuary1st(((int)devicee.DeviceTypeId), device.Id);
         }
 
         public async Task<List<DeviceType>> GetDeviceTypesByCategory(int id)
