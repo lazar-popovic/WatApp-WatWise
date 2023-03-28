@@ -1,21 +1,24 @@
-﻿using API.Models.Entity;
+﻿using API.BL.Implementations;
+using API.Models.Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.SignalR.Hubs
 {
-    [Authorize(Roles = "Admin, Employee")]
+    //[Authorize(Roles = "Admin, Employee")]
     public class MapHub : Hub
     {
         private readonly DataContext _dataContext;
         private static Dictionary<int, User> _userLocations = new Dictionary<int, User>();
-        public MapHub(DataContext dataContext)
+        private readonly ILogger<MapHub> _logger;
+        public MapHub(DataContext dataContext, ILogger<MapHub> logger)
         {
             _dataContext = dataContext;
+            _logger = logger;
         }
 
-        public async Task UpdateLocation(int userId, double latitude, double longitude, string adress, string city, int adressNumber)
+        public async Task UpdateLocation(int userId, double latitude, double longitude, string adress, string city, int adressNumber, int locationId)
         {
             // Find the user in the database and update their location
             try
@@ -30,11 +33,12 @@ namespace API.SignalR.Hubs
                         user.Location.City = city;
                         user.Location.AddressNumber = adressNumber;
                         user.Location.Address = adress;
-
+                        user.Location.Id = locationId;
                         await _dataContext.SaveChangesAsync();
                     }
 
-                    await Clients.All.SendAsync("UpdateUserLocation", userId, latitude, longitude, adress, city, adressNumber);
+                    await Clients.All.SendAsync("UpdateUserLocation", userId, latitude, longitude, adress, city, adressNumber,locationId);
+                    _logger.LogInformation($"User {userId} location updated successfully");
                 }
                 else
                 {
@@ -43,6 +47,7 @@ namespace API.SignalR.Hubs
             }
             catch(Exception ex)
             {
+                _logger.LogError(ex, $"Error updating user {userId} location: {ex.Message}");
                 await Clients.Caller.SendAsync("UpdateLocationError", ex.Message);
             }
            
@@ -59,12 +64,14 @@ namespace API.SignalR.Hubs
                     foreach (var user in users)
                     {
                         if (user.Location != null)
-                            await Clients.Caller.SendAsync("AddUserLocation", user.Id, user.Location.Latitude, user.Location.Longitude, user.Location.Address, user.Location.AddressNumber, user.Location.City);
+                            await Clients.Caller.SendAsync("AddUsersLocation", user.Id, user.Location.Latitude, user.Location.Longitude, user.Location.Address, user.Location.AddressNumber, user.Location.City,user.Location.Id);
                     }
+                    _logger.LogInformation($"Initial locations updated successfully");
                 }
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"Error updating users inital location: {ex.Message}");
                 await Clients.Caller.SendAsync("GetInitialLocationsError", ex.Message);
             }
 

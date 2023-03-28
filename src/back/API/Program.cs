@@ -103,7 +103,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 
-    /*
+    
     options.Events = new JwtBearerEvents
     {
         OnMessageReceived = context =>
@@ -117,7 +117,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
             }
             return Task.CompletedTask;
         }
-    };*/
+    };
 });
 
 
@@ -141,8 +141,8 @@ app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials(
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapHub<MapHub>("hubs/mapHub").RequireAuthorization();
 app.MapControllers();
+app.MapHub<MapHub>("hubs/mapHub");//.RequireAuthorization();
 
 app.UseHangfireDashboard();
 app.MapHangfireDashboard();

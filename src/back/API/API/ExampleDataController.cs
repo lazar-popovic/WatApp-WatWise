@@ -29,8 +29,8 @@ public class ExampleDataController : ControllerBase
     [AutomaticRetry(Attempts = 3)]
     public async Task<IActionResult> AutoHourlyUpdate()
     {
-        //RecurringJob.AddOrUpdate<IDeviceSimulatorService>(x => x.HourlyUpdate(), Cron.Hourly);
-        await _simulator.HourlyUpdate();
+        RecurringJob.AddOrUpdate<IDeviceSimulatorService>(x => x.HourlyUpdate(), Cron.Hourly);
+       // await _simulator.HourlyUpdate();
         return Ok();
     }
 }

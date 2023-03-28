@@ -18,4 +18,13 @@ export class UserService {
   public getUser(id: string | null) : Observable<User> {
     return this.http.get<User>(`${environment.apiUrl}user/${id}`);
   }
+
+  public getUsers() {
+    return this.http.get<User[]>(`${environment.apiUrl}user/all`);
+  }
+
+  /*
+  public updateUserLocation(userId: number, latitude: number, longitude: number) {
+    return this.http.put(`${environment.apiUrl}user/${userId}/location`, { latitude, longitude });
+  }*/
 }
