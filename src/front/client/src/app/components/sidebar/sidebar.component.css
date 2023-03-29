@@ -8,10 +8,18 @@
 .sidebar-container {
     width: 302px;
     height: 100vh;
-    background-color: #1676AC;
     position: sticky;
     top: 0;
 }
+
+.sidebar-container-blue {
+  background-color: #1676AC;
+}
+
+.sidebar-container-green {
+  background-color: #239F81;
+}
+
 
 .sidebar-header {
     padding-top : 10px;
@@ -56,20 +64,25 @@
 
 .sidebar-item-active {
     background-color: white;
-    color:#1676AC;
+    color:#3E3E3E;
     padding : 10px;
     padding-left: 20px;
     border-radius : 20px;
 }
 
 .sidebar-footer {
-    width: 242px;
-    background-color: #0C4869;
-    border-radius: 30px;
-    position: absolute;
-    bottom: 24px;
-    display: flex;
-    align-items: center;
+  width: 242px;
+  border-radius: 30px;
+  position: absolute;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+}
+.sidebar-footer-blue {
+  background-color: #0C4869;
+}
+.sidebar-footer-green {
+  background-color: #115746;
 }
 
 
@@ -98,7 +111,6 @@
         padding-right: 10px;
         box-sizing: border-box;
         width: 100vw;
-        background-color: #1676AC;
     }
 
     #logoMobile
@@ -160,7 +172,7 @@
     .burger-menu span {
         width: 50%;
         height: 3px;
-        background-color: #1676AC;
+        background-color: #3E3E3E;
         transition: all 0.3s ease-in-out;
     }
 
@@ -200,7 +212,7 @@
 
     .menu-list
     {
-        background-color: #1676AC;
+        background-color: #3E3E3E;
 
         box-shadow: none;
         padding-bottom: 0px;
@@ -212,7 +224,7 @@
         background-color: #fff;
         max-height: 330px;
         border-radius: 10px;
-        border: 1px solid #1676AC;
+        border: 1px solid #3E3E3E;
         z-index: 2;
 
 
@@ -245,23 +257,12 @@
     #production-mobile:hover,#profile-mobile:hover
     {
         color: #fff;
-        background-color: #1676AC;
+        background-color: #dddddd;
     }
 
     #devices-mobile     {   background-image: url(/assets/devices.png);}
     #consumption-mobile {   background-image: url(/assets/consumption.png);}
     #production-mobile  {   background-image: url(/assets/production.png);}
-
-    #profile-mobile
-    {
-        background-image: url(/assets/user.png);
-
-        margin-left: 10px;
-        margin-right: 10px;
-
-        border-top: 1px solid #333;
-        border-top-width: 50%;
-
-    }
+    #profile-mobile { background-image: url(/assets/user.png); }
 
 }

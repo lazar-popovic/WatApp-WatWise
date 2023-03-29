@@ -21,7 +21,7 @@ export class LoginComponent {
       this.authService.login(this.login).subscribe((result: any) => {
         if( result.body.success) {
           localStorage.setItem("token", result.body.data.token);
-          this.route.navigateByUrl('/prosumer/overview');
+          this.route.navigate(['/prosumer/overview']);
         }
         else {
           this.toastrNotifService.showErrors( result.body.errors);
