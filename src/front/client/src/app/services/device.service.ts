@@ -19,4 +19,8 @@ constructor( private http: HttpClient) { }
   getDevicesByUserId(userId: number) : Observable<any> {
     return this.http.get(`${environment.apiUrl}device/get-devices-by-user-id?userId=${userId}`);
   }
+
+  getDeviceById( id: any) : Observable<any> {
+    return this.http.get(`${environment.apiUrl}device/${id}`);
+  }
 }

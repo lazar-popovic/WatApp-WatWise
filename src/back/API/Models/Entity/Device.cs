@@ -18,5 +18,7 @@ namespace API.Models.Entity
         public int? DeviceTypeId { get; set; }
         [ForeignKey("DeviceTypeId")] 
         public DeviceType? DeviceType { get; set; }
+
+        public bool DataShare { get; set; } = false;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using API.DAL.Interfaces;
 using API.Models.Entity;
 using API.Models.ViewModels;
+using API.Services.DeviceSimulatorService.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.DAL.Implementations
@@ -8,10 +9,12 @@ namespace API.DAL.Implementations
     public class DeviceDAL : IDeviceDAL
     {
         private readonly DataContext _dbContext;
+        private readonly IDeviceSimulatorService _deviceSimulatorService;
 
-        public DeviceDAL(DataContext dbContext)
+        public DeviceDAL(DataContext dbContext, IDeviceSimulatorService deviceSimulatorService)
         {
             _dbContext = dbContext;
+            _deviceSimulatorService = deviceSimulatorService;
         }
 
         public async Task<List<Device>> GetAllDevicesAsync()
@@ -19,9 +22,17 @@ namespace API.DAL.Implementations
             return await _dbContext.Devices.ToListAsync();
         }
 
-        public async Task<Device> GetDeviceByIdAsync(int id)
+        public async Task<Device?> GetDeviceByIdAsync(int id)
         {
-            return await _dbContext.Devices.FindAsync(id);
+            return await _dbContext.Devices.Where(d=>d.Id == id).Select(d => new Device
+            {
+                Id = d.Id,
+                Name = d.Name,
+                DataShare = d.DataShare,
+                ActivityStatus = d.ActivityStatus,
+                DeviceType = d.DeviceType,
+                UserId = d.UserId
+            }).FirstOrDefaultAsync();
         }
 
         public async Task AddDeviceAsync(Device device)
@@ -51,10 +62,13 @@ namespace API.DAL.Implementations
                 ActivityStatus = false,
                 PurchaseDate = DateTime.Now,
                 DeviceTypeId = devicee.DeviceTypeId,
-                Name = devicee.Name
+                Name = devicee.Name,
+                DataShare = false
             };
             await _dbContext.Devices.AddAsync(device);
             await _dbContext.SaveChangesAsync();
+
+            await _deviceSimulatorService.FillDataSinceJanuary1st(((int)devicee.DeviceTypeId), device.Id);
         }
 
         public async Task<List<DeviceType>> GetDeviceTypesByCategory(int id)

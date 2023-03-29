@@ -1,0 +1,40 @@
+<div id="details-container">
+    <div style="display: inline-block;">
+      <app-sidebar>
+
+      </app-sidebar>
+    </div>
+
+    <div  style="display: inline-block; vertical-align: top;" >
+
+      <h2 style="display: inline-block;">Devices /</h2> <h2 id="h2_device" style="display: inline-block;">{{device.name}}</h2>
+      <br>
+      <h3 style="display: inline-block;">History</h3> <h3 style="display: inline-block; margin-left: 10px; color: gray;">Prediction</h3><br>
+
+      <div id="today-month-year" style="display: inline-block;">
+        <div id="today" (click)="todayClick()">Today </div>
+        <div id="month" (click)="monthClick()">Month</div>
+        <div id="year"  (click)="yearClick()">Year</div>
+      </div>
+        <div id="graph-container">
+          <canvas id="chart" style="max-width: 800px; height: auto;"></canvas>
+        </div>
+        <button id="export"> EXPORT TO CSV</button>
+        <div id = "table-container">
+            <table id="tableShow" class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 50%">Period</th>
+                  <th>{{categoryLabel}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of data; let i = index">
+                  <td>{{labels[i]}}</td>
+                  <td>{{item | number:'1.3-3' }}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+    </div>
+  </div>

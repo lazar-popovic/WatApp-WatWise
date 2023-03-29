@@ -30,5 +30,13 @@ public class ExampleDataController : ControllerBase
         await _simulator.HourlyUpdate();
         return Ok();
     }
+        
+    [HttpPost("fill-january-first")]
+    [AutomaticRetry(Attempts = 3)]
+    public async Task<IActionResult> FillDataSinceJanuary1st( int type, int deviceId)
+    {
+        await _simulator.FillDataSinceJanuary1st( type, deviceId);
+        return Ok();
+    }
 }
 
