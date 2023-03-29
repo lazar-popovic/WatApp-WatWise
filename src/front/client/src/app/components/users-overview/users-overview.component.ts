@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { User } from 'src/app/Models/User';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-users-overview',
@@ -9,37 +10,46 @@ import { User } from 'src/app/Models/User';
 export class UsersOverviewComponent {
 
   users: User[] = [];
-  currentIndex = 9;
-  pageDist = 2;
-  pagesNum = [1,2,3,4,5,6,7,8,9,10];
+  currentIndex = 1;
+  pagesNum: number = 1;
+  pageSize: any = 10;
 
-  dynamicList: number[] = [];
-
-  constructor() {
-    for(var i = 0; i < 10; i++) {
-      this.users.push(new User());
-    }
-    this.makeList();
+  constructor(private userService: UserService) {
+    this.getProsumers();
   }
 
-  makeList() {
-    this.dynamicList.push(1,2);
-    if(this.currentIndex < this.pageDist*2+1) {
-      for(var i = 3;i<this.pageDist*2+1;i++) {
-        this.dynamicList.push(i);
+  getProsumers() {
+    this.userService.getProsumers(this.pageSize, this.pagesNum).subscribe((result: any) => {
+      for(let item of result.data) {
+        let user = new User();
+        user.firstName = item.firstname; 
+        user.lastName = item.lastname; 
+        user.id = item.id;
+        user.mail = item.email;
+        user.address = item.location;
+        this.users.push(user);
       }
+    },(error: any) => {
+      console.log(error);
+    });
+  }
+
+  handler(type: number) {
+    let active = document.querySelector(".overview-pagination-page-active") as HTMLDivElement;
+    
+    if(type == 2) {
+      if(this.currentIndex < this.pagesNum)
+        this.currentIndex++;
     }
-    else if(this.currentIndex >= this.pageDist *2) {
-      for(var i = this.currentIndex - this.pageDist;i<this.currentIndex + this.pageDist + 1;i++) {
-        if(i <= this.pagesNum.length - this.pageDist)
-          this.dynamicList.push(i);
-      }
+    if(type == 1  ) {
+      if(this.currentIndex>1)
+      this.currentIndex--;
     }
-    else {
-      for(var i = this.pagesNum.length;i>this.pagesNum.length - this.pageDist*2 - 1;i--) {
-        this.dynamicList.push(i);
-      }
-    }
-    this.dynamicList.push(this.pagesNum.length-1,this.pagesNum.length);
+
+    active.innerHTML = this.currentIndex as unknown as string;
+  }
+
+  pageSizeHandler() {
+    console.log(this.pageSize);
   }
 }

@@ -18,4 +18,8 @@ export class UserService {
   public getUser(id: string | null) : Observable<User> {
     return this.http.get<User>(`${environment.apiUrl}user/${id}`);
   }
+
+  public getProsumers(pageSize: number, pageNumber: number) : Observable<User[]> {
+    return this.http.get<User[]>(`${environment.apiUrl}user/employees?pageSize=${pageSize}&pageNumber=${pageNumber}`);
+  }
 }

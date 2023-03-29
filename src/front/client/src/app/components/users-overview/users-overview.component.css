@@ -7,6 +7,7 @@
 .overview-container {
     display: flex;
     background-color: #E1E1E1;
+    min-height: 100vh;
 }
 
 .overview-container button, #overview-filter {
@@ -22,8 +23,8 @@
 
 .overview-tab {
     width: 1350px;
-    margin-top: 100px;
-    margin: auto;
+    position: relative;
+    margin: 100px auto;
 }
 
 .overview-filter-holder form{
@@ -58,9 +59,15 @@
     outline: 1px solid black;
 }
 
+/*
+.overview-users-table {
+    overflow-y: scroll;
+    max-height: 80vh;
+}
+*/
+
 .overview-users-table table {
     width: 100%;
-    height: 670px;
     background-color: white;
     border-radius: 30px;
     border-collapse: collapse;
@@ -84,6 +91,7 @@
 .overview-users-table table tr td {
     text-align: center;
     color: #3E3E3E;
+    height: 60px;
 }
 
 .overview-users-table button{

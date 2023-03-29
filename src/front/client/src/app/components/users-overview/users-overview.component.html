@@ -38,21 +38,18 @@
             <form>
                 <div class="page-size-holder">
                     <label for="page-size">Select page size:</label>
-                    <select name="page-size" [selectedIndex]="0">
-                        <option value="10">10</option>
+                    <select name="page-size" [(ngModel)]="pageSize" (change)="pageSizeHandler()">
+                        <option value="10" selected>10</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
                     </select>
                 </div>
                 <div class="overview-pagination-pages">
-                    <div *ngFor="let item of dynamicList">
-                        <div *ngIf="currentIndex == item" class="overview-pagination-page-active">
-                            {{item}}
-                        </div>
-                        <div *ngIf="currentIndex != item" class="overview-pagination-page">
-                            {{item}}
-                        </div>
+                    <div class="overview-pagination-page" (click)="handler(1)"><<</div>
+                    <div class="overview-pagination-page-active">
+                        {{currentIndex}}
                     </div>
+                    <div class="overview-pagination-page" (click)="handler(2)">>></div>
                 </div>
             </form>
         </div>
