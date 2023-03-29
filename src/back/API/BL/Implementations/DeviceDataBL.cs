@@ -42,4 +42,14 @@ public class DeviceDataBL : IDeviceDataBL
 
         return response;
     }
+
+    public async Task<Response<object>> GetTodayTotalProductionConsumptionByUserId(int userId)
+    {
+        var response = new Response<object>();
+
+        response.Success = true;
+        response.Data = await _deviceDataDal.GetTodayTotalProductionConsumptionByUserId(userId);
+
+        return response;
+    }
 }

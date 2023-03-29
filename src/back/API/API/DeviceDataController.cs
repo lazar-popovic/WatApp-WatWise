@@ -37,4 +37,11 @@ public class DeviceDataController : ControllerBase
     {
         return Ok( await _deviceDataBl.GetDeviceDataForYear( deviceId));
     }
+    
+    [HttpGet]
+    [Route("get-today-total-for-user")]
+    public async Task<IActionResult> GetTodayTotalProductionConsumptionByUserId(int userId)
+    {
+        return Ok( await _deviceDataBl.GetTodayTotalProductionConsumptionByUserId( userId));
+    }
 }
