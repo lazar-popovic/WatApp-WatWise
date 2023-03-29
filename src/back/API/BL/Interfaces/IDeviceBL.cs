@@ -12,5 +12,7 @@ namespace API.BL.Interfaces
         Task<Response<String>> UpdateDevice(int id, Device device);
         Task<Response<String>> DeleteDevice(int id);
         Task<Response<String>> AddDeviceViewModel(DeviceViewModel devicee);
+        Task<Response<List<DeviceType>>> GetDeviceTypesByCategory(int id);
+        Response<object> GetDevicesByUserId(int userId);
     }
 }

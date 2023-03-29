@@ -19,21 +19,25 @@ namespace API.API
         {
             _deviceBL = deviceBL;
         }
+        
         [HttpGet("all")]
         public async Task<IActionResult> GetAllDevices()
         {
             return Ok(await _deviceBL.GetDevice());
         }
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDeviceById(int id)
         {
             return Ok(await _deviceBL.GetByIdAsync(id));
         }
+        
         [HttpPost("add")]
         public async Task<IActionResult> AddDevice(Device device)
         {
             return Ok(await _deviceBL.AddDevice(device));
         }
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDevice(int id, Device device)
         {
@@ -45,12 +49,24 @@ namespace API.API
         {
             return Ok(await _deviceBL.DeleteDevice(id));
         }
+        
         [HttpPost("insert-device"), Authorize(Roles = "User")]
         public async Task<IActionResult> AddDeviceViewModel(DeviceViewModel device)
         {
             return Ok(await _deviceBL.AddDeviceViewModel(device));
         }
 
-
+        [HttpGet]
+        [Route("get-types-by-category")]
+        public async Task<IActionResult> GetDeviceTypesByCategory(int category)
+        {
+            return Ok(await _deviceBL.GetDeviceTypesByCategory( category));
+        }
+        
+        [HttpGet("get-devices-by-user-id")]
+        public IActionResult GetDevicesByUserId(int userId)
+        {
+            return Ok( _deviceBL.GetDevicesByUserId( userId));
+        }
     }
 }

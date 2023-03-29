@@ -1,13 +1,20 @@
 <div class="verify-container">
   <div class="container">
-  <form>
-    <h2>Verify account</h2>
-    <h3 id="verify-prosumer-mail"> prosumer@gmail.com </h3>
-    <br>
 
-    <input type="password" id="password" placeholder="password" name="password" [(ngModel)]="password.password1">
-    <input type="password" id="password" placeholder="password" name="password" [(ngModel)]="password.password2">
-    <button type="submit" (click)="verify()">Verify</button>
-  </form>
+    <div class="wrapper" >
+      <h2>Verify account</h2>
+      <form action="#">
+        <h3 id="verify-prosumer-mail"></h3>
+        <div class="input-box">
+          <input type="text" name="email" [(ngModel)]="password.password1" placeholder="Password">
+        </div>
+        <div class="input-box">
+          <input type="text" name="email" [(ngModel)]="password.password2" placeholder="Repeat password">
+        </div>
+        <div class="input-box button">
+          <button type="button" (click)="verify()">Send reset mail</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

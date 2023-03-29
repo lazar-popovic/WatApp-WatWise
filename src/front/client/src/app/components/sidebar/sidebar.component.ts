@@ -35,30 +35,30 @@ export class SidebarComponent {
     this.url = this.route.url.split('/')[2];
     this.role = authService.roleId;
   }
-  
+
   select(element: EventTarget | null, role: number) {
-    if(element == null) 
+    if(element == null)
       return;
     let active = document.querySelector(".sidebar-item-active") as HTMLDivElement;
-    
+
     if(active!=null) {
       active.className = "sidebar-item";
     }
-    
+
     (element as HTMLDivElement).className = "sidebar-item-active";
     if(role == 1)
       this.route.navigateByUrl(`/prosumer/${(element as HTMLDivElement).innerHTML.toLowerCase()}`);
     else if(role == 2)
       this.route.navigateByUrl(`/dso/${(element as HTMLDivElement).innerHTML.toLowerCase()}`);
   }
-  
+
 
   clickHandler(event: MouseEvent, role: number) {
     this.select(event.target, role);
   }
 
- 
-  
+
+
   isMobile():boolean
   {
     if(window.innerWidth < 800){
@@ -69,7 +69,7 @@ export class SidebarComponent {
       return false;
   }
 
-  
+
   menuOpen = false;
   toggleMenu() {
     this.menuOpen = !this.menuOpen;

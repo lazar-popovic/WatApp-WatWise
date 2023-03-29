@@ -11,9 +11,8 @@ namespace API.DAL.Interfaces
         Task UpdateDeviceAsync(Device device);
         Task DeleteDeviceAsync(int id);
         Task AddDeviceViewModel(DeviceViewModel device);
+        Task<List<DeviceType>> GetDeviceTypesByCategory(int id);
 
-
-
-
+        object GetDevicesByUserId( int userId);
     }
 }
