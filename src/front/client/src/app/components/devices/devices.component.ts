@@ -83,5 +83,10 @@ export class DevicesComponent implements OnInit
     refresh() {
       this.route.navigateByUrl('/prosumer/devices');
     }
+
+    toDevice( id: number) {
+      console.log( id);
+      this.route.navigate(['/prosumer/device',id]);
+    }
 }
 

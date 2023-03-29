@@ -15,8 +15,8 @@ public class DeviceDataDAL : IDeviceDataDAL
     public async Task<object> GetDeviceDataForToday(int deviceId)
     {
         return await _dataContext.DeviceEnergyUsage
-            .Where(du => du.DeviceId == deviceId && du.Timestamp.Value.Date == DateTime.Now.Date)
-            .Select( du => new { du.Timestamp, du.Value})
+            .Where(du => du.DeviceId == deviceId && du.Timestamp.Value.Date == DateTime.Now.Date && du.Timestamp.Value < DateTime.Now)
+            .Select( du => new { Timestamp = du.Timestamp, Value = du.Value})
             .OrderBy( du => du.Timestamp)
             .ToListAsync();
     }
@@ -24,12 +24,12 @@ public class DeviceDataDAL : IDeviceDataDAL
     public async Task<object> GetDeviceDataForMonth(int deviceId)
     {
         var query = from usage in _dataContext.DeviceEnergyUsage
-            where usage.DeviceId == deviceId && usage.Timestamp.Value.Year == DateTime.Now.Year && usage.Timestamp.Value.Month == DateTime.Now.Month
+            where usage.DeviceId == deviceId && usage.Timestamp.Value.Year == DateTime.Now.Year && usage.Timestamp.Value.Month == DateTime.Now.Month && usage.Timestamp.Value < DateTime.Now
             group usage by usage.Timestamp.Value.Date into usageGroup
             select new
             {
-                Date = usageGroup.Key,
-                TotalUsage = usageGroup.Sum(u => u.Value)
+                Timestamp = usageGroup.Key.Date.ToShortDateString(),
+                Value = usageGroup.Sum(u => u.Value)
             };
 
         return await query.ToListAsync();
@@ -38,13 +38,12 @@ public class DeviceDataDAL : IDeviceDataDAL
     public async Task<object> GetDeviceDataForYear(int deviceId)
     {
         var query = from usage in _dataContext.DeviceEnergyUsage
-            where usage.DeviceId == deviceId && usage.Timestamp.Value.Year == DateTime.Now.Year
+            where usage.DeviceId == deviceId && usage.Timestamp.Value.Year == DateTime.Now.Year && usage.Timestamp.Value < DateTime.Now
             group usage by new { usage.Timestamp.Value.Year, usage.Timestamp.Value.Month } into usageGroup
             select new
             {
-                Year = usageGroup.Key.Year,
-                Month = usageGroup.Key.Month,
-                TotalUsage = usageGroup.Sum(u => u.Value)
+                Timestamp = usageGroup.Key.Month +"/"+usageGroup.Key.Year,
+                Value = usageGroup.Sum(u => u.Value)
             };
 
         return await query.ToListAsync();

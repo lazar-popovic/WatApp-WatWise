@@ -22,9 +22,17 @@ namespace API.DAL.Implementations
             return await _dbContext.Devices.ToListAsync();
         }
 
-        public async Task<Device> GetDeviceByIdAsync(int id)
+        public async Task<Device?> GetDeviceByIdAsync(int id)
         {
-            return await _dbContext.Devices.FindAsync(id);
+            return await _dbContext.Devices.Where(d=>d.Id == id).Select(d => new Device
+            {
+                Id = d.Id,
+                Name = d.Name,
+                DataShare = d.DataShare,
+                ActivityStatus = d.ActivityStatus,
+                DeviceType = d.DeviceType,
+                UserId = d.UserId
+            }).FirstOrDefaultAsync();
         }
 
         public async Task AddDeviceAsync(Device device)

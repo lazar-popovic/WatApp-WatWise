@@ -37,8 +37,8 @@ const routes: Routes = [
   { path: 'dso/map', component : MapComponent, canActivate: [EmployeeGuard]},
   { path: 'dso/consumption', component : EnergyUsageComponent, canActivate: [EmployeeGuard]},
   { path: 'prosumer/reset-password', component: PasswordInputComponent},
-  { path: 'prosumer/device-details', component: DeviceDetailsComponent}
-  
+  { path: 'prosumer/device/:id', component: DeviceDetailsComponent}
+
 ];
 
 @NgModule({

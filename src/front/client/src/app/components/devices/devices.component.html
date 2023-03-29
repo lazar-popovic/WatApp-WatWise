@@ -18,7 +18,7 @@
       <div class="container">
         <div class="category consumers">
           <h2>Consumers</h2>
-          <div class="card" *ngFor="let device of userDevices.consumers">
+          <div class="card" *ngFor="let device of userDevices.consumers" (click)="toDevice(device.id)">
             <h2>{{device.name}}</h2>
             <div *ngIf="device.activityStatus" class="status on"></div>
             <div *ngIf="!device.activityStatus" class="status off"></div>
@@ -28,7 +28,7 @@
         </div>
         <div class="category producers">
           <h2>Producers</h2>
-          <div class="card" *ngFor="let device of userDevices.producers">
+          <div class="card" *ngFor="let device of userDevices.producers" (click)="toDevice(device.id)">
             <h2>{{device.name}}</h2>
             <div *ngIf="device.activityStatus" class="status on"></div>
             <div *ngIf="!device.activityStatus" class="status off"></div>
@@ -38,7 +38,7 @@
         </div>
         <div class="category storages">
           <h2>Storages</h2>
-          <div class="card" *ngFor="let device of userDevices.storages">
+          <div class="card" *ngFor="let device of userDevices.storages" (click)="toDevice(device.id)">
             <h2>{{device.name}}</h2>
             <p><br></p>
           </div>
