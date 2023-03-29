@@ -1,4 +1,5 @@
 ﻿using API.DAL.Interfaces;
+using API.Models.Entity;
 using API.SignalR.Hubs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,8 +22,11 @@ namespace API.API
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public  IActionResult Get()
         {
+            //Task<List<Location>> locations = new();
+            // locations = _locationDAL.GetAllLocationsAsync();
+
             _hub.Clients.All.SendAsync("getLocations", _locationDAL.GetAllLocationsAsync());
             return Ok(new { Message = "Request Completed" });
         }

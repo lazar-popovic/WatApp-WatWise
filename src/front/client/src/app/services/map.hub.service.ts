@@ -15,7 +15,7 @@ export class MapHubService {
 
   constructor(toastr: ToastrService) {
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl('http://localhost:5226/hubs/mapHub')
+      .withUrl('http://localhost:5226/mapHub')
       .withAutomaticReconnect()
       .build();
 

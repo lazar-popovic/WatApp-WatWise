@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import {LocationService} from "../../services/location.service";
 import { Router } from '@angular/router';
 import { MapHubService } from 'src/app/services/map.hub.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-map-component',
@@ -17,7 +18,7 @@ export class MapComponentComponent implements OnInit {
   selectedLocation: any = {};
   users: any[] = [];
   showOverlay = false;
-  constructor( private locationService: LocationService, private router: Router, private mapHubService: MapHubService) { }
+  constructor( private locationService: LocationService, private router: Router, private mapHubService: MapHubService, private http: HttpClient) { }
   ngOnInit(): void {
     this.map = L.map('map').setView([44.0128, 20.9114], 14);
 
@@ -34,7 +35,7 @@ export class MapComponentComponent implements OnInit {
     console.log(`z: ${z}, x: ${x}, y: ${y}`);
 
     //this.mapHubService.getInitialLocations();
-
+    this.st
     this.mapHubService.locations$.subscribe(locations => {
       this.locations = locations;
       this.placeMarkers(); // Call the placeMarkers function here
