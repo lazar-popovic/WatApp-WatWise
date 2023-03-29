@@ -1,0 +1,53 @@
+<div id="details-container">
+    <div style="display: inline-block; flex: left;">
+      <app-sidebar>
+      
+      </app-sidebar>
+    </div>
+    
+    <div  style="display: inline-block; vertical-align: top;" >
+    
+      <h2 style="display: inline-block;">Devices /</h2> <h2 id="h2_device" style="display: inline-block;">Fridge</h2>
+      <br>
+      <h3 style="display: inline-block;">History</h3> <h3 style="display: inline-block; margin-left: 10px; color: gray;">Prediction</h3><br>
+    
+      <div id="today-month-year" style="display: inline-block;">
+        <div id="today" (click)="todayClick()">Today </div>
+        <div id="month" (click)="monthClick()">Month</div> 
+        <div id="year"  (click)="yearClick()">Year</div>
+      </div>
+  
+      
+        <div id="today-graph-container" *ngIf="todayFlag==true">
+
+          <canvas id="barChartDay" style="max-width: 800px; height: auto;"></canvas>
+          
+        </div>
+
+        <div  id="month-graph-container" *ngIf="monthFlag==true">
+
+          <canvas id="barChartMonth" style="max-width: 800px; height: auto;"></canvas> 
+
+        </div>
+
+        <div  id="year-graph-container" *ngIf="yearFlag==true">
+
+          <canvas id="barChartYear" style="max-width: 800px; height: auto;"></canvas> 
+
+        </div>
+
+        <button id="export"> EXPORT TO CSV</button>
+
+        
+        <div id = "tableContainer_today">
+            <table id="tableShow">
+                
+            </table>
+        </div>
+      
+
+        
+
+    </div>
+  </div>
+  

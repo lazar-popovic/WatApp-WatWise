@@ -1,0 +1,165 @@
+
+#details-container
+{
+    background-color: #E1E1E1;
+}
+
+body
+{
+    background-color: #E1E1E1;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+}
+
+h2
+{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    /* border-bottom: 2px solid #3E3E3E ;  */
+}
+
+#h2_device
+{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    margin-left: 5px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+
+    color: rgb(143, 141, 141);
+}
+
+h3
+{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    /* border-bottom: 2px solid #3E3E3E ;  */
+}
+
+
+#today-month-year 
+{
+    height: 30px;
+    width: 250px;
+    background-color: #ffff;
+    border-radius: 30px;
+    margin-left: 30px;
+    
+    vertical-align: middle;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+}
+
+#today,#month,#year
+{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    
+    display: inline-block;
+    vertical-align: middle;
+    justify-content: space-between;
+    
+    margin-left: 15px;
+    padding: 5px;
+}
+
+
+#today:hover,#month:hover,#year:hover
+{
+    color: #ffff!important;
+    margin-top: 0px;
+    padding: 5px;
+    background-color: #1676AC!important;
+    border-radius: 10px;
+}
+
+
+#today-graph-container,#month-graph-container,#year-graph-container
+{
+    margin-top: 30px;
+    margin-left: 50px;
+    background-color: #ccc;
+    height: 420px;
+    width: 820px;
+
+    border-radius: 5px;
+    border: 2px solid #898787;
+}
+
+#export
+{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+
+    color: #ccc;
+    background-color: #3E3E3E;
+
+    margin-top: 10px;
+    margin-left: 79%;
+
+    height: 40px;
+    width: 180px;
+    border-radius: 30px;
+
+    padding-top: 5px;
+    padding-bottom:  5px;
+}
+
+#export:hover
+{
+    font-size: 20px;
+
+    color: #ccc;
+    background-color: #575656;
+}
+
+
+/*Table*/
+
+#tableContainer_today
+{
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-size: 20px;
+
+  margin-left: 100px;
+  width: 80%;
+
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#tableShow
+{
+    text-align: center;
+    
+}
+
+table
+{
+  margin-top: 10px;
+  width: 100%;
+
+  background-color: #ffff;
+  text-align: center;
+  border-radius: 20px;
+}
+
+
+
