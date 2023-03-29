@@ -16,13 +16,6 @@ public class ExampleDataController : ControllerBase
         _simulator = simulator;
     }
 
-    [HttpGet]
-    [Route("device-between-dates")]
-    public async Task<IActionResult> GetUsageForDeviceBetweenDates(string device, DateTime startingDate, DateTime endingDate)
-    {
-        return Ok(await _simulator.GetUsageForDeviceBetweenDates(device, startingDate, endingDate));
-    }
-
     [HttpPost("auto-update")]
     [AutomaticRetry(Attempts = 3)]
     public async Task<IActionResult> AutoHourlyUpdate()

@@ -22,28 +22,6 @@ public class DeviceSimulatorService : IDeviceSimulatorService
         _collection = _devices.GetCollection<BsonDocument>("devices");
     }
 
-    public async Task<List<ElectricalUsageViewModel>> GetUsageForDeviceBetweenDates(string device,
-        DateTime startingDate, DateTime endingDate)
-    {
-        var collection = _devices.GetCollection<BsonDocument>(device);
-        var filterBuilder = Builders<BsonDocument>.Filter;
-        var query = filterBuilder.And(
-            filterBuilder.Gte("timestamp", startingDate),
-            filterBuilder.Lt("timestamp", endingDate)
-        );
-        var consumptionData = await collection.Find(query).ToListAsync();
-        var usageList = new List<ElectricalUsageViewModel>();
-        foreach (BsonDocument doc in consumptionData)
-        {
-            DateTime timestamp = doc["timestamp"].ToUniversalTime();
-            double value = doc["value"].ToDouble();
-            var usage = new ElectricalUsageViewModel { Timestamp = timestamp, Value = value };
-            usageList.Add(usage);
-        }
-
-        return usageList;
-    }
-
     public async Task HourlyUpdate()
     {
         var pom = DateTime.Now.AddDays(7);
@@ -71,15 +49,15 @@ public class DeviceSimulatorService : IDeviceSimulatorService
 
                 foreach (var device in deviceType.Devices)
                 {
-                    var insertValue = device.ActivityStatus == true ? value : 0.0;
                     deviceEnergyUsageList.Add(new DeviceEnergyUsage
-                        { DeviceId = device.Id, Value = Math.Round( insertValue.Value * (1 + rand.NextDouble() * 0.2 - 0.1), 3), Timestamp = timestamp });
+                        { DeviceId = device.Id, Value = Math.Round( value.Value * (1 + rand.NextDouble() * 0.2 - 0.1), 3), Timestamp = timestamp });
                 }
             }
         }
 
         await _context.DeviceEnergyUsage.AddRangeAsync(deviceEnergyUsageList);
         await _context.SaveChangesAsync();
+        await SetCurrentDataTo0IfOff();
     }
 
     public async Task FillDataSinceJanuary1st(int type, int deviceId)
@@ -104,6 +82,27 @@ public class DeviceSimulatorService : IDeviceSimulatorService
         }
         
         await _context.DeviceEnergyUsage.AddRangeAsync(deviceEnergyUsageList);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task SetCurrentDataTo0IfOff()
+    {
+        var now = DateTime.Now;
+        var hourStart = new DateTime(now.Year, now.Month, now.Day, now.Hour, 0, 0, 0);
+
+        var usages = await _context.DeviceEnergyUsage
+            .Where(u => u.Timestamp == hourStart)
+            .ToListAsync();
+
+        foreach (var usage in usages)
+        {
+            var device = await _context.Devices.FindAsync(usage.DeviceId);
+            if (device.ActivityStatus == false)
+            {
+                usage.Value = 0;
+            }
+        }
+
         await _context.SaveChangesAsync();
     }
 }
