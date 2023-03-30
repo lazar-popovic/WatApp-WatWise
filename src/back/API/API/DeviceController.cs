@@ -68,5 +68,11 @@ namespace API.API
         {
             return Ok( _deviceBL.GetDevicesByUserId( userId));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> TurnDevicesOnOff(DeviceControlViewModel request)
+        {
+            return Ok(await _deviceBL.TurnDevicesOff(request));
+        }
     }
 }

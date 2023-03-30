@@ -93,5 +93,29 @@ namespace API.DAL.Implementations
                 };
             return result;
         }
+        
+        public async Task TurnDevicesOff()
+        {
+            using (_dbContext)
+            {
+                var devices = await _dbContext.Devices.ToListAsync();
+
+                devices.ForEach(d => d.ActivityStatus = false);
+
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task TurnDevicesOn()
+        {
+            using (_dbContext)
+            {
+                var devices = await _dbContext.Devices.ToListAsync();
+
+                devices.ForEach(d => d.ActivityStatus = true);
+
+                await _dbContext.SaveChangesAsync();
+            }
+        }
     }
 }
