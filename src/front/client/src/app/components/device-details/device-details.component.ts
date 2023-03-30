@@ -86,7 +86,7 @@ export class DeviceDetailsComponent
         result => {
           if( result.success) {
             this.result = result.data;
-            this.labels = this.result.map( e => e.timestamp);
+            this.labels = this.result.map( e => this.datePipe.transform(e.timestamp,"shortTime"));
             this.data = this.result.map( e => e.value);
             this.createBarChart();
           }
@@ -179,7 +179,12 @@ export class DeviceDetailsComponent
               backgroundColor: this.color
             }]
           },
-          options: {  scales: { y: {  beginAtZero: true } } }
+          options: {  scales: { y: {  beginAtZero: true,
+                ticks: {
+                  callback: function(value, index, ticks) {
+                    return value+'kW';
+                  }
+                } } } }
         });
     }
 
