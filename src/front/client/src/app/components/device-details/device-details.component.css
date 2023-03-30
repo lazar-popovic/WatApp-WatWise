@@ -2,13 +2,15 @@
 #details-container
 {
     background-color: #E1E1E1;
-
+    /* background: linear-gradient(to bottom right, #E1E1E1, #9ac4e8); */
+    /* background: radial-gradient(circle at center, #E1E1E1 0%, #b6cbeb 80%); */
     display: flex;
 }
 
 body
 {
-    background-color: #E1E1E1;
+    /* background-color: #E1E1E1; */
+    background: linear-gradient(to bottom right, #E1E1E1, #9ac4e8);
     font-family: 'Inter', sans-serif;
     font-style: normal;
 }
@@ -61,7 +63,7 @@ h3
 
     padding: 10px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-
+    background-color:  #1676AC!important;
 }
 
 #today,#month,#year
@@ -74,6 +76,7 @@ h3
     display: inline-block;
     vertical-align: middle;
     justify-content: space-between;
+    color: #ffff;
 
     margin-left: 15px;
     padding: 5px;
@@ -82,10 +85,10 @@ h3
 
 #today:hover,#month:hover,#year:hover
 {
-    color: #ffff!important;
+    color: #1676AC!important;
     margin-top: 0px;
     padding: 5px;
-    background-color: #1676AC!important;
+    background-color: #ffff!important;
     border-radius: 10px;
 }
 
@@ -115,6 +118,7 @@ h3
 
     margin-top: 10px;
     margin-left: 79%;
+    margin-bottom: 10px;
 
     height: 40px;
     width: 180px;
@@ -122,6 +126,7 @@ h3
 
     padding-top: 5px;
     padding-bottom:  5px;
+
 }
 
 #export:hover
@@ -150,6 +155,8 @@ h3
 #tableShow
 {
     text-align: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+    
 }
 
 table
@@ -160,6 +167,8 @@ table
   background-color: #ffff;
   text-align: center;
   border-radius: 20px;
+
+  
 }
 
 
@@ -202,7 +211,29 @@ table
 @media screen and (max-width: 700px) {
 
   body{
+    /* background: linear-gradient(to bottom right, #E1E1E1, #9ac4e8); */
     overflow: auto;
+  }
+
+  h2{
+      float: left;
+  }
+
+  h3{
+    color: #fff!important;
+  }
+
+  #today-month-year
+  {
+    margin-left: 0px;
+    padding-right: 30px;
+    margin-right: 10px;
+  }
+
+  #h2_device
+  {
+      float: left;
+      margin-left: 10px;
   }
 
   #single-device-container
@@ -221,7 +252,7 @@ table
 
   #table-container
   {
-    margin-left: 50px;
+    margin-left: 0px;
   }
 
   #export
@@ -231,11 +262,9 @@ table
     margin-bottom: 10px;
   }
 
-
- 
   .data-table
   {
-    width: 400px; 
+    width: 350px; 
   }
 
 
