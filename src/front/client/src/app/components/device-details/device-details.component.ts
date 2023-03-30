@@ -70,23 +70,23 @@ export class DeviceDetailsComponent
       var todayDiv = document.getElementById("today");
       if(todayDiv)
       {
-        todayDiv.style.color = "#ffff";
-        todayDiv.style.backgroundColor = "#1676AC";
+        todayDiv.style.color = "#1676AC";
+        todayDiv.style.backgroundColor =  "#ffff";
         todayDiv.style.padding = "5px";
         todayDiv.style.borderRadius = "5px";
       }
 
       var monthDiv = document.getElementById("month");
-      if(monthDiv){ monthDiv.style.backgroundColor = "transparent"; monthDiv.style.color = "black";}
+      if(monthDiv){ monthDiv.style.backgroundColor = "transparent"; monthDiv.style.color = "#ffff";}
 
       var yearDiv = document.getElementById("year");
-      if(yearDiv){ yearDiv.style.backgroundColor = "transparent"; yearDiv.style.color = "black";}
+      if(yearDiv){ yearDiv.style.backgroundColor = "transparent"; yearDiv.style.color = "#ffff";}
 
       this.deviceDataService.getDeviceDataForToday( this.device.id).subscribe(
         result => {
           if( result.success) {
             this.result = result.data;
-            this.labels = this.result.map( e => e.timestamp);
+            this.labels = this.result.map( e => this.datePipe.transform(e.timestamp,"shortTime"));
             this.data = this.result.map( e => e.value);
             this.createBarChart();
           }
@@ -102,17 +102,17 @@ export class DeviceDetailsComponent
       const monthDiv = document.getElementById("month");
       if(monthDiv)
       {
-        monthDiv.style.color = "#ffff";
-        monthDiv.style.backgroundColor = "#1676AC";
+        monthDiv.style.color = "#1676AC";
+        monthDiv.style.backgroundColor =  "#ffff";
         monthDiv.style.padding = "5px";
         monthDiv.style.borderRadius = "5px";
       }
 
       const todayDiv = document.getElementById("today");
-      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="black";}
+      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#ffff";}
 
       const yearDiv = document.getElementById("year");
-      if(yearDiv){ yearDiv.style.backgroundColor = "transparent "; yearDiv.style.color="black";}
+      if(yearDiv){ yearDiv.style.backgroundColor = "transparent "; yearDiv.style.color="#ffff";}
 
       this.deviceDataService.getDeviceDataForMonth( this.device.id).subscribe(
         result => {
@@ -134,17 +134,17 @@ export class DeviceDetailsComponent
       var yearDiv = document.getElementById("year");
       if(yearDiv)
       {
-        yearDiv.style.color = "#ffff";
-        yearDiv.style.backgroundColor = "#1676AC";
+        yearDiv.style.color = "#1676AC";
+        yearDiv.style.backgroundColor =  "#ffff";
         yearDiv.style.padding = "5px";
         yearDiv.style.borderRadius = "5px";
       }
 
       const todayDiv = document.getElementById("today");
-      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="black";}
+      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#ffff";}
 
       const monthDiv = document.getElementById("month");
-      if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="black";}
+      if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#ffff";}
 
       this.deviceDataService.getDeviceDataForYear( this.device.id).subscribe(
         result => {
@@ -179,7 +179,12 @@ export class DeviceDetailsComponent
               backgroundColor: this.color
             }]
           },
-          options: {  scales: { y: {  beginAtZero: true } } }
+          options: {  scales: { y: {  beginAtZero: true,
+                ticks: {
+                  callback: function(value, index, ticks) {
+                    return value+'kW';
+                  }
+                } } } }
         });
     }
 
