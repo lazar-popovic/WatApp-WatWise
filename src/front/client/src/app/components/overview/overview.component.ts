@@ -65,12 +65,12 @@ export class OverviewComponent implements OnInit
       data: {
         labels: this.chart1Data.labels.map(d=>this.datePipe.transform(d,"shortTime")),
         datasets: [{
-          label: "Total consumption (kW)",
+          label: "Total consumption(kW)",
           data: this.chart1Data.consumption,
           backgroundColor: "red",
           fill: false
         },{
-          label: "Total production (kW)",
+          label: "Total production(kW)",
           data: this.chart1Data.production,
           backgroundColor: "blue",
           fill: false

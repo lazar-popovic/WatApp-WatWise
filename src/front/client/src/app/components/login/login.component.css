@@ -32,7 +32,7 @@ font-family: 'Poppins', sans-serif;
   width: 100%;
   background: #fff;
   padding: 34px;
-  border-radius: 6px;
+  border-radius:20px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.2);
 }
 .wrapper h2{
