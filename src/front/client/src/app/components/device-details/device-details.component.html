@@ -5,7 +5,7 @@
       </app-sidebar>
     </div>
 
-    <div  style="display: inline-block; vertical-align: top;" >
+    <div id="single-device-container" style="display: inline-block; vertical-align: top;" >
 
       <h2 style="display: inline-block;">Devices /</h2> <h2 id="h2_device" style="display: inline-block;">{{device.name}}</h2>
       <br>
@@ -17,10 +17,12 @@
         <div id="year"  (click)="yearClick()">Year</div>
       </div>
         <div id="graph-container">
-          <canvas id="chart" style="max-width: 800px; height: auto;"></canvas>
+          <div class="chart-container">
+            <canvas id="chart" style="max-width: 800px; height: auto;"></canvas>
+          </div>
         </div>
         <button id="export"> EXPORT TO CSV</button>
-        <div id = "table-container">
+        <div id = "table-container" style="display: inline-block;">
             <table id="tableShow" class="data-table">
               <thead>
                 <tr>
