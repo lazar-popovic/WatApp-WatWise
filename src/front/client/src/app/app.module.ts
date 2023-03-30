@@ -29,6 +29,7 @@ import { LeafletModule} from "@asymmetrik/ngx-leaflet";
 import { DeviceDetailsComponent } from './components/device-details/device-details.component';
 import { NgChartsModule } from 'ng2-charts';
 
+
 @NgModule({
   declarations: [
     AppComponent,

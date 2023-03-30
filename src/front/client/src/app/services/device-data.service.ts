@@ -20,4 +20,8 @@ export class DeviceDataService {
   {
     return this.http.get(`${environment.apiUrl}device-data/get-data-for-year?deviceId=${deviceId}`);
   }
+  getUserTodayStats( userId: number) : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}device-data/get-today-total-for-user?userId=${userId}`);
+  }
 }

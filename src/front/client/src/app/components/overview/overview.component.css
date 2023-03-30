@@ -7,7 +7,9 @@
     flex-direction: row;
   }
   .card {
+
     margin: 1%;
+    width: 45%;
   }
   #content {
     padding: 0 10%;
@@ -21,6 +23,7 @@
   .card {
     max-height: 220px;
     margin: 2%;
+    width: 90%;
   }
 }
 
@@ -35,19 +38,25 @@
 }
 .card {
   box-sizing: border-box;
-  width: 45%;
+  padding: 1%;
   background-color: white;
   height: 45%;
+  min-height: 300px;
   min-width: 350px;
   border-radius: 30px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
 }
+.card h2 {
+  color: #3E3E3E;
+  margin-left: 20px;
+}
 #cards {
-  /*justify-content: space-evenly;*/
+  justify-content: space-evenly;
   align-items: center;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   padding-bottom: 2%;
   height: 100%;
+  margin-top: 2%;
 }
