@@ -25,11 +25,11 @@ namespace API.Common.Database_handling
             var updatedLocation = JsonConvert.DeserializeObject<Location>(payload);
 
             // Update the corresponding user's location in the database
-            var user = dbContext.Users.FirstOrDefault(u => u.Id == updatedLocation.UserId);
+            var user = dbContext.Users.FirstOrDefault(u => u.Id == updatedLocation.Id);
             if (user != null)
             {
-                user.Latitude = updatedLocation.Latitude;
-                user.Longitude = updatedLocation.Longitude;
+                user.Location.Latitude = updatedLocation.Latitude;
+                user.Location.Longitude = updatedLocation.Longitude;
                 dbContext.SaveChanges();
             }
         }

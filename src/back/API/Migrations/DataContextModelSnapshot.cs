@@ -44,7 +44,7 @@ namespace API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Devices");
+                    b.ToTable("Devices", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Entity.DeviceEnergyUsage", b =>
@@ -66,7 +66,7 @@ namespace API.Migrations
 
                     b.HasIndex("DeviceId");
 
-                    b.ToTable("DeviceEnergyUsage");
+                    b.ToTable("DeviceEnergyUsage", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Entity.DeviceType", b =>
@@ -83,7 +83,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeviceTypes");
+                    b.ToTable("DeviceTypes", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Entity.Location", b =>
@@ -109,7 +109,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Locations");
+                    b.ToTable("Locations", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Entity.RefreshToken", b =>
@@ -137,7 +137,7 @@ namespace API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshTokens");
+                    b.ToTable("RefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Entity.ResetPasswordToken", b =>
@@ -159,7 +159,7 @@ namespace API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ResetPasswordTokens");
+                    b.ToTable("ResetPasswordTokens", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Entity.Role", b =>
@@ -174,7 +174,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Entity.User", b =>
@@ -210,7 +210,7 @@ namespace API.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Entity.Device", b =>
