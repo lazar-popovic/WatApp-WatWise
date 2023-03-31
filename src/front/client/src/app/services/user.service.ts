@@ -20,6 +20,10 @@ export class UserService {
   }
 
   public getProsumers(pageSize: number, pageNumber: number) : Observable<User[]> {
+    return this.http.get<User[]>(`${environment.apiUrl}user/prosumers?pageSize=${pageSize}&pageNumber=${pageNumber}`);
+  }
+
+  public getEmployees(pageSize: number, pageNumber: number) : Observable<User[]> {
     return this.http.get<User[]>(`${environment.apiUrl}user/employees?pageSize=${pageSize}&pageNumber=${pageNumber}`);
   }
 }
