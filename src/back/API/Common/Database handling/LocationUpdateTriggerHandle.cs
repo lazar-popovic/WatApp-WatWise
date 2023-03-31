@@ -1,4 +1,6 @@
 ﻿using API.Models.Entity;
+using API.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -7,9 +9,11 @@ namespace API.Common.Database_handling
     public class LocationUpdateTriggerHandle
     {
         private readonly DataContext _context;
+        private readonly IHubContext<MapHub> _hubContext;
 
-        public LocationUpdateTriggerHandle(DataContext context)
+        public LocationUpdateTriggerHandle(DataContext context, IHubContext<MapHub> hubContext)
         {
+            _hubContext = hubContext;
             _context = context;
         }
 
@@ -21,6 +25,7 @@ namespace API.Common.Database_handling
 
             using var dbContext = new DataContext(optionsBuilder.Options);
 
+            /*
             // Update the corresponding user's location in the database
             var user = dbContext.Users.FirstOrDefault(u => u.LocationId == id);
             if (user != null)
@@ -35,7 +40,10 @@ namespace API.Common.Database_handling
                     dbContext.SaveChanges();
                 }
                 
-            }
+            }*/
+
+             _hubContext.Clients.All.SendAsync("locationUpdated",id,latitude, longitude, address, adressNumber,city);
         }
+    }
     }
 }
