@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./add-employee.component.css']
 })
 export class AddEmployeeComponent {
-  user: any = {
+  employee: any = {
     email: '',
     firstname: '',
     lastname: '',
@@ -17,10 +17,10 @@ export class AddEmployeeComponent {
 
   constructor(private userService: UserService,private router: Router, private toastrNotifService: ToastrNotifService) { }
 
-  storeUser()
+  storeEmployee()
   {
-    this.userService.createUser(this.user).subscribe((result: any) => {
-      if( result.body.success) {
+    this.userService.createEmployee(this.employee).subscribe((result: any) => {
+      if(result.body.success) {
         this.toastrNotifService.showSuccess(result.body.data.message);
       }
       else {
@@ -31,7 +31,7 @@ export class AddEmployeeComponent {
     });
 
   }
-  
+
   hide() {
     let thisComponent = document.querySelector('.employee-add') as HTMLDivElement;
     thisComponent.style.display = "None";

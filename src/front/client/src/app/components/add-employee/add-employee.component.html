@@ -4,9 +4,9 @@
         <h2 (click)="hide()">x</h2>
       </div>
       <h2>Add new employee</h2>
-    <input type="name" class="employee-form-name" placeholder="firstname" name="firstname" required [(ngModel)]="user.firstname">
-    <input type="name" class="employee-form-name" placeholder="lastname" name="lastname" required [(ngModel)]="user.lastname">
-    <input type="email" id="employee-form-email" placeholder="email" name="email" required [(ngModel)]="user.email">
-    <button type="submit" (click)="storeUser()">Register</button>
+    <input type="name" class="employee-form-name" placeholder="firstname" name="firstname" required [(ngModel)]="employee.firstname">
+    <input type="name" class="employee-form-name" placeholder="lastname" name="lastname" required [(ngModel)]="employee.lastname">
+    <input type="email" id="employee-form-email" placeholder="email" name="email" required [(ngModel)]="employee.email">
+    <button type="submit" (click)="storeEmployee()">Register</button>
     </form>
 </div>
