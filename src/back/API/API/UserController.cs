@@ -50,6 +50,16 @@ namespace API.API
         {
             return Ok(await _userBL.GetUsersWithLocationId(id));
         }
+        [HttpGet("employees-number")]
+        public async Task<IActionResult> GetNumberEmployees()
+        {
+            return Ok(await _userBL.getNumberOfUsers((int)RoleEnum.Role.Employee));
+        }
+        [HttpGet("prosumers-number")]
+        public async Task<IActionResult> GetNumberProsumers()
+        {
+            return Ok(await _userBL.getNumberOfUsers((int)RoleEnum.Role.User));
+        }
 
 
 

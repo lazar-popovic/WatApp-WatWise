@@ -9,5 +9,6 @@ namespace API.BL.Interfaces
         Task<Response<List<User>>> GetUsersBasedOnRoleAsync(int id, int pageSize, int pageNumber);
         Task<Response<List<User>>> GetUsers();
         Task<Response<List<User>>> GetUsersWithLocationId(int id);
+        Task<Response<int>> getNumberOfUsers(int id);
     }
 }

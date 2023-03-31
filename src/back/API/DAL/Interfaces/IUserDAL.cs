@@ -8,5 +8,7 @@ namespace API.DAL.Interfaces
         Task<List<User>?> GetUsersBasedOnRoleAsync(int id, int pageSize, int pageNumber);
         Task<List<User>?> GetUsers();
         Task<List<User>?> GetUsersWithLocationId(int id);
-    }
+        Task<int> getNumberOfProsumersOrEmployees(int id);
+        
+        }
 }

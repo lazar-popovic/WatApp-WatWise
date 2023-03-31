@@ -93,5 +93,23 @@ namespace API.BL.Implementations
 
             return response;
         }
+        public async Task<Response<int>> getNumberOfUsers(int id)
+        {
+            var response = new Response<int>();
+            int number = await _userDal.getNumberOfProsumersOrEmployees(id);
+            if (number == 0)
+            {
+                response.Errors.Add("There are no loaded users");
+                response.Success = false;
+
+                return response;
+            }
+
+            response.Data = number!;
+            response.Success = response.Errors.Count() == 0;
+
+            return response;
+
+        }
     }
 }

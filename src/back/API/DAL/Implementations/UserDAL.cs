@@ -28,7 +28,7 @@ namespace API.DAL.Implementations
                                        LocationId = u.LocationId,
                                        Location = u.Location
 
-                                   }).SingleOrDefaultAsync();
+                                   }).AsNoTracking().SingleOrDefaultAsync();
 
             return users;
         }
@@ -47,7 +47,7 @@ namespace API.DAL.Implementations
                                        LocationId = u.LocationId,
                                        Location = u.Location
 
-                                   }).ToListAsync();
+                                   }).AsNoTracking().ToListAsync();
 
             return users;
         }
@@ -87,6 +87,13 @@ namespace API.DAL.Implementations
 
             return users;
         }
+
+        public async Task<int> getNumberOfProsumersOrEmployees(int id)
+        {
+            int numberUsers = _dbContext.Users.Count(u => u.RoleId == id);
+            return numberUsers;
+        }
+            
 
 
     }
