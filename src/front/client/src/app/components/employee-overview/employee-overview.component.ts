@@ -12,6 +12,7 @@ export class EmployeeOverviewComponent {
   currentIndex = 1;
   pagesNum: number = 1;
   pageSize: any = 10;
+  showPrompt: boolean = false;
 
   constructor(private userService: UserService) {
     this.getEmployees();
@@ -33,7 +34,9 @@ export class EmployeeOverviewComponent {
   }
 
   addEmployee() {
-    
+    //(document.querySelector('.overview-container') as HTMLDivElement).style.backgroundColor = "light grey";
+    let employeeAddPrompt = document.querySelector('.employee-add') as HTMLDivElement;
+    employeeAddPrompt.style.display = "block";
   }
 
   getNumberOfPages() {

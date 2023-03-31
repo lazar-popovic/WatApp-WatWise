@@ -29,5 +29,11 @@ export class AddEmployeeComponent {
     },(error: any) => {
       console.log(error);
     });
+
+  }
+  
+  hide() {
+    let thisComponent = document.querySelector('.employee-add') as HTMLDivElement;
+    thisComponent.style.display = "None";
   }
 }

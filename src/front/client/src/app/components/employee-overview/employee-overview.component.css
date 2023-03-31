@@ -144,3 +144,11 @@
 .overview-pagination-page:hover {
     background-color: rgba(22, 118, 172, 0.75);
 }
+
+.employee-add {
+    display: none;
+    position: fixed;
+    top: 35%;
+    left: 20%;
+    z-index: 9999;
+}
