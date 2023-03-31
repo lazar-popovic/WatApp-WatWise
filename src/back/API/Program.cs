@@ -91,6 +91,8 @@ builder.Services.AddScoped<IDeviceBL, DeviceBL>();
 builder.Services.AddScoped<ILocationDAL, LocationDAL>();
 builder.Services.AddScoped<ILocationBL, LocationBL>();
 builder.Services.AddTransient<IRecurringJobManager, RecurringJobManager>();
+builder.Services.AddTransient<IDeviceDataDAL, DeviceDataDAL>();
+builder.Services.AddTransient<IDeviceDataBL, DeviceDataBL>();
 
 //JWT Authenthication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {

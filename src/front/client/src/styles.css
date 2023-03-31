@@ -1,7 +1,6 @@
 * {
-  margin: 0px;
-  padding: 0px;
-  font-family: 'Poppins', sans-serif;
+    margin: 0px;
+    padding: 0px;
 }
 .toast-bottom-center {
   bottom: 0;
@@ -9,9 +8,3 @@
   transform: translateX(-50%);
   font-family: 'Poppins', sans-serif;
 }
-
-html, body { height: 100%; }
-body { margin: 0; }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

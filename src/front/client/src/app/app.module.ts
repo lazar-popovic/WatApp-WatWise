@@ -27,7 +27,8 @@ import { ProfileIDComponent } from './components/profile-id/profile-id.component
 import { MapComponentComponent } from './components/map-component/map-component.component';
 import { LeafletModule} from "@asymmetrik/ngx-leaflet";
 import { UsersOverviewComponent } from './components/users-overview/users-overview.component';
-
+import { DeviceDetailsComponent } from './components/device-details/device-details.component';
+import { NgChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +49,7 @@ import { UsersOverviewComponent } from './components/users-overview/users-overvi
     PasswordInputComponent,
     MapComponentComponent,
     UsersOverviewComponent
+    DeviceDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,8 @@ import { UsersOverviewComponent } from './components/users-overview/users-overvi
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    LeafletModule
+    LeafletModule,
+    NgChartsModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,

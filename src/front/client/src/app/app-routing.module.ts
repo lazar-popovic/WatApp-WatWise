@@ -19,6 +19,7 @@ import { EmployeeGuard } from './guards/employee.guard';
 import { ProfileIDComponent } from './components/profile-id/profile-id.component';
 import { LoggedGuard } from './guards/logged.guard';
 import { UsersOverviewComponent } from './components/users-overview/users-overview.component';
+import { DeviceDetailsComponent } from './components/device-details/device-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -37,7 +38,8 @@ const routes: Routes = [
   { path: 'dso/map', component : MapComponent, canActivate: [EmployeeGuard]},
   { path: 'dso/consumption', component : EnergyUsageComponent, canActivate: [EmployeeGuard]},
   { path: 'prosumer/reset-password', component: PasswordInputComponent},
-  { path: 'test-component', component: UsersOverviewComponent}
+  { path: 'test-component', component: UsersOverviewComponent},
+  { path: 'prosumer/device/:id', component: DeviceDetailsComponent}
 ];
 
 @NgModule({
