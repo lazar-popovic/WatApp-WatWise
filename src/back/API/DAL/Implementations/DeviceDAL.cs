@@ -141,5 +141,21 @@ namespace API.DAL.Implementations
                 await _dbContext.SaveChangesAsync();
             }
         }
+
+        public async Task TurnDeviceOffById(int deviceId)
+        {
+            var device = await _dbContext.Devices.Where(d => d.Id == deviceId).FirstOrDefaultAsync();
+            if (device == null)
+                return null;
+
+            device!.ActivityStatus = false;
+            await _dbContext.SaveChangesAsync();
+
+        }
+
+        public Task TurnDeviceOnById(int deviceId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

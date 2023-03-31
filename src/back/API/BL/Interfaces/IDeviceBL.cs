@@ -15,6 +15,7 @@ namespace API.BL.Interfaces
         Task<Response<List<DeviceType>>> GetDeviceTypesByCategory(int id);
         Response<object> GetDevicesByUserId(int userId);
         Task<Response<RegisterResponseViewModel>> TurnDevicesOnOff(DeviceControlViewModel request);
+        Task<Response<RegisterResponseViewModel>> TurnDevicesOnOffById(DeviceControlViewModel request, int deviceId);
         Task<Response<RegisterResponseViewModel>> ShareDeviceDataWithDSO(DeviceControlViewModel request);
     }
 }

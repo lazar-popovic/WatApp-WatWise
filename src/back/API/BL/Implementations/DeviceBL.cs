@@ -227,5 +227,29 @@ namespace API.BL.Implementations
                 return response;
             }
         }
+
+        public async Task<Response<RegisterResponseViewModel>> TurnDevicesOnOffById(DeviceControlViewModel request, int deviceId)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+
+            if (request.DevicesOn == false)
+            {
+                await _ideviceDal.TurnDeviceOffById(deviceId);
+
+                response.Success = true;
+                response.Data = new RegisterResponseViewModel { Message = "Device turned off succesfully!" };
+
+                return response;
+            }
+            else
+            {
+                await _ideviceDal.TurnDeviceOnById(deviceId);
+
+                response.Success = true;
+                response.Data = new RegisterResponseViewModel { Message = "Device turned on succesfully!" };
+
+                return response;
+            }
+        }
     }
 }

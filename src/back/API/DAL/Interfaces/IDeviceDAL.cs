@@ -1,4 +1,5 @@
-﻿using API.Models.Entity;
+﻿using API.BL.Implementations;
+using API.Models.Entity;
 using API.Models.ViewModels;
 
 namespace API.DAL.Interfaces
@@ -14,6 +15,8 @@ namespace API.DAL.Interfaces
         Task<List<DeviceType>> GetDeviceTypesByCategory(int id);
         object GetDevicesByUserId( int userId);
         Task TurnDevicesOff();
+        Task TurnDeviceOffById(int deviceId);
+        Task TurnDeviceOnById(int deviceId);
         Task TurnDevicesOn();
         Task TurnDataSharingOff();
         Task TurnDataSharingOn();
