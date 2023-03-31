@@ -1,4 +1,5 @@
 ﻿using API.DAL.Interfaces;
+using API.Models;
 using API.Models.Entity;
 using API.Models.ViewModels;
 using API.Services.DeviceSimulatorService.Interfaces;
@@ -142,20 +143,44 @@ namespace API.DAL.Implementations
             }
         }
 
-        public async Task TurnDeviceOffById(int deviceId)
+        public async Task<Response<RegisterResponseViewModel>> TurnDeviceOffById(int deviceId)
         {
+            var response = new Response<RegisterResponseViewModel>();
             var device = await _dbContext.Devices.Where(d => d.Id == deviceId).FirstOrDefaultAsync();
+
             if (device == null)
-                return null;
+            {
+                response.Errors.Add("Device doesen't exist");
+                response.Success = false;
+
+                return response;
+            }
 
             device!.ActivityStatus = false;
             await _dbContext.SaveChangesAsync();
 
+            response.Success = response.Errors.Count == 0;
+            return response;
         }
 
-        public Task TurnDeviceOnById(int deviceId)
+        public async Task<Response<RegisterResponseViewModel>> TurnDeviceOnById(int deviceId)
         {
-            throw new NotImplementedException();
+            var response = new Response<RegisterResponseViewModel>();
+            var device = await _dbContext.Devices.Where(d => d.Id == deviceId).FirstOrDefaultAsync();
+
+            if (device == null)
+            {
+                response.Errors.Add("Device doesen't exist");
+                response.Success = false;
+
+                return response;
+            }
+
+            device!.ActivityStatus = true;
+            await _dbContext.SaveChangesAsync();
+
+            response.Success = response.Errors.Count == 0;
+            return response;
         }
     }
 }

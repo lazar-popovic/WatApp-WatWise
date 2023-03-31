@@ -234,7 +234,13 @@ namespace API.BL.Implementations
 
             if (request.DevicesOn == false)
             {
-                await _ideviceDal.TurnDeviceOffById(deviceId);
+                var resp = await _ideviceDal.TurnDeviceOffById(deviceId);
+                
+                if(resp.Success == false)
+                {
+                    resp.Data = new RegisterResponseViewModel { Message = "Error! Failed to turn off the device!" };
+                    return resp;
+                }
 
                 response.Success = true;
                 response.Data = new RegisterResponseViewModel { Message = "Device turned off succesfully!" };
@@ -243,7 +249,13 @@ namespace API.BL.Implementations
             }
             else
             {
-                await _ideviceDal.TurnDeviceOnById(deviceId);
+                var resp = await _ideviceDal.TurnDeviceOnById(deviceId);
+
+                if (resp.Success == false)
+                {
+                    resp.Data = new RegisterResponseViewModel { Message = "Error! Failed to turn on the device!" };
+                    return resp;
+                }
 
                 response.Success = true;
                 response.Data = new RegisterResponseViewModel { Message = "Device turned on succesfully!" };
