@@ -117,5 +117,29 @@ namespace API.DAL.Implementations
                 await _dbContext.SaveChangesAsync();
             }
         }
+
+        public async Task TurnDataSharingOff()
+        {
+            using (_dbContext)
+            {
+                var devices = await _dbContext.Devices.ToListAsync();
+
+                devices.ForEach(d => d.DataShare = false);
+
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task TurnDataSharingOn()
+        {
+            using (_dbContext)
+            {
+                var devices = await _dbContext.Devices.ToListAsync();
+
+                devices.ForEach(d => d.DataShare = true);
+
+                await _dbContext.SaveChangesAsync();
+            }
+        }
     }
 }
