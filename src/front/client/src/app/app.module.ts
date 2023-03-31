@@ -29,6 +29,8 @@ import { LeafletModule} from "@asymmetrik/ngx-leaflet";
 import { UsersOverviewComponent } from './components/users-overview/users-overview.component';
 import { DeviceDetailsComponent } from './components/device-details/device-details.component';
 import { NgChartsModule } from 'ng2-charts';
+import { EmployeeOverviewComponent } from './components/employee-overview/employee-overview.component';
+import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,8 +50,10 @@ import { NgChartsModule } from 'ng2-charts';
     ForgotPasswordComponent,
     PasswordInputComponent,
     MapComponentComponent,
-    UsersOverviewComponent
+    UsersOverviewComponent,
     DeviceDetailsComponent,
+    EmployeeOverviewComponent,
+    AddEmployeeComponent,
   ],
   imports: [
     BrowserModule,

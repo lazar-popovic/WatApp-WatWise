@@ -32,6 +32,10 @@ export class EmployeeOverviewComponent {
     });
   }
 
+  addEmployee() {
+    
+  }
+
   getNumberOfPages() {
     //this.userService.getNumberOfEmployees();
   }

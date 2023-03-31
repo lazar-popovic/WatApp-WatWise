@@ -1,0 +1,9 @@
+<div class="employee-form-container">
+    <form>
+      <h2>Add new employee</h2>
+        <input type="name" class="employee-form-name" placeholder="firstname" name="firstname" required [(ngModel)]="user.firstname">
+        <input type="name" class="employee-form-name" placeholder="lastname" name="lastname" required [(ngModel)]="user.lastname">
+        <input type="email" id="employee-form-email" placeholder="email" name="email" required [(ngModel)]="user.email">
+        <button type="submit" (click)="storeUser()">Register</button>
+    </form>
+</div>
