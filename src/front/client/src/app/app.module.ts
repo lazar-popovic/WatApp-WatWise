@@ -30,6 +30,8 @@ import { DeviceDetailsComponent } from './components/device-details/device-detai
 import { NgChartsModule } from 'ng2-charts';
 
 
+import { UsersOverviewComponent } from './components/users-overview/users-overview.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +50,8 @@ import { NgChartsModule } from 'ng2-charts';
     ChangePasswordComponent,
     ForgotPasswordComponent,
     PasswordInputComponent,
+    MapComponentComponent,
+    UsersOverviewComponent,
     MapComponentComponent,
     DeviceDetailsComponent,
   ],
