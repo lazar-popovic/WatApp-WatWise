@@ -180,7 +180,7 @@ namespace API.BL.Implementations
             return response;
         }
 
-        public async Task<Response<RegisterResponseViewModel>> TurnDevicesOff(DeviceControlViewModel request)
+        public async Task<Response<RegisterResponseViewModel>> TurnDevicesOnOff(DeviceControlViewModel request)
         {
             var response = new Response<RegisterResponseViewModel>();
 
@@ -199,6 +199,30 @@ namespace API.BL.Implementations
 
                 response.Success = true;
                 response.Data = new RegisterResponseViewModel { Message = "Devices turned on succesfully!" };
+
+                return response;
+            }
+        }
+
+        public async Task<Response<RegisterResponseViewModel>> ShareDeviceDataWithDSO(DeviceControlViewModel request)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+
+            if (request.DevicesOn == false)
+            {
+                await _ideviceDal.TurnDataSharingOff();
+
+                response.Success = true;
+                response.Data = new RegisterResponseViewModel { Message = "Devices data sharing with DSO turned off succesfully!" };
+
+                return response;
+            }
+            else
+            {
+                await _ideviceDal.TurnDataSharingOn();
+
+                response.Success = true;
+                response.Data = new RegisterResponseViewModel { Message = "Devices data sharing with DSO turned on succesfully!" };
 
                 return response;
             }

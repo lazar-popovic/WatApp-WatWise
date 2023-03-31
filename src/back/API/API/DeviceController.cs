@@ -69,10 +69,16 @@ namespace API.API
             return Ok( _deviceBL.GetDevicesByUserId( userId));
         }
 
-        [HttpPost]
+        [HttpPost("device-control")]
         public async Task<IActionResult> TurnDevicesOnOff(DeviceControlViewModel request)
         {
-            return Ok(await _deviceBL.TurnDevicesOff(request));
+            return Ok(await _deviceBL.TurnDevicesOnOff(request));
+        }
+
+        [HttpPost("share-to-dso")]
+        public async Task<IActionResult> ShareDeviceDataWithDSO(DeviceControlViewModel request)
+        {
+            return Ok(await _deviceBL.ShareDeviceDataWithDSO(request));
         }
     }
 }
