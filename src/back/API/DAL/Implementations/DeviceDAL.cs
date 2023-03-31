@@ -32,7 +32,7 @@ namespace API.DAL.Implementations
                 ActivityStatus = d.ActivityStatus,
                 DeviceType = d.DeviceType,
                 UserId = d.UserId
-            }).FirstOrDefaultAsync();
+            }).AsNoTracking().FirstOrDefaultAsync();
         }
 
         public async Task AddDeviceAsync(Device device)

@@ -5,8 +5,8 @@ export class User {
     mail = "mejl";
     password = "as";
     role = 1;
-    address = "Radoja Domanovica";
+    address = "";
     num = 1;
-    city = "Kragujevac";
+    city = "";
 
 }
