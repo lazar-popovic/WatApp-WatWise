@@ -1,4 +1,5 @@
 ﻿using API.DAL.Interfaces;
+using API.Models;
 using API.Models.Entity;
 using API.Models.ViewModels;
 using API.Services.DeviceSimulatorService.Interfaces;
@@ -116,6 +117,110 @@ namespace API.DAL.Implementations
 
                 await _dbContext.SaveChangesAsync();
             }
+        }
+
+        public async Task TurnDataSharingOff()
+        {
+            using (_dbContext)
+            {
+                var devices = await _dbContext.Devices.ToListAsync();
+
+                devices.ForEach(d => d.DataShare = false);
+
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task TurnDataSharingOn()
+        {
+            using (_dbContext)
+            {
+                var devices = await _dbContext.Devices.ToListAsync();
+
+                devices.ForEach(d => d.DataShare = true);
+
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task<Response<RegisterResponseViewModel>> TurnDeviceOffById(int deviceId)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+            var device = await _dbContext.Devices.Where(d => d.Id == deviceId).FirstOrDefaultAsync();
+
+            if (device == null)
+            {
+                response.Errors.Add("Device doesen't exist");
+                response.Success = false;
+
+                return response;
+            }
+
+            device!.ActivityStatus = false;
+            await _dbContext.SaveChangesAsync();
+
+            response.Success = response.Errors.Count == 0;
+            return response;
+        }
+
+        public async Task<Response<RegisterResponseViewModel>> TurnDeviceOnById(int deviceId)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+            var device = await _dbContext.Devices.Where(d => d.Id == deviceId).FirstOrDefaultAsync();
+
+            if (device == null)
+            {
+                response.Errors.Add("Device doesen't exist");
+                response.Success = false;
+
+                return response;
+            }
+
+            device!.ActivityStatus = true;
+            await _dbContext.SaveChangesAsync();
+
+            response.Success = response.Errors.Count == 0;
+            return response;
+        }
+
+        public async Task<Response<RegisterResponseViewModel>> ShareDataOffById(int deviceId)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+            var device = await _dbContext.Devices.Where(d => d.Id == deviceId).FirstOrDefaultAsync();
+
+            if (device == null)
+            {
+                response.Errors.Add("Device doesen't exist");
+                response.Success = false;
+
+                return response;
+            }
+
+            device!.DataShare = false;
+            await _dbContext.SaveChangesAsync();
+
+            response.Success = response.Errors.Count == 0;
+            return response;
+        }
+
+        public async Task<Response<RegisterResponseViewModel>> ShareDataOnById(int deviceId)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+            var device = await _dbContext.Devices.Where(d => d.Id == deviceId).FirstOrDefaultAsync();
+
+            if (device == null)
+            {
+                response.Errors.Add("Device doesen't exist");
+                response.Success = false;
+
+                return response;
+            }
+
+            device!.DataShare = true;
+            await _dbContext.SaveChangesAsync();
+
+            response.Success = response.Errors.Count == 0;
+            return response;
         }
     }
 }

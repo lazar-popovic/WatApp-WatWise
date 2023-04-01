@@ -10,7 +10,7 @@ namespace API.DAL.Interfaces
         User RegisterEmployee(RegisterEmployeeViewModel user);
         bool EmailExists(string email);
         void AddResetToken(ResetPasswordToken token);
-        ResetPasswordToken GetResetTokenEntity(string type);
+        ResetPasswordToken? GetResetTokenEntity(string type);
         User? FindUserById(int userId);
         void UpdateUserAfterPasswordReset(User user);
         void RemoveResetToken(ResetPasswordToken token);
