@@ -78,7 +78,7 @@ namespace API.DAL.Implementations
             _context.SaveChanges();
         }
 
-        public ResetPasswordToken GetResetTokenEntity(string type)
+        public ResetPasswordToken? GetResetTokenEntity(string type)
         {
             var token = _context.ResetPasswordTokens.SingleOrDefault(t => t.Token == type);
 
@@ -148,7 +148,7 @@ namespace API.DAL.Implementations
                 {
                     // Rollback the transaction in case of any error
                     await transaction.RollbackAsync();
-                    throw ex;
+                    throw;
                 }
             }
         }

@@ -86,5 +86,11 @@ namespace API.API
         {
             return Ok(await _deviceBL.ShareDeviceDataWithDSO(request));
         }
+
+        [HttpPatch("share-to-dso-id")]
+        public async Task<IActionResult> ShareDeviceDataWithDSOById(DeviceControlViewModel request, int deviceId)
+        {
+            return Ok(await _deviceBL.ShareDeviceDataWithDSOById(request, deviceId));
+        }
     }
 }

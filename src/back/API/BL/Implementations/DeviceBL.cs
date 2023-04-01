@@ -263,5 +263,41 @@ namespace API.BL.Implementations
                 return response;
             }
         }
+
+        public async Task<Response<RegisterResponseViewModel>> ShareDeviceDataWithDSOById(DeviceControlViewModel request, int deviceId)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+
+            if (request.DevicesOn == false)
+            {
+                var resp = await _ideviceDal.ShareDataOffById(deviceId);
+
+                if (resp.Success == false)
+                {
+                    resp.Data = new RegisterResponseViewModel { Message = "Error! Failed to turn off data sharing!" };
+                    return resp;
+                }
+
+                response.Success = true;
+                response.Data = new RegisterResponseViewModel { Message = "Device data sharing with DSO turned off succesfully!" };
+
+                return response;
+            }
+            else
+            {
+                var resp = await _ideviceDal.ShareDataOffById(deviceId);
+
+                if (resp.Success == false)
+                {
+                    resp.Data = new RegisterResponseViewModel { Message = "Error! Failed to turn on data sharing!" };
+                    return resp;
+                }
+
+                response.Success = true;
+                response.Data = new RegisterResponseViewModel { Message = "Device data sharing with DSO turned on succesfully!" };
+
+                return response;
+            }
+        }
     }
 }
