@@ -28,8 +28,9 @@ export class OverviewComponent implements OnInit
   }
 
   ngOnInit(): void {
-    let date = new Date();
-    this.deviceDataService.getUserTodayStats(date.getDay(), date.getMonth(), date.getFullYear(), this.jwtService.userId).subscribe(
+    const date = new Date();
+    console.log( date);
+    this.deviceDataService.getUserDayStats(date.getDay(), date.getMonth(), date.getFullYear(), this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
           const currentHour = new Date().getHours();
@@ -56,14 +57,17 @@ export class OverviewComponent implements OnInit
             return hour > currentHour;
           }).map( (d:any)=>d.totalEnergyUsage);
 
+          console.log( this.chart1Data);
           this.drawChart1();
         }
       }, error => {
         console.log( error);
       }
     );
-    date = new Date( date.getDate()+1);
-    this.deviceDataService.getUserTodayStats(date.getDay(), date.getMonth(), date.getFullYear(), this.jwtService.userId).subscribe(
+    const date2 = new Date();
+    date2.setDate( date2.getDate() + 1);
+    console.log( date2);
+    this.deviceDataService.getUserDayStats(date2.getDay(), date2.getMonth(), date2.getFullYear(), this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
           this.chart2Data.labels = result.data.producingEnergyUsageByTimestamp.map( (d:any)=>d.timestamp);
@@ -73,12 +77,13 @@ export class OverviewComponent implements OnInit
           this.chart2Data.predictedProduction = result.data.producingEnergyUsageByTimestamp.map( (d:any)=>d.totalEnergyUsage);
           this.chart2Data.predictedConsumption = result.data.consumingEnergyUsageByTimestamp.map( (d:any)=>d.totalEnergyUsage);
 
+          console.log( this.chart2Data);
           this.drawChart2();
         }
       }, error => {
         console.log( error);
       }
-    )
+    );
   }
 
   drawChart1(): void {
