@@ -143,6 +143,24 @@ namespace API.DAL.Implementations
             }
         }
 
+        public async Task<object> Top3DevicesByUserId(int userId)
+        {
+            var timestamp = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+            var result = from device in _dbContext.Devices
+                join deviceType in _dbContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
+                join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty()
+                    on device.Id equals usage.DeviceId into usageGroup
+                where device.UserId == userId
+                group new { device.Id, device.Name, device.ActivityStatus, Value = usageGroup.FirstOrDefault().Value }
+                    by deviceType.Category into grouped
+                orderby grouped.Max(g => g.Value) descending
+                select new {
+                    Category = grouped.Key,
+                    Devices = grouped.OrderByDescending(g => g.Value).Take(3).ToList()
+                };
+            return await result.ToListAsync();
+        }
+
         public async Task<Response<RegisterResponseViewModel>> TurnDeviceOffById(int deviceId)
         {
             var response = new Response<RegisterResponseViewModel>();

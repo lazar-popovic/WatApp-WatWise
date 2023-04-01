@@ -228,6 +228,14 @@ namespace API.BL.Implementations
             }
         }
 
+        public async Task<Response<object>> Top3DevicesByUserId(int userId)
+        {
+            var response = new Response<object>();
+            response.Success = true;
+            response.Data = await _ideviceDal.Top3DevicesByUserId(userId);
+            return response;
+        }
+
         public async Task<Response<RegisterResponseViewModel>> TurnDevicesOnOffById(DeviceControlViewModel request, int deviceId)
         {
             var response = new Response<RegisterResponseViewModel>();
