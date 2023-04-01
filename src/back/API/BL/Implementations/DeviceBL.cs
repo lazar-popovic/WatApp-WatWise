@@ -285,7 +285,7 @@ namespace API.BL.Implementations
             }
             else
             {
-                var resp = await _ideviceDal.ShareDataOffById(deviceId);
+                var resp = await _ideviceDal.ShareDataOnById(deviceId);
 
                 if (resp.Success == false)
                 {

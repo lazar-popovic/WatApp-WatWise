@@ -182,5 +182,45 @@ namespace API.DAL.Implementations
             response.Success = response.Errors.Count == 0;
             return response;
         }
+
+        public async Task<Response<RegisterResponseViewModel>> ShareDataOffById(int deviceId)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+            var device = await _dbContext.Devices.Where(d => d.Id == deviceId).FirstOrDefaultAsync();
+
+            if (device == null)
+            {
+                response.Errors.Add("Device doesen't exist");
+                response.Success = false;
+
+                return response;
+            }
+
+            device!.DataShare = false;
+            await _dbContext.SaveChangesAsync();
+
+            response.Success = response.Errors.Count == 0;
+            return response;
+        }
+
+        public async Task<Response<RegisterResponseViewModel>> ShareDataOnById(int deviceId)
+        {
+            var response = new Response<RegisterResponseViewModel>();
+            var device = await _dbContext.Devices.Where(d => d.Id == deviceId).FirstOrDefaultAsync();
+
+            if (device == null)
+            {
+                response.Errors.Add("Device doesen't exist");
+                response.Success = false;
+
+                return response;
+            }
+
+            device!.DataShare = true;
+            await _dbContext.SaveChangesAsync();
+
+            response.Success = response.Errors.Count == 0;
+            return response;
+        }
     }
 }

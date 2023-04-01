@@ -18,6 +18,8 @@ namespace API.DAL.Interfaces
         Task TurnDevicesOff();
         Task<Response<RegisterResponseViewModel>> TurnDeviceOffById(int deviceId);
         Task<Response<RegisterResponseViewModel>> TurnDeviceOnById(int deviceId);
+        Task<Response<RegisterResponseViewModel>> ShareDataOffById(int deviceId);
+        Task<Response<RegisterResponseViewModel>> ShareDataOnById(int deviceId);
         Task TurnDevicesOn();
         Task TurnDataSharingOff();
         Task TurnDataSharingOn();
