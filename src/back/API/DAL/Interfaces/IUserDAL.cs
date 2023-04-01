@@ -9,6 +9,6 @@ namespace API.DAL.Interfaces
         Task<List<User>?> GetUsers();
         Task<List<User>?> GetUsersWithLocationId(int id);
         Task<int> getNumberOfProsumersOrEmployees(int id);
-        
+        Task<List<User>?> FindUser(int id, string search, string mail, int pageSize, int pageNum, string order);
         }
 }

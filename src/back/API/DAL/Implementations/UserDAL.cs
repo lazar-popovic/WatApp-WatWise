@@ -1,10 +1,11 @@
-﻿using API.DAL.Interfaces;
+﻿using API.BL.Implementations;
+using API.DAL.Interfaces;
 using API.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.DAL.Implementations
 {
-    public class UserDAL:IUserDAL
+    public class UserDAL : IUserDAL
     {
         private readonly DataContext _dbContext;
 
@@ -63,14 +64,14 @@ namespace API.DAL.Implementations
                                        Id = u.Id,
                                        Email = u.Email,
                                        Firstname = u.Firstname,
-                                       Lastname = u.Lastname, 
+                                       Lastname = u.Lastname,
                                        Verified = u.Verified,
                                        RoleId = u.RoleId,
                                        Role = u.Role,
                                        LocationId = u.LocationId,
                                        Location = u.Location
 
-                                   }).ToListAsync();
+                                   }).AsNoTracking().ToListAsync();
 
             return users;
         }
@@ -83,7 +84,7 @@ namespace API.DAL.Implementations
                                        Email = u.Email,
                                        Firstname = u.Firstname,
                                        Lastname = u.Lastname
-                                   }).ToListAsync();
+                                   }).AsNoTracking().ToListAsync();
 
             return users;
         }
@@ -93,8 +94,69 @@ namespace API.DAL.Implementations
             int numberUsers = _dbContext.Users.Count(u => u.RoleId == id);
             return numberUsers;
         }
+
+
+        public async Task<List<User>?> FindUser(int id, string search, string mail, int pageSize, int pageNum, string order)
+        {
+          
+            string[] fullName = search.Split(" ");
+
+           
+
+          
+            List<User> users = _dbContext.Users.Select(o => new User
+                                                {
+                                                    Id = o.Id,
+                                                    Email = o.Email,
+                                                    Firstname = o.Firstname,
+                                                    Lastname = o.Lastname,
+                                                    Verified = o.Verified,
+                                                    RoleId = o.RoleId,
+                                                    Role = o.Role,
+                                                    LocationId = o.LocationId,
+                                                    Location = o.Location
+
+                                                }).ToList();
+
+
+            if (!string.IsNullOrEmpty(mail))
+            {
+                users = users.Where(o => o.Email.Contains(mail)).ToList();
+            }
+
             
+            if (fullName.Length == 2)
+            {
+                users = users.Where(o => o.Firstname.Contains(fullName[0]) && o.Lastname.Contains(fullName[1])).ToList();
+            }
+            else if (fullName.Length == 1)
+            {
+                users = users.Where(o => o.Firstname.Contains(fullName[0]) || o.Lastname.Contains(fullName[0])).ToList();
+            }
+            users = users.Where(o => o.RoleId == id).ToList();
+
+            
+            switch (order)
+            {
+                case "Up":
+                    users = users.OrderBy(o => o.Firstname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                    break;
+                case "Down":
+                    users = users.OrderByDescending(o => o.Firstname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                    break;
+                default:
+                    users = users.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                    break;
+            }
+
+            
+            return users;
+        }
+
 
 
     }
-}
+
+
+    }
+

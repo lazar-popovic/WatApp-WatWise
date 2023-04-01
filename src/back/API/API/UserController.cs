@@ -60,6 +60,14 @@ namespace API.API
         {
             return Ok(await _userBL.getNumberOfUsers((int)RoleEnum.Role.User));
         }
+        [HttpGet("prosumers-filter")]
+        public async Task<IActionResult> FilterProsumer(string fullName, string email, int pageSize, int pageNumber, string orderBy)
+        {
+            return Ok(await _userBL.FindUsers((int)RoleEnum.Role.User, fullName, email, pageSize, pageNumber, orderBy));
+        }
+
+
+
 
 
 
