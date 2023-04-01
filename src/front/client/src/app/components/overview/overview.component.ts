@@ -22,14 +22,18 @@ export class OverviewComponent implements OnInit
   }
 
   ngOnInit(): void {
-    this.deviceDataService.getUserTodayStats( this.jwtService.userId).subscribe(
+    const date = new Date();
+    this.deviceDataService.getUserTodayStats(date.getDay(), date.getMonth(), date.getFullYear(), this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
           const currentHour = new Date().getHours();
           this.chart1Data.labels = result.data.producingEnergyUsageByTimestamp.map( (d:any)=>d.timestamp);
-          this.chart1Data.production = result.data.producingEnergyUsageByTimestamp.map( (d:any)=>d.totalEnergyUsage);
-          this.chart1Data.consumption = result.data.consumingEnergyUsageByTimestamp.map( (d:any)=>d.totalEnergyUsage);
-          /*this.chart1Data.production = result.data.producingEnergyUsageByTimestamp.filter((entry:any) => {
+          if( this.chart1Data.labels.length == 0) {
+            this.chart1Data.labels = result.data.consumingEnergyUsageByTimestamp.map( (d:any)=>d.timestamp);
+          }
+          //this.chart1Data.production = result.data.producingEnergyUsageByTimestamp.map( (d:any)=>d.totalEnergyUsage);
+          //this.chart1Data.consumption = result.data.consumingEnergyUsageByTimestamp.map( (d:any)=>d.totalEnergyUsage);
+          this.chart1Data.production = result.data.producingEnergyUsageByTimestamp.filter((entry:any) => {
             const hour = new Date(entry.timestamp).getHours();
             return hour <= currentHour;
           }).map( (d:any)=>d.totalEnergyUsage);
@@ -44,7 +48,8 @@ export class OverviewComponent implements OnInit
           this.chart1Data.predictedConsumption = result.data.consumingEnergyUsageByTimestamp.filter((entry:any) => {
             const hour = new Date(entry.timestamp).getHours();
             return hour > currentHour;
-          }).map( (d:any)=>d.totalEnergyUsage);*/
+          }).map( (d:any)=>d.totalEnergyUsage);
+
           this.drawChart1();
         }
       }, error => {
@@ -67,24 +72,38 @@ export class OverviewComponent implements OnInit
         datasets: [{
           label: "Total consumption(kW)",
           data: this.chart1Data.consumption,
-          backgroundColor: "red",
-          fill: false
+          pointBackgroundColor: 'rgba(255, 0, 0,1)',
+          backgroundColor: 'rgba(255, 0, 0,1)',
+          borderColor: 'rgba(255, 0, 0, 0.1)',
+          tension: 0.2,
+          pointStyle: 'circle'
+        },{
+          label: "Predicted consumption (kW)",
+          data: this.chart1Data.predictedConsumption.splice(0, this.chart1Data.consumption.length),
+          pointBackgroundColor: 'rgba(254, 0, 0, 0.5)',
+          backgroundColor: 'rgba(254, 0, 0, 0.5)',
+          borderColor: 'rgba(254, 0, 0, 0.1)',
+          borderDash: [5,5],
+          tension: 0.2,
+          pointStyle: 'circle'
         },{
           label: "Total production(kW)",
           data: this.chart1Data.production,
-          backgroundColor: "blue",
-          fill: false
-        }/*,{
-          label: "Predicted production (kW)",
-          data: this.chart1Data.predictedProduction,
-          backgroundColor: "blue",
-          fill: false
+          pointBackgroundColor: 'rgba(0, 0, 255, 1)',
+          backgroundColor: 'rgba(0, 0, 255, 1)',
+          borderColor: 'rgba(0, 0, 255, 0.1)',
+          tension: 0.2,
+          pointStyle: 'rectRounded'
         },{
-          label: "Predicted consumption (kW)",
-          data: this.chart1Data.predictedConsumption,
-          backgroundColor: "blue",
-          fill: false
-        }*/]
+          label: "Predicted production (kW)",
+          data: this.chart1Data.predictedProduction.splice(0, this.chart1Data.production.length),
+          pointBackgroundColor: 'rgba( 0, 0,254, 0.5)',
+          backgroundColor: 'rgba( 0, 0,254, 0.5)',
+          borderColor: 'rgba( 0, 0,254, 0.1)',
+          borderDash: [5,5],
+          tension: 0.2,
+          pointStyle: 'rectRounded'
+        }]
       },
       options: {
         scales: {

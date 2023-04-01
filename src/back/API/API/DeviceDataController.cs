@@ -39,9 +39,9 @@ public class DeviceDataController : ControllerBase
     }
     
     [HttpGet]
-    [Route("get-today-total-for-user")]
-    public async Task<IActionResult> GetTodayTotalProductionConsumptionByUserId(int userId)
+    [Route("get-day-total-for-user")]
+    public async Task<IActionResult> GetDayTotalProductionConsumptionByUserId(int day, int month, int year, int userId)
     {
-        return Ok( await _deviceDataBl.GetTodayTotalProductionConsumptionByUserId( userId));
+        return Ok( await _deviceDataBl.GetDayTotalProductionConsumptionByUserId(day,month,year,userId));
     }
 }

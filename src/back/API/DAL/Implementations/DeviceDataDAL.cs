@@ -49,9 +49,9 @@ public class DeviceDataDAL : IDeviceDataDAL
         return await query.ToListAsync();
     }
 
-    public async Task<object> GetTodayTotalProductionConsumptionByUserId(int userId)
+    public async Task<object> GetDayTotalProductionConsumptionByUserId(int day, int month, int year, int userId)
     {
-        var currentDate = DateTime.UtcNow.Date;
+        var currentDate = new DateTime(year,month,day);
         
         var startTimestamp = new DateTimeOffset(currentDate, TimeSpan.Zero);
         
