@@ -76,7 +76,7 @@ namespace API.DAL.Implementations
         {
             return await _dbContext.DeviceTypes.Where(dt => dt.Category == id)
                                                .Select(dt => new DeviceType { Id = dt.Id, Type = dt.Type })
-                                               .ToListAsync();
+                                               .AsNoTracking().ToListAsync();
         }
 
         public object GetDevicesByUserId(int userId)

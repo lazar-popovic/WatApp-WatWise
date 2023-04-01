@@ -17,7 +17,7 @@ public class DeviceDataDAL : IDeviceDataDAL
         return await _dataContext.DeviceEnergyUsage
             .Where(du => du.DeviceId == deviceId && du.Timestamp.Value.Date == DateTime.Now.Date && du.Timestamp.Value < DateTime.Now)
             .Select( du => new { Timestamp = du.Timestamp, Value = du.Value})
-            .OrderBy( du => du.Timestamp)
+            .OrderBy( du => du.Timestamp).AsNoTracking()
             .ToListAsync();
     }
 
