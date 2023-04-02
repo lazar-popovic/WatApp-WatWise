@@ -10,9 +10,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-
-  showProfileForm = true;
-  dsoShow = true;
   user = new User();
   constructor(private authService:AuthService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
     this.getUser();
