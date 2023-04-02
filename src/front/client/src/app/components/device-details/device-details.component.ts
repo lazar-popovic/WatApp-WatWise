@@ -9,6 +9,24 @@ import {DeviceService} from "../../services/device.service";
 import {DeviceDataService} from "../../services/device-data.service";
 import {DatePipe} from "@angular/common";
 
+import * as $ from 'jquery';
+import 'bootstrap-datepicker';
+// import 'jqueryui';
+
+
+interface DatepickerOptions {
+  // other properties
+  autoclose?: boolean;
+}
+
+// $(function () {
+//   $("#datepicker").datepicker({ 
+//         autoClose: true, 
+//         todayHighlight: true
+//   }).datepicker('update', new Date());
+// });
+
+
 
 @Component({
   selector: 'app-device-details',
@@ -32,6 +50,7 @@ export class DeviceDetailsComponent
       deviceType: null,
       dataShare: false
     }
+
     constructor( private datePipe: DatePipe, private authService:AuthService, private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private deviceDataService: DeviceDataService) {
       this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
         result => {
@@ -55,8 +74,16 @@ export class DeviceDetailsComponent
       )
       Chart.register(...registerables);
     }
+    
     ngOnInit(): void
     {
+
+      /*bootstrap datepicker*/
+      $("#datepicker").datepicker({
+        autoclose: true,
+        todayHighlight: true
+      }).datepicker('update', new Date());
+      
     }
 
     todayFlag : boolean = true;
@@ -221,6 +248,10 @@ export class DeviceDetailsComponent
         tableContainer.appendChild(table);
       }
     }
+
+
+
+
 }
 
 

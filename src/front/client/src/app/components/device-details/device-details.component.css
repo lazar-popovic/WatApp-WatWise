@@ -263,3 +263,100 @@ table {
     margin-bottom: 10px;
   }
 }
+
+
+/*Calendar*/
+
+/* Style for datepicker input */
+.mat-input-element {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  width: 200px;
+  font-size: 16px;
+}
+
+/* Style for datepicker toggle */
+button.mat-icon-button {
+  background-color: transparent;
+  color: #333;
+  border: none;
+  margin-left: -40px;
+  margin-top: 8px;
+}
+
+
+
+
+
+
+
+/*Bootstrap datepicker*/
+/* Set the font size and color of the calendar icon */
+.input-group-addon i {
+  font-size: 20px;
+  color: #6f6f6f;
+}
+
+/* Set the background color of the datepicker input */
+.input-group.date input[type="text"] {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+}
+
+/* Style the datepicker dropdown */
+.datepicker-dropdown {
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+/* Style the datepicker header */
+.datepicker-dropdown .datepicker-header {
+  background-color: #f0f0f0;
+  border-radius: 5px 5px 0px 0px;
+  border: none;
+  padding: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Style the datepicker days */
+.datepicker-dropdown .datepicker-days th, 
+.datepicker-dropdown .datepicker-days td {
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Style the selected date */
+.datepicker-dropdown .datepicker-days .active, 
+.datepicker-dropdown .datepicker-days .active:hover, 
+.datepicker-dropdown .datepicker-days .active:focus {
+  background-color: #6f6f6f;
+  color: #fff;
+}
+
+/* Style the today button */
+.datepicker-dropdown .datepicker-days .today {
+  color: #6f6f6f;
+  font-weight: bold;
+}
+
+/* Style the clear button */
+.datepicker-dropdown .datepicker-footer .clear {
+  color: #6f6f6f;
+  font-size: 16px;
+}
+
+/* Style the close button */
+.datepicker-dropdown .datepicker-footer .close {
+  color: #6f6f6f;
+  font-size: 16px;
+}
+

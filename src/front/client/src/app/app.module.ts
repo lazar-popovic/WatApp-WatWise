@@ -32,6 +32,11 @@ import { NgChartsModule } from 'ng2-charts';
 
 import { UsersOverviewComponent } from './components/users-overview/users-overview.component';
 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +70,9 @@ import { UsersOverviewComponent } from './components/users-overview/users-overvi
     ToastrModule.forRoot(),
     LeafletModule,
     NgChartsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
