@@ -15,11 +15,11 @@
       <div class="card" id="card3">
         <div class="small-card-vertical">
           <h3 *ngIf="chartActiveConsumersData.consumption.length==0">No active consumers</h3>
-          <canvas id="chart-active-consumers" style="width: 90%; height: 80%;"></canvas>
+          <canvas id="chart-active-consumers" style="width: 70%; height: 80%;"></canvas>
         </div>
         <div class="small-card-vertical">
           <h3 *ngIf="chartActiveProducersData.production.length==0">No active producers</h3>
-          <canvas id="chart-active-producers" style="width: 90%; height: 80%;"></canvas>
+          <canvas id="chart-active-producers" style="width: 70%; height: 80%;"></canvas>
         </div>
       </div>
       <div class="card" id="card4">
@@ -32,4 +32,6 @@
       </div>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 </div>

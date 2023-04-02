@@ -181,6 +181,8 @@ export class OverviewComponent implements OnInit
         }]
       },
       options: {
+        maintainAspectRatio: true,
+        responsive: true,
         scales: {
           y: {
             beginAtZero: true,
@@ -273,6 +275,10 @@ export class OverviewComponent implements OnInit
         scales: {
           y: {
             beginAtZero: true
+          },
+          x: {
+            beginAtZero: true,
+            display: false
           }
         }
       }
@@ -308,6 +314,10 @@ export class OverviewComponent implements OnInit
         scales: {
           y: {
             beginAtZero: true
+          },
+          x: {
+            beginAtZero: true,
+            display: false
           }
         }
       }
