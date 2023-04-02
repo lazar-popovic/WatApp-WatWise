@@ -97,7 +97,7 @@ public class DeviceSimulatorService : IDeviceSimulatorService
         foreach (var usage in usages)
         {
             var device = await _context.Devices.FindAsync(usage.DeviceId);
-            if (device.ActivityStatus == false)
+            if (device?.ActivityStatus == false)
             {
                 usage.Value = 0;
             }

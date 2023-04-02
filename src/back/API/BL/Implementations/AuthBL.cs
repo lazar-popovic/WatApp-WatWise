@@ -282,7 +282,7 @@ namespace API.BL.Implementations
 
             response.Data = new LoginResponseViewModel
             { 
-                Token = newAccessToken,
+                Token = newAccessToken!,
                 RefreshToken = newRefreshToken
             };
 

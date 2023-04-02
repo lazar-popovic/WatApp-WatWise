@@ -127,7 +127,7 @@ namespace API.BL.Implementations
             var response = new Response<String>();
             var dev = device;
             
-            if (string.IsNullOrWhiteSpace( dev.Name.Trim()))
+            if (string.IsNullOrEmpty( dev.Name?.Trim()))
             {
                 response.Errors.Add("Name is required!");
             }
