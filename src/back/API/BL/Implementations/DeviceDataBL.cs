@@ -43,12 +43,12 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
-    public async Task<Response<object>> GetDayTotalProductionConsumptionByUserId(int day, int month, int year, int userId)
+    public async Task<Response<object>> GetDayTotalProductionConsumptionByUserId( DateTime date, int userId)
     {
         var response = new Response<object>();
 
         response.Success = true;
-        response.Data = await _deviceDataDal.GetDayTotalProductionConsumptionByUserId(day,month,year,userId);
+        response.Data = await _deviceDataDal.GetDayTotalProductionConsumptionByUserId( date,userId);
 
         return response;
     }

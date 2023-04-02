@@ -49,11 +49,9 @@ public class DeviceDataDAL : IDeviceDataDAL
         return await query.ToListAsync();
     }
 
-    public async Task<object> GetDayTotalProductionConsumptionByUserId(int day, int month, int year, int userId)
+    public async Task<object> GetDayTotalProductionConsumptionByUserId( DateTime date, int userId)
     {
-        var currentDate = new DateTime(year,month,day);
-        
-        var startTimestamp = new DateTimeOffset(currentDate, TimeSpan.Zero);
+        var startTimestamp = new DateTimeOffset(date, TimeSpan.Zero);
         
         var producingEnergyUsageByTimestamp = await _dataContext.DeviceEnergyUsage
             .Join(_dataContext.Devices, energyUsage => energyUsage.DeviceId, device => device.Id, (energyUsage, device) => new { EnergyUsage = energyUsage, Device = device })

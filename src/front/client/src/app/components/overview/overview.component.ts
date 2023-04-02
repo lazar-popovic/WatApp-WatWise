@@ -38,8 +38,6 @@ export class OverviewComponent implements OnInit
           if( this.chart1Data.labels.length == 0) {
             this.chart1Data.labels = result.data.consumingEnergyUsageByTimestamp.map( (d:any)=>d.timestamp);
           }
-          //this.chart1Data.production = result.data.producingEnergyUsageByTimestamp.map( (d:any)=>d.totalEnergyUsage);
-          //this.chart1Data.consumption = result.data.consumingEnergyUsageByTimestamp.map( (d:any)=>d.totalEnergyUsage);
           this.chart1Data.production = result.data.producingEnergyUsageByTimestamp.filter((entry:any) => {
             const hour = new Date(entry.timestamp).getHours();
             return hour <= currentHour;
@@ -48,16 +46,25 @@ export class OverviewComponent implements OnInit
             const hour = new Date(entry.timestamp).getHours();
             return hour <= currentHour;
           }).map( (d:any)=>d.totalEnergyUsage);
-          this.chart1Data.predictedProduction = result.data.producingEnergyUsageByTimestamp.filter((entry:any) => {
-            const hour = new Date(entry.timestamp).getHours();
-            return hour > currentHour;
-          }).map( (d:any)=>d.totalEnergyUsage);
-          this.chart1Data.predictedConsumption = result.data.consumingEnergyUsageByTimestamp.filter((entry:any) => {
-            const hour = new Date(entry.timestamp).getHours();
-            return hour > currentHour;
-          }).map( (d:any)=>d.totalEnergyUsage);
 
-          console.log( this.chart1Data);
+          const predictedProduction = result.data.producingEnergyUsageByTimestamp.filter((entry: any) => {
+            const hour = new Date(entry.timestamp).getHours();
+            return hour > currentHour;
+          }).map((d: any) => d.totalEnergyUsage);
+
+          const predictedConsumption = result.data.consumingEnergyUsageByTimestamp.filter((entry: any) => {
+            const hour = new Date(entry.timestamp).getHours();
+            return hour > currentHour;
+          }).map((d: any) => d.totalEnergyUsage);
+
+          const nullArray1 = Array(this.chart1Data.production.length).fill(null);
+          const nullArray2 = Array(this.chart1Data.consumption.length).fill(null);
+
+          this.chart1Data.predictedProduction = nullArray1.concat(predictedProduction);
+          this.chart1Data.predictedConsumption = nullArray2.concat(predictedConsumption);
+
+          console.log( this.chart1Data.predictedProduction);
+          console.log( this.chart1Data.predictedConsumption);
           this.drawChart1();
         }
       }, error => {
@@ -107,13 +114,13 @@ export class OverviewComponent implements OnInit
           pointStyle: 'circle'
         },{
           label: "Predicted consumption (kW)",
-          data: this.chart1Data.predictedConsumption.splice(0, this.chart1Data.consumption.length),
+          data: this.chart1Data.predictedConsumption,
           pointBackgroundColor: 'rgba(254, 0, 0, 0.5)',
           backgroundColor: 'rgba(254, 0, 0, 0.5)',
           borderColor: 'rgba(254, 0, 0, 0.1)',
           borderDash: [5,5],
           tension: 0.2,
-          pointStyle: 'circle'
+          pointStyle: 'rectRounded'
         },{
           label: "Total production(kW)",
           data: this.chart1Data.production,
@@ -121,10 +128,10 @@ export class OverviewComponent implements OnInit
           backgroundColor: 'rgba(0, 0, 255, 1)',
           borderColor: 'rgba(0, 0, 255, 0.1)',
           tension: 0.2,
-          pointStyle: 'rectRounded'
+          pointStyle: 'circle'
         },{
           label: "Predicted production (kW)",
-          data: this.chart1Data.predictedProduction.splice(0, this.chart1Data.production.length),
+          data: this.chart1Data.predictedProduction,
           pointBackgroundColor: 'rgba( 0, 0,254, 0.5)',
           backgroundColor: 'rgba( 0, 0,254, 0.5)',
           borderColor: 'rgba( 0, 0,254, 0.1)',

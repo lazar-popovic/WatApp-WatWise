@@ -7,5 +7,5 @@ public interface IDeviceDataBL
     Task<Response<object>> GetDeviceDataForToday(int deviceId);
     Task<Response<object>> GetDeviceDataForMonth(int deviceId);
     Task<Response<object>> GetDeviceDataForYear(int deviceId);
-    Task<Response<object>> GetDayTotalProductionConsumptionByUserId(int day, int month, int year, int userId);
+    Task<Response<object>> GetDayTotalProductionConsumptionByUserId( DateTime date, int userId);
 }

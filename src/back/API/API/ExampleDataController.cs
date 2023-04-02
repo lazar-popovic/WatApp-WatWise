@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Hangfire;
 using API.Models.Entity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.API;
@@ -63,5 +64,12 @@ public class ExampleDataController : ControllerBase
         var response = new { producingEnergyUsageByTimestamp, consumingEnergyUsageByTimestamp};
         return Ok( response);
     }
+
+    [HttpGet("get-all-prosumers")]
+    public async Task<IActionResult> GetAllProsumers( DateTime datum)
+    {
+        return Ok( datum);
+    }
+    
 }
 
