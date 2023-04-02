@@ -57,7 +57,7 @@ public class DeviceDataDAL : IDeviceDataDAL
         
         var producingEnergyUsageByTimestamp = await _dataContext.DeviceEnergyUsage
             .Join(_dataContext.Devices, energyUsage => energyUsage.DeviceId, device => device.Id, (energyUsage, device) => new { EnergyUsage = energyUsage, Device = device })
-            .Join(_dataContext.DeviceTypes, joined => joined.Device.DeviceTypeId, type => type.Id, (joined, type) => new { EnergyUsage = joined.EnergyUsage, Device = joined.Device, Category = type.Category.Value })
+            .Join(_dataContext.DeviceTypes, joined => joined.Device.DeviceTypeId, type => type.Id, (joined, type) => new { EnergyUsage = joined.EnergyUsage, Device = joined.Device, Category = type.Category!.Value })
             .Where(joined => joined.EnergyUsage.Timestamp!.Value.Date == DateTime.Now.Date && joined.Device.UserId == userId && joined.Category == 1)
             .GroupBy(joined => new { Timestamp = joined.EnergyUsage.Timestamp!.Value})
             .Select(grouped => new { Timestamp = grouped.Key.Timestamp, TotalEnergyUsage = grouped.Sum(joined => joined.EnergyUsage.Value) })
@@ -65,7 +65,7 @@ public class DeviceDataDAL : IDeviceDataDAL
 
         var consumingEnergyUsageByTimestamp = await _dataContext.DeviceEnergyUsage
             .Join(_dataContext.Devices, energyUsage => energyUsage.DeviceId, device => device.Id, (energyUsage, device) => new { EnergyUsage = energyUsage, Device = device })
-            .Join(_dataContext.DeviceTypes, joined => joined.Device.DeviceTypeId, type => type.Id, (joined, type) => new { EnergyUsage = joined.EnergyUsage, Device = joined.Device, Category = type.Category.Value })
+            .Join(_dataContext.DeviceTypes, joined => joined.Device.DeviceTypeId, type => type.Id, (joined, type) => new { EnergyUsage = joined.EnergyUsage, Device = joined.Device, Category = type.Category!.Value })
             .Where(joined => joined.EnergyUsage.Timestamp!.Value.Date == DateTime.Now.Date && joined.Device.UserId == userId && joined.Category == -1)
             .GroupBy(joined => new { Timestamp = joined.EnergyUsage.Timestamp!.Value})
             .Select(grouped => new { Timestamp = grouped.Key.Timestamp, TotalEnergyUsage = Math.Abs(grouped.Sum(joined => joined.EnergyUsage.Value!.Value)) })

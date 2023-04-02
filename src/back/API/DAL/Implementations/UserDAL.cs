@@ -104,7 +104,7 @@ namespace API.DAL.Implementations
            
 
           
-            List<User> users = _dbContext.Users.Select(o => new User
+            List<User> users = await _dbContext.Users.Select(o => new User
                                                 {
                                                     Id = o.Id,
                                                     Email = o.Email,
@@ -116,22 +116,22 @@ namespace API.DAL.Implementations
                                                     LocationId = o.LocationId,
                                                     Location = o.Location
 
-                                                }).ToList();
+                                                }).ToListAsync();
 
 
             if (!string.IsNullOrEmpty(mail))
             {
-                users = users.Where(o => o.Email.Contains(mail)).ToList();
+                users = users.Where(o => o.Email!.Contains(mail)).ToList();
             }
 
             
             if (fullName.Length == 2)
             {
-                users = users.Where(o => o.Firstname.Contains(fullName[0]) && o.Lastname.Contains(fullName[1])).ToList();
+                users = users.Where(o => o.Firstname!.Contains(fullName[0]) && o.Lastname!.Contains(fullName[1])).ToList();
             }
             else if (fullName.Length == 1)
             {
-                users = users.Where(o => o.Firstname.Contains(fullName[0]) || o.Lastname.Contains(fullName[0])).ToList();
+                users = users.Where(o => o.Firstname!.Contains(fullName[0]) || o.Lastname!.Contains(fullName[0])).ToList();
             }
             users = users.Where(o => o.RoleId == id).ToList();
 
