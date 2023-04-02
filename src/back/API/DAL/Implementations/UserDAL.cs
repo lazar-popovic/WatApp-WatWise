@@ -99,57 +99,60 @@ namespace API.DAL.Implementations
         public async Task<List<User>?> FindUser(int id, string search, string mail, int pageSize, int pageNum, string order)
         {
           
-            string[] fullName = search.Split(" ");
+            var fullName = search?.Trim().ToLower().Split(" ");
 
            
 
           
-            List<User> users = _dbContext.Users.Select(o => new User
+            var users = await _dbContext.Users.Where( u => u.RoleId == id).Select(o => new User
                                                 {
                                                     Id = o.Id,
                                                     Email = o.Email,
                                                     Firstname = o.Firstname,
                                                     Lastname = o.Lastname,
                                                     Verified = o.Verified,
-                                                    RoleId = o.RoleId,
-                                                    Role = o.Role,
                                                     LocationId = o.LocationId,
                                                     Location = o.Location
 
-                                                }).ToList();
+                                                }).ToListAsync();
 
-
-            if (!string.IsNullOrEmpty(mail))
+            if (mail != null)
             {
-                users = users.Where(o => o.Email.Contains(mail)).ToList();
+                if (!string.IsNullOrEmpty(mail?.Trim()) || id != 3)
+                {
+                    users = users.Where(o =>
+                        ($"{o.Location.Address} {o.Location.AddressNumber}, {o.Location.City}".ToLower())
+                        .Contains(mail)).ToList();
+                }
             }
 
-            
-            if (fullName.Length == 2)
+            if (search != null)
             {
-                users = users.Where(o => o.Firstname.Contains(fullName[0]) && o.Lastname.Contains(fullName[1])).ToList();
+                if (fullName.Length == 2)
+                {
+                    users = users.Where(o => o.Firstname.ToLower().Contains(fullName[0]) && o.Lastname.ToLower().Contains(fullName[1]))
+                        .ToList();
+                }
+                else if (fullName.Length == 1)
+                {
+                    users = users.Where(o => o.Firstname.ToLower().Contains(fullName[0]) || o.Lastname.ToLower().Contains(fullName[0]))
+                        .ToList();
+                }
             }
-            else if (fullName.Length == 1)
-            {
-                users = users.Where(o => o.Firstname.Contains(fullName[0]) || o.Lastname.Contains(fullName[0])).ToList();
-            }
-            users = users.Where(o => o.RoleId == id).ToList();
 
-            
             switch (order)
             {
-                case "Up":
-                    users = users.OrderBy(o => o.Firstname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                case "asc":
+                    users = users.OrderBy(o => o.Lastname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
                     break;
-                case "Down":
-                    users = users.OrderByDescending(o => o.Firstname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                case "desc":
+                    users = users.OrderByDescending(o => o.Lastname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
                     break;
                 default:
                     users = users.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
                     break;
             }
 
-            
             return users;
         }
 
