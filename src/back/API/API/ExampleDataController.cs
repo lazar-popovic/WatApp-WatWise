@@ -44,11 +44,11 @@ public class ExampleDataController : ControllerBase
         
         var endTimestamp = startTimestamp.AddDays(1);
         
-        var producingEnergyUsageByTimestamp = _dbContext.DeviceEnergyUsage
+        var producingEnergyUsageByTimestamp =  _dbContext.DeviceEnergyUsage
             .Join(_dbContext.Devices, energyUsage => energyUsage.DeviceId, device => device.Id, (energyUsage, device) => new { EnergyUsage = energyUsage, Device = device })
-            .Join(_dbContext.DeviceTypes, joined => joined.Device.DeviceTypeId, type => type.Id, (joined, type) => new { EnergyUsage = joined.EnergyUsage, Device = joined.Device, Category = type.Category.Value })
-            .Where(joined => joined.EnergyUsage.Timestamp.Value.Date == DateTime.Now.Date && joined.Device.UserId == userId && joined.Category == 1)
-            .GroupBy(joined => new { Timestamp = joined.EnergyUsage.Timestamp.Value})
+            .Join(_dbContext.DeviceTypes, joined => joined.Device.DeviceTypeId, type => type.Id, (joined, type) => new { EnergyUsage = joined.EnergyUsage, Device = joined.Device, Category = type.Category!.Value })
+            .Where(joined => joined.EnergyUsage.Timestamp!.Value.Date == DateTime.Now.Date && joined.Device.UserId == userId && joined.Category == 1)
+            .GroupBy(joined => new { Timestamp = joined.EnergyUsage.Timestamp!.Value})
             .Select(grouped => new { Timestamp = grouped.Key.Timestamp, TotalEnergyUsage = grouped.Sum(joined => joined.EnergyUsage.Value) })
             .ToList();
 
