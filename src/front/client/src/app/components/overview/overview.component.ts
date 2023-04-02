@@ -3,6 +3,7 @@ import {DeviceDataService} from "../../services/device-data.service";
 import {JWTService} from "../../services/jwt.service";
 import {Chart} from "chart.js";
 import {DatePipe} from "@angular/common";
+import {DeviceService} from "../../services/device.service";
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -24,13 +25,23 @@ export class OverviewComponent implements OnInit
     predictedConsumption: [] as any[],
     predictedProduction: [] as any[]
   }
-  constructor( private deviceDataService: DeviceDataService, private jwtService: JWTService, private datePipe: DatePipe) {
+
+
+  chartActiveConsumers: any;
+  chartActiveConsumersData = {
+    labels: [] as any[],
+    consumption: [] as any[]
+  }
+  chartActiveProducers: any;
+  chartActiveProducersData = {
+    labels: [] as any[],
+    production: [] as any[]
+  }
+  constructor( private deviceDataService: DeviceDataService, private jwtService: JWTService, private datePipe: DatePipe, private deviceService: DeviceService) {
   }
 
   ngOnInit(): void {
     const date = new Date();
-    console.log( date);
-    console.log( date.getDate(), date.getMonth()+1, date.getFullYear());
     this.deviceDataService.getUserDayStats( date.getDate(), date.getMonth()+1, date.getFullYear(), this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
@@ -64,18 +75,15 @@ export class OverviewComponent implements OnInit
           this.chart1Data.predictedProduction = nullArray1.concat(predictedProduction);
           this.chart1Data.predictedConsumption = nullArray2.concat(predictedConsumption);
 
-          console.log( this.chart1Data.predictedProduction);
-          console.log( this.chart1Data.predictedConsumption);
           this.drawChart1();
         }
       }, error => {
         console.log( error);
       }
     );
+
     const date2 = new Date();
     date2.setDate( date2.getDate() + 1);
-    console.log( date2);
-    console.log( date2.getDate(), date2.getMonth()+1, date2.getFullYear());
     this.deviceDataService.getUserDayStats( date2.getDate(), date2.getMonth()+1, date2.getFullYear(), this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
@@ -86,11 +94,41 @@ export class OverviewComponent implements OnInit
           this.chart2Data.predictedProduction = result.data.producingEnergyUsageByTimestamp.map( (d:any)=>d.totalEnergyUsage);
           this.chart2Data.predictedConsumption = result.data.consumingEnergyUsageByTimestamp.map( (d:any)=>d.totalEnergyUsage);
 
-          console.log( this.chart2Data);
           this.drawChart2();
         }
       }, error => {
         console.log( error);
+      }
+    );
+
+    this.deviceService.getTop3ByCategory( this.jwtService.userId).subscribe(
+      (result:any) => {
+        if( result.success) {
+          let consumers = result.data.find( (c:any) => c.category == -1);
+          if( consumers != null) {
+            this.chartActiveConsumersData.labels = consumers.devices.map( (device:any) => device.name);
+            this.chartActiveConsumersData.consumption = consumers.devices.map( (device:any) => device.value);
+          } else {
+            this.chartActiveConsumersData.consumption = [];
+            this.chartActiveConsumersData.labels = [];
+          }
+
+          let producers = result.data.find( (c:any) => c.category == 1);
+          if( producers != null) {
+            this.chartActiveProducersData.labels = producers.devices.map( (device:any) => device.name);
+            this.chartActiveProducersData.production = producers.devices.map( (device:any) => device.value);
+          } else {
+            this.chartActiveProducersData.production = [];
+            this.chartActiveProducersData.labels = [];
+          }
+
+          console.log( this.chartActiveConsumersData);
+          console.log( this.chartActiveProducersData);
+
+          this.drawChartsTopActiveDevices();
+        }
+      }, error => {
+
       }
     );
   }
@@ -197,6 +235,79 @@ export class OverviewComponent implements OnInit
                 return value+'kW';
               }
             }
+          }
+        }
+      }
+    });
+  }
+
+  drawChartsTopActiveDevices() {
+    const canvas: any = document.getElementById("chart-active-consumers");
+    const chart2d = canvas.getContext("2d");
+    if( this.chartActiveConsumers) {
+      this.chartActiveConsumers.destroy();
+    }
+    this.chartActiveConsumers = new Chart(chart2d, {
+      type: 'bar',
+      data: {
+        labels: this.chartActiveConsumersData.labels,
+        datasets: [{
+          data: this.chartActiveConsumersData.consumption,
+          backgroundColor: 'rgba(254, 0, 0, 0.5)',
+          borderColor: 'rgba(254, 0, 0, 0.1)'
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        indexAxis: 'y',
+        elements: {
+          bar: {
+            borderWidth: 2,
+          }
+        },
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    const canvas2: any = document.getElementById("chart-active-producers");
+    const chart2d2 = canvas2.getContext("2d");
+    if( this.chartActiveProducers) {
+      this.chartActiveProducers.destroy();
+    }
+    this.chartActiveProducers = new Chart(chart2d2, {
+      type: 'bar',
+      data: {
+        labels: this.chartActiveProducersData.labels,
+        datasets: [{
+          data: this.chartActiveProducersData.production,
+          backgroundColor: 'rgba(0, 0, 254, 0.5)',
+          borderColor: 'rgba(0, 0, 254, 0.1)'
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        indexAxis: 'y',
+        elements: {
+          bar: {
+            borderWidth: 2,
+          }
+        },
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
           }
         }
       }
