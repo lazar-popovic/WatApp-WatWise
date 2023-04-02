@@ -30,7 +30,8 @@ export class OverviewComponent implements OnInit
   ngOnInit(): void {
     const date = new Date();
     console.log( date);
-    this.deviceDataService.getUserDayStats(date.getDay(), date.getMonth(), date.getFullYear(), this.jwtService.userId).subscribe(
+    console.log( date.getDate(), date.getMonth()+1, date.getFullYear());
+    this.deviceDataService.getUserDayStats( date.getDate(), date.getMonth()+1, date.getFullYear(), this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
           const currentHour = new Date().getHours();
@@ -74,7 +75,8 @@ export class OverviewComponent implements OnInit
     const date2 = new Date();
     date2.setDate( date2.getDate() + 1);
     console.log( date2);
-    this.deviceDataService.getUserDayStats(date2.getDay(), date2.getMonth(), date2.getFullYear(), this.jwtService.userId).subscribe(
+    console.log( date2.getDate(), date2.getMonth()+1, date2.getFullYear());
+    this.deviceDataService.getUserDayStats( date2.getDate(), date2.getMonth()+1, date2.getFullYear(), this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
           this.chart2Data.labels = result.data.producingEnergyUsageByTimestamp.map( (d:any)=>d.timestamp);
@@ -174,7 +176,7 @@ export class OverviewComponent implements OnInit
           borderColor: 'rgba(254, 0, 0, 0.1)',
           borderDash: [5,5],
           tension: 0.2,
-          pointStyle: 'circle'
+          pointStyle: 'rectRounded'
         },{
           label: "Predicted production (kW)",
           data: this.chart2Data.predictedProduction,

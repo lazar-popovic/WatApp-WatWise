@@ -150,7 +150,7 @@ namespace API.DAL.Implementations
                 join deviceType in _dbContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
                 join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty()
                     on device.Id equals usage.DeviceId into usageGroup
-                where device.UserId == userId
+                where device.UserId == userId && device.ActivityStatus == true
                 group new { device.Id, device.Name, device.ActivityStatus, Value = usageGroup.FirstOrDefault().Value }
                     by deviceType.Category into grouped
                 orderby grouped.Max(g => g.Value) descending
