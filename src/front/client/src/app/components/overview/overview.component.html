@@ -14,10 +14,12 @@
       </div>
       <div class="card" id="card3">
         <div class="small-card-vertical">
+          <h3>Biggest consumers</h3>
           <h3 *ngIf="chartActiveConsumersData.consumption.length==0">No active consumers</h3>
           <canvas id="chart-active-consumers" style="width: 70%; height: 80%;"></canvas>
         </div>
         <div class="small-card-vertical">
+          <h3>Biggest producers</h3>
           <h3 *ngIf="chartActiveProducersData.production.length==0">No active producers</h3>
           <canvas id="chart-active-producers" style="width: 70%; height: 80%;"></canvas>
         </div>
