@@ -1,13 +1,40 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { HubConnection } from '@microsoft/signalr';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { environment } from '../environments/environment';
+import { HubConnection } from '@microsoft/signalr';
 
 @Injectable({
   providedIn: 'root',
 })
+export class SignalRService {
+  private hubConnection!: signalR.HubConnection;
+  public locationUpdates$: Subject<any> = new Subject();
+
+  constructor() { }
+
+  public startConnection = () => {
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl('https://localhost:5226/mapHub')
+      .build();
+
+    this.hubConnection.start()
+      .then(() => console.log('SignalR connection started'))
+      .catch((err: any) => console.log(`Error starting SignalR connection: ${err}`));
+
+    this.hubConnection.on('locationUpdated', ( latitude: number, longitude: number, address: string, city: string, addressNumber: number, locationId: number) => {
+      const location = {
+        latitude,
+        longitude,
+        address,
+        city,
+        addressNumber,
+        locationId
+      };
+      this.locationUpdates$.next(location);
+    });
+/*
 export class MapHubService {
   private connection: signalR.HubConnection;
   private locationsSubject = new BehaviorSubject<any[]>([]);
@@ -69,5 +96,6 @@ export class MapHubService {
   {
     this.connection.stop().catch(error => console.log(error));
   }
-
+*/
+  }
 }
