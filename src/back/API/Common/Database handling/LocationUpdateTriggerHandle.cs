@@ -8,24 +8,25 @@ namespace API.Common.Database_handling
 {
     public class LocationUpdateTriggerHandle
     {
-        private readonly DataContext _context;
+        //private readonly DataContext _context;
         private readonly IHubContext<MapHub> _hubContext;
 
-        public LocationUpdateTriggerHandle(DataContext context, IHubContext<MapHub> hubContext)
+        public LocationUpdateTriggerHandle(/*DataContext context,*/ IHubContext<MapHub> hubContext)
         {
             _hubContext = hubContext;
-            _context = context;
+            //_context = context;
         }
 
         [DbFunction("location_updated")]
-        public static void HandleLocationUpdated(int id, double latitude, double longitude, string address, int adressNumber, string city)
+        public async void HandleLocationUpdated(int id, double latitude, double longitude, string address, int adressNumber, string city)
         {
+            /*
             var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
             optionsBuilder.UseSqlite("your_connection_string");
 
             using var dbContext = new DataContext(optionsBuilder.Options);
 
-            /*
+            
             // Update the corresponding user's location in the database
             var user = dbContext.Users.FirstOrDefault(u => u.LocationId == id);
             if (user != null)
@@ -42,7 +43,7 @@ namespace API.Common.Database_handling
                 
             }*/
 
-             _hubContext.Clients.All.SendAsync("locationUpdated",id,latitude, longitude, address, adressNumber,city);
+             await _hubContext.Clients.All.SendAsync("locationUpdated",id,latitude, longitude, address, adressNumber,city);
         }
     }
     }

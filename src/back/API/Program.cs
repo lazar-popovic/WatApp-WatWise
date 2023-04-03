@@ -21,6 +21,8 @@ using API.Services.JWTCreation.Implementations;
 using Hangfire.Storage.SQLite;
 using AspNetCoreRateLimit;
 using API.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using API.Common.Database_handling;
 
 var builder = WebApplication.CreateBuilder(args);
 
