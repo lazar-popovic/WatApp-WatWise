@@ -9,22 +9,21 @@ import {DeviceService} from "../../services/device.service";
 import {DeviceDataService} from "../../services/device-data.service";
 import {DatePipe} from "@angular/common";
 
+import { ViewEncapsulation } from '@angular/core';
+
 import * as $ from 'jquery';
 import 'bootstrap-datepicker';
 // import 'jqueryui';
 
 
+import { IgxMonthPickerComponent } from 'igniteui-angular';
+import { MatDatepicker } from '@angular/material/datepicker';
+
+
 interface DatepickerOptions {
-  // other properties
   autoclose?: boolean;
 }
 
-// $(function () {
-//   $("#datepicker").datepicker({ 
-//         autoClose: true, 
-//         todayHighlight: true
-//   }).datepicker('update', new Date());
-// });
 
 
 
@@ -32,7 +31,7 @@ interface DatepickerOptions {
   selector: 'app-device-details',
   templateUrl: './device-details.component.html',
   styleUrls: ['./device-details.component.css'],
-
+  encapsulation: ViewEncapsulation.None
 })
 export class DeviceDetailsComponent
 {
@@ -73,6 +72,8 @@ export class DeviceDetailsComponent
         }
       )
       Chart.register(...registerables);
+
+      this.selectedMonth = 'January';
     }
     
     ngOnInit(): void
@@ -83,6 +84,8 @@ export class DeviceDetailsComponent
         autoclose: true,
         todayHighlight: true
       }).datepicker('update', new Date());
+
+      
       
     }
 
@@ -249,9 +252,16 @@ export class DeviceDetailsComponent
       }
     }
 
+    date: Date = new Date();
 
 
-
+    months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+  
+    selectedMonth: string;
+    
 }
 
 

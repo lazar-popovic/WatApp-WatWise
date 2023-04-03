@@ -266,14 +266,9 @@ table {
 
 /*Calendar*/
 
-#date-picker_container
+#date-picker_container,#month-picker_container
 {
   float: right;
-}
-
-#date-picker-form
-{
-  background-color: #1676AC;
 }
 
 /* Style for datepicker input */
@@ -293,7 +288,7 @@ table {
 /* Style for datepicker toggle */
 button.mat-icon-button {
   background-color: transparent;
-  color: #333;
+  color: #ffffff;
   border: none;
 
   margin-left: -40px;
@@ -313,5 +308,49 @@ button.mat-icon-button {
 
 
 
+/*Day datepicker (month selected)*/
 
+#enterDate,#startDate,#endDate
+{
+  color: #f5f5f5;
+}
+
+#date-picker-form
+{
+  color: #333;
+}
+
+.mat-calendar-table
+{
+  color: #333;
+}
+
+.mat-calendar-table span
+{
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-size: 16px;
+  color: #333;
+}
+
+.mat-calendar-body
+{
+  color: #333;
+ 
+}
+
+.mat-calendar-table button :hover
+{
+  background-color: #a3a4a5 !important;
+}
+
+.mat-calendar-table button :active
+{
+  background-color: #0e1822 !important;
+}
+
+.mat-calendar-table span :active
+{
+  background-color: #1676AC;
+}
 

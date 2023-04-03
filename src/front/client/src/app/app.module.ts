@@ -35,6 +35,8 @@ import { UsersOverviewComponent } from './components/users-overview/users-overvi
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -72,7 +74,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     NgChartsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSelectModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
