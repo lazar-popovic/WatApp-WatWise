@@ -8,3 +8,10 @@
   transform: translateX(-50%);
   font-family: 'Poppins', sans-serif;
 }
+
+html, body { height: 100vh; }
+body { 
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #E1E1E1;
+}

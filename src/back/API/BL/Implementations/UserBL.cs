@@ -93,5 +93,44 @@ namespace API.BL.Implementations
 
             return response;
         }
+        public async Task<Response<int>> getNumberOfUsers(int id)
+        {
+            var response = new Response<int>();
+            int number = await _userDal.getNumberOfProsumersOrEmployees(id);
+            if (number == 0)
+            {
+                response.Errors.Add("There are no loaded users");
+                response.Success = false;
+
+                return response;
+            }
+
+            response.Data = number!;
+            response.Success = response.Errors.Count() == 0;
+
+            return response;
+
+        }
+        public async Task<Response<List<User>>> FindUsers(int id, string search, string mail, int pageSize, int pageNum, string order)
+        {
+            var response = new Response<List<User>>();
+
+            var users = await _userDal.FindUser(id, search, mail, pageSize, pageNum, order);
+
+            if (users == null)
+            {
+                response.Errors.Add("Error with displaying users from base!");
+                response.Success = false;
+
+                return response;
+            }
+
+            response.Data = users!;
+            response.Success = response.Errors.Count() == 0;
+
+            return response;
+        }
+
+
     }
 }

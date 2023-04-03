@@ -20,14 +20,20 @@ export class UsersOverviewComponent {
 
   getProsumers() {
     this.userService.getProsumers(this.pageSize, this.pagesNum).subscribe((result: any) => {
+      this.users = [];
       for(let item of result.data) {
         let user = new User();
-        user.firstName = item.firstname; 
-        user.lastName = item.lastname; 
+        user.firstName = item.firstname;
+        user.lastName = item.lastname;
         user.id = item.id;
         user.mail = item.email;
-        user.address = item.location;
+        if (item.location != null) {
+          user.address = item.location.address;
+          user.num = item.location.addressNumber;
+          user.city = item.location.city;
+        }
         this.users.push(user);
+        console.log( user);
       }
     },(error: any) => {
       console.log(error);
@@ -36,7 +42,7 @@ export class UsersOverviewComponent {
 
   handler(type: number) {
     let active = document.querySelector(".overview-pagination-page-active") as HTMLDivElement;
-    
+
     if(type == 2) {
       if(this.currentIndex < this.pagesNum)
         this.currentIndex++;
@@ -50,6 +56,7 @@ export class UsersOverviewComponent {
   }
 
   pageSizeHandler() {
+    this.getProsumers();
     console.log(this.pageSize);
   }
 }

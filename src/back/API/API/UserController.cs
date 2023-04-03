@@ -1,4 +1,5 @@
-﻿using API.BL.Interfaces;
+﻿using System.ComponentModel.DataAnnotations;
+using API.BL.Interfaces;
 using API.Common;
 using API.DAL.Implementations;
 using API.DAL.Interfaces;
@@ -50,6 +51,24 @@ namespace API.API
         {
             return Ok(await _userBL.GetUsersWithLocationId(id));
         }
+        [HttpGet("employees-number")]
+        public async Task<IActionResult> GetNumberEmployees()
+        {
+            return Ok(await _userBL.getNumberOfUsers((int)RoleEnum.Role.Employee));
+        }
+        [HttpGet("prosumers-number")]
+        public async Task<IActionResult> GetNumberProsumers()
+        {
+            return Ok(await _userBL.getNumberOfUsers((int)RoleEnum.Role.User));
+        }
+        [HttpGet("get-prosumers-filtered")]
+        public async Task<IActionResult> GetAllProsumersFiltered( string? fullName, string? streetAddress, int pageSize, int pageNumber, string? sortOrder)
+        {
+            return Ok(await _userBL.FindUsers((int)RoleEnum.Role.User, fullName, streetAddress, pageSize, pageNumber, sortOrder));
+        }
+
+
+
 
 
 

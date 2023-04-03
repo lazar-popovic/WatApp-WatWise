@@ -9,5 +9,5 @@ public class Role
 
     public string RoleName { get; set; } = string.Empty;
 
-    public List<User> Users { get; set; }
+    public List<User>? Users { get; set; }
 }

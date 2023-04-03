@@ -78,7 +78,7 @@ namespace API.DAL.Implementations
             _context.SaveChanges();
         }
 
-        public ResetPasswordToken GetResetTokenEntity(string type)
+        public ResetPasswordToken? GetResetTokenEntity(string type)
         {
             var token = _context.ResetPasswordTokens.SingleOrDefault(t => t.Token == type);
 
@@ -106,7 +106,7 @@ namespace API.DAL.Implementations
             _context.SaveChanges();
         }
 
-        public RefreshToken GetRefreshToken(int userID)
+        public RefreshToken? GetRefreshToken(int userID)
         {
             return _context.RefreshTokens.SingleOrDefault(rt => rt.UserId == userID && rt.IsActive);
         }
@@ -144,11 +144,11 @@ namespace API.DAL.Implementations
                     // Commit the transaction
                     await transaction.CommitAsync();
                 }
-                catch (Exception ex)
+                catch
                 {
                     // Rollback the transaction in case of any error
                     await transaction.RollbackAsync();
-                    throw ex;
+                    throw;
                 }
             }
         }

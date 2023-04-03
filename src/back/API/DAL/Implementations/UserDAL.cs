@@ -1,10 +1,11 @@
-﻿using API.DAL.Interfaces;
+﻿using API.BL.Implementations;
+using API.DAL.Interfaces;
 using API.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.DAL.Implementations
 {
-    public class UserDAL:IUserDAL
+    public class UserDAL : IUserDAL
     {
         private readonly DataContext _dbContext;
 
@@ -28,7 +29,7 @@ namespace API.DAL.Implementations
                                        LocationId = u.LocationId,
                                        Location = u.Location
 
-                                   }).SingleOrDefaultAsync();
+                                   }).AsNoTracking().SingleOrDefaultAsync();
 
             return users;
         }
@@ -47,7 +48,7 @@ namespace API.DAL.Implementations
                                        LocationId = u.LocationId,
                                        Location = u.Location
 
-                                   }).ToListAsync();
+                                   }).AsNoTracking().ToListAsync();
 
             return users;
         }
@@ -63,14 +64,14 @@ namespace API.DAL.Implementations
                                        Id = u.Id,
                                        Email = u.Email,
                                        Firstname = u.Firstname,
-                                       Lastname = u.Lastname, 
+                                       Lastname = u.Lastname,
                                        Verified = u.Verified,
                                        RoleId = u.RoleId,
                                        Role = u.Role,
                                        LocationId = u.LocationId,
                                        Location = u.Location
 
-                                   }).ToListAsync();
+                                   }).AsNoTracking().ToListAsync();
 
             return users;
         }
@@ -83,11 +84,82 @@ namespace API.DAL.Implementations
                                        Email = u.Email,
                                        Firstname = u.Firstname,
                                        Lastname = u.Lastname
-                                   }).ToListAsync();
+                                   }).AsNoTracking().ToListAsync();
+
+            return users;
+        }
+
+        public async Task<int> getNumberOfProsumersOrEmployees(int id)
+        {
+            int numberUsers = _dbContext.Users.Count(u => u.RoleId == id);
+            return numberUsers;
+        }
+
+
+        public async Task<List<User>?> FindUser(int id, string search, string mail, int pageSize, int pageNum, string order)
+        {
+          
+            var fullName = search?.Trim().ToLower().Split(" ");
+
+           
+
+          
+            var users = await _dbContext.Users.Where( u => u.RoleId == id).Select(o => new User
+                                                {
+                                                    Id = o.Id,
+                                                    Email = o.Email,
+                                                    Firstname = o.Firstname,
+                                                    Lastname = o.Lastname,
+                                                    Verified = o.Verified,
+                                                    LocationId = o.LocationId,
+                                                    Location = o.Location
+
+                                                }).ToListAsync();
+
+            if (mail != null)
+            {
+                if (!string.IsNullOrEmpty(mail?.Trim()) || id != 3)
+                {
+                    users = users.Where(o =>
+                        ($"{o.Location.Address} {o.Location.AddressNumber}, {o.Location.City}".ToLower())
+                        .Contains(mail)).ToList();
+                }
+            }
+
+            if (search != null)
+            {
+                if (fullName.Length == 2)
+                {
+                    users = users.Where(o => o.Firstname.ToLower().Contains(fullName[0]) && o.Lastname.ToLower().Contains(fullName[1]))
+                        .ToList();
+                }
+                else if (fullName.Length == 1)
+                {
+                    users = users.Where(o => o.Firstname.ToLower().Contains(fullName[0]) || o.Lastname.ToLower().Contains(fullName[0]))
+                        .ToList();
+                }
+            }
+
+            switch (order)
+            {
+                case "asc":
+                    users = users.OrderBy(o => o.Lastname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                    break;
+                case "desc":
+                    users = users.OrderByDescending(o => o.Lastname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                    break;
+                default:
+                    users = users.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                    break;
+            }
 
             return users;
         }
 
 
+
     }
-}
+
+
+    }
+

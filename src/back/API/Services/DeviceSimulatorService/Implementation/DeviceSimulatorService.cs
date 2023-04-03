@@ -50,7 +50,7 @@ public class DeviceSimulatorService : IDeviceSimulatorService
                 foreach (var device in deviceType.Devices)
                 {
                     deviceEnergyUsageList.Add(new DeviceEnergyUsage
-                        { DeviceId = device.Id, Value = Math.Round( value.Value * (1 + rand.NextDouble() * 0.2 - 0.1), 3), Timestamp = timestamp });
+                        { DeviceId = device.Id, Value = Math.Round( value!.Value * (1 + rand.NextDouble() * 0.2 - 0.1), 3), Timestamp = timestamp });
                 }
             }
         }
@@ -97,7 +97,7 @@ public class DeviceSimulatorService : IDeviceSimulatorService
         foreach (var usage in usages)
         {
             var device = await _context.Devices.FindAsync(usage.DeviceId);
-            if (device.ActivityStatus == false)
+            if (device?.ActivityStatus == false)
             {
                 usage.Value = 0;
             }

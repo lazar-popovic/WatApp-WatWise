@@ -33,6 +33,7 @@ import { EmployeeOverviewComponent } from './components/employee-overview/employ
 import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 import { DevicesInfoComponent } from './components/devices-info/devices-info.component';
 import { DeviceInputComponent } from './components/device-input/device-input.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +59,8 @@ import { DeviceInputComponent } from './components/device-input/device-input.com
     AddEmployeeComponent,
     DevicesInfoComponent,
     DeviceInputComponent,
+    MapComponentComponent,
+    DeviceDetailsComponent,
   ],
   imports: [
     BrowserModule,

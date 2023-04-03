@@ -13,9 +13,9 @@ export class UsersComponent {
     firstname: '',
     lastname: '',
     location: {
-      address: 'bb',
-      city: 'none',
-      number: 0
+      address: '',
+      city: '',
+      number: ''
     }
   };
 

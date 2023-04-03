@@ -56,7 +56,7 @@ namespace API.Services.E_mail.Implementations
         public void resendToken(User user)
         {
             var token = _jWTCreator.CreateVerificationToken(user.Id);
-            var mail = new EmailModel("New verification token", token, user.Email);
+            var mail = new EmailModel("New verification token", token, user.Email!);
 
             mail.Body =
                 "\r\nHi,\r\n\r\nThis is new verification mail. To activate your account and create a password, click on the activation link below:\n\n";
@@ -79,7 +79,7 @@ namespace API.Services.E_mail.Implementations
         */
         public void sendResetToken(User user,string token)
         {
-            var mail = new EmailModel("Reset token", token, user.Email);
+            var mail = new EmailModel("Reset token", token, user.Email!);
       
             mail.Body =
                 "\r\nHi,\r\nthere was a request to change your password!\r\nIf you did not make this request then please ignore this email.\r\n\r\nOtherwise, please click this link to change your password:";
