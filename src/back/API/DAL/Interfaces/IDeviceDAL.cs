@@ -23,5 +23,6 @@ namespace API.DAL.Interfaces
         Task TurnDevicesOn();
         Task TurnDataSharingOff();
         Task TurnDataSharingOn();
+        Task<object> Top3DevicesByUserId( int userId);
     }
 }

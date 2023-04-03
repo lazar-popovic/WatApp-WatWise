@@ -18,30 +18,30 @@ public class DeviceDataController : ControllerBase
     }
 
     [HttpGet]
-    [Route("get-data-for-today")]
+    [Route("get-device-data-for-today")]
     public async Task<IActionResult> GetDeviceDataForToday(int deviceId)
     {
         return Ok( await _deviceDataBl.GetDeviceDataForToday( deviceId));
     }
     
     [HttpGet]
-    [Route("get-data-for-month")]
+    [Route("get-device-data-for-month")]
     public async Task<IActionResult> GetDeviceDataForMonth(int deviceId)
     {
         return Ok( await _deviceDataBl.GetDeviceDataForMonth( deviceId));
     }
         
     [HttpGet]
-    [Route("get-data-for-year")]
+    [Route("get-device-data-for-year")]
     public async Task<IActionResult> GetDeviceDataForYear(int deviceId)
     {
         return Ok( await _deviceDataBl.GetDeviceDataForYear( deviceId));
     }
     
     [HttpGet]
-    [Route("get-today-total-for-user")]
-    public async Task<IActionResult> GetTodayTotalProductionConsumptionByUserId(int userId)
+    [Route("get-day-total-for-user")]
+    public async Task<IActionResult> GetDayTotalProductionConsumptionByUserId( int day, int month, int year, int userId)
     {
-        return Ok( await _deviceDataBl.GetTodayTotalProductionConsumptionByUserId( userId));
+        return Ok( await _deviceDataBl.GetDayTotalProductionConsumptionByUserId( day, month, year,userId));
     }
 }

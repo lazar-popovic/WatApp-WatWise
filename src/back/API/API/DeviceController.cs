@@ -68,6 +68,12 @@ namespace API.API
         {
             return Ok( _deviceBL.GetDevicesByUserId( userId));
         }
+        
+        [HttpGet("get-top-3-devices-by-user-id")]
+        public async Task<IActionResult> Top3DevicesByUserId(int userId)
+        {
+            return Ok( await _deviceBL.Top3DevicesByUserId( userId));
+        }
 
         [HttpPatch("device-control")]
         public async Task<IActionResult> TurnDevicesOnOff(DeviceControlViewModel request)

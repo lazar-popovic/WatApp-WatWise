@@ -4,21 +4,36 @@
   </div>
   <div id="content">
     <div id="cards">
-      <div class="card" id="card1">
-        <h2>Today's total</h2>
-        <canvas id="chart" style="width: 95%; height: 85%;"></canvas>
+      <div class="card big-card" id="card1">
+        <h3>Today's total with predictions</h3>
+        <canvas id="chart1" style="width: 95%; height: 85%;"></canvas>
       </div>
-      <div class="card" style="display: flex; align-items: center; justify-content: center; flex-direction: column">
-        <div>
+      <div class="card big-card" id="card2">
+        <h3>Tommorow's prediction</h3>
+        <canvas id="chart2" style="width: 95%; height: 85%;"></canvas>
+      </div>
+      <div class="card" id="card3">
+        <div class="small-card-vertical">
+          <h3>Biggest consumers</h3>
+          <h3 *ngIf="chartActiveConsumersData.consumption.length==0">No active consumers</h3>
+          <canvas id="chart-active-consumers" style="width: 70%; height: 80%;"></canvas>
+        </div>
+        <div class="small-card-vertical">
+          <h3>Biggest producers</h3>
+          <h3 *ngIf="chartActiveProducersData.production.length==0">No active producers</h3>
+          <canvas id="chart-active-producers" style="width: 70%; height: 80%;"></canvas>
+        </div>
+      </div>
+      <div class="card" id="card4">
+        <div class="small-card-horizontal">
+
+        </div>
+        <div class="small-card-horizontal">
 
         </div>
       </div>
-      <div class="card">
-
-      </div>
-      <div class="card">
-
-      </div>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 </div>

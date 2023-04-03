@@ -20,6 +20,10 @@ constructor( private http: HttpClient) { }
     return this.http.get(`${environment.apiUrl}device/get-devices-by-user-id?userId=${userId}`);
   }
 
+  getTop3ByCategory( userId: number) : Observable<any> {
+  return this.http.get(`${environment.apiUrl}device/get-top-3-devices-by-user-id?userId=${userId}`);
+  }
+
   getDeviceById( id: any) : Observable<any> {
     return this.http.get(`${environment.apiUrl}device/${id}`);
   }
