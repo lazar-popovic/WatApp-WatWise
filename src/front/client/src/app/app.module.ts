@@ -31,6 +31,8 @@ import { DeviceDetailsComponent } from './components/device-details/device-detai
 import { NgChartsModule } from 'ng2-charts';
 import { EmployeeOverviewComponent } from './components/employee-overview/employee-overview.component';
 import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
+import { DevicesInfoComponent } from './components/devices-info/devices-info.component';
+import { DeviceInputComponent } from './components/device-input/device-input.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +56,8 @@ import { AddEmployeeComponent } from './components/add-employee/add-employee.com
     DeviceDetailsComponent,
     EmployeeOverviewComponent,
     AddEmployeeComponent,
+    DevicesInfoComponent,
+    DeviceInputComponent,
   ],
   imports: [
     BrowserModule,
