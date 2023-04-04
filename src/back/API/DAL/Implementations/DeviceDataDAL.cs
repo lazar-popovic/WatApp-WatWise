@@ -49,26 +49,26 @@ public class DeviceDataDAL : IDeviceDataDAL
         return await query.ToListAsync();
     }
 
-    public async Task<object> GetTodayTotalProductionConsumptionByUserId(int userId)
+    public async Task<object> GetDayTotalProductionConsumptionByUserId( int day, int month, int year, int userId)
     {
-        var currentDate = DateTime.UtcNow.Date;
+        var startTimestamp = new DateTime(year, month, day);
         
-        var startTimestamp = new DateTimeOffset(currentDate, TimeSpan.Zero);
+        Console.WriteLine( startTimestamp);
         
         var producingEnergyUsageByTimestamp = await _dataContext.DeviceEnergyUsage
             .Join(_dataContext.Devices, energyUsage => energyUsage.DeviceId, device => device.Id, (energyUsage, device) => new { EnergyUsage = energyUsage, Device = device })
-            .Join(_dataContext.DeviceTypes, joined => joined.Device.DeviceTypeId, type => type.Id, (joined, type) => new { EnergyUsage = joined.EnergyUsage, Device = joined.Device, Category = type.Category!.Value })
-            .Where(joined => joined.EnergyUsage.Timestamp!.Value.Date == DateTime.Now.Date && joined.Device.UserId == userId && joined.Category == 1)
-            .GroupBy(joined => new { Timestamp = joined.EnergyUsage.Timestamp!.Value})
+            .Join(_dataContext.DeviceTypes, joined => joined.Device.DeviceTypeId, type => type.Id, (joined, type) => new { EnergyUsage = joined.EnergyUsage, Device = joined.Device, Category = type.Category.Value })
+            .Where(joined => joined.EnergyUsage.Timestamp.Value.Date == startTimestamp.Date && joined.Device.UserId == userId && joined.Category == 1)
+            .GroupBy(joined => new { Timestamp = joined.EnergyUsage.Timestamp.Value})
             .Select(grouped => new { Timestamp = grouped.Key.Timestamp, TotalEnergyUsage = grouped.Sum(joined => joined.EnergyUsage.Value) })
             .ToListAsync();
 
         var consumingEnergyUsageByTimestamp = await _dataContext.DeviceEnergyUsage
             .Join(_dataContext.Devices, energyUsage => energyUsage.DeviceId, device => device.Id, (energyUsage, device) => new { EnergyUsage = energyUsage, Device = device })
-            .Join(_dataContext.DeviceTypes, joined => joined.Device.DeviceTypeId, type => type.Id, (joined, type) => new { EnergyUsage = joined.EnergyUsage, Device = joined.Device, Category = type.Category!.Value })
-            .Where(joined => joined.EnergyUsage.Timestamp!.Value.Date == DateTime.Now.Date && joined.Device.UserId == userId && joined.Category == -1)
-            .GroupBy(joined => new { Timestamp = joined.EnergyUsage.Timestamp!.Value})
-            .Select(grouped => new { Timestamp = grouped.Key.Timestamp, TotalEnergyUsage = Math.Abs(grouped.Sum(joined => joined.EnergyUsage.Value!.Value)) })
+            .Join(_dataContext.DeviceTypes, joined => joined.Device.DeviceTypeId, type => type.Id, (joined, type) => new { EnergyUsage = joined.EnergyUsage, Device = joined.Device, Category = type.Category.Value })
+            .Where(joined => joined.EnergyUsage.Timestamp.Value.Date == startTimestamp.Date && joined.Device.UserId == userId && joined.Category == -1)
+            .GroupBy(joined => new { Timestamp = joined.EnergyUsage.Timestamp.Value})
+            .Select(grouped => new { Timestamp = grouped.Key.Timestamp, TotalEnergyUsage = Math.Abs(grouped.Sum(joined => joined.EnergyUsage.Value.Value)) })
             .ToListAsync();
 
         return new { producingEnergyUsageByTimestamp, consumingEnergyUsageByTimestamp};
