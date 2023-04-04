@@ -1,17 +1,11 @@
 export class Device 
 {
     id: number = 0;
-    name: string;
-    type: string;
-    consumption : number;
-    category: string;
-
-    constructor(name: string, consumption : number ,type: string, category: string) 
-    {
-        this.name = name;
-        this.type = type;
-        this.consumption = consumption;
-        this.category = category;
-    }
+    userId: number = 0;
+    activityStatus: boolean = true;
+    name: string = '';
+    type: string = '';
+    usage : number = 0;
+    category: string = '';
 }
   
