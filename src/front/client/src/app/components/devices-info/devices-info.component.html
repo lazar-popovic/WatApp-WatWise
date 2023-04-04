@@ -8,8 +8,11 @@
       <div class="device-items-holder" *ngIf="consumeShow">
         <div class="device-item" *ngFor="let device of consumeDevices">
           <div class="device-item-header">
-            <img src="/assets/consumer.png" alt="consumer">
-            <h3>{{device.name}}</h3>
+            <div class="device-item-header-model">
+              <img src="/assets/consumer.png" alt="consumer">
+              <h3>{{device.name}}</h3>
+            </div>
+            {{device.type}}
           </div>
           <div class="device-item-footer">
             <div *ngIf="device.activityStatus"><img src="/assets/active.png" alt="active"></div>

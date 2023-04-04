@@ -19,24 +19,23 @@ export class DevicesInfoComponent implements OnInit{
   prosumeDevices: Device[] = [];
   storageDevices: Device[] = [];
 
-
-
  constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService, private route: Router) { }
 
   ngOnInit(): void {
     this.deviceService.getDevicesByUserId( this.jwtService.userId).subscribe(
       result => {
         if( result.success) {
-          console.log(result.data);
           for(let device of result.data[0].devices) {
             let deviceIns = new Device();
             deviceIns.id = device.id;
             deviceIns.name = device.name;
             deviceIns.activityStatus = device.activityStatus;
             deviceIns.usage = device.value;
-            if(device.id == 1) {
+            deviceIns.type = device.deviceType.type;
+            
+            if(device.deviceTypeId == 1) {
               this.consumeDevices.push(deviceIns)
-            } else if(device.id == 2) {
+            } else if(device.deviceTypeId == 2) {
               this.prosumeDevices.push(deviceIns);
             } else {
               this.storageDevices.push(deviceIns);
