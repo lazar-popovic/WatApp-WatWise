@@ -26,11 +26,13 @@ import { ToastrModule } from 'ngx-toastr';
 import { ProfileIDComponent } from './components/profile-id/profile-id.component';
 import { MapComponentComponent } from './components/map-component/map-component.component';
 import { LeafletModule} from "@asymmetrik/ngx-leaflet";
+import { UsersOverviewComponent } from './components/users-overview/users-overview.component';
 import { DeviceDetailsComponent } from './components/device-details/device-details.component';
 import { NgChartsModule } from 'ng2-charts';
-
-
-import { UsersOverviewComponent } from './components/users-overview/users-overview.component';
+import { EmployeeOverviewComponent } from './components/employee-overview/employee-overview.component';
+import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
+import { DevicesInfoComponent } from './components/devices-info/devices-info.component';
+import { DeviceInputComponent } from './components/device-input/device-input.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,11 @@ import { UsersOverviewComponent } from './components/users-overview/users-overvi
     PasswordInputComponent,
     MapComponentComponent,
     UsersOverviewComponent,
+    DeviceDetailsComponent,
+    EmployeeOverviewComponent,
+    AddEmployeeComponent,
+    DevicesInfoComponent,
+    DeviceInputComponent,
     MapComponentComponent,
     DeviceDetailsComponent,
   ],

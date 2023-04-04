@@ -10,8 +10,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./profile-id.component.css']
 })
 export class ProfileIDComponent{
-  showProfileForm = true;
-  dsoShow = true;
   user = new User();
   id : any = '' ;
 
@@ -27,8 +25,13 @@ export class ProfileIDComponent{
         this.user.firstName = result.data.firstname;
         this.user.lastName = result.data.lastname;
         this.user.mail = result.data.email;
-        this.user.role = result.data.roleId;
-        this.user.address = result.data.location;
+        this.user.roleId = result.data.roleId;
+        this.user.role = result.data.role.roleName;
+        if(result.data.location != null) {
+          this.user.address = result.data.location.address;
+          this.user.num = result.data.location.addressNumber;
+          this.user.city = result.data.location.city;
+        }
       }
     });
   }

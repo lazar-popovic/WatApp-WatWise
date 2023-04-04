@@ -4,9 +4,9 @@ export class User {
     lastName = "Prezime";
     mail = "mejl";
     password = "as";
-    role = 1;
-    address = "";
+    roleId = 3;
+    role = "Prosumer";
+    address = "Radoja Domanovica";
     num = 1;
-    city = "";
-
+    city = "Kragujevac";
 }

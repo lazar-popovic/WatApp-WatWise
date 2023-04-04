@@ -10,9 +10,12 @@ import { User } from '../Models/User';
 export class UserService {
   constructor(private http:HttpClient) { }
 
-  createUser(data: any) : Observable<any>
-  {
-    return this.http.post(`${environment.apiUrl}auth/register-user`,data, {observe: 'response'});
+  createUser(data: any) : Observable<any> {
+    return this.http.post(`${environment.apiUrl}auth/register-user`, data, {observe: 'response'});
+  }
+
+  createEmployee(data: any) : Observable<any> {
+    return this.http.post(`${environment.apiUrl}auth/register-employee`, data, {observe: 'response'})
   }
 
   public getUser(id: string | null) : Observable<User> {
@@ -21,5 +24,9 @@ export class UserService {
 
   public getProsumers(pageSize: number, pageNumber: number) : Observable<User[]> {
     return this.http.get<User[]>(`${environment.apiUrl}user/prosumers?pageSize=${pageSize}&pageNumber=${pageNumber}`);
+  }
+  
+  public getEmployees(pageSize: number, pageNumber: number) : Observable<User[]> {
+    return this.http.get<User[]>(`${environment.apiUrl}user/employees?pageSize=${pageSize}&pageNumber=${pageNumber}`);
   }
 }

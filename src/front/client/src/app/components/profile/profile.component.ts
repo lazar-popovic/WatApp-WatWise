@@ -10,9 +10,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-
-  showProfileForm = true;
-  dsoShow = true;
   user = new User();
   constructor(private authService:AuthService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
     this.getUser();
@@ -26,8 +23,13 @@ export class ProfileComponent {
         this.user.firstName = result.data.firstname;
         this.user.lastName = result.data.lastname;
         this.user.mail = result.data.email;
-        this.user.role = result.data.roleId;
-        this.user.address = result.data.location;
+        this.user.roleId = result.data.roleId;
+        this.user.role = result.data.role.roleName;
+        if(result.data.location != null) {
+          this.user.address = result.data.location.address;
+          this.user.num = result.data.location.addressNumber;
+          this.user.city = result.data.location.city;
+        }
       }
     });
   }

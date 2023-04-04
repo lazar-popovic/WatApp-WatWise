@@ -87,7 +87,7 @@ namespace API.DAL.Implementations
                 join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty() on
                     device.Id equals usage.DeviceId into usageGroup
                 where device.UserId == userId
-                group new { device.Id, device.Name, device.ActivityStatus, Value = usageGroup.FirstOrDefault()!.Value } by deviceType.Category into grouped
+                group new { device.Id, device.Name, device.DeviceType, device.DeviceTypeId, device.ActivityStatus, Value = usageGroup.FirstOrDefault()!.Value } by deviceType.Category into grouped
                 select new {
                     Category = grouped.Key,
                     Devices = grouped.ToList()

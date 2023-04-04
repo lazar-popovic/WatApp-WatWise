@@ -1,81 +1,14 @@
-<div id="main">
-  <div>
-    <app-sidebar>
-
-    </app-sidebar>
+<div class="devices-page">
+  <app-sidebar></app-sidebar>
+  <div class="devices-container">
+    <form>
+      <button (click)="showAddDevice = true">+Add device</button>  
+    </form>
+    <app-devices-info></app-devices-info>
   </div>
-  <div id="sub-container" style="box-sizing: border-box;">
-    <div id="devices-list" style="display: inline-block; vertical-align: top;" *ngIf="showDevices">
-
-      <h1>Devices</h1>
-      <div id="buttons">
-        <div id="filter">
-        </div>
-        <div id="add-new-device-div">
-          <button (click)="showDevices = false;" class="add-to-cart"><span class="plus-sign">+  </span>Add device</button>
-        </div>
-      </div>
-      <div class="container">
-        <div class="category consumers">
-          <h2>Consumers</h2>
-          <div class="card" *ngFor="let device of userDevices.consumers" (click)="toDevice(device.id)">
-            <h2>{{device.name}}</h2>
-            <div *ngIf="device.activityStatus" class="status on"></div>
-            <div *ngIf="!device.activityStatus" class="status off"></div>
-            <p *ngIf="device.activityStatus">-{{device.value}}kW</p>
-            <p *ngIf="!device.activityStatus"><br></p>
-          </div>
-        </div>
-        <div class="category producers">
-          <h2>Producers</h2>
-          <div class="card" *ngFor="let device of userDevices.producers" (click)="toDevice(device.id)">
-            <h2>{{device.name}}</h2>
-            <div *ngIf="device.activityStatus" class="status on"></div>
-            <div *ngIf="!device.activityStatus" class="status off"></div>
-            <p *ngIf="device.activityStatus">+{{device.value}}kW</p>
-            <p *ngIf="!device.activityStatus"><br></p>
-          </div>
-        </div>
-        <div class="category storages">
-          <h2>Storages</h2>
-          <div class="card" *ngFor="let device of userDevices.storages" (click)="toDevice(device.id)">
-            <h2>{{device.name}}</h2>
-            <p><br></p>
-          </div>
-        </div>
-      </div>
-  </div>
-
-
-
-
-    <div class="wrapper" *ngIf="!showDevices">
-      <div style="display: flex; justify-content: right;">
-        <a href="/prosumer/devices" style="color: black;"><i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;" (click)="refresh()"></i></a>
-      </div>
-      <h2>Connect device</h2>
-      <form action="#">
-        <div class="input-box">
-          <input type="text" name="name" [(ngModel)]="newDevice.name" placeholder="Device name">
-        </div>
-        <div class="input-box">
-          <select name="category" [(ngModel)]="category" (change)="fillTypes()">
-            <option value=-1 selected>Consumer</option>
-            <option value=1>Producer</option>
-            <option value=0> Storage</option>
-          </select>
-        </div>
-        <div class="input-box">
-          <select type="text" name="type" [(ngModel)]="newDevice.deviceTypeId">
-            <option *ngFor=" let type of types" [value]="type.id">{{type.type}}</option>
-          </select>
-        </div>
-        <div class="input-box button">
-          <button type="button" (click)="addDevice()">Connect</button>
-        </div>
-      </form>
+  <div *ngIf="showAddDevice" class="devices-add-device">
+    <div class="add-device-position">
+      <app-device-input></app-device-input>
     </div>
-
-
   </div>
 </div>

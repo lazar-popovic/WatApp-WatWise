@@ -18,8 +18,10 @@ import { UserGuard } from './guards/user.guard';
 import { EmployeeGuard } from './guards/employee.guard';
 import { ProfileIDComponent } from './components/profile-id/profile-id.component';
 import { LoggedGuard } from './guards/logged.guard';
-import { DeviceDetailsComponent } from './components/device-details/device-details.component';
 import { UsersOverviewComponent } from './components/users-overview/users-overview.component';
+import { DeviceDetailsComponent } from './components/device-details/device-details.component';
+import { DevicesInfoComponent } from './components/devices-info/devices-info.component';
+import { EmployeeOverviewComponent } from './components/employee-overview/employee-overview.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -38,10 +40,10 @@ const routes: Routes = [
   { path: 'dso/map', component : MapComponent, canActivate: [EmployeeGuard]},
   { path: 'dso/consumption', component : EnergyUsageComponent, canActivate: [EmployeeGuard]},
   { path: 'prosumer/reset-password', component: PasswordInputComponent},
-  { path: 'prosumer/device/:id', component: DeviceDetailsComponent},
-
-  { path: 'prosumer/reset-password', component: PasswordInputComponent},
-  { path: 'test-component', component: UsersOverviewComponent}
+  { path: 'test-component2', component: DevicesInfoComponent},
+  { path: 'test-component', component: UsersOverviewComponent},
+  { path: 'test-component3', component: EmployeeOverviewComponent},
+  { path: 'prosumer/device/:id', component: DeviceDetailsComponent}
 ];
 
 @NgModule({

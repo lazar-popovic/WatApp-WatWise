@@ -1,37 +1,22 @@
-<div id="container">
-  <div id="nav">
-    <app-sidebar>
-
-    </app-sidebar>
-  </div>
-  <div id="content">
-    <div>
-      <div *ngIf="showProfileForm">
-        <form>
-          <h2>My Profile</h2>
-          <div class="profile-user">
-            <div class="profile-user-info">first name</div>
-            <div class="profile-user-name">{{user.firstName}}</div>
-          </div>
-          <div class="profile-user">
-            <div class="profile-user-info">last name</div>
-            <div class="profile-user-name">{{user.lastName}}</div>
-          </div>
-          <div class="profile-email">
-            <div class="profile-user-info">email</div>
-            <div class="profile-user-name">{{user.mail}}</div>
-          </div>
-          <div class="profile-street">
-            <div class="profile-user-info">address</div>
-            <div class="profile-user-name">{{user.address}} {{user.num}}</div>
-          </div>
-          <button (click)="showProfileForm = false" class="button-container" type="submit" routerLink="/profile">Change password</button>
-        </form>
-      </div>
-
-      <div *ngIf="!showProfileForm" class="profile-change-password-holder">
-        <app-change-password></app-change-password>
+<div class="profile-container">
+  <app-sidebar></app-sidebar>
+  <div class="profile-wraper">
+    <div class="profile-header">
+      <img src="https://www.tu-ilmenau.de/unionline/fileadmin/_processed_/0/0/csm_Person_Yury_Prof_Foto_AnLI_Footgrafie__2_.JPG_5845266f99.jpg" alt="Profile picture">
+      <div class="profile-main">
+        <div class="profile-info-header">
+          <div class="profile-main-info">
+            <h1>{{user.firstName}} {{user.lastName}}</h1>
+            <h2>{{user.mail}}</h2>  
+          </div>  
+          <h3>{{user.role}}</h3>
+        </div>
+        <div class="profile-location" *ngIf="user.roleId == 3">
+          <img src="/assets/pin_grey.png">
+          <h2>{{user.city}}, {{user.address}} {{user.num}}</h2>
+        </div>
       </div>
     </div>
+    <app-devices-info></app-devices-info>
   </div>
 </div>
