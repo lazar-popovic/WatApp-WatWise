@@ -6,7 +6,7 @@
         <img src="/assets/drop-down.png" alt="drop-down">
       </div>
       <div class="device-items-holder" *ngIf="consumeShow">
-        <div class="device-item" *ngFor="let device of consumeDevices">
+        <div class="device-item" *ngFor="let device of consumeDevices" (click)="toDevice( device.id)">
           <div class="device-item-header">
             <div class="device-item-header-model">
               <img src="/assets/consumer.png" alt="consumer">
@@ -27,7 +27,7 @@
         <img src="/assets/drop-down.png" alt="drop-down">
       </div>
       <div class="device-items-holder" *ngIf="prosumeShow">
-        <div class="device-item" *ngFor="let device of prosumeDevices">
+        <div class="device-item" *ngFor="let device of prosumeDevices" (click)="toDevice( device.id)">
           <div class="device-item-header">
             <div class="device-item-header-model">
               <img src="/assets/consumer.png" alt="consumer">
@@ -49,7 +49,7 @@
         <img src="/assets/drop-down.png" alt="drop-down">
       </div>
       <div class="device-items-holder" *ngIf="storageShow">
-        <div class="device-item" *ngFor="let device of storageDevices">
+        <div class="device-item" *ngFor="let device of storageDevices" (click)="toDevice( device.id)">
           <div class="device-item-header">
             <div class="device-item-header-model">
               <img src="/assets/consumer.png" alt="consumer">
