@@ -266,9 +266,12 @@ table {
 
 /*Calendar*/
 
-#date-picker_container,#month-picker_container
+#date-picker_container,#month-picker_container,#time-picker_container
 {
   float: right;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  color: #333;
 }
 
 /* Style for datepicker input */
@@ -278,11 +281,6 @@ table {
   padding: 8px;
   width: 200px;
   font-size: 16px;
-}
-
-/* #picker
-{
-    color: #333;
 }
 
 /* Style for datepicker toggle */
@@ -353,4 +351,67 @@ button.mat-icon-button {
 {
   background-color: #1676AC;
 }
+
+.hour-range-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+mat-slider {
+  width: 200px;
+  height: 20px;
+  margin: 0 20px;
+}
+
+.hour-range-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 240px;
+  margin-top: 10px;
+}
+
+.hour-range-label {
+  font-size: 14px;
+}
+
+.hour-range-picker {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.mat-slider {
+  width: 100%;
+}
+
+/*time*/
+
+#time-picker_container
+{
+    font-family: 'Roboto' sans-serif;
+    font-weight: bold;
+
+    color: #fff;
+    background-color: #4a4a4a;
+    /* background-color: #1676AC; */
+    
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+
+    width: 40%;
+}
+
+#slider
+{
+  width: 60%;
+}
+
+
+
 

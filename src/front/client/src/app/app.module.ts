@@ -37,7 +37,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
-
+import { MatSlider, MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -76,6 +76,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatNativeDateModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatSliderModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,

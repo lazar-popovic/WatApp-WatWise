@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {ChartData, ChartDataset, ChartOptions, registerables} from 'chart.js';
+import { Input } from '@angular/core';
+
 
 import { Chart } from 'chart.js';
 import {AuthService} from "../../services/auth-service.service";
@@ -18,14 +20,11 @@ import 'bootstrap-datepicker';
 
 import { IgxMonthPickerComponent } from 'igniteui-angular';
 import { MatDatepicker } from '@angular/material/datepicker';
-
+import { MatSliderModule } from '@angular/material/slider';
 
 interface DatepickerOptions {
   autoclose?: boolean;
 }
-
-
-
 
 @Component({
   selector: 'app-device-details',
@@ -261,6 +260,9 @@ export class DeviceDetailsComponent
     ];
   
     selectedMonth: string;
+
+    startHour: number = 0;
+    endHour: number = 23;
     
 }
 

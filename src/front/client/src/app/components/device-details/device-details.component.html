@@ -17,8 +17,21 @@
         <div id="year"  (click)="yearClick()">Year</div>
       </div>
 
-      <div *ngIf="monthFlag==true" id="date-picker_container" style="display: inline-block;">
+      <div *ngIf="todayFlag==true"  id="time-picker_container" style="display: inline-block;">
 
+        <!-- <label>Select time range :</label>
+        <br>   -->
+        
+        <span> 00:00 h </span>
+        <mat-slider id="slider"  min="0" max="23" step="1" showTickMarks discrete>
+          <input value="1" matSliderStartThumb>
+          <input value="22" matSliderEndThumb>
+        </mat-slider>
+        <span> 23:00 h </span>
+       
+      </div>
+
+      <div *ngIf="monthFlag==true" id="date-picker_container" style="display: inline-block;">
         <mat-form-field id="date-picker-form" appearance="fill">
           <mat-label id="enterDate">Enter a date range</mat-label>
           <mat-date-range-input id="lol" [rangePicker]="picker">
@@ -27,21 +40,19 @@
           </mat-date-range-input>
           <mat-datepicker-toggle id="ppicker" matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-date-range-picker #picker></mat-date-range-picker>
-        </mat-form-field>
-                          
+        </mat-form-field>          
       </div>
 
       <div *ngIf="yearFlag==true" id="month-picker_container" style="display: inline-block;">
-        
         <mat-form-field>
           <mat-label>Select a month</mat-label>
           <mat-select [(value)]="selectedMonth">
             <mat-option *ngFor="let month of months" [value]="month">{{ month }}</mat-option>
           </mat-select>
         </mat-form-field>
-
-    
       </div>
+
+      
 
 
       
@@ -72,4 +83,11 @@
   </div>
 
 
- 
+  <!-- <div class="hour-range-picker">
+    <mat-slider [(ngModel)]="startHour" min="0" max="23" tickInterval="1" thumbLabel></mat-slider>
+    <mat-slider [(ngModel)]="endHour" min="0" max="23" tickInterval="1" thumbLabel></mat-slider>
+    <div class="hour-range-labels">
+      <div class="hour-range-label">{{ startHour }}:00</div>
+      <div class="hour-range-label">{{ endHour }}:00</div>
+    </div>
+  </div> -->
