@@ -1,7 +1,7 @@
 
 <div id="map"></div>
 
-<div id="user-overlay"  [ngClass]="{'show': showOverlay}">
+<div id="user-overlay"  [ngClass]="{'show': showOverlay}" *ngIf="selectedLocation != null">
 
   <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" (click)="closeOverlay()" style="font-size: 30px; margin: 10px; float: right;"></i>
 
