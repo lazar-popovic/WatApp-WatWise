@@ -59,13 +59,6 @@
     outline: 1px solid black;
 }
 
-/*
-.overview-users-table {
-    overflow-y: scroll;
-    max-height: 80vh;
-}
-*/
-
 .overview-users-table table {
     width: 100%;
     background-color: white;
@@ -143,4 +136,19 @@
 
 .overview-pagination-page:hover {
     background-color: rgba(22, 118, 172, 0.75);
+}
+
+.users-overview-overlay {
+    width: 100%;
+    height: 100%;
+    z-index: 9998;
+    position: fixed;
+    background-color: rgba(157, 157, 157, 0.5);
+}
+
+.users-overview-add-new {
+    z-index: 9999;
+    position: fixed;
+    left: 40%;
+    top: 20%;
 }

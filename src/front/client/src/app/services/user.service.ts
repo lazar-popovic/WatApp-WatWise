@@ -22,8 +22,12 @@ export class UserService {
     return this.http.get<User>(`${environment.apiUrl}user/${id}`);
   }
 
-  public getProsumers(pageSize: number, pageNumber: number) : Observable<User[]> {
-    return this.http.get<User[]>(`${environment.apiUrl}user/prosumers?pageSize=${pageSize}&pageNumber=${pageNumber}`);
+  public getProsumers(pageSize: number, pageNumber: number, name: string, address: string, order: string) : Observable<User[]> {
+    return this.http.get<User[]>(`${environment.apiUrl}user/get-prosumers-filtered?fullName=${name}&streetAddress=${address}&sortOrder=${order}&pageSize=${pageSize}&pageNumber=${pageNumber}`);
+  }
+
+  public getNumberOfProsumers(): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}user/prosumers-number`, {observe: 'response'});
   }
   
   public getEmployees(pageSize: number, pageNumber: number) : Observable<User[]> {

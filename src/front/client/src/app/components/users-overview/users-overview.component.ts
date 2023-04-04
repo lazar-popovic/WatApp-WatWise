@@ -13,13 +13,21 @@ export class UsersOverviewComponent {
   currentIndex = 1;
   pagesNum: number = 1;
   pageSize: any = 10;
+  showAddUProsumer: boolean = false;
+
+  filter : any = {
+    name : '',
+    address: '',
+    order: 'asc'
+  };
 
   constructor(private userService: UserService) {
+    this.getNumberOfPages();
     this.getProsumers();
   }
 
   getProsumers() {
-    this.userService.getProsumers(this.pageSize, this.pagesNum).subscribe((result: any) => {
+    this.userService.getProsumers(this.pageSize, this.currentIndex, this.filter.name, this.filter.address, this.filter.order).subscribe((result: any) => {
       this.users = [];
       for(let item of result.data) {
         let user = new User();
@@ -33,7 +41,6 @@ export class UsersOverviewComponent {
           user.city = item.location.city;
         }
         this.users.push(user);
-        console.log( user);
       }
     },(error: any) => {
       console.log(error);
@@ -51,12 +58,34 @@ export class UsersOverviewComponent {
       if(this.currentIndex>1)
       this.currentIndex--;
     }
-
+    this.getProsumers();
     active.innerHTML = this.currentIndex as unknown as string;
   }
 
+  getNumberOfPages() {
+    this.userService.getNumberOfProsumers().subscribe((result: any) => {
+      this.pagesNum = Math.ceil((result.body.data as number)/this.pageSize);
+    }, (error : any) => {
+      console.log(error);
+    });
+  }
+
   pageSizeHandler() {
+    this.getNumberOfPages();
     this.getProsumers();
-    console.log(this.pageSize);
+  }
+
+  inverseOrder() {
+    if(this.filter.order == "asc")
+      this.filter.order = "desc";
+    else if(this.filter.order == "desc")
+      this.filter.order = "asc";
+    
+    console.log(this.filter.order);
+      let element = document.querySelector("#overview-filter") as HTMLDivElement;
+
+      element.innerText = this.filter.order.toUpperCase();
+
+      this.getProsumers();
   }
 }

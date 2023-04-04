@@ -22,6 +22,7 @@ import { UsersOverviewComponent } from './components/users-overview/users-overvi
 import { DeviceDetailsComponent } from './components/device-details/device-details.component';
 import { DevicesInfoComponent } from './components/devices-info/devices-info.component';
 import { EmployeeOverviewComponent } from './components/employee-overview/employee-overview.component';
+import { DeviceInputComponent } from './components/device-input/device-input.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -36,12 +37,10 @@ const routes: Routes = [
   { path: 'prosumer/consumption', component : ConsumptionComponent, canActivate: [UserGuard]},
   { path: 'prosumer/production', component : ProductionComponent, canActivate: [UserGuard]},
   { path: 'profile/change-password', component : ChangePasswordComponent, canActivate: [UserGuard]},
-  { path: 'dso/users', component : UsersComponent, canActivate: [EmployeeGuard]},
+  { path: 'dso/users', component : UsersOverviewComponent, canActivate: [EmployeeGuard]},
   { path: 'dso/map', component : MapComponent, canActivate: [EmployeeGuard]},
   { path: 'dso/consumption', component : EnergyUsageComponent, canActivate: [EmployeeGuard]},
   { path: 'prosumer/reset-password', component: PasswordInputComponent},
-  { path: 'test-component2', component: DevicesInfoComponent},
-  { path: 'test-component', component: UsersOverviewComponent},
   { path: 'test-component3', component: EmployeeOverviewComponent},
   { path: 'prosumer/device/:id', component: DeviceDetailsComponent}
 ];
