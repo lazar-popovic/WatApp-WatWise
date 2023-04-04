@@ -101,9 +101,6 @@ namespace API.DAL.Implementations
           
             var fullName = search?.Trim().ToLower().Split(" ");
 
-           
-
-          
             var users = await _dbContext.Users.Where( u => u.RoleId == id).Select(o => new User
                                                 {
                                                     Id = o.Id,
@@ -121,8 +118,8 @@ namespace API.DAL.Implementations
                 if (!string.IsNullOrEmpty(mail?.Trim()) || id != 3)
                 {
                     users = users.Where(o =>
-                        ($"{o.Location.Address} {o.Location.AddressNumber}, {o.Location.City}".ToLower())
-                        .Contains(mail)).ToList();
+                        ($"{o.Location?.Address} {o.Location?.AddressNumber}, {o.Location?.City}".ToLower())
+                        .Contains(mail.ToLower())).ToList();
                 }
             }
 
