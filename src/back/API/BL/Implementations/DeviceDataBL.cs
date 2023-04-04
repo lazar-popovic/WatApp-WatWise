@@ -44,6 +44,16 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
+    public async Task<Response<object>> GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth()
+    {
+        var response = new Response<object>();
+
+        response.Success = true;
+        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth();
+
+        return response;
+    }
+
     public async Task<Response<object>> GetDeviceDataForYear(int deviceId)
     {
         var response = new Response<object>();
@@ -64,4 +74,5 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
+  
 }

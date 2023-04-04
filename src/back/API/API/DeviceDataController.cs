@@ -37,7 +37,14 @@ public class DeviceDataController : ControllerBase
     {
         return Ok( await _deviceDataBl.GetDeviceDataForMonth( deviceId));
     }
-        
+
+    [HttpGet]
+    [Route("get-allowed-share-devices-data-for-month")]
+    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth()
+    {
+        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth());
+    }
+
     [HttpGet]
     [Route("get-device-data-for-year")]
     public async Task<IActionResult> GetDeviceDataForYear(int deviceId)
