@@ -1,0 +1,83 @@
+.devices-info-container {
+  display: flex;
+  gap: 20px;
+}
+
+.device-container {
+  margin-bottom: 20px;
+  width: 100vw;
+}
+
+.device-container-header {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: #4B4B4B;
+  box-sizing: border-box;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #CFCBCB;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.device-container-header h2 {
+  font-size: 20px;
+}
+
+.device-container-header img {
+  height: 15px;
+}
+
+.device-items-holder {
+  display: grid;
+  background-color: #E4E4E4;
+  justify-items: center;
+  grid-template-columns: repeat(4,1fr);
+  grid-auto-rows: 143px;
+  grid-gap: 20px;
+  grid-column-gap: 20px;
+  padding-top: 20px;
+}
+
+.device-item {
+  width: 289px;
+  height: 143px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 2px 4px 6px 2px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.device-item-header, .device-item-footer {
+  display: flex;
+}
+
+.device-item-header h3 {
+  font-size: 26px;
+  color: #6F6F6F;
+}
+
+.device-item-header img {
+  width: 20px;
+  padding: 0px 20px;
+}
+
+.device-item-footer {
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 20px;
+  font-weight: 600;
+  color: red;
+}
+
+.device-item-footer img{
+  width: 30px;
+  border-radius: 50%;
+  padding: 5px;
+  background-color: #EEE9E9;
+}
