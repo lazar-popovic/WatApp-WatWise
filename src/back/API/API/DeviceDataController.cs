@@ -23,6 +23,13 @@ public class DeviceDataController : ControllerBase
     {
         return Ok( await _deviceDataBl.GetDeviceDataForToday( deviceId));
     }
+
+    [HttpGet]
+    [Route("get-allowed-share-devices-data-for-today")]
+    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForToday()
+    {
+        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForToday());
+    }
     
     [HttpGet]
     [Route("get-device-data-for-month")]

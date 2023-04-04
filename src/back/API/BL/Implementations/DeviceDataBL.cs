@@ -1,6 +1,7 @@
 ﻿using API.BL.Interfaces;
 using API.DAL.Interfaces;
 using API.Models;
+using API.Models.Entity;
 
 namespace API.BL.Implementations;
 
@@ -19,6 +20,16 @@ public class DeviceDataBL : IDeviceDataBL
 
         response.Success = true;
         response.Data = await _deviceDataDal.GetDeviceDataForToday(deviceId);
+
+        return response;
+    }
+
+    public async Task<Response<object>> GetAllDevicesDataWhereShareWithDsoIsAllowedForToday()
+    {
+        var response = new Response<object>();
+
+        response.Success = true;
+        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForToday();
 
         return response;
     }
@@ -52,4 +63,5 @@ public class DeviceDataBL : IDeviceDataBL
 
         return response;
     }
+
 }

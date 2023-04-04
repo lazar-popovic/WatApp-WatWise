@@ -21,6 +21,27 @@ public class DeviceDataDAL : IDeviceDataDAL
             .ToListAsync();
     }
 
+    public async Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForToday()
+    {
+        return await _dataContext.DeviceEnergyUsage
+                .Join(_dataContext.Devices,
+                    energyUsage => energyUsage.DeviceId,
+                    device => device.Id,
+                    (energyUsage, device) => new { EnergyUsage = energyUsage, Device = device })
+                .Join(_dataContext.Devices
+                    .Join(_dataContext.DeviceTypes,
+                        device => device.DeviceTypeId,
+                        deviceType => deviceType.Id,
+                        (device, deviceType) => new { Device = device, DeviceType = deviceType }),
+                    joined => joined.Device.Id,
+                    deviceJoin => deviceJoin.Device.Id,
+                    (joined, deviceJoin) => new { EnergyUsage = joined.EnergyUsage, Device = deviceJoin.Device, DeviceType = deviceJoin.DeviceType })
+                .Where(joined => joined.DeviceType.Category == -1 && joined.Device.DataShare && joined.EnergyUsage.Timestamp!.Value.Date == DateTime.Now.Date && joined.EnergyUsage.Timestamp.Value < DateTime.Now)
+                .GroupBy(joined => joined.DeviceType.Type)
+                .Select(group => new { Type = group.Key, EnergyUsageSum = group.Sum(joined => joined.EnergyUsage.Value) }).AsNoTracking()
+                .ToListAsync();
+    }
+
     public async Task<object> GetDeviceDataForMonth(int deviceId)
     {
         var query = from usage in _dataContext.DeviceEnergyUsage
@@ -73,4 +94,5 @@ public class DeviceDataDAL : IDeviceDataDAL
 
         return new { producingEnergyUsageByTimestamp, consumingEnergyUsageByTimestamp};
     }
+
 }
