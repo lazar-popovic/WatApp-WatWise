@@ -113,9 +113,9 @@ namespace API.DAL.Implementations
 
                                                 }).ToListAsync();
 
-            if (mail != null)
+            if (mail != null && id==3)
             {
-                if (!string.IsNullOrEmpty(mail?.Trim()) || id != 3)
+                if (!string.IsNullOrEmpty(mail?.Trim()))
                 {
                     users = users.Where(o =>
                         ($"{o.Location?.Address} {o.Location?.AddressNumber}, {o.Location?.City}".ToLower())
