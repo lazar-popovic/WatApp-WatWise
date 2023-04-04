@@ -1,6 +1,6 @@
-
 #container {
   display: flex;
+  overflow: hidden;
 }
 #map-container {
   width: 100vw;
@@ -11,13 +11,5 @@
   }
   #map-container {
     height: 90vh;
-  }
-}
-@media (min-width: 600px) {
-  #container {
-    flex-direction: row;
-  }
-  #map-container {
-    height: 100vh;
   }
 }

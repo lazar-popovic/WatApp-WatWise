@@ -4,14 +4,14 @@
         <div class="overview-filter-holder">
             <form>
                 <div class="search-input">
-                    <input>
+                    <input type="text" name="name" [(ngModel)]="filter.name" (change)="getProsumers()">
                     <button>Search by name</button>
                 </div>
                 <div class="search-input">
-                    <input>
+                    <input type="text" name="address" [(ngModel)]="filter.address" (change)="getProsumers()">
                     <button>Search by Address</button>
                 </div>
-                <button id="add-user-btn">+Add Prosumer</button>
+                <button id="add-user-btn" (click)="showAddUProsumer = true">+Add Prosumer</button>
             </form>
         </div>
 
@@ -22,7 +22,7 @@
                     <td>Last Name</td>
                     <td>Mail</td>
                     <td>Address</td>
-                    <td><button id="overview-filter">Usage UP   </button></td>
+                    <td><button id="overview-filter" (click)="inverseOrder()">{{filter.order.toUpperCase()}}</button></td>
                 </tr>
                 <tr *ngFor="let user of users">
                     <td>{{user.firstName}}</td>
@@ -54,4 +54,9 @@
             </form>
         </div>
     </div>
+    <div class="users-overview-overlay" *ngIf="showAddUProsumer">
+        <div class="users-overview-add-new">
+            <app-users></app-users>         
+        </div>
+    </div>    
 </div>
