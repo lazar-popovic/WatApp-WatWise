@@ -85,7 +85,18 @@
   justify-content: space-between;
   align-items: center;
   font-weight: 600;
+}
+
+.device-item-footer.c {
   color: red;
+}
+
+.device-item-footer.p {
+  color: green;
+}
+
+.device-item-footer.s {
+  color: yellow;
 }
 
 .device-item-footer img{

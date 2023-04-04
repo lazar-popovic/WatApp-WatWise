@@ -25,19 +25,19 @@ export class DevicesInfoComponent implements OnInit{
     this.deviceService.getDevicesByUserId( this.jwtService.userId).subscribe(
       result => {
         if( result.success) {
-          for(let device of result.data[0].devices) {
+          for (let devicesType of result.data)
+          for(let device of devicesType.devices) {
             let deviceIns = new Device();
             deviceIns.id = device.id;
             deviceIns.name = device.name;
             deviceIns.activityStatus = device.activityStatus;
             deviceIns.usage = device.value;
             deviceIns.type = device.deviceType.type;
-            
-            if(device.deviceTypeId == 1) {
-              this.consumeDevices.push(deviceIns)
-            } else if(device.deviceTypeId == 2) {
+            if(devicesType.category == -1) {
+              this.consumeDevices.push(deviceIns);
+            } else if(devicesType.category == 1) {
               this.prosumeDevices.push(deviceIns);
-            } else {
+            } else if(devicesType.category == 0) {
               this.storageDevices.push(deviceIns);
             }
           }
