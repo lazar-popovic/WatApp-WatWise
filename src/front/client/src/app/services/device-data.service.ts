@@ -10,15 +10,15 @@ export class DeviceDataService {
   constructor( private http: HttpClient) { }
   getDeviceDataForToday( deviceId: number) : Observable<any>
   {
-    return this.http.get(`${environment.apiUrl}device-data/get-data-for-today?deviceId=${deviceId}`);
+    return this.http.get(`${environment.apiUrl}device-data/get-device-data-for-today?deviceId=${deviceId}`);
   }
   getDeviceDataForMonth( deviceId: number) : Observable<any>
   {
-    return this.http.get(`${environment.apiUrl}device-data/get-data-for-month?deviceId=${deviceId}`);
+    return this.http.get(`${environment.apiUrl}device-data/get-device-data-for-month?deviceId=${deviceId}`);
   }
   getDeviceDataForYear( deviceId: number) : Observable<any>
   {
-    return this.http.get(`${environment.apiUrl}device-data/get-data-for-year?deviceId=${deviceId}`);
+    return this.http.get(`${environment.apiUrl}device-data/get-device-data-for-year?deviceId=${deviceId}`);
   }
   getUserDayStats( day: number, month: number, year: number, userId: number) : Observable<any>
   {
