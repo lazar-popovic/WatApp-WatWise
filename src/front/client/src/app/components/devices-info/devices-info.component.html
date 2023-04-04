@@ -28,7 +28,20 @@
         <img src="/assets/drop-down.png" alt="drop-down">
       </div>
       <div class="device-items-holder" *ngIf="prosumeShow">
-        <div class="device-item" *ngFor="let device of prosumeDevices"></div>
+        <div class="device-item" *ngFor="let device of prosumeDevices">
+          <div class="device-item-header">
+            <div class="device-item-header-model">
+              <img src="/assets/consumer.png" alt="consumer">
+              <h3>{{device.name}}</h3>
+            </div>
+            {{device.type}}
+          </div>
+          <div class="device-item-footer">
+            <div *ngIf="device.activityStatus"><img src="/assets/active.png" alt="active"></div>
+            <div *ngIf="!device.activityStatus"><img src="/assets/nonactive.png" alt="non-active"></div>
+            {{device.usage}} kWh
+          </div>
+        </div>
       </div>
     </div>
     <div class="device-container">
@@ -37,7 +50,20 @@
         <img src="/assets/drop-down.png" alt="drop-down">
       </div>
       <div class="device-items-holder" *ngIf="storageShow">
-        <div class="device-item" *ngFor="let device of prosumeDevices"></div>
+        <div class="device-item" *ngFor="let device of prosumeDevices">
+          <div class="device-item-header">
+            <div class="device-item-header-model">
+              <img src="/assets/consumer.png" alt="consumer">
+              <h3>{{device.name}}</h3>
+            </div>
+            {{device.type}}
+          </div>
+          <div class="device-item-footer">
+            <div *ngIf="device.activityStatus"><img src="/assets/active.png" alt="active"></div>
+            <div *ngIf="!device.activityStatus"><img src="/assets/nonactive.png" alt="non-active"></div>
+            {{device.usage}} kWh
+          </div>
+        </div>
       </div>
     </div>
   </div>
