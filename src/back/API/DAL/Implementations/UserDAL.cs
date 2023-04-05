@@ -91,7 +91,7 @@ namespace API.DAL.Implementations
 
         public async Task<int> getNumberOfProsumersOrEmployees(int id)
         {
-            int numberUsers = _dbContext.Users.Count(u => u.RoleId == id);
+            int numberUsers = await _dbContext.Users.CountAsync(u => u.RoleId == id);
             return numberUsers;
         }
 
