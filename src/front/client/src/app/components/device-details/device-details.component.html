@@ -9,45 +9,36 @@
 
       <h2 style="display: inline-block;">Devices /</h2> <h2 id="h2_device" style="display: inline-block;">{{device.name}}</h2>
       <br>
-      <h3 style="display: inline-block;">History</h3> <h3 style="display: inline-block; margin-left: 10px; color: gray;">Prediction</h3><br>
+      <!-- <h3 style="display: inline-block;">History</h3> <h3 style="display: inline-block; margin-left: 10px; color: gray;">Prediction</h3><br> -->
 
       <div id="today-month-year" style="display: inline-block;">
-        <div id="today" (click)="todayClick()">Today </div>
+        <div id="today" (click)="todayClick()">Day </div>
         <div id="month" (click)="monthClick()">Month</div>
         <div id="year"  (click)="yearClick()">Year</div>
       </div>
 
-      <div *ngIf="todayFlag==true"  id="time-picker_container" style="display: inline-block;">
-
-        <!-- <label>Select time range :</label>
-        <br>   -->
-        
-        <span> 00:00 h </span>
-        <mat-slider id="slider"  min="0" max="23" step="1" showTickMarks discrete>
-          <input value="1" matSliderStartThumb>
-          <input value="22" matSliderEndThumb>
-        </mat-slider>
-        <span> 23:00 h </span>
-       
+      <div *ngIf="todayFlag==true"  id="day-picker_container" style="display: inline-block;">
+          <div id="mat-datePicker">
+            <input matInput [matDatepicker]="picker" placeholder="Select day">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker id="todayInput" #picker></mat-datepicker>
+          </div>
       </div>
 
-      <div *ngIf="monthFlag==true" id="date-picker_container" style="display: inline-block;">
-        <mat-form-field id="date-picker-form" appearance="fill">
-          <mat-label id="enterDate">Enter a date range</mat-label>
-          <mat-date-range-input id="lol" [rangePicker]="picker">
-            <input id="startDate" matStartDate placeholder="Start date">
-            <input id="endDate"   matEndDate placeholder="End date">
-          </mat-date-range-input>
-          <mat-datepicker-toggle id="ppicker" matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-date-range-picker #picker></mat-date-range-picker>
-        </mat-form-field>          
-      </div>
-
-      <div *ngIf="yearFlag==true" id="month-picker_container" style="display: inline-block;">
+      <div *ngIf="monthFlag==true" id="month-picker_container" style="display: inline-block;">
         <mat-form-field>
           <mat-label>Select a month</mat-label>
           <mat-select [(value)]="selectedMonth">
             <mat-option *ngFor="let month of months" [value]="month">{{ month }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="yearFlag==true"  id="year-picker_container" style="display: inline-block;">
+        <mat-form-field>
+          <mat-label>Select a year</mat-label>
+          <mat-select [(value)]="selectedYear">
+            <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -91,3 +82,13 @@
       <div class="hour-range-label">{{ endHour }}:00</div>
     </div>
   </div> -->
+
+   <!-- <label>Select time range :</label>
+        <br>   -->
+        
+        <!-- <span> 00:00 h </span>
+        <mat-slider id="slider"  min="0" max="23" step="1" showTickMarks discrete>
+          <input value="1" matSliderStartThumb>
+          <input value="22" matSliderEndThumb>
+        </mat-slider>
+        <span> 23:00 h </span> -->

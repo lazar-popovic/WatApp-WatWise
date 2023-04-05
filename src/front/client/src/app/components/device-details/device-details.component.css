@@ -23,7 +23,7 @@ h2
     font-style: normal;
     margin-left: 20px;
     margin-top: 20px;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
     /* border-bottom: 2px solid #3E3E3E ;  */
 }
 
@@ -264,92 +264,34 @@ table {
 }
 
 
-/*Calendar*/
-
-#date-picker_container,#month-picker_container,#time-picker_container
-{
-  float: right;
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  color: #333;
-}
-
-/* Style for datepicker input */
-.mat-input-element {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px;
-  width: 200px;
-  font-size: 16px;
-}
-
-/* Style for datepicker toggle */
-button.mat-icon-button {
-  background-color: transparent;
-  color: #ffffff;
-  border: none;
-
-  margin-left: -40px;
-  margin-top: 8px;
-}
-
-#date
-{
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  font-size: 18px;
-
-  text-align: center;
-  width: 100px;
-  height: 20px;
-}
-
-
-
 /*Day datepicker (month selected)*/
 
-#enterDate,#startDate,#endDate
-{
-  color: #f5f5f5;
-}
 
-#date-picker-form
-{
+#date-picker-form{
   color: #333;
 }
 
-.mat-calendar-table
-{
+.mat-calendar-table{
   color: #333;
 }
 
-.mat-calendar-table span
-{
+.mat-calendar-table span{
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-size: 16px;
   color: #333;
 }
 
-.mat-calendar-body
-{
+.mat-calendar-body{
   color: #333;
- 
 }
 
-.mat-calendar-table button :hover
-{
+.mat-calendar-table button :hover{
   background-color: #a3a4a5 !important;
 }
 
-.mat-calendar-table button :active
-{
+.mat-calendar-table button :active{
   background-color: #0e1822 !important;
-}
-
-.mat-calendar-table span :active
-{
-  background-color: #1676AC;
 }
 
 .hour-range-picker {
@@ -359,19 +301,6 @@ button.mat-icon-button {
   margin-top: 50px;
 }
 
-mat-slider {
-  width: 200px;
-  height: 20px;
-  margin: 0 20px;
-}
-
-.hour-range-labels {
-  display: flex;
-  justify-content: space-between;
-  width: 240px;
-  margin-top: 10px;
-}
-
 .hour-range-label {
   font-size: 14px;
 }
@@ -379,39 +308,64 @@ mat-slider {
 .hour-range-picker {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-  width: 100%;
   margin-top: 10px;
 }
 
-.mat-slider {
-  width: 100%;
-}
 
-/*time*/
 
-#time-picker_container
+
+/*Day - date picker*/
+
+
+#day-picker_container
 {
+    float: right;
+    text-align: left;
     font-family: 'Roboto' sans-serif;
     font-weight: bold;
 
     color: #fff;
     background-color: #4a4a4a;
-    /* background-color: #1676AC; */
-    
-    padding-left: 10px;
-    padding-right: 10px;
+   
+  
     border-radius: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+
+    width: 180px;
+    margin-left: 10px;
+}
+
+#mat-datePicker
+{
+  margin-left: 10px;
+  width: 300px;
+  
+}
+
+input.mat-datepicker-input
+{
+    text-align: center;
+    font-family: 'Roboto' sans-serif;
+    font-size: 20px;
 
     width: 40%;
 }
 
-#slider
+
+#todayInput
 {
-  width: 60%;
+    font-family: 'Roboto' sans-serif;
+    font-weight: bold;  
+    background-color: #0e1822;
 }
 
+/*Month picker*/
 
-
-
+#month-picker_container,#year-picker_container
+{
+    float: right;
+    text-align: left;
+    font-family: 'Roboto' sans-serif;
+}

@@ -73,6 +73,7 @@ export class DeviceDetailsComponent
       Chart.register(...registerables);
 
       this.selectedMonth = 'January';
+      this.selectedYear = '2023';
     }
     
     ngOnInit(): void
@@ -255,11 +256,14 @@ export class DeviceDetailsComponent
 
 
     months = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
+      'January', 'February', 'March', 'April'
     ];
-  
     selectedMonth: string;
+
+    years = [
+      '2023',
+    ];
+    selectedYear: string;
 
     startHour: number = 0;
     endHour: number = 23;
