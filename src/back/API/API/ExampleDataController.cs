@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Hangfire;
 using API.Models.Entity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.API;
 
