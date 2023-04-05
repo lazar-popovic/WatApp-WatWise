@@ -26,6 +26,8 @@
     "@types/leaflet.markercluster": "^1.5.1",
     "bootstrap": "^5.2.3",
     "chart.js": "^3.9.1",
+    "chartjs-plugin-annotation": "^2.2.1",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "leaflet": "^1.9.3",
     "leaflet.markercluster": "^1.5.3",
     "ng2-charts": "^4.1.1",

@@ -4,6 +4,8 @@ import {JWTService} from "../../services/jwt.service";
 import {Chart} from "chart.js";
 import {DatePipe} from "@angular/common";
 import {DeviceService} from "../../services/device.service";
+import * as DataLabelsPlugin from 'chartjs-plugin-datalabels';
+
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -38,6 +40,7 @@ export class OverviewComponent implements OnInit
     production: [] as any[]
   }
   constructor( private deviceDataService: DeviceDataService, private jwtService: JWTService, private datePipe: DatePipe, private deviceService: DeviceService) {
+    Chart.register( DataLabelsPlugin);
   }
 
   ngOnInit(): void {
@@ -147,9 +150,9 @@ export class OverviewComponent implements OnInit
         datasets: [{
           label: "Total consumption(kW)",
           data: this.chart1Data.consumption,
-          pointBackgroundColor: 'rgba(255, 0, 0,1)',
-          backgroundColor: 'rgba(255, 0, 0,1)',
-          borderColor: 'rgba(255, 0, 0, 0.1)',
+          pointBackgroundColor: 'rgba(250, 65, 65,1)',
+          backgroundColor: 'rgba(250, 65, 65,1)',
+          borderColor: 'rgba(250, 65, 65, 0.1)',
           tension: 0.2,
           pointStyle: 'circle'
         },{
@@ -230,6 +233,9 @@ export class OverviewComponent implements OnInit
       },
       options: {
         scales: {
+          x: {
+
+          },
           y: {
             beginAtZero: true,
             ticks: {
@@ -263,6 +269,13 @@ export class OverviewComponent implements OnInit
         plugins: {
           legend: {
             display: false
+          },
+          datalabels: {
+            anchor: 'end',
+            align: 'right',
+            formatter: (value) => {
+              return value+'kW';
+            }
           }
         },
         indexAxis: 'y',

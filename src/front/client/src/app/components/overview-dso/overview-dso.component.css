@@ -15,6 +15,9 @@
     padding: 0 10%;
     overflow-y: scroll;
   }
+  .small-card {
+    width: 30%;
+  }
 }
 @media ( max-width: 599px)
 {
@@ -25,6 +28,9 @@
     max-height: 220px;
     margin: 2%;
     width: 90%;
+  }
+  .small-card {
+    width: 100%;
   }
 }
 #content {
@@ -52,7 +58,6 @@
 .small-card {
   background-color: white;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
-  width: 30%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -82,4 +87,17 @@
   border-top-right-radius: 30px;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
+}
+.card-body {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 40px);
+  flex-grow: 1;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  display: flex;
+  flex-direction: column;
 }
