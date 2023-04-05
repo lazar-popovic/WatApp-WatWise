@@ -79,13 +79,15 @@ export class OverviewDsoComponent implements OnInit {
       options: {
         plugins: {
           annotation: {
-            annotations:[
-              {
+            annotations: {
+              box1: {
                 type: 'line',
-                borderColor: 'rgb(255, 99, 132)',
-                borderWidth: 2,
-              },
-            ],
+                yMin: 0,
+                yMax: 2,
+                xMin: 6.5,
+                xMax: 6.5,
+              }
+            }
           }
         },
         scales: {
