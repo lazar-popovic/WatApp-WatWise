@@ -1,5 +1,6 @@
 ﻿using API.DAL.Interfaces;
 using API.Models.Entity;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.DAL.Implementations;
@@ -84,10 +85,10 @@ public class DeviceDataDAL : IDeviceDataDAL
              from energyUsage in _dataContext.DeviceEnergyUsage
              join device in _dataContext.Devices on energyUsage.DeviceId equals device.Id
              where device.DataShare && energyUsage.Timestamp!.Value.Year == DateTime.Now.Year && energyUsage.Timestamp!.Value.Month == DateTime.Now.Month && energyUsage.Timestamp.Value < DateTime.Now
-             group energyUsage by new { Day = energyUsage.Timestamp!.Value.Day } into g
+             group energyUsage by energyUsage.Timestamp!.Value.Date into g
              select new
              {
-                 Timestamp = new DateTime(DateTime.Now.Year, DateTime.Now.Month, g.Key.Day),
+                 Timestamp = g.Key.Date.ToShortDateString(),
                  Value = g.Sum(eu => eu.Value)
              }).AsNoTracking().ToListAsync();
 
@@ -105,6 +106,20 @@ public class DeviceDataDAL : IDeviceDataDAL
             };
 
         return await query.ToListAsync();
+    }
+
+    public async Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForYear()
+    {
+        return await (
+            from energyUsage in _dataContext.DeviceEnergyUsage
+            join device in _dataContext.Devices on energyUsage.DeviceId equals device.Id
+            where device.DataShare && energyUsage.Timestamp!.Value.Year == DateTime.Now.Year
+            group energyUsage by new { energyUsage.Timestamp!.Value.Year, energyUsage.Timestamp.Value.Month } into g
+            select new
+            {
+                Timestamp = g.Key.Month + "/" + g.Key.Year,
+                Value = g.Sum(eu => eu.Value)
+            }).AsNoTracking().ToListAsync();
     }
 
     public async Task<object> GetDayTotalProductionConsumptionByUserId( int day, int month, int year, int userId)
@@ -131,6 +146,4 @@ public class DeviceDataDAL : IDeviceDataDAL
 
         return new { producingEnergyUsageByTimestamp, consumingEnergyUsageByTimestamp};
     }
-
-   
 }

@@ -7,5 +7,6 @@ public interface IDeviceDataDAL
     Task<object> GetDeviceDataForMonth(int deviceId);
     Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth();
     Task<object> GetDeviceDataForYear(int deviceId);
+    Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForYear();
     Task<object> GetDayTotalProductionConsumptionByUserId( int day, int month, int year, int userId);
 }

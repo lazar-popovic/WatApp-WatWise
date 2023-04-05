@@ -51,7 +51,14 @@ public class DeviceDataController : ControllerBase
     {
         return Ok( await _deviceDataBl.GetDeviceDataForYear( deviceId));
     }
-    
+
+    [HttpGet]
+    [Route("get-allowed-share-devices-data-for-year")]
+    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForYear()
+    {
+        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForYear());
+    }
+
     [HttpGet]
     [Route("get-day-total-for-user")]
     public async Task<IActionResult> GetDayTotalProductionConsumptionByUserId( int day, int month, int year, int userId)
