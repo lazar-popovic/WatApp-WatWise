@@ -23,13 +23,14 @@ import { DeviceDetailsComponent } from './components/device-details/device-detai
 import { DevicesInfoComponent } from './components/devices-info/devices-info.component';
 import { EmployeeOverviewComponent } from './components/employee-overview/employee-overview.component';
 import { DeviceInputComponent } from './components/device-input/device-input.component';
+import {OverviewDsoComponent} from "./components/overview-dso/overview-dso.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent},
   { path: 'verification', component : VerifyComponent},
   { path: 'prosumer/overview',  component:  OverviewComponent, canActivate: [UserGuard]},
-  { path: 'dso/overview',  component:  OverviewComponent, canActivate: [UserGuard]},
+  { path: 'dso/overview',  component:  OverviewDsoComponent, canActivate: [EmployeeGuard]},
   { path: 'profile',  component:  ProfileComponent, canActivate: [UserGuard]},
   { path: 'profile/:id', component: ProfileIDComponent, canActivate: [EmployeeGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent},
