@@ -24,6 +24,7 @@ import { DevicesInfoComponent } from './components/devices-info/devices-info.com
 import { EmployeeOverviewComponent } from './components/employee-overview/employee-overview.component';
 import { DeviceInputComponent } from './components/device-input/device-input.component';
 import { OverviewDsoComponent } from './components/overview-dso/overview-dso.component';
+import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
