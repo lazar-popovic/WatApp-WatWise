@@ -65,4 +65,11 @@ public class DeviceDataController : ControllerBase
     {
         return Ok( await _deviceDataBl.GetDayTotalProductionConsumptionByUserId( day, month, year,userId));
     }
+
+    [HttpGet]
+    [Route("get-energy-usage-total-7-hours-for-all-devices")]
+    public async Task<IActionResult> GetTotalConsumptionForPrevious7HoursAndTotalProductionForNext7HoursForAllUsers()
+    {
+        return Ok( await _deviceDataBl.GetTotalConsumptionForPrevious7HoursAndTotalProductionForNext7HoursForAllUsers());
+    }
 }

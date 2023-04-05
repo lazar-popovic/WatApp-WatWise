@@ -85,5 +85,13 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
-    
+    public async Task<Response> GetTotalConsumptionForPrevious7HoursAndTotalProductionForNext7HoursForAllUsers()
+    {
+        var response = new Response();
+
+        response.Success = true;
+        response.Data = await _deviceDataDal.GetTotalConsumptionForPrevious7HoursAndTotalProductionForNext7HoursForAllUsers();
+
+        return response;
+    }
 }
