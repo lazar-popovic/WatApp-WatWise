@@ -93,13 +93,23 @@ export class DeviceDetailsComponent
     predictionFlag : boolean = false;
 
     historyClick(){
-      this.predictionFlag = false;
       this.historyflag = true;
+      var historyDiv = document.getElementById("history");
+      if(historyDiv)  { historyDiv.style.color = "black"; }
+      
+      this.predictionFlag = false;
+      var predictionDiv = document.getElementById("prediction");
+      if(predictionDiv)  { predictionDiv.style.color = "gray";}
     }
 
     predictionClick(){
       this.historyflag = false;
+      var historyDiv = document.getElementById("history");
+      if(historyDiv)  { historyDiv.style.color = "gray"; }
+      
       this.predictionFlag = true;
+      var predictionDiv = document.getElementById("prediction");
+      if(predictionDiv)  { predictionDiv.style.color = "black";}
     }
 
 

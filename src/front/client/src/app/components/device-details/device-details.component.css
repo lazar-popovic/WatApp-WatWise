@@ -48,6 +48,11 @@ h3
     /* border-bottom: 2px solid #3E3E3E ;  */
 }
 
+#history:hover,#prediction:hover
+{
+  font-size: 19px;
+}
+
 
 #today-month-year,#days
 {
@@ -319,8 +324,6 @@ table {
 }
 
 
-
-
 /*Day - date picker*/
 
 
@@ -374,4 +377,37 @@ input.mat-datepicker-input
     float: right;
     text-align: left;
     font-family: 'Roboto' sans-serif;
+}
+
+
+/*Prediction*/
+
+
+#prediction-details
+{
+  text-align: center;
+  font-family: 'Roboto' sans-serif;
+  color: #3E3E3E;
+  float: right;
+  font-family: 'Roboto' sans-serif; 
+}
+
+#allow-DSO
+{
+  float: right;
+  text-align: right;
+  font-size: 20px;
+  color: #4a4a4a;
+
+  border-radius: 10px;
+  width: 80%;
+  margin-bottom: 5px;
+}
+
+.predicted-consumption
+{
+  font-size: 20px;
+  font-weight: bold;
+
+
 }
