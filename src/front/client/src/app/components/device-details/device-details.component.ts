@@ -89,6 +89,20 @@ export class DeviceDetailsComponent
       
     }
 
+    historyflag : boolean = true;
+    predictionFlag : boolean = false;
+
+    historyClick(){
+      this.predictionFlag = false;
+      this.historyflag = true;
+    }
+
+    predictionClick(){
+      this.historyflag = false;
+      this.predictionFlag = true;
+    }
+
+
     todayFlag : boolean = true;
     monthFlag : boolean = false;
     yearFlag : boolean = false;

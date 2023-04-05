@@ -49,7 +49,7 @@ h3
 }
 
 
-#today-month-year
+#today-month-year,#days
 {
     height: 30px;
     width: 250px;
@@ -68,7 +68,7 @@ h3
     background-color:  #1676AC!important;
 }
 
-#today,#month,#year
+#today,#month,#year,#day1,#day2,#day3
 {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -84,8 +84,16 @@ h3
     padding: 5px;
 }
 
+#days{
+    width: 300px;
+}
 
-#today:hover,#month:hover,#year:hover
+#day1,#day2,#day3{
+    margin-left: 15px;
+}
+
+
+#today:hover,#month:hover,#year:hover,#day1:hover,#day2:hover,#day3:hover
 {
     color: #1676AC!important;
     margin-top: 0px;
@@ -170,8 +178,6 @@ table
 
 
 }
-
-
 
 
 /* data table za today devices */

@@ -9,68 +9,75 @@
 
       <h2 style="display: inline-block;">Devices /</h2> <h2 id="h2_device" style="display: inline-block;">{{device.name}}</h2>
       <br>
-      <!-- <h3 style="display: inline-block;">History</h3> <h3 style="display: inline-block; margin-left: 10px; color: gray;">Prediction</h3><br> -->
+      <h3 style="display: inline-block;"><a (click)="historyClick()">History</a></h3> 
+      <h3 style="display: inline-block; margin-left: 10px; color: gray;"><a (click)="predictionClick()">Prediction</a></h3><br>
 
-      <div id="today-month-year" style="display: inline-block;">
-        <div id="today" (click)="todayClick()">Day </div>
-        <div id="month" (click)="monthClick()">Month</div>
-        <div id="year"  (click)="yearClick()">Year</div>
-      </div>
+      <div *ngIf="historyflag==true">
+        <div id="today-month-year" style="display: inline-block;">
+          <div id="today" (click)="todayClick()">Day </div>
+          <div id="month" (click)="monthClick()">Month</div>
+          <div id="year"  (click)="yearClick()">Year</div>
+        </div>
 
-      <div *ngIf="todayFlag==true"  id="day-picker_container" style="display: inline-block;">
-          <div id="mat-datePicker">
-            <input matInput [matDatepicker]="picker" placeholder="Select day">
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker id="todayInput" #picker></mat-datepicker>
-          </div>
-      </div>
+        <div *ngIf="todayFlag==true"  id="day-picker_container" style="display: inline-block;">
+            <div id="mat-datePicker">
+              <input matInput [matDatepicker]="picker" placeholder="Select day">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker id="todayInput" #picker></mat-datepicker>
+            </div>
+        </div>
 
-      <div *ngIf="monthFlag==true" id="month-picker_container" style="display: inline-block;">
-        <mat-form-field>
-          <mat-label>Select a month</mat-label>
-          <mat-select [(value)]="selectedMonth">
-            <mat-option *ngFor="let month of months" [value]="month">{{ month }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+        <div *ngIf="monthFlag==true" id="month-picker_container" style="display: inline-block;">
+          <mat-form-field>
+            <mat-label>Select a month</mat-label>
+            <mat-select [(value)]="selectedMonth">
+              <mat-option *ngFor="let month of months" [value]="month">{{ month }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-      <div *ngIf="yearFlag==true"  id="year-picker_container" style="display: inline-block;">
-        <mat-form-field>
-          <mat-label>Select a year</mat-label>
-          <mat-select [(value)]="selectedYear">
-            <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+        <div *ngIf="yearFlag==true"  id="year-picker_container" style="display: inline-block;">
+          <mat-form-field>
+            <mat-label>Select a year</mat-label>
+            <mat-select [(value)]="selectedYear">
+              <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+     
+            <div id="graph-container">
+              <div class="chart-container">
+                <canvas id="chart" style="max-width: 800px; height: auto;"></canvas>
+              </div>
+            </div>
+            <button id="export"> EXPORT TO CSV</button>
+            <div id = "table-container" style="display: inline-block;">
+                <table id="tableShow" class="data-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 50%">Period</th>
+                      <th>{{categoryLabel}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of data; let i = index">
+                      <td>{{labels[i]}}</td>
+                      <td>{{item | number:'1.3-3' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
 
-      
-
-
-      
-
-        <div id="graph-container">
-          <div class="chart-container">
-            <canvas id="chart" style="max-width: 800px; height: auto;"></canvas>
+        <div *ngIf="predictionFlag==true">
+          <div id="days" style="display: inline-block;">
+            <div id="day1" (click)="todayClick()">1 Day</div>
+            <div id="day2" (click)="monthClick()">3 Days</div>
+            <div id="day3"  (click)="yearClick()">7 Days</div>
           </div>
         </div>
-        <button id="export"> EXPORT TO CSV</button>
-        <div id = "table-container" style="display: inline-block;">
-            <table id="tableShow" class="data-table">
-              <thead>
-                <tr>
-                  <th style="width: 50%">Period</th>
-                  <th>{{categoryLabel}}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of data; let i = index">
-                  <td>{{labels[i]}}</td>
-                  <td>{{item | number:'1.3-3' }}</td>
-                </tr>
-              </tbody>
-            </table>
-        </div>
-    </div>
+
+      </div>
   </div>
 
 
