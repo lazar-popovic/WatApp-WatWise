@@ -33,6 +33,10 @@ import { EmployeeOverviewComponent } from './components/employee-overview/employ
 import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 import { DevicesInfoComponent } from './components/devices-info/devices-info.component';
 import { DeviceInputComponent } from './components/device-input/device-input.component';
+import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
+import { ProfileViewSettingsComponent } from './components/profile-view-settings/profile-view-settings.component';
+import { PasswordViewSettingsComponent } from './components/password-view-settings/password-view-settings.component';
+import { DisplayViewSettingsComponent } from './components/display-view-settings/display-view-settings.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +65,10 @@ import { DeviceInputComponent } from './components/device-input/device-input.com
     DeviceInputComponent,
     MapComponentComponent,
     DeviceDetailsComponent,
+    ProfileSettingsComponent,
+    ProfileViewSettingsComponent,
+    PasswordViewSettingsComponent,
+    DisplayViewSettingsComponent,
   ],
   imports: [
     BrowserModule,
