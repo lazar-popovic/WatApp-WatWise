@@ -1,0 +1,23 @@
+<div class="profile-settings-container">
+    <app-sidebar></app-sidebar>
+    <div class="profile-settings-holder">
+        <h1>Settings</h1>
+        <div class="profile-settings-menu">
+            <div class="profile-settings-menu-active-item" (click)="handler($event); wanted=1">
+                <img src="/assets/user.png" alt="user">Profile
+            </div>
+            <div class="profile-settings-menu-item" (click)="handler($event); wanted=2">
+                <img src="/assets/lock.png" alt="password">Password
+            </div>
+            <div class="profile-settings-menu-item" (click)="handler($event); wanted=3">
+                <img src="/assets/eye.png" alt="display">Display
+            </div>
+        </div>
+        <div *ngIf="wanted==1">
+            <app-profile-view-settings></app-profile-view-settings>
+        </div>
+        <div *ngIf="wanted==2">
+            <app-password-view-settings></app-password-view-settings>
+        </div>
+    </div>
+</div>

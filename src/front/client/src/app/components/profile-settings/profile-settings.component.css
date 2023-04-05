@@ -1,0 +1,42 @@
+.profile-settings-container {
+    display: flex;
+    gap:180px;
+    font-family: 'Inter', sans-serif;
+    color: #5B5858;
+    font-weight: 700;
+}
+
+.profile-settings-holder {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+}
+
+.profile-settings-menu {
+    display: flex;
+    width: 600px;
+    height: 40px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.profile-settings-menu-item, .profile-settings-menu-active-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 200px;
+    height: 100%;
+    font-size: 22px;
+    color: #5B5858;
+}
+
+.profile-settings-menu-active-item {
+    background: linear-gradient(0deg, #000000 -27.5%, rgba(188, 188, 188, 0.74572) -27.49%, rgba(171, 171, 171, 0.549797) -27.47%, rgba(173, 173, 173, 0.573314) -3.01%, rgba(221, 221, 221, 0) 88.28%);
+    border-bottom: 1.5px solid rgba(91, 88, 88, 0.5);
+}
+
+.profile-settings-menu-item img, .profile-settings-menu-active-item img {
+    height: 25px;
+    margin-right: 20px;
+}

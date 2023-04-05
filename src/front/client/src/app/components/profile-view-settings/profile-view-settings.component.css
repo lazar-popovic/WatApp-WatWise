@@ -1,0 +1,109 @@
+.profile-view-image {
+    display: flex;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.profile-view-image img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-right: 100px;
+}
+
+.profile-view-image-buttons form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-view-settings button {
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.profile-button-blue {
+    background-color: #1676AC;
+    color: white;
+}
+
+#profile-button-delete {
+    background-color: rgba(158, 156, 156, 0.4);
+    color: #5B5858;
+}
+
+.profile-view-settings-change {
+    width: 1000px;
+}
+
+.profile-view-input-wraper {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-view-input-wraper label {
+    font-size: 20px;
+    font-weight: lighter;
+    color: #5B5858;
+}
+
+.profile-view-input-wraper input {
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid black;
+    outline: none;
+    margin-right: 100px;
+    background-color: #E1E1E1;
+}
+
+.profile-view-input-wraper input#email {
+    width: 700px;
+}
+
+.profile-view-upper-form {
+    display: flex;
+    margin-bottom: 80px;
+}
+
+.middle-form {
+    margin-bottom: 70px;
+}
+
+.profile-view-bottom-form {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.profile-info-address {
+    width: 400px;
+    text-align : center;
+    background-color: #D9D9D9;
+    border-radius: 10px;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+#profile-info-address-header {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+h3 {
+    color: #5B5858;
+}
+
+#r {
+    color: red;
+}
+
+p {
+    color: #5B5858;
+}

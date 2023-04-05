@@ -23,7 +23,8 @@ import { DeviceDetailsComponent } from './components/device-details/device-detai
 import { DevicesInfoComponent } from './components/devices-info/devices-info.component';
 import { EmployeeOverviewComponent } from './components/employee-overview/employee-overview.component';
 import { DeviceInputComponent } from './components/device-input/device-input.component';
-import {OverviewDsoComponent} from "./components/overview-dso/overview-dso.component";
+import { OverviewDsoComponent } from './components/overview-dso/overview-dso.component';
+import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -43,7 +44,8 @@ const routes: Routes = [
   { path: 'dso/consumption', component : EnergyUsageComponent, canActivate: [EmployeeGuard]},
   { path: 'prosumer/reset-password', component: PasswordInputComponent},
   { path: 'test-component3', component: EmployeeOverviewComponent},
-  { path: 'prosumer/device/:id', component: DeviceDetailsComponent}
+  { path: 'prosumer/device/:id', component: DeviceDetailsComponent},
+  { path: 'test-component', component: ProfileSettingsComponent}
 ];
 
 @NgModule({

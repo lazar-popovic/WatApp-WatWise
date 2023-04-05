@@ -33,8 +33,10 @@ import { EmployeeOverviewComponent } from './components/employee-overview/employ
 import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 import { DevicesInfoComponent } from './components/devices-info/devices-info.component';
 import { DeviceInputComponent } from './components/device-input/device-input.component';
+import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
+import { ProfileViewSettingsComponent } from './components/profile-view-settings/profile-view-settings.component';
+import { PasswordViewSettingsComponent } from './components/password-view-settings/password-view-settings.component';
 import { OverviewDsoComponent } from './components/overview-dso/overview-dso.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +64,10 @@ import { OverviewDsoComponent } from './components/overview-dso/overview-dso.com
     DeviceInputComponent,
     MapComponentComponent,
     DeviceDetailsComponent,
-    OverviewDsoComponent,
+    ProfileSettingsComponent,
+    ProfileViewSettingsComponent,
+    PasswordViewSettingsComponent,
+    OverviewDsoComponent
   ],
   imports: [
     BrowserModule,
