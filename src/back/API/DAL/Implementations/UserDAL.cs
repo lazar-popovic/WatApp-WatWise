@@ -91,7 +91,7 @@ namespace API.DAL.Implementations
 
         public async Task<int> getNumberOfProsumersOrEmployees(int id)
         {
-            int numberUsers = _dbContext.Users.Count(u => u.RoleId == id);
+            int numberUsers = await _dbContext.Users.CountAsync(u => u.RoleId == id);
             return numberUsers;
         }
 
@@ -113,9 +113,9 @@ namespace API.DAL.Implementations
 
                                                 }).ToListAsync();
 
-            if (mail != null)
+            if (mail != null && id==3)
             {
-                if (!string.IsNullOrEmpty(mail?.Trim()) || id != 3)
+                if (!string.IsNullOrEmpty(mail?.Trim()))
                 {
                     users = users.Where(o =>
                         ($"{o.Location?.Address} {o.Location?.AddressNumber}, {o.Location?.City}".ToLower())
