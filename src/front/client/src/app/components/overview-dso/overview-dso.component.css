@@ -9,11 +9,14 @@
   .card {
 
     margin: 1%;
-    width: 45%;
+    width: 40%;
   }
   #content {
     padding: 0 10%;
     overflow-y: scroll;
+  }
+  .small-card {
+    width: 30%;
   }
 }
 @media ( max-width: 599px)
@@ -25,6 +28,9 @@
     max-height: 220px;
     margin: 2%;
     width: 90%;
+  }
+  .small-card {
+    width: 100%;
   }
 }
 #content {
@@ -40,7 +46,7 @@
   box-sizing: border-box;
   height: 45%;
   min-height: 300px;
-  min-width: 350px;
+  min-width: 300px;
   border-radius: 30px;
 }
 
@@ -52,7 +58,6 @@
 .small-card {
   background-color: white;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
-  width: 30%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -82,4 +87,26 @@
   border-top-right-radius: 30px;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
+}
+.card-body {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 40px);
+  flex-grow: 1;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+#hover {
+  position: absolute;
+  left: 52%;
+  width: 5px;
+  height: 75%;
+  background-color: black;
 }

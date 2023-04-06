@@ -24,4 +24,8 @@ export class DeviceDataService {
   {
     return this.http.get(`${environment.apiUrl}device-data/get-day-total-for-user?day=${day}&month=${month}&year=${year}&userId=${userId}`);
   }
+  getDSOOverviewLiveData() : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}device-data/get-energy-usage-total-7-hours-for-all-devices`);
+  }
 }
