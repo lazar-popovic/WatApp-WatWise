@@ -48,4 +48,8 @@ export class AuthService {
   get userId() {
     return this.jwtService.userId;
   }
+
+  logOut() {
+    localStorage.removeItem('token');
+  }
 }

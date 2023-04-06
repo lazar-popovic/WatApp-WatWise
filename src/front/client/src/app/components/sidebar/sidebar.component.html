@@ -40,8 +40,11 @@
 
 
         <div class="sidebar-footer" routerLink="/profile" [ngClass]="{'sidebar-footer-blue': role == 3, 'sidebar-footer-green': role == 1 || role == 2}">
-            <div class="sidebar-profile"><img src="\assets\profile.png"></div>
-            {{this.user.firstName + " " + this.user.lastName}}
+            <div id="profile-wraper">
+                <div class="sidebar-profile"><img src="\assets\profile.png"></div>
+                {{this.user.firstName + " " + this.user.lastName}}
+            </div>
+            <div id="logout" (click)="logOut()"><img src="/assets/logout.png" alt="logout"></div>
         </div>
     </div>
 </div>
