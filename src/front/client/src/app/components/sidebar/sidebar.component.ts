@@ -29,7 +29,7 @@ export class SidebarComponent {
   currentTime;
   user = new User();
   role = 3;
-  constructor (public datepipe: DatePipe, private route: Router, authService: AuthService){
+  constructor (public datepipe: DatePipe, private route: Router, private authService: AuthService){
     let currentDateTime = this.datepipe.transform((new Date), 'h:mm dd/MM/yyyy');
     this.currentTime = currentDateTime;
     this.url = this.route.url.split('/')[2];
@@ -52,6 +52,10 @@ export class SidebarComponent {
       this.route.navigateByUrl(`/dso/${(element as HTMLDivElement).innerHTML.toLowerCase()}`);
   }
 
+  logOut() {
+    this.authService.logOut();
+    this.route.navigateByUrl('/login');
+  }
 
   clickHandler(event: MouseEvent, role: number) {
     this.select(event.target, role);
