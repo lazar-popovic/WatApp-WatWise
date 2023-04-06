@@ -60,6 +60,12 @@
   font-weight: lighter;
 }
 
+.profile-main-info img {
+  height: 40px;
+  width: 40px;
+  margin-left: 20px;
+}
+
 .profile-location {
   display: flex;
   align-items: center;
@@ -69,6 +75,15 @@
   width: 32px;
   height: 40px;
   margin-right: 10px;
+}
+
+#profile-settings-button img {
+  width: 40px;
+  height: 40px;
+}
+
+.profile-header-top {
+  display: flex;
 }
 
 @media (max-width: 599px) {
