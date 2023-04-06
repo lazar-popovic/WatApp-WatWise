@@ -13,7 +13,7 @@ import {DatePipe} from "@angular/common";
 
 import { ViewEncapsulation } from '@angular/core';
 
-import * as $ from 'jquery';
+//import * as $ from 'jquery';
 import 'bootstrap-datepicker';
 // import 'jqueryui';
 
@@ -75,18 +75,15 @@ export class DeviceDetailsComponent
       this.selectedMonth = 'January';
       this.selectedYear = '2023';
     }
-    
+
     ngOnInit(): void
     {
 
       /*bootstrap datepicker*/
-      $("#datepicker").datepicker({
+     /* $("#datepicker").datepicker({
         autoclose: true,
         todayHighlight: true
-      }).datepicker('update', new Date());
-
-      
-      
+      }).datepicker('update', new Date());*/
     }
 
     historyflag : boolean = true;
@@ -96,7 +93,7 @@ export class DeviceDetailsComponent
       this.historyflag = true;
       var historyDiv = document.getElementById("history");
       if(historyDiv)  { historyDiv.style.color = "black"; }
-      
+
       this.predictionFlag = false;
       var predictionDiv = document.getElementById("prediction");
       if(predictionDiv)  { predictionDiv.style.color = "gray";}
@@ -106,7 +103,7 @@ export class DeviceDetailsComponent
       this.historyflag = false;
       var historyDiv = document.getElementById("history");
       if(historyDiv)  { historyDiv.style.color = "gray"; }
-      
+
       this.predictionFlag = true;
       var predictionDiv = document.getElementById("prediction");
       if(predictionDiv)  { predictionDiv.style.color = "black";}
@@ -119,7 +116,6 @@ export class DeviceDetailsComponent
 
     todayClick()
     {
-
       this.todayFlag  = true; this.monthFlag  = false; this.yearFlag = false;
       var todayDiv = document.getElementById("today");
       if(todayDiv)
@@ -291,7 +287,7 @@ export class DeviceDetailsComponent
 
     startHour: number = 0;
     endHour: number = 23;
-    
+
 }
 
 

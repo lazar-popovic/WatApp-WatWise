@@ -28,4 +28,16 @@ export class DeviceDataService {
   {
     return this.http.get(`${environment.apiUrl}device-data/get-energy-usage-total-7-hours-for-all-devices`);
   }
+  getDSOSharedDataForDate() : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}device-data/get-allowed-share-devices-data-for-today`);
+  }
+  getDSOSharedDataForMonth() : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}device-data/get-allowed-share-devices-data-for-month`);
+  }
+  getDSOSharedDataForYear() : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}device-data/get-allowed-share-devices-data-for-year`);
+  }
 }
