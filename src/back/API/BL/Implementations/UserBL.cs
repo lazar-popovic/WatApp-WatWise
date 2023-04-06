@@ -3,6 +3,7 @@ using API.DAL.Implementations;
 using API.DAL.Interfaces;
 using API.Models;
 using API.Models.Entity;
+using API.Models.ViewModels;
 
 namespace API.BL.Implementations
 {
@@ -131,6 +132,60 @@ namespace API.BL.Implementations
             return response;
         }
 
+        public async Task<Response<string>> UpdateUserPassword(UpdateUserPasswordViewModel request, int id)
+        {
+            var response = new Response<string>();
 
+            if(string.IsNullOrEmpty(request.OldPassword))
+            {
+                response.Errors.Add("Old password field cannot be empty!");
+            }
+
+            if(string.IsNullOrEmpty(request.NewPassword))
+            {
+                response.Errors.Add("New password field cannot be empty!");
+            }
+            
+            if(string.IsNullOrEmpty(request.ConfirmedPassword)) 
+            {
+                response.Errors.Add("Confirmed password field cannot be empty!");
+            }
+
+            if(request.NewPassword != request.ConfirmedPassword)
+            {
+                response.Errors.Add("Passwords must match!");
+            }
+
+            response.Success = response.Errors.Count() == 0;
+            if (!response.Success)
+                return response;
+
+            var user = await _userDal.GetByIdWithPasswordAsync(id);
+
+            if(user == null)
+            {
+                response.Errors.Add("User with this id doesen't exist!");
+
+                response.Success = false;
+                return response;
+            }
+
+            if(!BCrypt.Net.BCrypt.Verify(request.OldPassword, user.PasswordHash))
+            {
+                response.Errors.Add("Your old password is incorrect!");
+
+                response.Success = false;
+                return response;
+            }
+
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+            _userDal.UpdateUserAfterPasswordReset(user);
+
+            response.Data = "Password has been updated succesfully";
+
+            response.Success = response.Errors.Count == 0;
+
+            return response;
+        }
     }
 }

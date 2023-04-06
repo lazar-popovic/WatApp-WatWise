@@ -1,5 +1,6 @@
 ﻿using API.Models;
 using API.Models.Entity;
+using API.Models.ViewModels;
 
 namespace API.BL.Interfaces
 {
@@ -11,5 +12,6 @@ namespace API.BL.Interfaces
         Task<Response<List<User>>> GetUsersWithLocationId(int id);
         Task<Response<int>> getNumberOfUsers(int id);
         Task<Response<List<User>>> FindUsers(int id, string search, string mail, int pageSize, int pageNum, string order);
+        Task<Response<string>> UpdateUserPassword(UpdateUserPasswordViewModel request, int id);
     }
 }
