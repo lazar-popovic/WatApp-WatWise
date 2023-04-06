@@ -20,7 +20,6 @@
   background-color: #239F81;
 }
 
-
 .sidebar-header {
     padding-top : 10px;
     padding-left: 26px;
@@ -42,6 +41,19 @@
     margin-left: 14px;
 }
 
+#profile-wraper {
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-footer img {
+    height: 30px;
+}
+
+#logout {
+    margin-right: 20px;
+}
+
 .sidebar-nav {
     width : 235px;
     margin : auto;
@@ -55,6 +67,7 @@
 
 .sidebar-item, .sidebar-item-active {
     margin-bottom: 38px;
+    cursor: default;
 }
 
 .sidebar-item {
@@ -71,12 +84,14 @@
 }
 
 .sidebar-footer {
-  width: 242px;
-  border-radius: 30px;
+  width: 100%;
   position: absolute;
-  bottom: 24px;
+  bottom: 0;
+  left: 0;
   display: flex;
   align-items: center;
+  cursor: default;
+  justify-content: space-between;
 }
 .sidebar-footer-blue {
   background-color: #0C4869;
