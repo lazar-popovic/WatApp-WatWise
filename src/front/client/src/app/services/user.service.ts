@@ -37,4 +37,8 @@ export class UserService {
   public updatePassword(data: any, id: number) : Observable<any> {
     return this.http.patch<any>(`${environment.apiUrl}user/update-user-password?id=${id}`, data, {observe: 'response'});
   }
+
+  public updateUser(data: any, id: number) : Observable<any> {
+    return this.http.patch<any>(`${environment.apiUrl}user/update-user-name-email?id=${id}`, data, {observe: 'response'});
+  }
 }

@@ -38,4 +38,12 @@ export class ProfileSettingsComponent {
       }
     })
   }
+
+  updateUser(data:any) {
+    this.userService.updateUser(data, this.authService.userId).subscribe((result: any) => {
+      if(result.body.success) {
+        this.router.navigateByUrl('profile')
+      }
+    })
+  }
 }
