@@ -8,9 +8,10 @@
           <div class="profile-main-info">
             <h1>{{user.firstName}} {{user.lastName}}</h1>
             <h2>{{user.mail}}</h2>  
+            <a href="profile-settings"><img src="/assets/sett.png" alt="settings"></a>
           </div>  
           <h3>{{user.role}}</h3>
-        </div>
+      </div>
         <div class="profile-location" *ngIf="user.roleId == 3">
           <img src="/assets/pin_grey.png">
           <h2>{{user.city}}, {{user.address}} {{user.num}}</h2>
