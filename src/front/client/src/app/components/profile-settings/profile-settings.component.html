@@ -17,7 +17,7 @@
             <app-profile-view-settings></app-profile-view-settings>
         </div>
         <div *ngIf="wanted==2">
-            <app-password-view-settings></app-password-view-settings>
+            <app-password-view-settings (dataEvent)="updatePassword($event)"></app-password-view-settings>
         </div>
     </div>
 </div>
