@@ -37,6 +37,18 @@ import { ProfileSettingsComponent } from './components/profile-settings/profile-
 import { ProfileViewSettingsComponent } from './components/profile-view-settings/profile-view-settings.component';
 import { PasswordViewSettingsComponent } from './components/password-view-settings/password-view-settings.component';
 import { OverviewDsoComponent } from './components/overview-dso/overview-dso.component';
+
+
+import { UsersOverviewComponent } from './components/users-overview/users-overview.component';
+
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlider, MatSliderModule } from '@angular/material/slider';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,6 +91,12 @@ import { OverviewDsoComponent } from './components/overview-dso/overview-dso.com
     ToastrModule.forRoot(),
     LeafletModule,
     NgChartsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatCheckboxModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,

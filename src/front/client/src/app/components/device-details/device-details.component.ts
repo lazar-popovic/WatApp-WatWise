@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {ChartData, ChartDataset, ChartOptions, registerables} from 'chart.js';
+import { Input } from '@angular/core';
+
 
 import { Chart } from 'chart.js';
 import {AuthService} from "../../services/auth-service.service";
@@ -9,12 +11,26 @@ import {DeviceService} from "../../services/device.service";
 import {DeviceDataService} from "../../services/device-data.service";
 import {DatePipe} from "@angular/common";
 
+import { ViewEncapsulation } from '@angular/core';
+
+import * as $ from 'jquery';
+import 'bootstrap-datepicker';
+// import 'jqueryui';
+
+
+import { IgxMonthPickerComponent } from 'igniteui-angular';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { MatSliderModule } from '@angular/material/slider';
+
+interface DatepickerOptions {
+  autoclose?: boolean;
+}
 
 @Component({
   selector: 'app-device-details',
   templateUrl: './device-details.component.html',
   styleUrls: ['./device-details.component.css'],
-
+  encapsulation: ViewEncapsulation.None
 })
 export class DeviceDetailsComponent
 {
@@ -32,6 +48,7 @@ export class DeviceDetailsComponent
       deviceType: null,
       dataShare: false
     }
+
     constructor( private datePipe: DatePipe, private authService:AuthService, private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private deviceDataService: DeviceDataService) {
       this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
         result => {
@@ -54,10 +71,47 @@ export class DeviceDetailsComponent
         }
       )
       Chart.register(...registerables);
+
+      this.selectedMonth = 'January';
+      this.selectedYear = '2023';
     }
+    
     ngOnInit(): void
     {
+
+      /*bootstrap datepicker*/
+      $("#datepicker").datepicker({
+        autoclose: true,
+        todayHighlight: true
+      }).datepicker('update', new Date());
+
+      
+      
     }
+
+    historyflag : boolean = true;
+    predictionFlag : boolean = false;
+
+    historyClick(){
+      this.historyflag = true;
+      var historyDiv = document.getElementById("history");
+      if(historyDiv)  { historyDiv.style.color = "black"; }
+      
+      this.predictionFlag = false;
+      var predictionDiv = document.getElementById("prediction");
+      if(predictionDiv)  { predictionDiv.style.color = "gray";}
+    }
+
+    predictionClick(){
+      this.historyflag = false;
+      var historyDiv = document.getElementById("history");
+      if(historyDiv)  { historyDiv.style.color = "gray"; }
+      
+      this.predictionFlag = true;
+      var predictionDiv = document.getElementById("prediction");
+      if(predictionDiv)  { predictionDiv.style.color = "black";}
+    }
+
 
     todayFlag : boolean = true;
     monthFlag : boolean = false;
@@ -221,6 +275,23 @@ export class DeviceDetailsComponent
         tableContainer.appendChild(table);
       }
     }
+
+    date: Date = new Date();
+
+
+    months = [
+      'January', 'February', 'March', 'April'
+    ];
+    selectedMonth: string;
+
+    years = [
+      '2023',
+    ];
+    selectedYear: string;
+
+    startHour: number = 0;
+    endHour: number = 23;
+    
 }
 
 
