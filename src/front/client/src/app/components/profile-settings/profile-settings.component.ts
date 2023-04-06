@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth-service.service';
+import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-settings',
@@ -8,6 +11,8 @@ import { Component } from '@angular/core';
 export class ProfileSettingsComponent {
 
   wanted: number = 1;
+
+  constructor(private userService: UserService, private authService: AuthService, private router: Router) { }
 
   click(element: EventTarget | null) {
     if(element == null)
@@ -24,5 +29,21 @@ export class ProfileSettingsComponent {
 
   handler(event: MouseEvent) {
     this.click(event.target);
+  }
+
+  updatePassword(data: any) {
+    this.userService.updatePassword(data, this.authService.userId).subscribe((result: any) => {
+      if(result.body.success) {
+        this.router.navigateByUrl('profile');
+      }
+    })
+  }
+
+  updateUser(data:any) {
+    this.userService.updateUser(data, this.authService.userId).subscribe((result: any) => {
+      if(result.body.success) {
+        this.router.navigateByUrl('profile')
+      }
+    })
   }
 }

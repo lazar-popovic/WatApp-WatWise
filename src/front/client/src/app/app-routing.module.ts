@@ -45,7 +45,7 @@ const routes: Routes = [
   { path: 'prosumer/reset-password', component: PasswordInputComponent},
   { path: 'test-component3', component: EmployeeOverviewComponent},
   { path: 'prosumer/device/:id', component: DeviceDetailsComponent},
-  { path: 'test-component', component: ProfileSettingsComponent}
+  { path: 'profile-settings', component: ProfileSettingsComponent}
 ];
 
 @NgModule({
