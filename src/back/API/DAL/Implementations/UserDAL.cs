@@ -176,7 +176,7 @@ namespace API.DAL.Implementations
             return users;
         }
 
-        public void UpdateUserAfterPasswordReset(User user)
+        public void UpdateUser(User user)
         {
             _dbContext.Users.Update(user);
             _dbContext.SaveChanges();

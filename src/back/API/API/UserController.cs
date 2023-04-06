@@ -84,5 +84,11 @@ namespace API.API
             return Ok(await _userBL.UpdateUserPassword(request, id));
         }
 
+        [HttpPatch("update-user-name-email")]
+        public async Task<IActionResult> UpdateUserNameAndEmail(UpdateUserNameAndEmailViewModel request, int id)
+        {
+            return Ok(await _userBL.UpdateUserNameAndEmail(request, id));
+        }
+
     }
 }

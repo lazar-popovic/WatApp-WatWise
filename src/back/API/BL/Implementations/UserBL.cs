@@ -179,10 +179,47 @@ namespace API.BL.Implementations
             }
 
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
-            _userDal.UpdateUserAfterPasswordReset(user);
+            _userDal.UpdateUser(user);
 
             response.Data = "Password has been updated succesfully";
 
+            response.Success = response.Errors.Count == 0;
+
+            return response;
+        }
+
+        public async Task<Response<string>> UpdateUserNameAndEmail(UpdateUserNameAndEmailViewModel request, int id)
+        {
+            var response = new Response<string>();
+
+            var user = await _userDal.GetByIdWithPasswordAsync(id);
+
+            if(user == null)
+            {
+                response.Errors.Add("User with this email doesent exist!");
+                response.Success = false;
+
+                return response;
+            }
+
+            if (!string.IsNullOrEmpty(request.Email))
+            {
+                user.Email =request.Email;
+            }
+
+            if (!string.IsNullOrEmpty(request.FirstName))
+            {
+                user.Firstname = request.FirstName;
+            }
+
+            if (!string.IsNullOrEmpty(request.LastName))
+            {
+                user.Lastname = request.LastName;
+            }
+
+            _userDal.UpdateUser(user);
+
+            response.Data = "User info has been updated successfully!";
             response.Success = response.Errors.Count == 0;
 
             return response;

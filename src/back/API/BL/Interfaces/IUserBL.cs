@@ -13,5 +13,6 @@ namespace API.BL.Interfaces
         Task<Response<int>> getNumberOfUsers(int id);
         Task<Response<List<User>>> FindUsers(int id, string search, string mail, int pageSize, int pageNum, string order);
         Task<Response<string>> UpdateUserPassword(UpdateUserPasswordViewModel request, int id);
+        Task<Response<string>> UpdateUserNameAndEmail(UpdateUserNameAndEmailViewModel request, int id);
     }
 }
