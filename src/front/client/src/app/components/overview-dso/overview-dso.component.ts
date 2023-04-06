@@ -52,25 +52,25 @@ export class OverviewDsoComponent implements OnInit {
       data: {
         datasets: [{
           data: this.liveChartData.consumption,
-          label: 'Consumption in kW',
+          label: 'Consumption [kWh]',
           backgroundColor: 'rgba(191, 65, 65, 1)',
           borderColor: 'rgba(191, 65, 65, 1)',
           borderWidth: 1
         },{
           data: this.liveChartData.predictedConsumption,
-          label: 'Predicted consumption in kW',
+          label: 'Predicted consumption [kWh]',
           backgroundColor: 'rgba(191, 65, 65, 0.5)',
           borderColor: 'rgba(191, 65, 65, 0.5)',
           borderWidth: 1
         },{
           data: this.liveChartData.production,
-          label: 'Production in kW',
+          label: 'Production [kWh]',
           backgroundColor: 'rgba(69, 94, 184, 1)',
           borderColor: 'rgba(69, 94, 184, 1)',
           borderWidth: 1
         },{
           data: this.liveChartData.predictedProduction,
-          label: 'Predicted production in kW',
+          label: 'Predicted production [kWh]',
           backgroundColor: 'rgba(69, 94, 184, 0.5)',
           borderColor: 'rgba(69, 94, 184, 0.5)',
           borderWidth: 1
@@ -97,7 +97,7 @@ export class OverviewDsoComponent implements OnInit {
             beginAtZero: true,
             ticks: {
               callback: function(value, index, ticks) {
-                return value+'kW';
+                return value+'kWh';
               }
             }
           }

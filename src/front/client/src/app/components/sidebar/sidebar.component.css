@@ -10,6 +10,8 @@
     height: 100vh;
     position: sticky;
     top: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar-container-blue {
@@ -44,6 +46,7 @@
 #profile-wraper {
     display: flex;
     align-items: center;
+    width: 80%;
 }
 
 .sidebar-footer img {
@@ -51,13 +54,15 @@
 }
 
 #logout {
-    margin-right: 20px;
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidebar-nav {
     width : 235px;
     margin : auto;
-    margin-top: 243px;
 }
 
 .sidebar-nav a {
@@ -91,6 +96,7 @@
   display: flex;
   align-items: center;
   cursor: default;
+  flex-direction: row;
   justify-content: space-between;
 }
 .sidebar-footer-blue {

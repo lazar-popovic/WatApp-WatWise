@@ -9,11 +9,14 @@ import {Chart} from "chart.js";
   styleUrls: ['./energy-usage.component.css']
 })
 export class EnergyUsageComponent implements OnInit {
+
   constructor( private deviceDataService: DeviceDataService, private datePipe: DatePipe) {
   }
+
   ngOnInit(): void {
     this.historyClick();
   }
+
   historyflag : boolean = true;
   predictionFlag : boolean = false;
   todayFlag : boolean = true;
@@ -21,10 +24,10 @@ export class EnergyUsageComponent implements OnInit {
   yearFlag : boolean = false;
   result: any[] = [];
   data: any[] = [];
-  labels: any[] = [];
 
   dataConsumption: any[] = [];
   dataProduction: any[] = [];
+
   historyClick(){
     this.historyflag = true;
     var historyDiv = document.getElementById("history-h3");
@@ -33,6 +36,8 @@ export class EnergyUsageComponent implements OnInit {
     this.predictionFlag = false;
     var predictionDiv = document.getElementById("prediction-h3");
     if(predictionDiv)  { predictionDiv.style.color = "gray";}
+
+    this.todayClick();
   }
 
   predictionClick(){
@@ -70,8 +75,8 @@ export class EnergyUsageComponent implements OnInit {
           this.dataConsumption = [];
           if( this.chart)
             this.chart.destroy();
-          this.dataProduction = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value}));
-          this.dataConsumption = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value}));
+          this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value}));
+          this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value}));
           this.createBarChart();
         }
       }, error => {
@@ -105,8 +110,8 @@ export class EnergyUsageComponent implements OnInit {
           this.dataConsumption = [];
           if( this.chart)
             this.chart.destroy();
-          this.dataProduction = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
-          this.dataConsumption = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+          this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+          this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
           this.createBarChart();
         }
       }, error => {
@@ -157,21 +162,21 @@ export class EnergyUsageComponent implements OnInit {
     const canvas: any = document.getElementById("chart-canvas");
     const chart2d = canvas.getContext("2d");
     if( this.chart) {
+      console.log("unistavam");
       this.chart.destroy();
     }
     this.chart = new Chart(chart2d, {
       type: 'bar',
       data: {
-        labels: this.labels,
         datasets: [{
           data: this.dataConsumption,
-          label: 'Consumption in kW',
+          label: 'Consumption [kWh]',
           backgroundColor: 'rgba(191, 65, 65, 1)',
           borderColor: 'rgba(191, 65, 65, 1)',
           borderWidth: 1
         },{
           data: this.dataProduction,
-          label: 'Production in kW',
+          label: 'Production [kWh]',
           backgroundColor: 'rgba(69, 94, 184, 1)',
           borderColor: 'rgba(69, 94, 184, 1)',
           borderWidth: 1

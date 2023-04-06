@@ -22,6 +22,7 @@ export class LoginComponent {
       this.authService.login(this.login).subscribe((result: any) => {
         if( result.body.success) {
           localStorage.setItem("token", result.body.data.token);
+          this.jwtService.setToken();
           console.log( this.jwtService.roleId);
           if( this.jwtService.roleId == 3) {
             this.route.navigate(['/prosumer/overview']);

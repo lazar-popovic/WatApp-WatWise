@@ -66,7 +66,6 @@
   margin-left: 10px;
 
   vertical-align: middle;
-  horiz-align: center;
 
   align-items: center;
 
@@ -112,28 +111,49 @@
   width: 100%;
   height: 300px;
   background-color: lightgrey;
-  padding: 10px;
+  padding: 5px;
 }
 
 canvas {
   width: 100%!important;
-  height: 280px!important;
-  max-height: 280px;
+  height: 290px!important;
+  max-height: 290px;
   max-width: calc(100% - 20px);
 }
 
-#table-holder {
-  border-radius: 30px;
+#table {
   width: 100%;
-  padding: 10px;
+  padding: 25px;
   box-sizing: border-box;
-  overflow-y: scroll;
 }
 
+
 table {
+  background-color: white;
   width: 100%;
+  align-items: center;
+  border-radius: 30px;
+  border-collapse: collapse;
+  box-shadow: 1px 4px 10px 4px rgba(0,0,0,0.5);
 }
-
-table {
-  overflow-y: scroll;
+#thead-tr {
+  border-bottom: 3px solid black;
+}
+tbody tr {
+  border-bottom: 1px solid black;
+}
+table tr:last-child {
+  border: 0;
+}
+table tr td {
+  text-align: center;
+  color: #3E3E3E;
+  height: 30px;
+}
+table tr th {
+  text-align: center;
+  height: 50px;
+}
+table tbody tr:hover {
+  background-color: #cfcfcf;
 }

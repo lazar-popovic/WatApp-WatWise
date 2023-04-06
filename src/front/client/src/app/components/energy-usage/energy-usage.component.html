@@ -34,24 +34,22 @@
       </div>
     </div>
     <div id="table">
-      <div id="table-holder">
-        <table>
-          <thead>
-          <tr>
-            <th>Timestamp</th>
-            <th>Total consumption</th>
-            <th>Total production</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let data of dataConsumption; let i = index">
-            <td>{{ data.x }}</td>
-            <td>{{ data.y }}kW</td>
-            <td>{{ dataProduction[i].y }}kW</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
+      <table>
+        <thead>
+        <tr id="thead-tr">
+          <th>Timestamp</th>
+          <th>Consumption<br>[kWh]</th>
+          <th>Production<br>[kWh]</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of dataConsumption; let i = index">
+          <td>{{ data.x }}</td>
+          <td>{{ data.y.toFixed(2) }}</td>
+          <td>{{ dataProduction[i].y.toFixed(2) }}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
