@@ -1,6 +1,7 @@
 ﻿using API.BL.Implementations;
 using API.DAL.Interfaces;
 using API.Models.Entity;
+using API.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.DAL.Implementations
@@ -33,6 +34,28 @@ namespace API.DAL.Implementations
 
             return users;
         }
+
+        public async Task<User?> GetByIdWithPasswordAsync(int id)
+        {
+            var user = await _dbContext.Users.Where(u => u.Id == id)
+                                   .Select(u => new User
+                                   {
+                                       Id = u.Id,
+                                       Email = u.Email,
+                                       Firstname = u.Firstname,
+                                       Lastname = u.Lastname,
+                                       PasswordHash = u.PasswordHash,
+                                       Verified = u.Verified,
+                                       RoleId = u.RoleId,
+                                       Role = u.Role,
+                                       LocationId = u.LocationId,
+                                       Location = u.Location
+                                    ,
+                                   }).AsNoTracking().SingleOrDefaultAsync();
+
+            return user;
+        }
+
         public async Task<List<User>?> GetUsers()
         {
             var users = await _dbContext.Users
@@ -153,8 +176,11 @@ namespace API.DAL.Implementations
             return users;
         }
 
-
-
+        public void UpdateUser(User user)
+        {
+            _dbContext.Users.Update(user);
+            _dbContext.SaveChanges();
+        }
     }
 
 
