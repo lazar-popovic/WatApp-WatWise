@@ -5,5 +5,53 @@
     </app-sidebar>
   </div>
   <div id="content">
+    <div id="header">
+      <h2>Electrical Energy production and consumption</h2>
+    </div>
+    <div id="nav-bar">
+      <h3 id="history-h3" (click)="historyClick()">History</h3>
+      <h3 id="prediction-h3" (click)="predictionClick()">Prediction</h3>
+    </div>
+    <div id="filter">
+      <div *ngIf="historyflag==true">
+        <div class="slider">
+          <div id="today" (click)="todayClick()">Day</div>
+          <div id="month" (click)="monthClick()">Month</div>
+          <div id="year" (click)="yearClick()">Year</div>
+        </div>
+      </div>
+      <div *ngIf="predictionFlag==true">
+        <div class="slider">
+          <div id="day1">Tom.</div>
+          <div id="day2">3 Days</div>
+          <div id="day3">7 Days</div>
+        </div>
+      </div>
+    </div>
+    <div id="chart">
+      <div id="chart-holder">
+        <canvas id="chart-canvas" style="height: 100%!important; width: 100%!important;"></canvas>
+      </div>
+    </div>
+    <div id="table">
+      <div id="table-holder">
+        <table>
+          <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Total consumption</th>
+            <th>Total production</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let data of dataConsumption; let i = index">
+            <td>{{ data.x }}</td>
+            <td>{{ data.y }}kW</td>
+            <td>{{ dataProduction[i].y }}kW</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>

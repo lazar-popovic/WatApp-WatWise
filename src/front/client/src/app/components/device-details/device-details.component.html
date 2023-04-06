@@ -9,11 +9,11 @@
 
       <h2 style="display: inline-block;">Devices /</h2> <h2 id="h2_device" style="display: inline-block;">{{device.name}}</h2>
       <br>
-      <h3 style="display: inline-block;"><div id="history" (click)="historyClick()">History</div></h3> 
-      <h3 style="display: inline-block; margin-left: 10px; color: gray;"><div id="prediction" (click)="predictionClick()">Prediction</div></h3><br>
+      <h3 style="display: inline-block;"><div id="history" (click)="historyClick()">History</div></h3>
+      <h3 style="display: inline-block; margin-left: 10px;"><div id="prediction" (click)="predictionClick()">Prediction</div></h3><br>
 
       <div *ngIf="historyflag==true">
-        <div id="today-month-year" style="display: inline-block;">
+        <div id="today-month-year">
           <div id="today" (click)="todayClick()">Day </div>
           <div id="month" (click)="monthClick()">Month</div>
           <div id="year"  (click)="yearClick()">Year</div>
@@ -34,6 +34,12 @@
               <mat-option *ngFor="let month of months" [value]="month">{{ month }}</mat-option>
             </mat-select>
           </mat-form-field>
+          <mat-form-field>
+            <mat-label>Select a year</mat-label>
+            <mat-select [(value)]="selectedYear">
+              <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
 
         <div *ngIf="yearFlag==true"  id="year-picker_container" style="display: inline-block;">
@@ -44,53 +50,40 @@
             </mat-select>
           </mat-form-field>
         </div>
-     
-        <div id="graph-container">
-          <div class="chart-container">
-            <canvas id="chart" style="max-width: 800px; height: auto;"></canvas>
-          </div>
-        </div>
-        <button id="export"> EXPORT TO CSV</button>
-        <div id = "table-container" style="display: inline-block;">
-            <table id="tableShow" class="data-table">
-              <thead>
-                <tr>
-                  <th style="width: 50%">Period</th>
-                  <th>{{categoryLabel}}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of data; let i = index">
-                  <td>{{labels[i]}}</td>
-                  <td>{{item | number:'1.3-3' }}</td>
-                </tr>
-              </tbody>
-            </table>
-         </div>
+
 
         </div>
 
         <div *ngIf="predictionFlag==true">
-          <div id="days" style="display: inline-block;">
-            <div id="day1" (click)="todayClick()">1 Day</div>
+          <div id="today-month-year">
+            <div id="day1" (click)="todayClick()">Tom.</div>
             <div id="day2" (click)="monthClick()">3 Days</div>
             <div id="day3"  (click)="yearClick()">7 Days</div>
           </div>
-          
-          <div id="prediction-details" style="display: inline-block;">
-            <div id="allow-DSO"><span>Allow DSO to track data</span>
-              <mat-checkbox id="allow-dso-checkbox" color="black"></mat-checkbox></div>
-            <br>
-            <span class="predicted-consumption">Predicted consumption </span> <span style="color: #BF4141; font-weight: bold; font-size: 22px;"> 27.34 </span> <span class="predicted-consumption">kWh</span>
-          </div>
-          
-          <div id="graph-container">
-            <div class="chart-container">
-              <canvas id="chart" style="max-width: 800px; height: auto;"></canvas>
-            </div>
-          </div>
-
         </div>
+
+      <div id="graph-container">
+        <div class="chart-container">
+          <canvas id="chart" style="max-width: 800px; height: auto;"></canvas>
+        </div>
+      </div>
+      <button id="export"> EXPORT TO CSV</button>
+      <div id = "table-container" style="display: inline-block;">
+        <table id="tableShow" class="data-table">
+          <thead>
+          <tr>
+            <th style="width: 50%">Period</th>
+            <th>{{categoryLabel}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of data; let i = index">
+            <td>{{labels[i]}}</td>
+            <td>{{item | number:'1.3-3' }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
       </div>
   </div>
 
@@ -106,7 +99,7 @@
 
    <!-- <label>Select time range :</label>
         <br>   -->
-        
+
         <!-- <span> 00:00 h </span>
         <mat-slider id="slider"  min="0" max="23" step="1" showTickMarks discrete>
           <input value="1" matSliderStartThumb>
