@@ -81,6 +81,7 @@
   border-radius: 10px;
   position: relative;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 }
 #user-div h3 {
   margin: 0px;

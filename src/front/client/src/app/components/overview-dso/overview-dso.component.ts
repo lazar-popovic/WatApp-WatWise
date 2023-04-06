@@ -77,6 +77,8 @@ export class OverviewDsoComponent implements OnInit {
         }]
       },
       options: {
+        responsive: true,
+        resizeDelay: 10,
         plugins: {
           annotation: {
             annotations: {
