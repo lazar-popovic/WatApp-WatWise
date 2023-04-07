@@ -49,6 +49,12 @@ h3
   font-size: 19px;
 }
 
+#details-a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
 
 #today-month-year
 {
@@ -60,12 +66,8 @@ h3
     width: 250px;
     border-radius: 30px;
     margin-left: 10px;
-
     vertical-align: middle;
-  horiz-align: center;
-
     align-items: center;
-
     padding: 10px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
     background-color:  #1676AC!important;

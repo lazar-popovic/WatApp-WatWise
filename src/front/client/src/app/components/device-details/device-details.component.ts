@@ -49,6 +49,13 @@ export class DeviceDetailsComponent
       dataShare: false
     }
 
+    todayFlag : boolean = true;
+    monthFlag : boolean = false;
+    yearFlag : boolean = false;
+
+    historyflag : boolean = true;
+    predictionFlag : boolean = false;
+
     constructor( private datePipe: DatePipe, private authService:AuthService, private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private deviceDataService: DeviceDataService) {
       this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
         result => {
@@ -64,30 +71,16 @@ export class DeviceDetailsComponent
               case 0: this.categoryLabel = "In storage"; this.color = 'rgba(27, 254, 127, 0.9)'; break;
               case 1: this.categoryLabel = "Production in kW"; this.color = 'rgba(27, 27, 236, 0.7)'; break;
             }
-            console.log( this.device);
+            this.todayClick();
           }
         }, error => {
           console.log( error);
         }
       )
       Chart.register(...registerables);
-
       this.selectedMonth = 'January';
       this.selectedYear = '2023';
     }
-
-    ngOnInit(): void
-    {
-
-      /*bootstrap datepicker*/
-     /* $("#datepicker").datepicker({
-        autoclose: true,
-        todayHighlight: true
-      }).datepicker('update', new Date());*/
-    }
-
-    historyflag : boolean = true;
-    predictionFlag : boolean = false;
 
     historyClick(){
       this.historyflag = true;
@@ -110,12 +103,11 @@ export class DeviceDetailsComponent
     }
 
 
-    todayFlag : boolean = true;
-    monthFlag : boolean = false;
-    yearFlag : boolean = false;
+    
 
     todayClick()
     {
+      console.log("today");
       this.todayFlag  = true; this.monthFlag  = false; this.yearFlag = false;
       var todayDiv = document.getElementById("today");
       if(todayDiv)
