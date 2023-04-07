@@ -10,15 +10,18 @@
     min-height: 100vh;
 }
 
-.overview-container button, #overview-filter {
+.overview-container button, #lastname-filter {
     padding: 5px 30px;
     border-radius: 20px;
     border: 0px;
     outline: 0;
 }
 
-#overview-filter {
-    background-color: rgba(22, 118, 172, 0.75);
+#lastname-filter {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    font-weight: 600;
 }
 
 .overview-tab {
@@ -69,6 +72,7 @@
 
 .overview-users-table table tr:first-child{
     border-bottom: 3px solid black;
+    cursor: default;
     font-weight: 600;
     font-size: 26px;
 }
@@ -151,4 +155,10 @@
     position: fixed;
     left: 40%;
     top: 20%;
+}
+
+.input[type="text"]::-webkit-search-decoration,
+.input[type="text"]::-webkit-search-results-decoration,
+.input[type="text"]::-webkit-search-results {
+    display: none;
 }

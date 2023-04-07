@@ -81,10 +81,12 @@ export class UsersOverviewComponent {
     else if(this.filter.order == "desc")
       this.filter.order = "asc";
     
-    console.log(this.filter.order);
-      let element = document.querySelector("#overview-filter") as HTMLDivElement;
+    let element = document.querySelector("#lastname-filter") as HTMLDivElement;
 
-      element.innerText = this.filter.order.toUpperCase();
+    if(this.filter.order == "asc")
+      element.innerText = "Last name ↑";
+    if(this.filter.order == "desc")
+      element.innerText = "Last name ↓";
 
       this.getProsumers();
   }
