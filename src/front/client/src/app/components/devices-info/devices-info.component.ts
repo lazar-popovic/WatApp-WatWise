@@ -11,9 +11,9 @@ import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
   styleUrls: ['./devices-info.component.css']
 })
 export class DevicesInfoComponent implements OnInit{
-  consumeShow: boolean = false;
-  prosumeShow: boolean = false;
-  storageShow: boolean = false;
+  consumeShow: boolean = true;
+  prosumeShow: boolean = true;
+  storageShow: boolean = true;
 
   consumeDevices: Device[] = [];
   prosumeDevices: Device[] = [];
