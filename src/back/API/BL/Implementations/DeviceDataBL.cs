@@ -35,11 +35,11 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
-    public async Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForTodayPrediction()
+    public async Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction()
     {
         var response = new Response();
         response.Success = true;
-        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForTodayPrediction();
+        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction();
 
         return response;
     }

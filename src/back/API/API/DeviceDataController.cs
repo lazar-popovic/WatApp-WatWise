@@ -32,10 +32,10 @@ public class DeviceDataController : ControllerBase
     }
 
     [HttpGet]
-    [Route("get-prediction-allowed-share-devices-data-for-today")]
-    public Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForTodayPrediction()
+    [Route("get-prediction-allowed-share-devices-data-for-tomorrow")]
+    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction()
     {
-        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForTodayPrediction());
+        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction());
     }
 
 

@@ -82,6 +82,40 @@ public class DeviceDataDAL : IDeviceDataDAL
         return new { producingEnergyUsageByTimestamp, consumingEnergyUsageByTimestamp };
     }
 
+    public async Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction()
+    {
+        var tomorrow = DateTime.Now.AddDays(1).Date;
+
+        var predictedConsumingEnergyUsageByTimestamp = await (
+            from energyUsage in _dataContext.DeviceEnergyUsage
+            join device in _dataContext.Devices on energyUsage.DeviceId equals device.Id
+            join deviceType in _dataContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
+            where device.DataShare && energyUsage.Timestamp!.Value.Date == tomorrow && deviceType.Category == -1 && energyUsage.Timestamp < tomorrow.AddHours(1)
+            group energyUsage by new { Hour = energyUsage.Timestamp!.Value.Hour } into g
+            select new
+            {
+                Timestamp = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, g.Key.Hour, 0, 0),
+                Value = g.Sum(eu => eu.Value)
+            }
+        ).AsNoTracking().ToListAsync();
+
+        var predictedProducingEnergyUsageByTimestamp = await (
+            from energyUsage in _dataContext.DeviceEnergyUsage
+            join device in _dataContext.Devices on energyUsage.DeviceId equals device.Id
+            join deviceType in _dataContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
+            where device.DataShare && energyUsage.Timestamp!.Value.Date == tomorrow && deviceType.Category == 1 && energyUsage.Timestamp < tomorrow.AddHours(1)
+            group energyUsage by new { Hour = energyUsage.Timestamp!.Value.Hour } into g
+            select new
+            {
+                Timestamp = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, g.Key.Hour, 0, 0),
+                Value = g.Sum(eu => eu.Value)
+            }
+        ).AsNoTracking().ToListAsync();
+
+        return new { predictedProducingEnergyUsageByTimestamp, predictedConsumingEnergyUsageByTimestamp };
+
+    }
+
     public async Task<object> GetDeviceDataForMonth(int deviceId)
     {
         var query = from usage in _dataContext.DeviceEnergyUsage
@@ -217,5 +251,10 @@ public class DeviceDataDAL : IDeviceDataDAL
 
         return new { consumptionEnergyUsage, productionEnergyUsage };
 
+    }
+
+    public Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForTodayPrediction()
+    {
+        throw new NotImplementedException();
     }
 }
