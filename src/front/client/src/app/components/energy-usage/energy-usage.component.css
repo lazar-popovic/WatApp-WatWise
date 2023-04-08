@@ -32,6 +32,10 @@
   padding-left: 20px;
 }
 
+#header h2 {
+  color:#3e3e3e;
+}
+
 #nav-bar {
   box-sizing: border-box;
   width: 100%;
@@ -52,8 +56,17 @@
   height: 80px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-direction: row;
+  padding: 0 25px;
 }
+
+#date-filter {
+  display: flex;
+  align-items: center;
+}
+
+
 .slider
 {
   display: flex;
@@ -63,7 +76,6 @@
   height: 30px;
   width: 250px;
   border-radius: 30px;
-  margin-left: 10px;
 
   vertical-align: middle;
 
@@ -156,4 +168,17 @@ table tr th {
 }
 table tbody tr:hover {
   background-color: #cfcfcf;
+}
+
+
+
+.slider-selected {
+  color: white;
+  background-color: #3E3E3E;
+  padding: 5px;
+  border-radius: 10px;
+}
+.slider-not-selected {
+  color: #3E3E3E;
+  background-color: transparent;
 }

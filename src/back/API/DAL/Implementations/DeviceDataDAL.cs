@@ -57,7 +57,7 @@ public class DeviceDataDAL : IDeviceDataDAL
             from energyUsage in _dataContext.DeviceEnergyUsage
             join device in _dataContext.Devices on energyUsage.DeviceId equals device.Id
             join deviceType in _dataContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
-            where device.DataShare && energyUsage.Timestamp!.Value.Date == DateTime.Now.Date && energyUsage.Timestamp!.Value < DateTime.Now && deviceType.Category == -1
+            where device.DataShare && energyUsage.Timestamp!.Value.Date == DateTime.Now.Date /*&& energyUsage.Timestamp!.Value < DateTime.Now*/ && deviceType.Category == -1
             group energyUsage by new { Hour = energyUsage.Timestamp!.Value.Hour } into g
             select new
             {
@@ -70,7 +70,7 @@ public class DeviceDataDAL : IDeviceDataDAL
             from energyUsage in _dataContext.DeviceEnergyUsage
             join device in _dataContext.Devices on energyUsage.DeviceId equals device.Id
             join deviceType in _dataContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
-            where device.DataShare && energyUsage.Timestamp!.Value.Date == DateTime.Now.Date && energyUsage.Timestamp!.Value < DateTime.Now && deviceType.Category == 1
+            where device.DataShare && energyUsage.Timestamp!.Value.Date == DateTime.Now.Date /*&& energyUsage.Timestamp!.Value < DateTime.Now*/ && deviceType.Category == 1
             group energyUsage by new { Hour = energyUsage.Timestamp!.Value.Hour } into g
             select new
             {
@@ -102,7 +102,7 @@ public class DeviceDataDAL : IDeviceDataDAL
              from energyUsage in _dataContext.DeviceEnergyUsage
              join device in _dataContext.Devices on energyUsage.DeviceId equals device.Id
              join deviceType in _dataContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
-             where device.DataShare && energyUsage.Timestamp!.Value.Year == DateTime.Now.Year && energyUsage.Timestamp!.Value.Month == DateTime.Now.Month && energyUsage.Timestamp.Value < DateTime.Now && deviceType.Category == -1
+             where device.DataShare && energyUsage.Timestamp!.Value.Year == DateTime.Now.Year && energyUsage.Timestamp!.Value.Month == DateTime.Now.Month /*&& energyUsage.Timestamp.Value < DateTime.Now */&& deviceType.Category == -1
              group energyUsage by energyUsage.Timestamp!.Value.Date into g
              select new
              {
@@ -114,7 +114,7 @@ public class DeviceDataDAL : IDeviceDataDAL
              from energyUsage in _dataContext.DeviceEnergyUsage
              join device in _dataContext.Devices on energyUsage.DeviceId equals device.Id
              join deviceType in _dataContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
-             where device.DataShare && energyUsage.Timestamp!.Value.Year == DateTime.Now.Year && energyUsage.Timestamp!.Value.Month == DateTime.Now.Month && energyUsage.Timestamp.Value < DateTime.Now && deviceType.Category == 1
+             where device.DataShare && energyUsage.Timestamp!.Value.Year == DateTime.Now.Year && energyUsage.Timestamp!.Value.Month == DateTime.Now.Month /*&& energyUsage.Timestamp.Value < DateTime.Now */&& deviceType.Category == 1
              group energyUsage by energyUsage.Timestamp!.Value.Date into g
              select new
              {

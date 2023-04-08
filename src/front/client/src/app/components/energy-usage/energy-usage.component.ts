@@ -19,9 +19,14 @@ export class EnergyUsageComponent implements OnInit {
 
   historyflag : boolean = true;
   predictionFlag : boolean = false;
+
   todayFlag : boolean = true;
   monthFlag : boolean = false;
   yearFlag : boolean = false;
+
+  tommorowFlag : boolean = false;
+  threeDaysFlag : boolean = false;
+  sevenDaysFlag : boolean = false;
   result: any[] = [];
   data: any[] = [];
 
@@ -31,7 +36,7 @@ export class EnergyUsageComponent implements OnInit {
   historyClick(){
     this.historyflag = true;
     var historyDiv = document.getElementById("history-h3");
-    if(historyDiv)  { historyDiv.style.color = "black"; }
+    if(historyDiv)  { historyDiv.style.color = "#3e3e3e"; }
 
     this.predictionFlag = false;
     var predictionDiv = document.getElementById("prediction-h3");
@@ -47,7 +52,9 @@ export class EnergyUsageComponent implements OnInit {
 
     this.predictionFlag = true;
     var predictionDiv = document.getElementById("prediction-h3");
-    if(predictionDiv)  { predictionDiv.style.color = "black";}
+    if(predictionDiv)  { predictionDiv.style.color = "#3e3e3e";}
+
+    this.tommorowClick();
   }
 
   todayClick()
@@ -136,6 +143,117 @@ export class EnergyUsageComponent implements OnInit {
     if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#3E3E3E";}
 
     const monthDiv = document.getElementById("month");
+    if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#3E3E3E";}
+
+    this.deviceDataService.getDSOSharedDataForYear().subscribe(
+      (result:any) => {
+        if( result.success) {
+          this.dataConsumption = [];
+          this.dataProduction = [];
+          if( this.chart)
+            this.chart.destroy();
+          this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+          this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+          this.createBarChart();
+        }
+      }, error => {
+        console.log( error)
+      }
+    );
+  }
+
+  tommorowClick()
+  {
+    this.tommorowFlag = true;
+    this.threeDaysFlag = false;
+    this.sevenDaysFlag = false;
+    var yearDiv = document.getElementById("day1");
+    if(yearDiv)
+    {
+      yearDiv.style.color = "white";
+      yearDiv.style.backgroundColor =  "#3E3E3E";
+      yearDiv.style.padding = "5px";
+      yearDiv.style.borderRadius = "10px";
+    }
+
+    const todayDiv = document.getElementById("day2");
+    if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#3E3E3E";}
+
+    const monthDiv = document.getElementById("day3");
+    if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#3E3E3E";}
+
+    this.deviceDataService.getDSOSharedDataForYear().subscribe(
+      (result:any) => {
+        if( result.success) {
+          this.dataConsumption = [];
+          this.dataProduction = [];
+          if( this.chart)
+            this.chart.destroy();
+          this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+          this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+          this.createBarChart();
+        }
+      }, error => {
+        console.log( error)
+      }
+    );
+  }
+
+  threeDaysClick()
+  {
+    this.tommorowFlag = false;
+    this.threeDaysFlag = true;
+    this.sevenDaysFlag = false;
+    var yearDiv = document.getElementById("day2");
+    if(yearDiv)
+    {
+      yearDiv.style.color = "white";
+      yearDiv.style.backgroundColor =  "#3E3E3E";
+      yearDiv.style.padding = "5px";
+      yearDiv.style.borderRadius = "10px";
+    }
+
+    const todayDiv = document.getElementById("day1");
+    if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#3E3E3E";}
+
+    const monthDiv = document.getElementById("day3");
+    if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#3E3E3E";}
+
+    this.deviceDataService.getDSOSharedDataForYear().subscribe(
+      (result:any) => {
+        if( result.success) {
+          this.dataConsumption = [];
+          this.dataProduction = [];
+          if( this.chart)
+            this.chart.destroy();
+          this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+          this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+          this.createBarChart();
+        }
+      }, error => {
+        console.log( error)
+      }
+    );
+  }
+
+  sevenDaysClick()
+  {
+    this.tommorowFlag = false;
+    this.threeDaysFlag = false;
+    this.sevenDaysFlag = true;
+    var yearDiv = document.getElementById("day3");
+    if(yearDiv)
+    {
+      yearDiv.style.color = "white";
+      yearDiv.style.backgroundColor =  "#3E3E3E";
+      yearDiv.style.padding = "5px";
+      yearDiv.style.borderRadius = "10px";
+    }
+
+    const todayDiv = document.getElementById("day1");
+    if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#3E3E3E";}
+
+    const monthDiv = document.getElementById("day2");
     if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#3E3E3E";}
 
     this.deviceDataService.getDSOSharedDataForYear().subscribe(
