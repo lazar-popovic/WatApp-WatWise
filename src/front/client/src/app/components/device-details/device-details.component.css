@@ -9,9 +9,10 @@
 #table-container {
   margin: 20px auto ;
 }
-body {
-  /* background-color: #E1E1E1; */
-}
+
+/* body {
+
+} */
 
 h2
 {
@@ -41,7 +42,7 @@ h3
     margin-left: 50px;
     margin-top: 20px;
     margin-bottom: 5px;
-    /* border-bottom: 2px solid #3E3E3E ;  */
+    display: inline-block;
 }
 
 #history:hover,#prediction:hover
@@ -62,8 +63,6 @@ h3
     margin-left: 10px;
 
     vertical-align: middle;
-  horiz-align: center;
-
     align-items: center;
 
     padding: 10px;

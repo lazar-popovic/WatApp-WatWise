@@ -55,3 +55,12 @@
   left: 40%;
   top: 30%;
 }
+
+h2
+{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

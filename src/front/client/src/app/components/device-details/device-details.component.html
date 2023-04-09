@@ -42,16 +42,14 @@
           </mat-form-field>
         </div>
 
-        <div *ngIf="yearFlag==true"  id="year-picker_container" style="display: inline-block;">
-          <mat-form-field>
-            <mat-label>Select a year</mat-label>
-            <mat-select [(value)]="selectedYear">
-              <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-
+          <div *ngIf="yearFlag==true"  id="year-picker_container" style="display: inline-block;">
+            <mat-form-field>
+              <mat-label>Select a year</mat-label>
+              <mat-select [(value)]="selectedYear">
+                <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
 
         <div *ngIf="predictionFlag==true">
@@ -67,6 +65,7 @@
           <canvas id="chart" style="max-width: 800px; height: auto;"></canvas>
         </div>
       </div>
+
       <button id="export"> EXPORT TO CSV</button>
       <div id = "table-container" style="display: inline-block;">
         <table id="tableShow" class="data-table">
@@ -86,23 +85,3 @@
       </div>
       </div>
   </div>
-
-
-  <!-- <div class="hour-range-picker">
-    <mat-slider [(ngModel)]="startHour" min="0" max="23" tickInterval="1" thumbLabel></mat-slider>
-    <mat-slider [(ngModel)]="endHour" min="0" max="23" tickInterval="1" thumbLabel></mat-slider>
-    <div class="hour-range-labels">
-      <div class="hour-range-label">{{ startHour }}:00</div>
-      <div class="hour-range-label">{{ endHour }}:00</div>
-    </div>
-  </div> -->
-
-   <!-- <label>Select time range :</label>
-        <br>   -->
-
-        <!-- <span> 00:00 h </span>
-        <mat-slider id="slider"  min="0" max="23" step="1" showTickMarks discrete>
-          <input value="1" matSliderStartThumb>
-          <input value="22" matSliderEndThumb>
-        </mat-slider>
-        <span> 23:00 h </span> -->
