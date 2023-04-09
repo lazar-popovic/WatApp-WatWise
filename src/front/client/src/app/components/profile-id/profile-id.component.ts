@@ -12,9 +12,11 @@ import { UserService } from 'src/app/services/user.service';
 export class ProfileIDComponent{
   user = new User();
   id : any = '' ;
-
+  idNum: number = 0;
+  
   constructor(private authService:AuthService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
-    this.getUser(this.route.snapshot.paramMap.get('id'));
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.getUser(this.id);
   }
 
   getUser(id: string | null) {
