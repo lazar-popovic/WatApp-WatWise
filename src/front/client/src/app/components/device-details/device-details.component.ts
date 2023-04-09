@@ -60,9 +60,9 @@ export class DeviceDetailsComponent
             this.device.deviceType = result.data.deviceType;
             switch ( result.data.deviceType.category)
             {
-              case -1: this.categoryLabel = "Consumption in kW"; this.color = 'rgba(236, 27, 14, 0.7)'; break;
+              case -1: this.categoryLabel = "Consumption [kWh]"; this.color = 'rgba(236, 27, 14, 0.7)'; break;
               case 0: this.categoryLabel = "In storage"; this.color = 'rgba(27, 254, 127, 0.9)'; break;
-              case 1: this.categoryLabel = "Production in kW"; this.color = 'rgba(27, 27, 236, 0.7)'; break;
+              case 1: this.categoryLabel = "Production [kWh]"; this.color = 'rgba(27, 27, 236, 0.7)'; break;
             }
             console.log( this.device);
           }
@@ -78,7 +78,7 @@ export class DeviceDetailsComponent
 
     ngOnInit(): void
     {
-
+      this.historyClick();
       /*bootstrap datepicker*/
      /* $("#datepicker").datepicker({
         autoclose: true,
@@ -91,24 +91,27 @@ export class DeviceDetailsComponent
 
     historyClick(){
       this.historyflag = true;
-      var historyDiv = document.getElementById("history");
-      if(historyDiv)  { historyDiv.style.color = "black"; }
+      var historyDiv = document.getElementById("history-h3");
+      if(historyDiv)  { historyDiv.style.color = "#3e3e3e"; }
 
       this.predictionFlag = false;
-      var predictionDiv = document.getElementById("prediction");
+      var predictionDiv = document.getElementById("prediction-h3");
       if(predictionDiv)  { predictionDiv.style.color = "gray";}
+
+      this.todayClick();
     }
 
     predictionClick(){
       this.historyflag = false;
-      var historyDiv = document.getElementById("history");
+      var historyDiv = document.getElementById("history-h3");
       if(historyDiv)  { historyDiv.style.color = "gray"; }
 
       this.predictionFlag = true;
-      var predictionDiv = document.getElementById("prediction");
-      if(predictionDiv)  { predictionDiv.style.color = "black";}
-    }
+      var predictionDiv = document.getElementById("prediction-h3");
+      if(predictionDiv)  { predictionDiv.style.color = "#3e3e3e";}
 
+      //this.tommorowClick();
+    }
 
     todayFlag : boolean = true;
     monthFlag : boolean = false;
@@ -120,17 +123,18 @@ export class DeviceDetailsComponent
       var todayDiv = document.getElementById("today");
       if(todayDiv)
       {
-        todayDiv.style.color = "#1676AC";
-        todayDiv.style.backgroundColor =  "#ffff";
+        todayDiv.style.color = "white";
+        todayDiv.style.backgroundColor =  "#3E3E3E";
         todayDiv.style.padding = "5px";
-        todayDiv.style.borderRadius = "5px";
+        todayDiv.style.borderRadius = "10px";
       }
+      console.log( todayDiv?.style);
 
       var monthDiv = document.getElementById("month");
-      if(monthDiv){ monthDiv.style.backgroundColor = "transparent"; monthDiv.style.color = "#ffff";}
+      if(monthDiv){ monthDiv.style.backgroundColor = "transparent"; monthDiv.style.color = "#3E3E3E";}
 
       var yearDiv = document.getElementById("year");
-      if(yearDiv){ yearDiv.style.backgroundColor = "transparent"; yearDiv.style.color = "#ffff";}
+      if(yearDiv){ yearDiv.style.backgroundColor = "transparent"; yearDiv.style.color = "#3E3E3E";}
 
       this.deviceDataService.getDeviceDataForToday( this.device.id).subscribe(
         result => {
@@ -152,17 +156,17 @@ export class DeviceDetailsComponent
       const monthDiv = document.getElementById("month");
       if(monthDiv)
       {
-        monthDiv.style.color = "#1676AC";
-        monthDiv.style.backgroundColor =  "#ffff";
+        monthDiv.style.color = "white";
+        monthDiv.style.backgroundColor =  "#3E3E3E";
         monthDiv.style.padding = "5px";
-        monthDiv.style.borderRadius = "5px";
+        monthDiv.style.borderRadius = "10px";
       }
 
       const todayDiv = document.getElementById("today");
-      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#ffff";}
+      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#3E3E3E";}
 
       const yearDiv = document.getElementById("year");
-      if(yearDiv){ yearDiv.style.backgroundColor = "transparent "; yearDiv.style.color="#ffff";}
+      if(yearDiv){ yearDiv.style.backgroundColor = "transparent "; yearDiv.style.color="#3E3E3E";}
 
       this.deviceDataService.getDeviceDataForMonth( this.device.id).subscribe(
         result => {
@@ -184,17 +188,17 @@ export class DeviceDetailsComponent
       var yearDiv = document.getElementById("year");
       if(yearDiv)
       {
-        yearDiv.style.color = "#1676AC";
-        yearDiv.style.backgroundColor =  "#ffff";
+        yearDiv.style.color = "white";
+        yearDiv.style.backgroundColor =  "#3E3E3E";
         yearDiv.style.padding = "5px";
-        yearDiv.style.borderRadius = "5px";
+        yearDiv.style.borderRadius = "10px";
       }
 
       const todayDiv = document.getElementById("today");
-      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#ffff";}
+      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#3E3E3E";}
 
       const monthDiv = document.getElementById("month");
-      if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#ffff";}
+      if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#3E3E3E";}
 
       this.deviceDataService.getDeviceDataForYear( this.device.id).subscribe(
         result => {
@@ -214,7 +218,7 @@ export class DeviceDetailsComponent
 
     createBarChart()
     {
-        const canvas: any = document.getElementById("chart");
+        const canvas: any = document.getElementById("chart-canvas");
         const chart2d = canvas.getContext("2d");
         if( this.chart) {
           this.chart.destroy();
@@ -229,7 +233,11 @@ export class DeviceDetailsComponent
               backgroundColor: this.color
             }]
           },
-          options: {  scales: { y: {  beginAtZero: true,
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
                 ticks: {
                   callback: function(value, index, ticks) {
                     return value+'kW';
