@@ -84,35 +84,39 @@ public class DeviceDataDAL : IDeviceDataDAL
 
     public async Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction()
     {
-        var tomorrow = DateTime.Now.AddDays(1).Date;
-
-        var predictedConsumingEnergyUsageByTimestamp = await (
-            from energyUsage in _dataContext.DeviceEnergyUsage
-            join device in _dataContext.Devices on energyUsage.DeviceId equals device.Id
+        var consumingEnergyUsageByTimestamp = await (
+            from deviceEnergyUsage in _dataContext.DeviceEnergyUsage
+            join device in _dataContext.Devices on deviceEnergyUsage.DeviceId equals device.Id
             join deviceType in _dataContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
-            where device.DataShare && energyUsage.Timestamp!.Value.Date == tomorrow && deviceType.Category == -1 && energyUsage.Timestamp < tomorrow.AddHours(1)
-            group energyUsage by new { Hour = energyUsage.Timestamp!.Value.Hour } into g
+            where device.DataShare
+                && deviceType.Category == -1
+                && deviceEnergyUsage.Timestamp > DateTime.Now.Date.AddDays(1)
+                && deviceEnergyUsage.Timestamp < DateTime.Now.Date.AddDays(2)
+            group deviceEnergyUsage by new { deviceEnergyUsage.Timestamp!.Value.Date, deviceEnergyUsage.Timestamp.Value.Hour } into g
             select new
             {
-                Timestamp = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, g.Key.Hour, 0, 0),
+                Timestamp = new DateTime(g.Key.Date.Year, g.Key.Date.Month, g.Key.Date.Day, g.Key.Hour, 0, 0),
                 Value = g.Sum(eu => eu.Value)
             }
         ).AsNoTracking().ToListAsync();
 
-        var predictedProducingEnergyUsageByTimestamp = await (
-            from energyUsage in _dataContext.DeviceEnergyUsage
-            join device in _dataContext.Devices on energyUsage.DeviceId equals device.Id
+        var producingEnergyUsageByTimestamp = await (
+            from deviceEnergyUsage in _dataContext.DeviceEnergyUsage
+            join device in _dataContext.Devices on deviceEnergyUsage.DeviceId equals device.Id
             join deviceType in _dataContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
-            where device.DataShare && energyUsage.Timestamp!.Value.Date == tomorrow && deviceType.Category == 1 && energyUsage.Timestamp < tomorrow.AddHours(1)
-            group energyUsage by new { Hour = energyUsage.Timestamp!.Value.Hour } into g
+            where device.DataShare
+                && deviceType.Category == 1
+                && deviceEnergyUsage.Timestamp > DateTime.Now.Date.AddDays(1)
+                && deviceEnergyUsage.Timestamp < DateTime.Now.Date.AddDays(2)
+            group deviceEnergyUsage by new { deviceEnergyUsage.Timestamp!.Value.Date, deviceEnergyUsage.Timestamp.Value.Hour } into g
             select new
             {
-                Timestamp = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, g.Key.Hour, 0, 0),
+                Timestamp = new DateTime(g.Key.Date.Year, g.Key.Date.Month, g.Key.Date.Day, g.Key.Hour, 0, 0),
                 Value = g.Sum(eu => eu.Value)
             }
         ).AsNoTracking().ToListAsync();
 
-        return new { predictedProducingEnergyUsageByTimestamp, predictedConsumingEnergyUsageByTimestamp };
+        return new { producingEnergyUsageByTimestamp, consumingEnergyUsageByTimestamp };
 
     }
 
