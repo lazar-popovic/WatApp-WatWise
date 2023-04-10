@@ -11,9 +11,9 @@ import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
   styleUrls: ['./devices-info.component.css']
 })
 export class DevicesInfoComponent implements OnInit{
-  consumeShow: boolean = false;
-  prosumeShow: boolean = false;
-  storageShow: boolean = false;
+  consumeShow: boolean = true;
+  prosumeShow: boolean = true;
+  storageShow: boolean = true;
 
   consumeDevices: Device[] = [];
   prosumeDevices: Device[] = [];
@@ -33,6 +33,9 @@ export class DevicesInfoComponent implements OnInit{
             deviceIns.activityStatus = device.activityStatus;
             deviceIns.usage = device.value;
             deviceIns.type = device.deviceType.type;
+            this.consumeShow= true;
+            this.prosumeShow = true;
+            this.storageShow = true;
             if(devicesType.category == -1) {
               this.consumeDevices.push(deviceIns);
             } else if(devicesType.category == 1) {

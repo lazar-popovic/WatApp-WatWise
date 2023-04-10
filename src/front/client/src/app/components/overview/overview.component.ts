@@ -148,7 +148,7 @@ export class OverviewComponent implements OnInit
       data: {
         labels: this.chart1Data.labels.map(d=>this.datePipe.transform(d,"shortTime")),
         datasets: [{
-          label: "Total consumption(kW)",
+          label: "Consumption[kWh]",
           data: this.chart1Data.consumption,
           pointBackgroundColor: 'rgba(250, 65, 65,1)',
           backgroundColor: 'rgba(250, 65, 65,1)',
@@ -156,7 +156,7 @@ export class OverviewComponent implements OnInit
           tension: 0.2,
           pointStyle: 'circle'
         },{
-          label: "Predicted consumption (kW)",
+          label: "Predicted consumption[kWh]",
           data: this.chart1Data.predictedConsumption,
           pointBackgroundColor: 'rgba(254, 0, 0, 0.5)',
           backgroundColor: 'rgba(254, 0, 0, 0.5)',
@@ -165,7 +165,7 @@ export class OverviewComponent implements OnInit
           tension: 0.2,
           pointStyle: 'rectRounded'
         },{
-          label: "Total production(kW)",
+          label: "Production[kWh]",
           data: this.chart1Data.production,
           pointBackgroundColor: 'rgba(0, 0, 255, 1)',
           backgroundColor: 'rgba(0, 0, 255, 1)',
@@ -173,7 +173,7 @@ export class OverviewComponent implements OnInit
           tension: 0.2,
           pointStyle: 'circle'
         },{
-          label: "Predicted production (kW)",
+          label: "Predicted production[kWh]",
           data: this.chart1Data.predictedProduction,
           pointBackgroundColor: 'rgba( 0, 0,254, 0.5)',
           backgroundColor: 'rgba( 0, 0,254, 0.5)',
@@ -184,8 +184,16 @@ export class OverviewComponent implements OnInit
         }]
       },
       options: {
-        maintainAspectRatio: true,
-        responsive: true,
+        plugins: {
+          legend: {
+            maxHeight: 80,
+              labels: {
+                  font: {
+                      size: 10
+                  }
+              }
+          }
+      },
         scales: {
           y: {
             beginAtZero: true,
@@ -212,7 +220,7 @@ export class OverviewComponent implements OnInit
       data: {
         labels: this.chart2Data.labels.map(d=>this.datePipe.transform(d,"shortTime")),
         datasets: [{
-          label: "Predicted consumption (kW)",
+          label: "Predicted consumption[kWh]",
           data: this.chart2Data.predictedConsumption,
           pointBackgroundColor: 'rgba(254, 0, 0, 0.5)',
           backgroundColor: 'rgba(254, 0, 0, 0.5)',
@@ -221,7 +229,7 @@ export class OverviewComponent implements OnInit
           tension: 0.2,
           pointStyle: 'rectRounded'
         },{
-          label: "Predicted production (kW)",
+          label: "Predicted production[kWh]",
           data: this.chart2Data.predictedProduction,
           pointBackgroundColor: 'rgba( 0, 0,254, 0.5)',
           backgroundColor: 'rgba( 0, 0,254, 0.5)',
@@ -232,6 +240,15 @@ export class OverviewComponent implements OnInit
         }]
       },
       options: {
+        plugins: {
+          legend: {
+              labels: {
+                  font: {
+                      size: 12
+                  }
+              }
+          }
+      },
         scales: {
           x: {
 

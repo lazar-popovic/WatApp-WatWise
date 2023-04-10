@@ -2,8 +2,9 @@
   <div class="devices-container">
     <div class="device-container">
       <div class="device-container-header" (click)="consumeShow = !consumeShow">
-        <h2>Consume</h2>
-        <img src="/assets/drop-down.png" alt="drop-down">
+        <h2>Consumers</h2>
+        <img src="/assets/drop-down.png" alt="drop-down" *ngIf="!consumeShow">
+        <img src="/assets/drop-up.png" alt="drop-down" *ngIf="consumeShow">
       </div>
       <div class="device-items-holder" *ngIf="consumeShow">
         <div class="device-item" *ngFor="let device of consumeDevices" (click)="toDevice( device.id)">
@@ -23,8 +24,9 @@
     </div>
     <div class="device-container">
       <div class="device-container-header" (click)="prosumeShow = !prosumeShow">
-        <h2>Produce</h2>
-        <img src="/assets/drop-down.png" alt="drop-down">
+        <h2>Producers</h2>
+        <img src="/assets/drop-down.png" alt="drop-down" *ngIf="!prosumeShow">
+        <img src="/assets/drop-up.png" alt="drop-down" *ngIf="prosumeShow">
       </div>
       <div class="device-items-holder" *ngIf="prosumeShow">
         <div class="device-item" *ngFor="let device of prosumeDevices" (click)="toDevice( device.id)">
@@ -45,8 +47,9 @@
     </div>
     <div class="device-container">
       <div class="device-container-header" (click)="storageShow = !storageShow">
-        <h2>Storage</h2>
-        <img src="/assets/drop-down.png" alt="drop-down">
+        <h2>Storages</h2>
+        <img src="/assets/drop-down.png" alt="drop-down" *ngIf="!storageShow">
+        <img src="/assets/drop-up.png" alt="drop-down" *ngIf="storageShow">
       </div>
       <div class="device-items-holder" *ngIf="storageShow">
         <div class="device-item" *ngFor="let device of storageDevices" (click)="toDevice( device.id)">

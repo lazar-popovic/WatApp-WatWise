@@ -28,16 +28,24 @@ export class DeviceDataService {
   {
     return this.http.get(`${environment.apiUrl}device-data/get-energy-usage-total-7-hours-for-all-devices`);
   }
-  getDSOSharedDataForDate() : Observable<any>
+  getDSOSharedDataForDate( day: number, month: number, year: number) : Observable<any>
   {
-    return this.http.get(`${environment.apiUrl}device-data/get-allowed-share-devices-data-for-today`);
+    return this.http.get(`${environment.apiUrl}device-data/get-allowed-share-devices-data-for-today?day=${day}&month=${month}&year=${year}`);
   }
-  getDSOSharedDataForMonth() : Observable<any>
+  getDSOSharedDataForMonth( month: number, year: number) : Observable<any>
   {
-    return this.http.get(`${environment.apiUrl}device-data/get-allowed-share-devices-data-for-month`);
+    return this.http.get(`${environment.apiUrl}device-data/get-allowed-share-devices-data-for-month?month=${month}&year=${year}`);
   }
-  getDSOSharedDataForYear() : Observable<any>
+  getDSOSharedDataForYear( year: number) : Observable<any>
   {
-    return this.http.get(`${environment.apiUrl}device-data/get-allowed-share-devices-data-for-year`);
+    return this.http.get(`${environment.apiUrl}device-data/get-allowed-share-devices-data-for-year?year=${year}`);
+  }
+  getDSOPredictionForDays( days: number) : Observable<any>
+  {
+    switch( days) {
+      case 1: return this.http.get(`${environment.apiUrl}device-data/get-prediction-allowed-share-devices-data-for-tomorrow`);
+      case 3: return this.http.get(`${environment.apiUrl}device-data/get-prediction-allowed-share-devices-data-for-next3days`);
+      default: return this.http.get(`${environment.apiUrl}device-data/get-prediction-allowed-share-devices-data-for-next7days`);
+    }
   }
 }
