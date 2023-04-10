@@ -86,13 +86,17 @@ export class EnergyUsageComponent implements OnInit {
     if(yearDiv){ yearDiv.style.backgroundColor = "transparent"; yearDiv.style.color = "#3E3E3E";}
 
     let date = new Date( this.date);
+    console.log( date);
+    console.log( date.getDate(), date.getMonth()+1, date.getFullYear());
     this.deviceDataService.getDSOSharedDataForDate( date.getDate(), date.getMonth()+1, date.getFullYear()).subscribe(
       (result:any) => {
         if( result.success) {
           this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
           this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
           let now = new Date();
-          if( new Date(this.date).toDateString() == now.toDateString()) {
+          console.log(date.toDateString());
+          console.log(now.toDateString());
+          if( date.toDateString() == now.toDateString()) {
             this.datasets = [{
               data: result.data.consumingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
                                                                .map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
@@ -123,7 +127,8 @@ export class EnergyUsageComponent implements OnInit {
               borderWidth: 2
             }];
 
-          } else if ( new Date(this.date).toDateString() > now.toDateString()) {
+          } else if ( date > now) {
+            console.log("pred");
             this.datasets = [{
               data: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
               label: 'Predicted consumption [kWh]',
@@ -138,6 +143,7 @@ export class EnergyUsageComponent implements OnInit {
               borderWidth: 2
             }];
           } else {
+            console.log("hist");
             this.datasets = [{
               data: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
               label: 'Consumption [kWh]',
@@ -325,14 +331,14 @@ export class EnergyUsageComponent implements OnInit {
             data: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
             label: 'Predicted consumption [kWh]',
             backgroundColor: 'rgba(191, 65, 65, 0.6)',
-            borderColor: 'rgba(191, 65, 65, 0.6)',
-            borderWidth: 1
+            borderColor: 'rgba(191, 65, 65, 1)',
+            borderWidth: 2
           },{
             data: result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
             label: 'Predicted production [kWh]',
             backgroundColor: 'rgba(69, 94, 184, 0.6)',
-            borderColor: 'rgba(69, 94, 184, 0.6)',
-            borderWidth: 1
+            borderColor: 'rgba(69, 94, 184, 1)',
+            borderWidth: 2
           }];
           this.createBarChart();
         }
@@ -371,14 +377,14 @@ export class EnergyUsageComponent implements OnInit {
             data: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
             label: 'Predicted consumption [kWh]',
             backgroundColor: 'rgba(191, 65, 65, 0.6)',
-            borderColor: 'rgba(191, 65, 65, 0.6)',
-            borderWidth: 1
+            borderColor: 'rgba(191, 65, 65, 1)',
+            borderWidth: 2
           },{
             data: result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
             label: 'Predicted production [kWh]',
             backgroundColor: 'rgba(69, 94, 184, 0.6)',
-            borderColor: 'rgba(69, 94, 184, 0.6)',
-            borderWidth: 1
+            borderColor: 'rgba(69, 94, 184, 1)',
+            borderWidth: 2
           }];
           this.createBarChart();
         }
@@ -417,14 +423,14 @@ export class EnergyUsageComponent implements OnInit {
             data: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
             label: 'Predicted consumption [kWh]',
             backgroundColor: 'rgba(191, 65, 65, 0.6)',
-            borderColor: 'rgba(191, 65, 65, 0.6)',
-            borderWidth: 1
+            borderColor: 'rgba(191, 65, 65, 1)',
+            borderWidth: 2
           },{
             data: result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
             label: 'Predicted production [kWh]',
             backgroundColor: 'rgba(69, 94, 184, 0.6)',
-            borderColor: 'rgba(69, 94, 184, 0.6)',
-            borderWidth: 1
+            borderColor: 'rgba(69, 94, 184, 1)',
+            borderWidth: 2
           }];
           this.createBarChart();
         }
