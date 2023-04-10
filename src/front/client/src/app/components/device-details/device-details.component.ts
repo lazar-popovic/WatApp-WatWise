@@ -109,7 +109,7 @@ export class DeviceDetailsComponent
       
       this.predictionFlag = true;
       var predictionDiv = document.getElementById("prediction");
-      if(predictionDiv)  { predictionDiv.style.color = "gray";}
+      if(predictionDiv)  { predictionDiv.style.color = "black";}
     }
 
 
