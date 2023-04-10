@@ -60,6 +60,16 @@
   flex-direction: row;
   padding: 0 25px;
 }
+#additional-filter {
+  box-sizing: border-box;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 0 25px;
+}
 #filter-history {
   display: flex;
   flex-direction: row;

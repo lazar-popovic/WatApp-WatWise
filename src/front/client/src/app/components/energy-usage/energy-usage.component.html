@@ -27,29 +27,24 @@
           <div id="day3" (click)="sevenDaysClick()">7 Days</div>
         </div>
       </div>
-      <div class="dropdown" *ngIf="historyflag==true">
-        <div id="filter-button">
-          <button class="filter-icon"><i class="fas fa-filter"></i></button>
-        </div>
-        <div class="dropdown-content">
-          <form>
-            <input type="date" *ngIf="todayFlag==true" [(ngModel)]="date" name="date" (change)="todayClick()">
-            <select id="picked-month" *ngIf="monthFlag==true" [(ngModel)]="month" name="month" (change)="monthClick()">
-              <option value="1">January</option>
-              <option value="2">February</option>
-              <option value="3">March</option>
-              <option value="4">April</option>
-              <option value="5">May</option>
-            </select>
-            <select id="picked-year" *ngIf="monthFlag==true"  [(ngModel)]="yearForMonth" name="year" (change)="monthClick()">
-              <option value="2023">2023</option>
-            </select>
-            <select id="picked-year" *ngIf="yearFlag==true"  [(ngModel)]="year" name="year" (change)="yearClick()">
-              <option value="2023">2023</option>
-            </select>
-          </form>
-        </div>
-      </div>
+    </div>
+    <div id="additional-filter">
+      <form *ngIf="historyflag==true">
+        <input type="date" *ngIf="todayFlag==true" [(ngModel)]="date" name="date" (change)="todayClick()">
+        <select id="picked-month" *ngIf="monthFlag==true" [(ngModel)]="month" name="month" (change)="monthClick()">
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+        </select>
+        <select id="picked-year" *ngIf="monthFlag==true"  [(ngModel)]="yearForMonth" name="year" (change)="monthClick()">
+          <option value="2023">2023</option>
+        </select>
+        <select id="picked-year" *ngIf="yearFlag==true"  [(ngModel)]="year" name="year" (change)="yearClick()">
+          <option value="2023">2023</option>
+        </select>
+      </form>
     </div>
     <div id="chart">
       <div id="chart-holder" class="standard-card-style">
