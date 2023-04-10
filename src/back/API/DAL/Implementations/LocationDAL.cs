@@ -39,6 +39,6 @@ public class LocationDAL : ILocationDAL
 
     public async Task<List<Location>> GetAllLocationsAsync()
     {
-        return await _context.Locations.ToListAsync();
+        return await _context.Locations.Where( l => l.Users.Count( u => u.Verified == true) > 0).ToListAsync();
     }
 }

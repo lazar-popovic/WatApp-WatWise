@@ -26,9 +26,9 @@ public class DeviceDataController : ControllerBase
 
     [HttpGet]
     [Route("get-allowed-share-devices-data-for-today")]
-    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForToday()
+    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForToday(int day, int month, int year)
     {
-        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForToday());
+        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForToday(day, month, year));
     }
 
     [HttpGet]
@@ -61,9 +61,9 @@ public class DeviceDataController : ControllerBase
 
     [HttpGet]
     [Route("get-allowed-share-devices-data-for-month")]
-    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth()
+    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth(int month, int year)
     {
-        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth());
+        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth(month, year));
     }
 
     [HttpGet]
@@ -75,9 +75,9 @@ public class DeviceDataController : ControllerBase
 
     [HttpGet]
     [Route("get-allowed-share-devices-data-for-year")]
-    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForYear()
+    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForYear( int year)
     {
-        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForYear());
+        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForYear( year));
     }
 
     [HttpGet]

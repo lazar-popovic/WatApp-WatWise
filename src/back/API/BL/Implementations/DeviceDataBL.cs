@@ -25,12 +25,12 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
-    public async Task<Response<object>> GetAllDevicesDataWhereShareWithDsoIsAllowedForToday()
+    public async Task<Response<object>> GetAllDevicesDataWhereShareWithDsoIsAllowedForToday(int day, int month, int year)
     {
         var response = new Response<object>();
 
         response.Success = true;
-        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForToday();
+        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForToday(day, month, year);
 
         return response;
     }
@@ -73,12 +73,12 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
-    public async Task<Response<object>> GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth()
+    public async Task<Response<object>> GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth(int month, int year)
     {
         var response = new Response<object>();
 
         response.Success = true;
-        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth();
+        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth( month, year);
 
         return response;
     }
@@ -93,12 +93,12 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
-    public async Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForYear()
+    public async Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForYear(int year)
     {
         var response = new Response();
 
         response.Success = true;
-        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForYear();
+        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForYear(year);
 
         return response;
     }
