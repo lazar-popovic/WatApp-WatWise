@@ -1,9 +1,29 @@
 <div id="container">
   <div id="nav">
-    <app-sidebar>
+      <app-sidebar>
 
-    </app-sidebar>
+      </app-sidebar>
   </div>
   <div id="content">
+
+    <h2 style="display: inline-block;">Production</h2>
+    <br>
+    <h3 style="display: inline-block;"><div (click)="historyClick()" id="history">History</div></h3>
+    <h3 style="display: inline-block; margin-left: 10px"><div (click)="predictionClick()" id="prediction">Prediction</div></h3><br>
+
+    <div>
+      <div id="today-month-year">
+        <div id="day1" (click)="day1Click()">Day </div>
+        <div id="day2" (click)="day2Click()">Month</div>
+        <div id="day3" (click)="day3Click()">Year</div>
+      </div>
+    </div>
+
+    <div id="graph-container">
+      <div class="chart-container">
+        <canvas id="chart" style="max-width: 800px; height: auto;"></canvas>
+      </div>
+    </div>
+
   </div>
 </div>
