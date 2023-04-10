@@ -35,6 +35,34 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
+    public async Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction()
+    {
+        var response = new Response();
+        response.Success = true;
+        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction();
+
+        return response;
+    }
+
+
+    public async Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForNext3DaysPrediction()
+    {
+        var response = new Response();
+        response.Success = true;
+        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForNext3DaysPrediction();
+
+        return response;
+    }
+
+    public async Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForNext7DaysPrediction()
+    {
+        var response = new Response();
+        response.Success = true;
+        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForNext7DaysPrediction();
+
+        return response;
+    }
+
     public async Task<Response<object>> GetDeviceDataForMonth(int deviceId)
     {
         var response = new Response<object>();
@@ -94,4 +122,5 @@ public class DeviceDataBL : IDeviceDataBL
 
         return response;
     }
+
 }

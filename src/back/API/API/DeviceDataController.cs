@@ -30,7 +30,28 @@ public class DeviceDataController : ControllerBase
     {
         return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForToday());
     }
-    
+
+    [HttpGet]
+    [Route("get-prediction-allowed-share-devices-data-for-tomorrow")]
+    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction()
+    {
+        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction());
+    }
+
+    [HttpGet]
+    [Route("get-prediction-allowed-share-devices-data-for-next3days")]
+    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForNext3DaysPrediction()
+    {
+        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForNext3DaysPrediction());
+    }
+
+    [HttpGet]
+    [Route("get-prediction-allowed-share-devices-data-for-next7days")]
+    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForNext7DaysPrediction()
+    {
+        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForNext7DaysPrediction());
+    }
+
     [HttpGet]
     [Route("get-device-data-for-month")]
     public async Task<IActionResult> GetDeviceDataForMonth(int deviceId)
