@@ -71,6 +71,8 @@ export class DeviceDetailsComponent implements OnInit
                 this.predColor = 'rgba(69, 94, 184, 0.4)';
                 break;
             }
+            let now = new Date();
+            this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
             this.historyClick();
             console.log( this.device);
           }
@@ -147,7 +149,7 @@ export class DeviceDetailsComponent implements OnInit
       let date = new Date( this.date);
       console.log( date);
       console.log( date.getDate(), date.getMonth()+1, date.getFullYear());
-      this.deviceDataService.getDeviceDataForToday( this.device.id).subscribe(
+      this.deviceDataService.getDeviceDataForDate( date.getDate(), date.getMonth()+1, date.getFullYear(), this.device.id).subscribe(
         (result:any) => {
           if( result.success) {
             this.data = result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
@@ -172,9 +174,9 @@ export class DeviceDetailsComponent implements OnInit
             } else if ( date > now) {
               console.log("pred");
               this.datasets = [{
-                data: result.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
+                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
                 label: 'Predicted ' + this.categoryLabel,
-                backgroundColor: this.color,
+                backgroundColor: this.predColor,
                 borderColor: this.color,
                 borderWidth: 2
               }];
@@ -214,7 +216,7 @@ export class DeviceDetailsComponent implements OnInit
       const yearDiv = document.getElementById("year");
       if(yearDiv){ yearDiv.style.backgroundColor = "transparent "; yearDiv.style.color="#3E3E3E";}
 
-      this.deviceDataService.getDeviceDataForMonth( this.device.id).subscribe(
+      this.deviceDataService.getDeviceDataForMonth(this.month, this.yearForMonth, this.device.id).subscribe(
         (result:any) => {
           console.log( result)
           if( result.success) {
@@ -282,7 +284,7 @@ export class DeviceDetailsComponent implements OnInit
       const monthDiv = document.getElementById("month");
       if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#3E3E3E";}
 
-      this.deviceDataService.getDeviceDataForYear( this.device.id).subscribe(
+      this.deviceDataService.getDeviceDataForYear(this.year, this.device.id).subscribe(
         (result:any) => {
           if( result.success) {
             this.data = result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
