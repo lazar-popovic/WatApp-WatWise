@@ -6,6 +6,7 @@ public interface IDeviceDataDAL
     Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForToday();
     Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction();
     Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForNext3DaysPrediction();
+    Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForNext7DaysPrediction();
     Task<object> GetDeviceDataForMonth(int deviceId);
     Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth();
     Task<object> GetDeviceDataForYear(int deviceId);

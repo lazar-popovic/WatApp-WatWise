@@ -45,6 +45,12 @@ public class DeviceDataController : ControllerBase
         return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForNext3DaysPrediction());
     }
 
+    [HttpGet]
+    [Route("get-prediction-allowed-share-devices-data-for-next7days")]
+    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForNext7DaysPrediction()
+    {
+        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForNext7DaysPrediction());
+    }
 
     [HttpGet]
     [Route("get-device-data-for-month")]
