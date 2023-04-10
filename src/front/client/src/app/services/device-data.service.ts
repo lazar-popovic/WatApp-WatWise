@@ -40,4 +40,12 @@ export class DeviceDataService {
   {
     return this.http.get(`${environment.apiUrl}device-data/get-allowed-share-devices-data-for-year`);
   }
+  getDSOPredictionForDays( days: number) : Observable<any>
+  {
+    switch( days) {
+      case 1: return this.http.get(`${environment.apiUrl}device-data/get-prediction-allowed-share-devices-data-for-tomorrow`);
+      case 3: return this.http.get(`${environment.apiUrl}device-data/get-prediction-allowed-share-devices-data-for-next3days`);
+      default: return this.http.get(`${environment.apiUrl}device-data/get-prediction-allowed-share-devices-data-for-next7days`);
+    }
+  }
 }

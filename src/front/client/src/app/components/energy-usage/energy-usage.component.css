@@ -60,6 +60,12 @@
   flex-direction: row;
   padding: 0 25px;
 }
+#filter-history {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 
 #date-filter {
   display: flex;
@@ -119,11 +125,9 @@
 }
 
 #chart-holder {
-  border-radius: 30px;
   width: 100%;
   height: 300px;
-  background-color: lightgrey;
-  padding: 5px;
+  background-color: white;
 }
 
 canvas {
@@ -144,9 +148,9 @@ table {
   background-color: white;
   width: 100%;
   align-items: center;
-  border-radius: 30px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   border-collapse: collapse;
-  box-shadow: 1px 4px 10px 4px rgba(0,0,0,0.5);
 }
 #thead-tr {
   border-bottom: 3px solid black;
@@ -181,4 +185,63 @@ table tbody tr:hover {
 .slider-not-selected {
   color: #3E3E3E;
   background-color: transparent;
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.filter-icon {
+  background-color: #fff;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  right: 0;
+  min-width: 200px;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.dropdown-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-content label {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.dropdown-content input {
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 0.9rem;
+}
+
+.dropdown-content button {
+  padding: 5px;
+  background-color: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }
