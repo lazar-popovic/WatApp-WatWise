@@ -303,4 +303,47 @@ public class DeviceDataDAL : IDeviceDataDAL
         return new { producingEnergyUsageByTimestamp, consumingEnergyUsageByTimestamp };
 
     }
+
+    public async Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForNext7DaysPrediction()
+    {
+        var now = DateTime.Now;
+        var startDateTime = now.Date.AddDays(1); // start at midnight tomorrow
+        var endDateTime = now.Date.AddDays(8); // end at midnight seven days from now
+
+        var consumingEnergyUsageByTimestamp = await (
+            from deviceEnergyUsage in _dataContext.DeviceEnergyUsage
+            join device in _dataContext.Devices on deviceEnergyUsage.DeviceId equals device.Id
+            join deviceType in _dataContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
+            where device.DataShare
+                && deviceType.Category == -1
+                && deviceEnergyUsage.Timestamp >= startDateTime
+                && deviceEnergyUsage.Timestamp < endDateTime                
+            group deviceEnergyUsage by deviceEnergyUsage.Timestamp!.Value.Date into g
+            select new
+            {
+                Timestamp = g.Key.Date.ToShortDateString(),
+                Value = g.Sum(eu => eu.Value)
+            }
+        ).AsNoTracking().ToListAsync();
+
+        var producingEnergyUsageByTimestamp = await (
+            from deviceEnergyUsage in _dataContext.DeviceEnergyUsage
+            join device in _dataContext.Devices on deviceEnergyUsage.DeviceId equals device.Id
+            join deviceType in _dataContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
+            where device.DataShare
+                && deviceType.Category == 1
+                && deviceEnergyUsage.Timestamp >= startDateTime
+                && deviceEnergyUsage.Timestamp < endDateTime
+            group deviceEnergyUsage by deviceEnergyUsage.Timestamp!.Value.Date into g
+            select new
+            {
+                //Timestamp = g.Key,
+                Timestamp = g.Key.Date.ToShortDateString(),
+                Value = g.Sum(eu => eu.Value)
+            }
+        ).AsNoTracking().ToListAsync();
+
+        return new { producingEnergyUsageByTimestamp, consumingEnergyUsageByTimestamp };
+
+    }
 }
