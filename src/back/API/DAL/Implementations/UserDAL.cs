@@ -181,8 +181,18 @@ namespace API.DAL.Implementations
             _dbContext.Users.Update(user);
             _dbContext.SaveChanges();
         }
+        public async Task<User> SaveProfilePictureAsync(int userId, byte[] profilePicture)
+        {
+            var user = await _dbContext.Users.FindAsync(userId);
+
+            user.ProfileImage = profilePicture;
+            await _dbContext.SaveChangesAsync();
+
+            return user;
+        }
+
     }
 
 
-    }
+}
 

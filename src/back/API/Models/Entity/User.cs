@@ -20,4 +20,5 @@ public class User
     public Location? Location { get; set; }
 
     public List<Device>? Devices { get; set; }
+    public byte[]? ProfileImage { get; set; }
 }

@@ -13,5 +13,6 @@ namespace API.DAL.Interfaces
         Task<int> getNumberOfProsumersOrEmployees(int id);
         Task<List<User>?> FindUser(int id, string search, string mail, int pageSize, int pageNum, string order);
         void UpdateUser(User user);
+        Task<User> SaveProfilePictureAsync(int userId, byte[] profilePicture);
     }
 }
