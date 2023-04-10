@@ -15,12 +15,12 @@ public class DeviceDataBL : IDeviceDataBL
         _deviceDataDal = deviceDataDal;
     }
     
-    public async Task<Response<object>> GetDeviceDataForToday(int deviceId)
+    public async Task<Response<object>> GetDeviceDataForToday(int day, int month, int year, int deviceId)
     {
         var response = new Response<object>();
 
         response.Success = true;
-        response.Data = await _deviceDataDal.GetDeviceDataForToday(deviceId);
+        response.Data = await _deviceDataDal.GetDeviceDataForToday(day, month, year, deviceId);
 
         return response;
     }
@@ -63,12 +63,12 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
-    public async Task<Response<object>> GetDeviceDataForMonth(int deviceId)
+    public async Task<Response<object>> GetDeviceDataForMonth( int month, int year, int deviceId)
     {
         var response = new Response<object>();
 
         response.Success = true;
-        response.Data = await _deviceDataDal.GetDeviceDataForMonth(deviceId);
+        response.Data = await _deviceDataDal.GetDeviceDataForMonth(month, year,deviceId);
 
         return response;
     }
@@ -83,12 +83,12 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
-    public async Task<Response<object>> GetDeviceDataForYear(int deviceId)
+    public async Task<Response<object>> GetDeviceDataForYear( int year, int deviceId)
     {
         var response = new Response<object>();
 
         response.Success = true;
-        response.Data = await _deviceDataDal.GetDeviceDataForYear(deviceId);
+        response.Data = await _deviceDataDal.GetDeviceDataForYear( year, deviceId);
 
         return response;
     }

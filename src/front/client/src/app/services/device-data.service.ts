@@ -8,17 +8,17 @@ import {HttpClient} from "@angular/common/http";
 })
 export class DeviceDataService {
   constructor( private http: HttpClient) { }
-  getDeviceDataForToday( deviceId: number) : Observable<any>
+  getDeviceDataForDate( day: number, month: number, year: number, deviceId: number) : Observable<any>
   {
-    return this.http.get(`${environment.apiUrl}device-data/get-device-data-for-today?deviceId=${deviceId}`);
+    return this.http.get(`${environment.apiUrl}device-data/get-device-data-for-date?day=${day}&month=${month}&year=${year}&deviceId=${deviceId}`);
   }
-  getDeviceDataForMonth( deviceId: number) : Observable<any>
+  getDeviceDataForMonth( month: number, year: number, deviceId: number) : Observable<any>
   {
-    return this.http.get(`${environment.apiUrl}device-data/get-device-data-for-month?deviceId=${deviceId}`);
+    return this.http.get(`${environment.apiUrl}device-data/get-device-data-for-month?month=${month}&year=${year}&deviceId=${deviceId}`);
   }
-  getDeviceDataForYear( deviceId: number) : Observable<any>
+  getDeviceDataForYear( year: number, deviceId: number) : Observable<any>
   {
-    return this.http.get(`${environment.apiUrl}device-data/get-device-data-for-year?deviceId=${deviceId}`);
+    return this.http.get(`${environment.apiUrl}device-data/get-device-data-for-year?year=${year}&deviceId=${deviceId}`);
   }
   getUserDayStats( day: number, month: number, year: number, userId: number) : Observable<any>
   {
@@ -30,7 +30,7 @@ export class DeviceDataService {
   }
   getDSOSharedDataForDate( day: number, month: number, year: number) : Observable<any>
   {
-    return this.http.get(`${environment.apiUrl}device-data/get-allowed-share-devices-data-for-today?day=${day}&month=${month}&year=${year}`);
+    return this.http.get(`${environment.apiUrl}device-data/get-allowed-share-devices-data-for-date?day=${day}&month=${month}&year=${year}`);
   }
   getDSOSharedDataForMonth( month: number, year: number) : Observable<any>
   {

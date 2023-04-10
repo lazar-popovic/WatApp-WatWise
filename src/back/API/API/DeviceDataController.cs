@@ -18,14 +18,14 @@ public class DeviceDataController : ControllerBase
     }
 
     [HttpGet]
-    [Route("get-device-data-for-today")]
-    public async Task<IActionResult> GetDeviceDataForToday(int deviceId)
+    [Route("get-device-data-for-date")]
+    public async Task<IActionResult> GetDeviceDataForToday(int day, int month, int year, int deviceId)
     {
-        return Ok( await _deviceDataBl.GetDeviceDataForToday( deviceId));
+        return Ok( await _deviceDataBl.GetDeviceDataForToday(day, month, year, deviceId));
     }
 
     [HttpGet]
-    [Route("get-allowed-share-devices-data-for-today")]
+    [Route("get-allowed-share-devices-data-for-date")]
     public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForToday(int day, int month, int year)
     {
         return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForToday(day, month, year));
@@ -54,9 +54,9 @@ public class DeviceDataController : ControllerBase
 
     [HttpGet]
     [Route("get-device-data-for-month")]
-    public async Task<IActionResult> GetDeviceDataForMonth(int deviceId)
+    public async Task<IActionResult> GetDeviceDataForMonth(int month, int year, int deviceId)
     {
-        return Ok( await _deviceDataBl.GetDeviceDataForMonth( deviceId));
+        return Ok( await _deviceDataBl.GetDeviceDataForMonth( month, year, deviceId));
     }
 
     [HttpGet]
@@ -68,9 +68,9 @@ public class DeviceDataController : ControllerBase
 
     [HttpGet]
     [Route("get-device-data-for-year")]
-    public async Task<IActionResult> GetDeviceDataForYear(int deviceId)
+    public async Task<IActionResult> GetDeviceDataForYear( int year, int deviceId)
     {
-        return Ok( await _deviceDataBl.GetDeviceDataForYear( deviceId));
+        return Ok( await _deviceDataBl.GetDeviceDataForYear( year, deviceId));
     }
 
     [HttpGet]
