@@ -38,10 +38,10 @@ namespace API.API
             return Ok(await _deviceBL.AddDevice(device));
         }
         
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDevice(int id, Device device)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateDevice(int id, DeviceNameAndActivityStatusUpdateViewModel request)
         {
-            return Ok(await _deviceBL.UpdateDevice(id, device));
+            return Ok(await _deviceBL.UpdateDevice(id, request));
         }
 
         [HttpDelete("{id}")]

@@ -30,6 +30,8 @@ namespace API.DAL.Implementations
                 Id = d.Id,
                 Name = d.Name,
                 DataShare = d.DataShare,
+                DeviceTypeId = d.DeviceTypeId,
+                PurchaseDate = d.PurchaseDate,
                 ActivityStatus = d.ActivityStatus,
                 DeviceType = d.DeviceType,
                 UserId = d.UserId

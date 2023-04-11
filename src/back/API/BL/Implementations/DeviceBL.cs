@@ -98,27 +98,30 @@ namespace API.BL.Implementations
 
 
         }
-        public async Task<Response<String>> UpdateDevice(int id, Device device)
+        public async Task<Response<String>> UpdateDevice(int id, DeviceNameAndActivityStatusUpdateViewModel request)
         {
             var response = new Response<String>();
-       
 
-            if (id!=device.Id)
+            var device = await _ideviceDal.GetDeviceByIdAsync(id);
+
+            if (device == null)
             {
-                response.Errors.Add("Id is not equal");
-                response.Success = false;
+                response.Errors.Add("Device with this id doesen't exist!");
+                response.Success = response.Errors.Count == 0;
 
                 return response;
             }
+
+            device.Name = request.Name;
+            device.ActivityStatus = request.ActivityStatus;
+
             await _ideviceDal.UpdateDeviceAsync(device);
 
-            response.Data = "Pass";
+            response.Data = "Device name and activity status has been updated succesfully!";
 
             response.Success = response.Errors.Count() == 0;
 
             return response;
-
-
 
         }
 
