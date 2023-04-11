@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {ChartData, ChartDataset, ChartOptions, registerables} from 'chart.js';
 import { Input } from '@angular/core';
 
@@ -10,17 +10,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {DeviceService} from "../../services/device.service";
 import {DeviceDataService} from "../../services/device-data.service";
 import {DatePipe} from "@angular/common";
-
 import { ViewEncapsulation } from '@angular/core';
-
-//import * as $ from 'jquery';
-import 'bootstrap-datepicker';
-// import 'jqueryui';
-
-
-import { IgxMonthPickerComponent } from 'igniteui-angular';
-import { MatDatepicker } from '@angular/material/datepicker';
-import { MatSliderModule } from '@angular/material/slider';
 
 interface DatepickerOptions {
   autoclose?: boolean;
@@ -32,14 +22,14 @@ interface DatepickerOptions {
   styleUrls: ['./device-details.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class DeviceDetailsComponent
+export class DeviceDetailsComponent implements OnInit
 {
     categoryLabel: string = "";
     color: any = 'rgba(206, 27, 14, 0.7)';
+    predColor: any = 'rgba(206, 27, 14, 0.7)';
     id : any = '' ;
     result: any[] = [];
     data: any[] = [];
-    labels: any[] = [];
     device = {
       id: 0,
       userId: 0,
@@ -49,12 +39,10 @@ export class DeviceDetailsComponent
       dataShare: false
     }
 
-    todayFlag : boolean = true;
-    monthFlag : boolean = false;
-    yearFlag : boolean = false;
-
-    historyflag : boolean = true;
-    predictionFlag : boolean = false;
+    date: any;
+    month: number = 4;
+    yearForMonth: number = 2023;
+    year: number = 2023;
 
     constructor( private datePipe: DatePipe, private authService:AuthService, private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private deviceDataService: DeviceDataService) {
       this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
@@ -67,43 +55,75 @@ export class DeviceDetailsComponent
             this.device.deviceType = result.data.deviceType;
             switch ( result.data.deviceType.category)
             {
-              case -1: this.categoryLabel = "Consumption in kW"; this.color = 'rgba(236, 27, 14, 0.7)'; break;
-              case 0: this.categoryLabel = "In storage"; this.color = 'rgba(27, 254, 127, 0.9)'; break;
-              case 1: this.categoryLabel = "Production in kW"; this.color = 'rgba(27, 27, 236, 0.7)'; break;
+              case -1:
+                this.categoryLabel = "Consumption [kWh]";
+                this.color = 'rgba(191, 65, 65, 1)';
+                this.predColor = 'rgba(191, 65, 65, 0.4)';
+                break;
+              case 0:
+                this.categoryLabel = "In storage";
+                this.color = 'rgba(27, 254, 127, 1)';
+                this.predColor = 'rgba(27, 254, 127, 0.4)';
+                break;
+              case 1:
+                this.categoryLabel = "Production [kWh]";
+                this.color = 'rgba(69, 94, 184, 1)';
+                this.predColor = 'rgba(69, 94, 184, 0.4)';
+                break;
             }
-            this.todayClick();
+            console.log( this.device);
           }
         }, error => {
           console.log( error);
         }
       )
       Chart.register(...registerables);
+
       this.selectedMonth = 'January';
       this.selectedYear = '2023';
     }
 
+    ngOnInit(): void
+    {
+
+      /*bootstrap datepicker*/
+     /* $("#datepicker").datepicker({
+        autoclose: true,
+        todayHighlight: true
+      }).datepicker('update', new Date());*/
+    }
+
+    historyflag : boolean = true;
+    predictionFlag : boolean = false;
+
     historyClick(){
       this.historyflag = true;
-      var historyDiv = document.getElementById("history");
-      if(historyDiv)  { historyDiv.style.color = "black"; }
+      var historyDiv = document.getElementById("history-h3");
+      if(historyDiv)  { historyDiv.style.color = "#3e3e3e"; }
 
       this.predictionFlag = false;
-      var predictionDiv = document.getElementById("prediction");
+      var predictionDiv = document.getElementById("prediction-h3");
       if(predictionDiv)  { predictionDiv.style.color = "gray";}
+
+      this.todayClick();
     }
 
     predictionClick(){
       this.historyflag = false;
-      var historyDiv = document.getElementById("history");
+      var historyDiv = document.getElementById("history-h3");
       if(historyDiv)  { historyDiv.style.color = "gray"; }
 
       this.predictionFlag = true;
-      var predictionDiv = document.getElementById("prediction");
-      if(predictionDiv)  { predictionDiv.style.color = "black";}
+      var predictionDiv = document.getElementById("prediction-h3");
+      if(predictionDiv)  { predictionDiv.style.color = "#3e3e3e";}
+
+      this.tommorowClick();
     }
 
 
-    
+    todayFlag : boolean = true;
+    monthFlag : boolean = false;
+    yearFlag : boolean = false;
 
     todayClick()
     {
@@ -112,24 +132,62 @@ export class DeviceDetailsComponent
       var todayDiv = document.getElementById("today");
       if(todayDiv)
       {
-        todayDiv.style.color = "#1676AC";
-        todayDiv.style.backgroundColor =  "#ffff";
+        todayDiv.style.color = "white";
+        todayDiv.style.backgroundColor =  "#3E3E3E";
         todayDiv.style.padding = "5px";
-        todayDiv.style.borderRadius = "5px";
+        todayDiv.style.borderRadius = "10px";
       }
 
       var monthDiv = document.getElementById("month");
-      if(monthDiv){ monthDiv.style.backgroundColor = "transparent"; monthDiv.style.color = "#ffff";}
+      if(monthDiv){ monthDiv.style.backgroundColor = "transparent"; monthDiv.style.color = "#3E3E3E";}
 
       var yearDiv = document.getElementById("year");
-      if(yearDiv){ yearDiv.style.backgroundColor = "transparent"; yearDiv.style.color = "#ffff";}
+      if(yearDiv){ yearDiv.style.backgroundColor = "transparent"; yearDiv.style.color = "#3E3E3E";}
 
-      this.deviceDataService.getDeviceDataForToday( this.device.id).subscribe(
-        result => {
+      let date = new Date( this.date);
+      console.log( date);
+      console.log( date.getDate(), date.getMonth()+1, date.getFullYear());
+      this.deviceDataService.getDeviceDataForDate( date.getDate(), date.getMonth()+1, date.getFullYear(), this.device.id).subscribe(
+        (result:any) => {
           if( result.success) {
-            this.result = result.data;
-            this.labels = this.result.map( e => this.datePipe.transform(e.timestamp,"shortTime"));
-            this.data = this.result.map( e => e.value);
+            this.data = result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
+            let now = new Date();
+            if( date.toDateString() == now.toDateString()) {
+              this.datasets = [{
+                data: result.data.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
+                                                                 .map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
+                label: this.categoryLabel,
+                backgroundColor: this.color,
+                borderColor: this.color,
+                borderWidth: 2
+              },{
+                data: result.data.filter((ceu:any) => new Date(ceu.timestamp) > new Date())
+                                                                 .map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
+                label: 'Predicted ' + this.categoryLabel,
+                backgroundColor: this.predColor,
+                borderColor: this.color,
+                borderWidth: 2
+              }];
+
+            } else if ( date > now) {
+              console.log("pred");
+              this.datasets = [{
+                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
+                label: 'Predicted ' + this.categoryLabel,
+                backgroundColor: this.predColor,
+                borderColor: this.color,
+                borderWidth: 2
+              }];
+            } else {
+              console.log("hist");
+              this.datasets = [{
+                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
+                label: this.categoryLabel,
+                backgroundColor: this.color,
+                borderColor: this.color,
+                borderWidth: 2
+              }];
+            }
             this.createBarChart();
           }
         }, error => {
@@ -144,24 +202,60 @@ export class DeviceDetailsComponent
       const monthDiv = document.getElementById("month");
       if(monthDiv)
       {
-        monthDiv.style.color = "#1676AC";
-        monthDiv.style.backgroundColor =  "#ffff";
+        monthDiv.style.color = "white";
+        monthDiv.style.backgroundColor =  "#3E3E3E";
         monthDiv.style.padding = "5px";
-        monthDiv.style.borderRadius = "5px";
+        monthDiv.style.borderRadius = "10px";
       }
 
       const todayDiv = document.getElementById("today");
-      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#ffff";}
+      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#3E3E3E";}
 
       const yearDiv = document.getElementById("year");
-      if(yearDiv){ yearDiv.style.backgroundColor = "transparent "; yearDiv.style.color="#ffff";}
+      if(yearDiv){ yearDiv.style.backgroundColor = "transparent "; yearDiv.style.color="#3E3E3E";}
 
-      this.deviceDataService.getDeviceDataForMonth( this.device.id).subscribe(
-        result => {
+      this.deviceDataService.getDeviceDataForMonth(this.month, this.yearForMonth, this.device.id).subscribe(
+        (result:any) => {
+          console.log( result)
           if( result.success) {
-            this.result = result.data;
-            this.labels = this.result.map( e => e.timestamp);
-            this.data = this.result.map( e => e.value);
+            this.data = result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+            let now = new Date();
+            if( this.month == now.getMonth()+1) {
+              this.datasets = [{
+                data: result.data.filter((ceu:any) => new Date(ceu.timestamp).getDate() <= new Date().getDate())
+                                                                 .map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+                label: this.categoryLabel,
+                backgroundColor: this.color,
+                borderColor: this.color,
+                borderWidth: 2
+              },{
+                data: result.data.filter((ceu:any) => new Date(ceu.timestamp).getDate() > new Date().getDate())
+                                                                 .map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+                label: 'Predicted ' + this.categoryLabel,
+                backgroundColor: this.predColor,
+                borderColor: this.color,
+                borderWidth: 2
+              }];
+
+            } else if ( this.month > now.getMonth()+1) {
+              console.log("pred");
+              this.datasets = [{
+                data: result.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+                label: 'Predicted ' + this.categoryLabel,
+                backgroundColor: this.color,
+                borderColor: this.color,
+                borderWidth: 2
+              }];
+            } else {
+              console.log("hist");
+              this.datasets = [{
+                data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+                label: this.categoryLabel,
+                backgroundColor: this.color,
+                borderColor: this.color,
+                borderWidth: 2
+              }];
+            }
             this.createBarChart();
           }
         }, error => {
@@ -176,24 +270,147 @@ export class DeviceDetailsComponent
       var yearDiv = document.getElementById("year");
       if(yearDiv)
       {
-        yearDiv.style.color = "#1676AC";
-        yearDiv.style.backgroundColor =  "#ffff";
+        yearDiv.style.color = "white";
+        yearDiv.style.backgroundColor =  "#3E3E3E";
         yearDiv.style.padding = "5px";
-        yearDiv.style.borderRadius = "5px";
+        yearDiv.style.borderRadius = "10px";
       }
 
       const todayDiv = document.getElementById("today");
-      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#ffff";}
+      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#3E3E3E";}
 
       const monthDiv = document.getElementById("month");
-      if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#ffff";}
+      if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#3E3E3E";}
 
-      this.deviceDataService.getDeviceDataForYear( this.device.id).subscribe(
-        result => {
+      this.deviceDataService.getDeviceDataForYear(this.year, this.device.id).subscribe(
+        (result:any) => {
           if( result.success) {
-            this.result = result.data;
-            this.labels = this.result.map( e => e.timestamp);
-            this.data = this.result.map( e => e.value);
+            this.data = result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+            this.datasets = [{
+              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+              label: this.categoryLabel,
+              backgroundColor: this.color,
+              borderColor: this.color,
+              borderWidth: 2
+            }]
+            this.createBarChart();
+          }
+        }, error => {
+          console.log( error)
+        }
+      );
+    }
+
+    tommorowClick()
+    {
+      this.tommorowFlag = true;
+      this.threeDaysFlag = false;
+      this.sevenDaysFlag = false;
+      var yearDiv = document.getElementById("day1");
+      if(yearDiv)
+      {
+        yearDiv.style.color = "white";
+        yearDiv.style.backgroundColor =  "#3E3E3E";
+        yearDiv.style.padding = "5px";
+        yearDiv.style.borderRadius = "10px";
+      }
+
+      const todayDiv = document.getElementById("day2");
+      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#3E3E3E";}
+
+      const monthDiv = document.getElementById("day3");
+      if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#3E3E3E";}
+
+      this.deviceDataService.getDeviceDataForNextNDays( this.device.id, 1).subscribe(
+        (result:any) => {
+          if( result.success) {
+            this.data = result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
+            this.datasets = [{
+              data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value})),
+              label: 'Predicted ' + this.categoryLabel,
+              backgroundColor: this.predColor,
+              borderColor: this.color,
+              borderWidth: 2
+            }];
+            this.createBarChart();
+          }
+        }, error => {
+          console.log( error)
+        }
+      );
+    }
+
+    threeDaysClick()
+    {
+      this.tommorowFlag = false;
+      this.threeDaysFlag = true;
+      this.sevenDaysFlag = false;
+      var yearDiv = document.getElementById("day2");
+      if(yearDiv)
+      {
+        yearDiv.style.color = "white";
+        yearDiv.style.backgroundColor =  "#3E3E3E";
+        yearDiv.style.padding = "5px";
+        yearDiv.style.borderRadius = "10px";
+      }
+
+      const todayDiv = document.getElementById("day1");
+      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#3E3E3E";}
+
+      const monthDiv = document.getElementById("day3");
+      if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#3E3E3E";}
+
+      this.deviceDataService.getDeviceDataForNextNDays(this.device.id, 3).subscribe(
+        (result:any) => {
+          if( result.success) {
+            console.log( result.data);
+            this.data = result.data.map( (ceu:any) => ({x:this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
+            this.datasets = [{
+              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+              label: 'Predicted ' + this.categoryLabel,
+              backgroundColor: this.predColor,
+              borderColor: this.color,
+              borderWidth: 2
+            }];
+            this.createBarChart();
+          }
+        }, error => {
+          console.log( error)
+        }
+      );
+    }
+
+    sevenDaysClick()
+    {
+      this.tommorowFlag = false;
+      this.threeDaysFlag = false;
+      this.sevenDaysFlag = true;
+      var yearDiv = document.getElementById("day3");
+      if(yearDiv)
+      {
+        yearDiv.style.color = "white";
+        yearDiv.style.backgroundColor =  "#3E3E3E";
+        yearDiv.style.padding = "5px";
+        yearDiv.style.borderRadius = "10px";
+      }
+
+      const todayDiv = document.getElementById("day1");
+      if(todayDiv){ todayDiv.style.backgroundColor = "transparent "; todayDiv.style.color="#3E3E3E";}
+
+      const monthDiv = document.getElementById("day2");
+      if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#3E3E3E";}
+
+      this.deviceDataService.getDeviceDataForNextNDays( this.device.id, 7).subscribe(
+        (result:any) => {
+          if( result.success) {
+            this.data = result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+            this.datasets = [{
+              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+              label: 'Predicted ' + this.categoryLabel,
+              backgroundColor: this.predColor,
+              borderColor: this.color,
+              borderWidth: 2
+            }];
             this.createBarChart();
           }
         }, error => {
@@ -203,85 +420,30 @@ export class DeviceDetailsComponent
     }
 
     chart: any;
-
     createBarChart()
     {
-        const canvas: any = document.getElementById("chart");
-        const chart2d = canvas.getContext("2d");
-        if( this.chart) {
-          this.chart.destroy();
-        }
-        this.chart = new Chart(chart2d, {
-          type: 'bar',
-          data: {
-            labels: this.labels,
-            datasets: [{
-              label: this.categoryLabel,
-              data: this.data,
-              backgroundColor: this.color
-            }]
-          },
-          options: {  scales: { y: {  beginAtZero: true,
-                ticks: {
-                  callback: function(value, index, ticks) {
-                    return value+'kW';
-                  }
-                } } } }
-        });
-    }
-
-    createTable(): void
-    {
-
-      const table = document.createElement('table');
-      table.classList.add('data-table');
-
-      // create table header
-      const thead = table.createTHead();
-      const headerRow = thead.insertRow();
-      const headers = ['', ''];
-      headers.forEach(header => {
-        const th = document.createElement('th');
-        th.textContent = header;
-        headerRow.appendChild(th);
-      });
-
-      // create table body
-      const tbody = table.createTBody();
-      this.labels.forEach((label, index) => {
-        const row = tbody.insertRow();
-        const dateCell = row.insertCell();
-        const timeCell = row.insertCell();
-        const consumptionCell = row.insertCell();
-        timeCell.textContent = label;
-        consumptionCell.textContent = this.data[index].toString();
-      });
-
-      const tableContainer = document.getElementById('tableShow');
-      if (tableContainer) {
-        tableContainer.innerHTML = '';
-        tableContainer.appendChild(table);
+      const canvas: any = document.getElementById("chart-canvas");
+      const chart2d = canvas.getContext("2d");
+      if( this.chart) {
+        this.chart.destroy();
       }
+      this.chart = new Chart(chart2d, {
+        type: 'bar',
+        data: {
+          datasets: this.datasets
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value, index, ticks) {
+                  return value+'kW';
+                }
+              }
+            }
+          }
+        }
+      });
     }
-
-    date: Date = new Date();
-
-
-    months = [
-      'January', 'February', 'March', 'April'
-    ];
-    selectedMonth: string;
-
-    years = [
-      '2023',
-    ];
-    selectedYear: string;
-
-    startHour: number = 0;
-    endHour: number = 23;
-
-}
-
-
-
-
+  }

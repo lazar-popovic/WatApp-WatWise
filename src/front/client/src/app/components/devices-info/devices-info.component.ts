@@ -40,6 +40,9 @@ export class DevicesInfoComponent implements OnInit{
             deviceIns.activityStatus = device.activityStatus;
             deviceIns.usage = device.value;
             deviceIns.type = device.deviceType.type;
+            this.consumeShow= true;
+            this.prosumeShow = true;
+            this.storageShow = true;
             if(devicesType.category == -1) {
               this.consumeDevices.push(deviceIns);
             } else if(devicesType.category == 1) {

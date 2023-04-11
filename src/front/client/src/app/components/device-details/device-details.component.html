@@ -1,96 +1,75 @@
-<div id="details-container">
-    <div style="display: inline-block;">
-      <app-sidebar>
+<div id="container">
+  <div id="nav">
+    <app-sidebar>
 
-      </app-sidebar>
+    </app-sidebar>
+  </div>
+  <div id="content">
+    <div id="header">
+      <h2><a href="/prosumer/devices">Devices</a> <span style="color: gray;"> /</span> {{device.name}}</h2>
     </div>
-
-    <div id="single-device-container" style="display: inline-block; vertical-align: top;" >
-
-      <h2 style="display: inline-block;"><a id="details-a" href="prosumer/devices">Devices</a> /</h2><h2 id="h2_device" style="display: inline-block;">{{device.name}}</h2>
-      <br>
-      <h3 style="display: inline-block;"><div id="history" (click)="historyClick()">History</div></h3>
-      <h3 style="display: inline-block; margin-left: 10px;"><div id="prediction" (click)="predictionClick()">Prediction</div></h3><br>
-
+    <div id="nav-bar">
+      <h3 id="history-h3" (click)="historyClick()">History</h3>
+      <h3 id="prediction-h3" (click)="predictionClick()">Prediction</h3>
+    </div>
+    <div id="filter">
       <div *ngIf="historyflag==true">
-        <div id="today-month-year">
-          <div id="today" (click)="todayClick()">Day </div>
+        <div class="slider">
+          <div id="today" (click)="todayClick()">Date</div>
           <div id="month" (click)="monthClick()">Month</div>
-          <div id="year"  (click)="yearClick()">Year</div>
-        </div>
-
-        <div *ngIf="todayFlag==true"  id="day-picker_container" style="display: inline-block;">
-            <div id="mat-datePicker">
-              <input matInput [matDatepicker]="picker" placeholder="Select day">
-              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker id="todayInput" #picker></mat-datepicker>
-            </div>
-        </div>
-
-        <div *ngIf="monthFlag==true" id="month-picker_container" style="display: inline-block;">
-          <mat-form-field>
-            <mat-label>Select a month</mat-label>
-            <mat-select [(value)]="selectedMonth">
-              <mat-option *ngFor="let month of months" [value]="month">{{ month }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Select a year</mat-label>
-            <mat-select [(value)]="selectedYear">
-              <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <div *ngIf="yearFlag==true"  id="year-picker_container" style="display: inline-block;">
-          <mat-form-field>
-            <mat-label>Select a year</mat-label>
-            <mat-select [(value)]="selectedYear">
-              <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-
-        </div>
-
-        <div *ngIf="predictionFlag==true">
-          <div id="today-month-year">
-            <div id="day1" (click)="todayClick()">Tom.</div>
-            <div id="day2" (click)="monthClick()">3 Days</div>
-            <div id="day3"  (click)="yearClick()">7 Days</div>
-          </div>
-        </div>
-
-      <div id="graph-container">
-        <div class="chart-container">
-          <canvas id="chart" style="max-width: 800px; height: auto;"></canvas>
+          <div id="year" (click)="yearClick()">Year</div>
         </div>
       </div>
-      <button id="export"> EXPORT TO CSV</button>
-      <div id = "table-container" style="display: inline-block;">
-        <table id="tableShow" class="data-table">
-          <thead>
-          <tr>
-            <th style="width: 50%">Period</th>
-            <th>{{categoryLabel}}</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let item of data; let i = index">
-            <td>{{labels[i]}}</td>
-            <td>{{item | number:'1.3-3' }}</td>
+      <div *ngIf="predictionFlag==true">
+        <div class="slider">
+          <div id="day1" (click)="tommorowClick()">Tom.</div>
+          <div id="day2" (click)="threeDaysClick()">3 Days</div>
+          <div id="day3" (click)="sevenDaysClick()">7 Days</div>
+        </div>
+      </div>
+    </div>
+    <div id="additional-filter">
+      <form *ngIf="historyflag==true">
+        <input type="date" *ngIf="todayFlag==true" [(ngModel)]="date" name="date" (change)="todayClick()">
+        <select id="picked-month" *ngIf="monthFlag==true" [(ngModel)]="month" name="month" (change)="monthClick()">
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+        </select>
+        <select id="picked-year" *ngIf="monthFlag==true"  [(ngModel)]="yearForMonth" name="year" (change)="monthClick()">
+          <option value="2023">2023</option>
+        </select>
+        <select id="picked-year" *ngIf="yearFlag==true"  [(ngModel)]="year" name="year" (change)="yearClick()">
+          <option value="2023">2023</option>
+        </select>
+      </form>
+    </div>
+    <div id="chart">
+      <div id="chart-holder" class="standard-card-style">
+        <canvas id="chart-canvas" style="height: 100%!important; width: 100%!important;"></canvas>
+      </div>
+    </div>
+    <div id="table">
+      <table>
+        <thead>
+        <tr id="thead-tr">
+          <th>Timestamp</th>
+          <th>{{categoryLabel}}</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor=" let row of data">
+            <td>{{row.x}}</td>
+            <td>{{row.y.toFixed(3)}}</td>
           </tr>
           </tbody>
         </table>
       </div>
       </div>
   </div>
-  <div class="device-details-overlay">
-    <div class="device-details-edit">
-      <app-edit-device [id]="device.id" [privacyStatus]="device.activityStatus"></app-edit-device>
-    </div>
-  </div>
+
 
   <!-- <div class="hour-range-picker">
     <mat-slider [(ngModel)]="startHour" min="0" max="23" tickInterval="1" thumbLabel></mat-slider>

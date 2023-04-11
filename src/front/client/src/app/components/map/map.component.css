@@ -4,12 +4,13 @@
 }
 #map-container {
   width: 100vw;
+  position: relative;
 }
 @media (max-width: 599px) {
   #container {
     flex-direction: column;
   }
   #map-container {
-    height: 90vh;
+    height: calc( 100vh - 88px);
   }
 }

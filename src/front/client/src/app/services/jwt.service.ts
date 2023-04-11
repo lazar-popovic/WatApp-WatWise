@@ -6,7 +6,11 @@ import { Injectable } from '@angular/core';
 export class JWTService {
   date: Date | undefined;
   token : string | null;
-  constructor() { 
+  constructor() {
+    this.token = localStorage.getItem("token");
+  }
+
+  setToken() {
     this.token = localStorage.getItem("token");
   }
 
