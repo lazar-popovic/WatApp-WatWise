@@ -9,7 +9,7 @@ import { Chart } from 'chart.js';
 })
 export class ProductionComponent 
 {
-  color: any = 'rgba(62, 234, 50, 0.8)';
+  color: any = 'rgba(26, 55, 173, 0.7)';
 
   ngOnInit()
   {
@@ -41,74 +41,77 @@ export class ProductionComponent
     if(predictionDiv)  { predictionDiv.style.color = "black";}
   }
 
-  day1Flag : boolean = true;
-  day2Flag : boolean = false;
-  day3Flag : boolean = false;
+  todayFlag : boolean = true;
+  monthFlag : boolean = false;
+  yearFlag : boolean = false;
 
-  day1Click()
+  todayClick()
   {
-      this.day1Flag  = true; this.day2Flag  = false; this.day3Flag = false;
+      this.todayFlag  = true; this.monthFlag  = false; this.yearFlag = false;
       
-      var day1 = document.getElementById("day1");
-      if(day1)
+      var today = document.getElementById("today");
+      if(today)
       {
-        day1.style.color = "#1676AC";
-        day1.style.backgroundColor =  "#ffff";
-        day1.style.padding = "5px";
-        day1.style.borderRadius = "10px";
+        today.style.color = "#1676AC";
+        today.style.backgroundColor =  "#ffff";
+        today.style.padding = "5px";
+        today.style.borderRadius = "10px";
       }
 
-      var day2 = document.getElementById("day2");
-      if(day2){ day2.style.backgroundColor = "transparent"; day2.style.color = "#ffff";}
+      var month = document.getElementById("month");
+      if(month){ month.style.backgroundColor = "transparent"; month.style.color = "#ffff";}
 
-      var day3 = document.getElementById("day3");
-      if(day3){ day3.style.backgroundColor = "transparent"; day3.style.color = "#ffff";}
+      var year = document.getElementById("year");
+      if(year){ year.style.backgroundColor = "transparent"; year.style.color = "#ffff";}
 
       /*Create chart*/
+      this.createBarChart();
   }
 
-  day2Click()
+  monthClick()
   {
-      this.day1Flag  = false; this.day2Flag  = true; this.day3Flag = false;
+      this.todayFlag  = false; this.monthFlag  = true; this.yearFlag = false;
       
-      var day1 = document.getElementById("day1");
-      if(day1){ day1.style.backgroundColor = "transparent"; day1.style.color = "#ffff";}
+      var today = document.getElementById("today");
+      if(today){ today.style.backgroundColor = "transparent"; today.style.color = "#ffff";}
 
-      var day2 = document.getElementById("day2");
-      if(day2)
+      var month = document.getElementById("month");
+      if(month)
       {
-        day2.style.color = "#1676AC";
-        day2.style.backgroundColor =  "#ffff";
-        day2.style.padding = "5px";
-        day2.style.borderRadius = "10px";
+        month.style.color = "#1676AC";
+        month.style.backgroundColor =  "#ffff";
+        month.style.padding = "5px";
+        month.style.borderRadius = "10px";
       }
 
-      var day3 = document.getElementById("day3");
-      if(day3){ day3.style.backgroundColor = "transparent"; day3.style.color = "#ffff";}
+      var year = document.getElementById("year");
+      if(year){ year.style.backgroundColor = "transparent"; year.style.color = "#ffff";}
 
       /*Create chart*/
+      this.createBarChart();
   }
 
-  day3Click()
+  yearClick()
   {
-      this.day1Flag  = false; this.day2Flag  = false; this.day3Flag = true;
+      this.todayFlag  = false; this.monthFlag  = false; this.yearFlag = true;
       
-      var day1 = document.getElementById("day1");
-      if(day1){ day1.style.backgroundColor = "transparent"; day1.style.color = "#ffff";}
+      var today = document.getElementById("today");
+      if(today){ today.style.backgroundColor = "transparent"; today.style.color = "#ffff";}
 
-      var day2 = document.getElementById("day2");
-      if(day2){ day2.style.backgroundColor = "transparent"; day2.style.color = "#ffff";}
+      var month = document.getElementById("month");
+      if(month){ month.style.backgroundColor = "transparent"; month.style.color = "#ffff";}
       
-      var day3 = document.getElementById("day3");
-      if(day3)
+      var year = document.getElementById("year");
+      if(year)
       {
-        day3.style.color = "#1676AC";
-        day3.style.backgroundColor =  "#ffff";
-        day3.style.padding = "5px";
-        day3.style.borderRadius = "10px";
+        year.style.color = "#1676AC";
+        year.style.backgroundColor =  "#ffff";
+        year.style.padding = "5px";
+        year.style.borderRadius = "10px";
       }
 
       /*Create chart*/
+      this.createBarChart();
   }
 
 
