@@ -323,22 +323,15 @@ export class DeviceDetailsComponent implements OnInit
       const monthDiv = document.getElementById("day3");
       if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#3E3E3E";}
 
-      this.deviceDataService.getDSOPredictionForDays(1).subscribe(
+      this.deviceDataService.getDeviceDataForNextNDays( this.device.id, 1).subscribe(
         (result:any) => {
           if( result.success) {
-            this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
-            this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
+            this.data = result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
             this.datasets = [{
-              data: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
-              label: 'Predicted consumption [kWh]',
-              backgroundColor: 'rgba(191, 65, 65, 0.6)',
-              borderColor: 'rgba(191, 65, 65, 1)',
-              borderWidth: 2
-            },{
-              data: result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
-              label: 'Predicted production [kWh]',
-              backgroundColor: 'rgba(69, 94, 184, 0.6)',
-              borderColor: 'rgba(69, 94, 184, 1)',
+              data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value})),
+              label: 'Predicted ' + this.categoryLabel,
+              backgroundColor: this.predColor,
+              borderColor: this.color,
               borderWidth: 2
             }];
             this.createBarChart();
@@ -369,22 +362,16 @@ export class DeviceDetailsComponent implements OnInit
       const monthDiv = document.getElementById("day3");
       if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#3E3E3E";}
 
-      this.deviceDataService.getDSOPredictionForDays(3).subscribe(
+      this.deviceDataService.getDeviceDataForNextNDays(this.device.id, 3).subscribe(
         (result:any) => {
           if( result.success) {
-            this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
-            this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+            console.log( result.data);
+            this.data = result.data.map( (ceu:any) => ({x:this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
             this.datasets = [{
-              data: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
-              label: 'Predicted consumption [kWh]',
-              backgroundColor: 'rgba(191, 65, 65, 0.6)',
-              borderColor: 'rgba(191, 65, 65, 1)',
-              borderWidth: 2
-            },{
-              data: result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
-              label: 'Predicted production [kWh]',
-              backgroundColor: 'rgba(69, 94, 184, 0.6)',
-              borderColor: 'rgba(69, 94, 184, 1)',
+              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+              label: 'Predicted ' + this.categoryLabel,
+              backgroundColor: this.predColor,
+              borderColor: this.color,
               borderWidth: 2
             }];
             this.createBarChart();
@@ -415,22 +402,15 @@ export class DeviceDetailsComponent implements OnInit
       const monthDiv = document.getElementById("day2");
       if(monthDiv){ monthDiv.style.backgroundColor = "transparent "; monthDiv.style.color="#3E3E3E";}
 
-      this.deviceDataService.getDSOPredictionForDays(7).subscribe(
+      this.deviceDataService.getDeviceDataForNextNDays( this.device.id, 7).subscribe(
         (result:any) => {
           if( result.success) {
-            this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
-            this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+            this.data = result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
             this.datasets = [{
-              data: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
-              label: 'Predicted consumption [kWh]',
-              backgroundColor: 'rgba(191, 65, 65, 0.6)',
-              borderColor: 'rgba(191, 65, 65, 1)',
-              borderWidth: 2
-            },{
-              data: result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
-              label: 'Predicted production [kWh]',
-              backgroundColor: 'rgba(69, 94, 184, 0.6)',
-              borderColor: 'rgba(69, 94, 184, 1)',
+              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+              label: 'Predicted ' + this.categoryLabel,
+              backgroundColor: this.predColor,
+              borderColor: this.color,
               borderWidth: 2
             }];
             this.createBarChart();

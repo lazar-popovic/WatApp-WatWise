@@ -161,9 +161,9 @@
 
 canvas {
   width: 100%!important;
-  height: 290px!important;
-  max-height: 290px;
-  max-width: calc(100% - 20px);
+  height: 300px!important;
+  max-height: 300px;
+  max-width: calc(100%);
 }
 
 #table {

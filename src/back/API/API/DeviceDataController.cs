@@ -39,10 +39,10 @@ public class DeviceDataController : ControllerBase
     }
 
     [HttpGet]
-    [Route("get-specific-device-data-prediction-allowed-share-for-nextNdays/{id}")]
-    public async Task<IActionResult> GetSpecificDeviceDataWhereShareWithDsoIsAllowedForNextNDays(int id, int numberOfDays)
+    [Route("get-device-data-for-next-n-days")]
+    public async Task<IActionResult> GetDeviceDataForNextNDays(int id, int numberOfDays)
     {
-        return Ok(await _deviceDataBl.GetSpecificDeviceDataWhereShareWithDsoIsAllowedForNextNDays(id, numberOfDays));
+        return Ok(await _deviceDataBl.GetDeviceDataForNextNDays(id, numberOfDays));
     }
 
     [HttpGet]

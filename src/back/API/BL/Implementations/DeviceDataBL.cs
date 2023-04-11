@@ -70,7 +70,7 @@ public class DeviceDataBL : IDeviceDataBL
         }
     }
 
-    public async Task<Response> GetSpecificDeviceDataWhereShareWithDsoIsAllowedForNextNDays(int id, int numberOfDays)
+    public async Task<Response> GetDeviceDataForNextNDays(int id, int numberOfDays)
     {
         var response = new Response();
 
@@ -85,21 +85,21 @@ public class DeviceDataBL : IDeviceDataBL
         if (numberOfDays == 1)
         {
             response.Success = true;
-            response.Data = await _deviceDataDal.GetDeviceDataByIdWhereShareWithDsoIsAllowedForTomorrowPrediction(id);
+            response.Data = await _deviceDataDal.GetDeviceDataForTomorrowPrediction(id);
 
             return response;
         }
         else if (numberOfDays == 3)
         {
             response.Success = true;
-            response.Data = await _deviceDataDal.GetDeviceDataByIdWhereShareWithDsoIsAllowedForNext3DaysPrediction(id);
+            response.Data = await _deviceDataDal.GetDeviceDataForNext3DaysPrediction(id);
 
             return response;
         }
         else
         {
             response.Success = true;
-            response.Data = await _deviceDataDal.GetDeviceDataByIdWhereShareWithDsoIsAllowedForNext7DaysPrediction(id);
+            response.Data = await _deviceDataDal.GetDeviceDataForNext7DaysPrediction(id);
 
             return response;
         }

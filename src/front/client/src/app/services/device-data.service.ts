@@ -20,6 +20,10 @@ export class DeviceDataService {
   {
     return this.http.get(`${environment.apiUrl}device-data/get-device-data-for-year?year=${year}&deviceId=${deviceId}`);
   }
+  getDeviceDataForNextNDays( deviceId: number, days: number) : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}device-data/get-device-data-for-next-n-days?id=${deviceId}&numberOfDays=${days}`);
+  }
   getUserDayStats( day: number, month: number, year: number, userId: number) : Observable<any>
   {
     return this.http.get(`${environment.apiUrl}device-data/get-day-total-for-user?day=${day}&month=${month}&year=${year}&userId=${userId}`);
@@ -42,10 +46,6 @@ export class DeviceDataService {
   }
   getDSOPredictionForDays( days: number) : Observable<any>
   {
-    switch( days) {
-      case 1: return this.http.get(`${environment.apiUrl}device-data/get-prediction-allowed-share-devices-data-for-tomorrow`);
-      case 3: return this.http.get(`${environment.apiUrl}device-data/get-prediction-allowed-share-devices-data-for-next3days`);
-      default: return this.http.get(`${environment.apiUrl}device-data/get-prediction-allowed-share-devices-data-for-next7days`);
-    }
+    return this.http.get(`${environment.apiUrl}device-data/get-devices-data-prediction-allowed-share-for-nextNdays?numberOfDays=${days}`);
   }
 }
