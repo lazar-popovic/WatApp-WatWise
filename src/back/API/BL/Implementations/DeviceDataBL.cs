@@ -37,38 +37,39 @@ public class DeviceDataBL : IDeviceDataBL
 
     public async Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForNextNDays(int numberOfDays)
     {
-        throw new NotImplementedException();
-    }
-
-    /*
-    public async Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction()
-    {
         var response = new Response();
-        response.Success = true;
-        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction();
 
-        return response;
+        if(numberOfDays != 1 &&  numberOfDays != 3 && numberOfDays != 7)
+        {
+            response.Errors.Add("Can only return prediction for 1,3 and 7 days interval!");
+            response.Success = response.Errors.Count == 0;
+
+            return response;
+        }
+
+        if(numberOfDays == 1)
+        {
+            response.Success = true;
+            response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction();
+
+            return response;
+        }
+        else if(numberOfDays == 3)
+        {
+            response.Success = true;
+            response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForNext3DaysPrediction();
+
+            return response;
+        }
+        else
+        {
+            response.Success = true;
+            response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForNext7DaysPrediction();
+
+            return response;
+        }
     }
 
-
-    public async Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForNext3DaysPrediction()
-    {
-        var response = new Response();
-        response.Success = true;
-        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForNext3DaysPrediction();
-
-        return response;
-    }
-
-    public async Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForNext7DaysPrediction()
-    {
-        var response = new Response();
-        response.Success = true;
-        response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForNext7DaysPrediction();
-
-        return response;
-    }
-    */
     public async Task<Response<object>> GetDeviceDataForMonth(int deviceId)
     {
         var response = new Response<object>();
