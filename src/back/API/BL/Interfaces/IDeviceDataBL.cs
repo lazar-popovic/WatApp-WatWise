@@ -8,6 +8,7 @@ public interface IDeviceDataBL
     Task<Response<object>> GetDeviceDataForToday(int deviceId);
     Task<Response<object>> GetAllDevicesDataWhereShareWithDsoIsAllowedForToday();
     Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForNextNDays(int numberOfDays);
+    Task<Response> GetSpecificDeviceDataWhereShareWithDsoIsAllowedForNextNDays(int id, int numberOfDays);
     Task<Response<object>> GetDeviceDataForMonth(int deviceId);
     Task<Response<object>> GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth();
     Task<Response<object>> GetDeviceDataForYear(int deviceId);
