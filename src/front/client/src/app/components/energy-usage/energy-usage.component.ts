@@ -128,7 +128,6 @@ export class EnergyUsageComponent implements OnInit {
             }];
 
           } else if ( date > now) {
-            console.log("pred");
             this.datasets = [{
               data: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
               label: 'Predicted consumption [kWh]',
@@ -143,7 +142,6 @@ export class EnergyUsageComponent implements OnInit {
               borderWidth: 2
             }];
           } else {
-            console.log("hist");
             this.datasets = [{
               data: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
               label: 'Consumption [kWh]',
