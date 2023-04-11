@@ -32,24 +32,17 @@ public class DeviceDataController : ControllerBase
     }
 
     [HttpGet]
-    [Route("get-prediction-allowed-share-devices-data-for-tomorrow")]
-    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction()
+    [Route("get-devices-data-prediction-allowed-share-for-nextNdays")]
+    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForNextNDays(int numberOfDays)
     {
-        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction());
+        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForNextNDays(numberOfDays));
     }
 
     [HttpGet]
-    [Route("get-prediction-allowed-share-devices-data-for-next3days")]
-    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForNext3DaysPrediction()
+    [Route("get-specific-device-data-prediction-allowed-share-for-nextNdays/{id}")]
+    public async Task<IActionResult> GetSpecificDeviceDataWhereShareWithDsoIsAllowedForNextNDays(int id, int numberOfDays)
     {
-        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForNext3DaysPrediction());
-    }
-
-    [HttpGet]
-    [Route("get-prediction-allowed-share-devices-data-for-next7days")]
-    public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForNext7DaysPrediction()
-    {
-        return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForNext7DaysPrediction());
+        return Ok(await _deviceDataBl.GetSpecificDeviceDataWhereShareWithDsoIsAllowedForNextNDays(id, numberOfDays));
     }
 
     [HttpGet]
