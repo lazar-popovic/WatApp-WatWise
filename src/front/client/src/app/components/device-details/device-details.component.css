@@ -34,7 +34,7 @@ h2
     color: rgb(143, 141, 141);
 }
 
-h3
+#details-container h3
 {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -209,6 +209,23 @@ table {
 .data-table tbody tr:hover {
   background-color: #f5f5f5;
 }
+
+.device-details-overlay {
+  /*display: none;*/
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(87, 86, 86, 0.75);
+}
+
+.device-details-edit {
+  position: fixed;
+  left: 40%;
+  top: 30%;
+}
+
 @media (min-width: 600px) {
   #table-container
   {

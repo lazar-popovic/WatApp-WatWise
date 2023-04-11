@@ -1,0 +1,19 @@
+<form class="edit-device-form">
+    <div id="device-esc-btn">
+        <a href="/prosumer/devices"><i class="fa fa-times" id="close-overlay-btn" aria-hidden="true"></i></a>
+    </div>
+    <div id="edit-device-header">
+        <h3>Settings</h3>
+    </div>
+    <div class="input-wraper">
+        <label for="name">Name - Model</label>
+        <input name="name" [(ngModel)]="device.name">
+    </div>
+    <div class="slider-wraper">
+        <app-slider (sliderEvent)="status($event)" [status]="privacyStatus"></app-slider>
+        <p id="slider-text"></p>
+    </div>
+    <div id="edit-device-button">
+        <button (click)="saveChanges()">Save changes</button>
+    </div>
+</form>

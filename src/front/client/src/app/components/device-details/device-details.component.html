@@ -86,7 +86,11 @@
       </div>
       </div>
   </div>
-
+  <div class="device-details-overlay">
+    <div class="device-details-edit">
+      <app-edit-device [id]="device.id" [privacyStatus]="device.activityStatus"></app-edit-device>
+    </div>
+  </div>
 
   <!-- <div class="hour-range-picker">
     <mat-slider [(ngModel)]="startHour" min="0" max="23" tickInterval="1" thumbLabel></mat-slider>
