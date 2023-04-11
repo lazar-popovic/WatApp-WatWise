@@ -35,6 +35,12 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
+    public async Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForNextNDays(int numberOfDays)
+    {
+        throw new NotImplementedException();
+    }
+
+    /*
     public async Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForTomorrowPrediction()
     {
         var response = new Response();
@@ -62,7 +68,7 @@ public class DeviceDataBL : IDeviceDataBL
 
         return response;
     }
-
+    */
     public async Task<Response<object>> GetDeviceDataForMonth(int deviceId)
     {
         var response = new Response<object>();
@@ -123,4 +129,5 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
+    
 }
