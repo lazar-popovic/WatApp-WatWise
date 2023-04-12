@@ -21,6 +21,13 @@ export class OverviewComponent implements OnInit
   currentConsumption: number = 0;
   currentProduction: number = 0;
 
+  cards = {
+    totalConsumption: 0 as number,
+    totalProduction: 0 as number,
+    currentConsumption: 0 as number,
+    currentProduction: 0 as number
+  }
+
   chart1 = {
     data: [] as any[],
     colors: {
@@ -80,24 +87,38 @@ export class OverviewComponent implements OnInit
     this.deviceDataService.getUserDayStats( date.getDate(), date.getMonth()+1, date.getFullYear(), this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
+
           this.chart1.data = [{
-              "name":"Consumption[kWh]",
-              "series": result.data.consumingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
+              name:"Consumption[kWh]",
+              series: result.data.consumingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
                               .map( (ceu:any) => ({name: this.datePipe.transform(ceu.timestamp,"shortTime"), value: ceu.totalEnergyUsage}))
             },{
-              "name":"Production[kWh]",
-              "series": result.data.producingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
+              name:"Production[kWh]",
+              series: result.data.producingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
                               .map( (ceu:any) => ({name: this.datePipe.transform(ceu.timestamp,"shortTime"), value: ceu.totalEnergyUsage}))
             },{
-              "name":"Predicted production[kWh]",
-              "series": result.data.producingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) > new Date())
+              name:"Predicted production[kWh]",
+              series: result.data.producingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) > new Date())
                               .map( (ceu:any) => ({name: this.datePipe.transform(ceu.timestamp,"shortTime"), value: ceu.totalEnergyUsage}))
             },{
-              "name":"Predicted consumption[kWh]",
-              "series": result.data.consumingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) > new Date())
+              name:"Predicted consumption[kWh]",
+              series: result.data.consumingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) > new Date())
                               .map( (ceu:any) => ({name: this.datePipe.transform(ceu.timestamp,"shortTime"), value: ceu.totalEnergyUsage}))
             }
-          ]
+          ];
+
+          this.cards.totalConsumption = result.data.consumingEnergyUsageByTimestamp.reduce((total:any, current:any) => {
+            return total + current.totalEnergyUsage;
+          }, 0);
+
+          this.cards.totalProduction = result.data.producingEnergyUsageByTimestamp.reduce((total:any, current:any) => {
+            return total + current.totalEnergyUsage;
+          }, 0);
+
+          this.cards.currentConsumption = this.chart1.data.find(d => d.name === "Consumption[kWh]")?.series.slice(-1)[0]?.value;
+          this.cards.currentProduction = this.chart1.data.find(d => d.name === "Production[kWh]")?.series.slice(-1)[0]?.value;
+
+          console.log( this.cards);
         }
       }, error => {
         console.log( error);
