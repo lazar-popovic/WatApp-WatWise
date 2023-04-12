@@ -4,12 +4,8 @@
         <div class="overview-filter-holder">
             <form>
                 <div class="search-input">
-                    <input type="text" name="name" [(ngModel)]="filter.name" (change)="getProsumers()">
-                    <button>Search by name</button>
-                </div>
-                <div class="search-input">
-                    <input type="text" name="address" [(ngModel)]="filter.address" (change)="getProsumers()">
-                    <button>Search by Address</button>
+                    <input type="text" name="name" [(ngModel)]="filter.name" (keydown)="getProsumers()" placeholder = "Search by name" autocomplete="off">
+                    <input type="text" name="address" [(ngModel)]="filter.address" (keydown)="getProsumers()" placeholder = "Search by address" autocomplete="off">
                 </div>
                 <button id="add-user-btn" (click)="showAddUProsumer = true">+Add Prosumer</button>
             </form>
@@ -19,10 +15,10 @@
             <table>
                 <tr>
                     <td>First Name</td>
-                    <td>Last Name</td>
+                    <td><button id="lastname-filter" (click)="inverseOrder()">Lastname ↑</button></td>
                     <td>Mail</td>
                     <td>Address</td>
-                    <td><button id="overview-filter" (click)="inverseOrder()">{{filter.order.toUpperCase()}}</button></td>
+                    <td></td>
                 </tr>
                 <tr *ngFor="let user of users">
                     <td>{{user.firstName}}</td>

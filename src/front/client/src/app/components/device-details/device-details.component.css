@@ -41,6 +41,35 @@
   color: gray;
 }
 
+#header img {
+  width: 40px;
+}
+#drop-down-sett {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.drop-down-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 30px;
+  cursor: pointer;
+}
+
+.drop-down-item:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+#header-img:hover #drop-down-sett{
+  display: block;
+}
+
 #nav-bar {
   box-sizing: border-box;
   width: 100%;
@@ -87,24 +116,32 @@
   align-items: center;
 }
 
+#details-a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
 
 .slider
 {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  height: 30px;
-  width: 250px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 30px;
+    width: 250px;
+    border-radius: 30px;
+    margin-left: 10px;
 
-  border-radius: 30px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  vertical-align: middle;
+    vertical-align: middle;
+  horiz-align: center;
 
-  align-items: center;
+    align-items: center;
 
-  padding: 10px;
-   background-color:  white!important;
+    padding: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color:  #1676AC!important;
 }
 
 #today,#month,#year,#day1,#day2,#day3
@@ -130,8 +167,155 @@
 
 #chart-title {
   box-sizing: border-box;
-  width: clac( 100% - 50px);
-  padding: 5px;
+  font-style: normal;
+  font-size: 20px;
+
+  width: 80%;
+
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#tableShow
+{
+    text-align: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+table
+{
+  margin-top: 10px;
+  width: 100%;
+
+  background-color: #ffff;
+  text-align: center;
+  border-radius: 20px;
+
+
+}
+
+
+/* data table za today devices */
+
+.data-table
+{
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 20px;
+  text-align: center;
+  background-color: #fff;
+  color: #333;
+  margin: 0 auto;
+  border-radius: 20px;
+}
+table {
+  border-radius: 20px;
+  width: 100%;
+}
+.data-table thead {
+  background-color: #3E3E3E;
+  color: #fff;
+}
+
+.data-table th, .data-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.data-table th {
+  font-weight: bold;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+@media (min-width: 600px) {
+  #table-container
+  {
+    margin-left: 10%;
+  }
+}
+
+@media screen and (max-width: 599px) {
+
+  body{
+    overflow: auto;
+  }
+
+  h2{
+      float: left;
+  }
+
+  #today-month-year
+  {
+    margin-left: 0px;
+    padding-right: 30px;
+    margin-right: 10px;
+  }
+
+  #h2_device
+  {
+      float: left;
+      margin-left: 10px;
+  }
+
+  #single-device-container
+  {
+    position: absolute;
+    margin-top: 100px;
+    width: 100vw;
+    text-align: center;
+  }
+
+  #graph-container {
+    max-height: 200px;
+    max-width: 90%;
+    overflow: auto;
+    margin: 20px auto auto auto;
+  }
+
+
+  #export
+  {
+    position: relative;
+    right: 45%;
+    margin-bottom: 10px;
+  }
+}
+
+
+/*Day datepicker (month selected)*/
+
+
+#date-picker-form{
+  color: #333;
+}
+
+.mat-calendar-table{
+  color: #333;
+}
+
+.mat-calendar-table span{
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-size: 16px;
+  color: #333;
+}
+
+.mat-calendar-body{
+  color: #333;
+}
+
+.mat-calendar-table button :hover{
+  background-color: #a3a4a5 !important;
+}
+
+.mat-calendar-table button :active{
+  background-color: #0e1822 !important;
+}
+
+.hour-range-picker {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -214,4 +398,21 @@ table tbody tr:hover {
 .slider-not-selected {
   color: #3E3E3E;
   background-color: transparent;
+}
+
+.device-details-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(87, 86, 86, 0.75);
+}
+
+.device-details-edit {
+  display: none;
+  position: fixed;
+  left: 40%;
+  top: 30%;
 }

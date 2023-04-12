@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Device } from 'src/app/Models/device';
 import { DeviceService } from 'src/app/services/device.service';
@@ -11,6 +11,8 @@ import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
   styleUrls: ['./devices-info.component.css']
 })
 export class DevicesInfoComponent implements OnInit{
+  @Input() id: number = 0;
+
   consumeShow: boolean = true;
   prosumeShow: boolean = true;
   storageShow: boolean = true;
@@ -22,7 +24,12 @@ export class DevicesInfoComponent implements OnInit{
  constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService, private route: Router) { }
 
   ngOnInit(): void {
-    this.deviceService.getDevicesByUserId( this.jwtService.userId).subscribe(
+    let idFunc =0;
+    if(this.id != 0)
+      idFunc = this.id;
+    else
+      idFunc = this.jwtService.userId;
+    this.deviceService.getDevicesByUserId(idFunc).subscribe(
       result => {
         if( result.success) {
           for (let devicesType of result.data)
@@ -53,6 +60,7 @@ export class DevicesInfoComponent implements OnInit{
       }
     );
   }
+
   refresh() {
     this.route.navigateByUrl('/prosumer/devices');
   }

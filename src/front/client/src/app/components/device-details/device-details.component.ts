@@ -39,6 +39,9 @@ export class DeviceDetailsComponent implements OnInit
       dataShare: false
     }
 
+    showEdit: boolean = false;
+    showDelete: boolean = false;
+
     date: any;
     month: number = 4;
     yearForMonth: number = 2023;
@@ -447,5 +450,19 @@ export class DeviceDetailsComponent implements OnInit
           }
         }
       });
+    }
+
+    showEditForm() {
+      (document.querySelector('.device-details-overlay') as HTMLDivElement).style.display = 'block';
+      (document.querySelector('.device-details-edit') as HTMLDivElement).style.display = 'block';
+    }
+
+    showDeleteForm() {
+
+    }
+
+    hideForm(status: boolean) {
+      (document.querySelector('.device-details-overlay') as HTMLDivElement).style.display = 'none';
+      (document.querySelector('.device-details-delete') as HTMLDivElement).style.display = 'none';
     }
   }

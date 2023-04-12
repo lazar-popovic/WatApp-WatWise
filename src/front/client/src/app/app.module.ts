@@ -44,6 +44,9 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlider, MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { EditDeviceComponent } from './components/edit-device/edit-device.component';
+import { SliderComponent } from './components/slider/slider.component';
+import { DeleteDeviceComponent } from './components/delete-device/delete-device.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgBusyModule } from 'ng-busy';
 
@@ -77,7 +80,10 @@ import { NgBusyModule } from 'ng-busy';
     ProfileSettingsComponent,
     ProfileViewSettingsComponent,
     PasswordViewSettingsComponent,
-    OverviewDsoComponent
+    OverviewDsoComponent,
+    EditDeviceComponent,
+    SliderComponent,
+    DeleteDeviceComponent
   ],
   imports: [
     BrowserModule,
