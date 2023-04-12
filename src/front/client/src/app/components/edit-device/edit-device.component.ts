@@ -14,7 +14,7 @@ export class EditDeviceComponent implements OnInit{
 
   device: any = {
     name: '',
-    activityStatus: false
+    dataShare: false
   }
 
   constructor(private deviceService: DeviceService, private router: Router) { }
@@ -22,12 +22,12 @@ export class EditDeviceComponent implements OnInit{
   ngOnInit(): void {
     if(this.privacyStatus == true)
       (document.querySelector('#slider-text') as HTMLDivElement).innerText = "Device is visible to DSO."
-    else 
+    else
       (document.querySelector('#slider-text') as HTMLDivElement).innerText = "Device is not visible to DSO."
   }
 
   status(event: boolean) {
-    this.device.activityStatus = event;
+    this.device.dataShare = event;
     if(this.privacyStatus == true) {
       (document.querySelector('#slider-text') as HTMLDivElement).innerText = "Device is visible to DSO.";
     } else if(this.privacyStatus == false) {

@@ -40,16 +40,14 @@ import { UsersOverviewComponent } from './components/users-overview/users-overvi
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepicker } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlider, MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EditDeviceComponent } from './components/edit-device/edit-device.component';
 import { SliderComponent } from './components/slider/slider.component';
-import { DeleteDeviceComponent } from './components/delete-device/delete-device.component';
+//import { DeleteDeviceComponent } from './components/delete-device/delete-device.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgBusyModule } from 'ng-busy';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,7 +81,7 @@ import { NgBusyModule } from 'ng-busy';
     OverviewDsoComponent,
     EditDeviceComponent,
     SliderComponent,
-    DeleteDeviceComponent
+    //DeleteDeviceComponent
   ],
   imports: [
     BrowserModule,

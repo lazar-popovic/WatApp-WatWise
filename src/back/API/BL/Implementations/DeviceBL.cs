@@ -98,7 +98,7 @@ namespace API.BL.Implementations
 
 
         }
-        public async Task<Response<String>> UpdateDevice(int id, DeviceNameAndActivityStatusUpdateViewModel request)
+        public async Task<Response<String>> UpdateDevice(int id, DeviceNameAndDataShareUpdateViewModel request)
         {
             var response = new Response<String>();
 
@@ -113,7 +113,7 @@ namespace API.BL.Implementations
             }
 
             device.Name = request.Name;
-            device.ActivityStatus = request.ActivityStatus;
+            device.DataShare = request.DataShare!.Value;
 
             await _ideviceDal.UpdateDeviceAsync(device);
 
