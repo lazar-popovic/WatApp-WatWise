@@ -39,6 +39,9 @@ export class DeviceDetailsComponent implements OnInit
       dataShare: false
     }
 
+    showEdit: boolean = false;
+    showDelete: boolean = false;
+
     date: any;
     month: number = 4;
     yearForMonth: number = 2023;
@@ -71,6 +74,9 @@ export class DeviceDetailsComponent implements OnInit
                 this.predColor = 'rgba(69, 94, 184, 0.4)';
                 break;
             }
+            let now = new Date();
+            this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
+            this.historyClick();
             console.log( this.device);
           }
         }, error => {
@@ -78,23 +84,28 @@ export class DeviceDetailsComponent implements OnInit
         }
       )
       Chart.register(...registerables);
-
-      this.selectedMonth = 'January';
-      this.selectedYear = '2023';
     }
-
-    ngOnInit(): void
-    {
-
-      /*bootstrap datepicker*/
-     /* $("#datepicker").datepicker({
-        autoclose: true,
-        todayHighlight: true
-      }).datepicker('update', new Date());*/
-    }
+  ngOnInit(): void {
+    let now = new Date();
+    this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
+    this.historyClick();
+  }
 
     historyflag : boolean = true;
     predictionFlag : boolean = false;
+
+    todayFlag : boolean = true;
+    monthFlag : boolean = false;
+    yearFlag : boolean = false;
+
+    tommorowFlag : boolean = false;
+    threeDaysFlag : boolean = false;
+    sevenDaysFlag : boolean = false;
+
+    datasets: any[] = [];
+
+    dataConsumption: any[] = [];
+    dataProduction: any[] = [];
 
     historyClick(){
       this.historyflag = true;
@@ -120,14 +131,8 @@ export class DeviceDetailsComponent implements OnInit
       this.tommorowClick();
     }
 
-
-    todayFlag : boolean = true;
-    monthFlag : boolean = false;
-    yearFlag : boolean = false;
-
     todayClick()
     {
-      console.log("today");
       this.todayFlag  = true; this.monthFlag  = false; this.yearFlag = false;
       var todayDiv = document.getElementById("today");
       if(todayDiv)
@@ -445,5 +450,19 @@ export class DeviceDetailsComponent implements OnInit
           }
         }
       });
+    }
+
+    showEditForm() {
+      (document.querySelector('.device-details-overlay') as HTMLDivElement).style.display = 'block';
+      (document.querySelector('.device-details-edit') as HTMLDivElement).style.display = 'block';
+    }
+
+    showDeleteForm() {
+
+    }
+
+    hideForm(status: boolean) {
+      (document.querySelector('.device-details-overlay') as HTMLDivElement).style.display = 'none';
+      (document.querySelector('.device-details-delete') as HTMLDivElement).style.display = 'none';
     }
   }

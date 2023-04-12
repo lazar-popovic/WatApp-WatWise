@@ -7,6 +7,13 @@
   <div id="content">
     <div id="header">
       <h2><a href="/prosumer/devices">Devices</a> <span style="color: gray;"> /</span> {{device.name}}</h2>
+      <div id="header-img">
+        <img src="/assets/sett.png" alt="settings">
+        <div id="drop-down-sett">
+          <div class="drop-down-item" (click)="showEditForm()">Edit</div>
+          <div class="drop-down-item" (click)="showDeleteForm()">Delete</div>
+        </div>
+      </div>
     </div>
     <div id="nav-bar">
       <h3 id="history-h3" (click)="historyClick()">History</h3>
@@ -69,6 +76,17 @@
       </div>
       </div>
   </div>
+  <div class="device-details-overlay">
+    <div class="device-details-edit">
+      <app-edit-device [id]="device.id" [privacyStatus]="device.activityStatus" (exitStatusEvent)="hideForm($event)"></app-edit-device>
+    </div>
+  </div>
+  <div class="device-details-overlay">
+    <div class="device-details-delete">
+      <app-edit-device [id]="device.id" [privacyStatus]="device.activityStatus" (exitStatusEvent)="hideForm($event)"></app-edit-device>
+    </div>
+  </div>
+
 
 
   <!-- <div class="hour-range-picker">
