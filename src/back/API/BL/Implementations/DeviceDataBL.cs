@@ -36,6 +36,16 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
+    public async Task<Response> GetDeviceDataForCategoryAndProsumerIdForToday(int day, int month, int year, int category, int userId)
+    {
+        var response = new Response();
+
+        response.Success = true;
+        response.Data = await _deviceDataDal.GetDeviceDataForCategoryAndProsumerIdForToday(day, month, year, category, userId);
+
+        return response;
+    }
+
     public async Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForNextNDays(int numberOfDays)
     {
         var response = new Response();

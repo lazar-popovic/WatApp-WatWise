@@ -85,6 +85,32 @@ public class DeviceDataDAL : IDeviceDataDAL
 
     }
 
+
+    public async Task<object> GetDeviceDataForCategoryAndProsumerIdForToday(int day, int month, int year, int category, int userId)
+    {
+        var startDateTime = new DateTime(year, month, day, 0, 0, 0); // start at midnight on the specified day
+        var endDateTime = new DateTime(year, month, day, 23, 59, 0); // end at 23:59pm on the specified day
+
+        var energyUsageByTimestamp = await(
+            from deviceEnergyUsage in _dataContext.DeviceEnergyUsage
+            join device in _dataContext.Devices on deviceEnergyUsage.DeviceId equals device.Id
+            join deviceType in _dataContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
+            where device.DataShare
+                && deviceType.Category == category
+                && device.UserId == userId
+                && deviceEnergyUsage.Timestamp >= startDateTime
+                && deviceEnergyUsage.Timestamp <= endDateTime
+            group deviceEnergyUsage by new { deviceEnergyUsage.Timestamp!.Value.Date, deviceEnergyUsage.Timestamp.Value.Hour } into g
+            select new
+            {
+                Timestamp = new DateTime(g.Key.Date.Year, g.Key.Date.Month, g.Key.Date.Day, g.Key.Hour, 0, 0),
+                Value = g.Sum(eu => eu.Value)
+            }
+        ).AsNoTracking().ToListAsync();
+
+        return energyUsageByTimestamp;
+    }
+
     public async Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth(int month, int year)
     {
         var consumingEnergyUsageByTimestamp = await (

@@ -32,6 +32,13 @@ public class DeviceDataController : ControllerBase
     }
 
     [HttpGet]
+    [Route("get-device-data-history-by-category-andProsumers-id-allowed-share-for-today")]
+    public async Task<IActionResult> GetDeviceDataForCategoryAndProsumerIdForToday(int day, int month, int year, int category, int userId)
+    {
+        return Ok(await _deviceDataBl.GetDeviceDataForCategoryAndProsumerIdForToday(day, month, year, category, userId));
+    }
+
+    [HttpGet]
     [Route("get-devices-data-prediction-allowed-share-for-nextNdays")]
     public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForNextNDays(int numberOfDays)
     {
