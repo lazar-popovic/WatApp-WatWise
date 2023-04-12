@@ -3,6 +3,7 @@ using API.Common;
 using API.DAL.Interfaces;
 using API.Models;
 using API.Models.Entity;
+using System;
 
 namespace API.BL.Implementations;
 
@@ -155,6 +156,16 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
+    public async Task<Response> GetDeviceDataForCategoryAndProsumerIdForYear(int year, int category, int userId)
+    {
+        var response = new Response();
+
+        response.Success = true;
+        response.Data = await _deviceDataDal.GetDeviceDataForCategoryAndProsumerIdForYear(year, category, userId);
+
+        return response;
+    }
+
     public async Task<Response<object>> GetDayTotalProductionConsumptionByUserId( int day, int month, int year, int userId)
     {
         var response = new Response<object>();
@@ -174,5 +185,4 @@ public class DeviceDataBL : IDeviceDataBL
 
         return response;
     }
-
 }

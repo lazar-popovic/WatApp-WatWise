@@ -12,6 +12,7 @@ public interface IDeviceDataDAL
     Task<object> GetDeviceDataForCategoryAndProsumerIdForMonth(int month, int year, int category, int userId);
     Task<object> GetDeviceDataForYear( int year, int deviceId);
     Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForYear(int year);
+    Task<object> GetDeviceDataForCategoryAndProsumerIdForYear(int year, int category, int userId);
     Task<object> GetDeviceDataForTomorrowPrediction(int id);
     Task<object> GetDeviceDataForNext3DaysPrediction(int id);
     Task<object> GetDeviceDataForNext7DaysPrediction(int id);

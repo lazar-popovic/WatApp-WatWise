@@ -160,6 +160,25 @@ public class DeviceDataDAL : IDeviceDataDAL
         return new { producingEnergyUsageByTimestamp, consumingEnergyUsageByTimestamp };
     }
 
+    public async Task<object> GetDeviceDataForCategoryAndProsumerIdForYear(int year, int category, int userId)
+    {
+        var energyUsageByYear = await (
+                 from energyUsage in _dataContext.DeviceEnergyUsage
+                 join device in _dataContext.Devices on energyUsage.DeviceId equals device.Id
+                 join deviceType in _dataContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
+                 where device.DataShare && energyUsage.Timestamp!.Value.Year == year && device.UserId == userId && deviceType.Category == category
+                 group energyUsage by new { energyUsage.Timestamp!.Value.Year, energyUsage.Timestamp!.Value.Month } into g
+                 select new
+                 {
+                     Timestamp = g.Key.Month + "/" + g.Key.Year,
+                     Value = g.Sum(eu => eu.Value)
+                 }
+             ).AsNoTracking().ToListAsync();
+
+        return new { energyUsageByYear };
+
+    }
+
     public async Task<object> GetDayTotalProductionConsumptionByUserId( int day, int month, int year, int userId)
     {
         var startTimestamp = new DateTime(year, month, day);

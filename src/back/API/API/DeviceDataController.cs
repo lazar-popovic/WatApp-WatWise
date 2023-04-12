@@ -46,7 +46,7 @@ public class DeviceDataController : ControllerBase
     }
 
     [HttpGet]
-    [Route("get-device-data-history-by-category-andProsumers-id-for-month")]
+    [Route("get-device-data-history-by-category-andProsumers-id-allowed-share-for-month")]
     public async Task<IActionResult> GetDeviceDataForCategoryAndProsumerIdForMonth(int month,int year, int category, int userId)
     {
         return Ok(await _deviceDataBl.GetDeviceDataForCategoryAndProsumerIdForMonth(month, year, category, userId));
@@ -78,6 +78,13 @@ public class DeviceDataController : ControllerBase
     public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForYear( int year)
     {
         return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForYear( year));
+    }
+
+    [HttpGet]
+    [Route("get-device-data-history-by-category-andProsumers-id-allowed-share-for-year")]
+    public async Task<IActionResult> GetDeviceDataForCategoryAndProsumerIdForYear(int year, int category, int userId)
+    {
+        return Ok(await _deviceDataBl.GetDeviceDataForCategoryAndProsumerIdForYear(year, category, userId));
     }
 
     [HttpGet]
