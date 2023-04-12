@@ -25,9 +25,9 @@ public class User
     public User()
     {
 
-        var defaultImageName = "defaultavatar.jpg";
-        var defaultImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", defaultImageName);
-        var defaultImageData = System.IO.File.ReadAllBytes(defaultImagePath);
+
+        string imagePath = Path.Combine("Images", "defaultavatar.jpg");
+        var defaultImageData = File.ReadAllBytes(imagePath);
 
 
 

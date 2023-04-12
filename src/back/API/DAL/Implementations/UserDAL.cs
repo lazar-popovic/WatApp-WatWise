@@ -29,7 +29,8 @@ namespace API.DAL.Implementations
                                        RoleId = u.RoleId,
                                        Role = u.Role,
                                        LocationId = u.LocationId,
-                                       Location = u.Location
+                                       Location = u.Location,
+                                       ProfileImage = u.ProfileImage 
 
                                    }).AsNoTracking().SingleOrDefaultAsync();
 
@@ -50,7 +51,8 @@ namespace API.DAL.Implementations
                                        RoleId = u.RoleId,
                                        Role = u.Role,
                                        LocationId = u.LocationId,
-                                       Location = u.Location
+                                       Location = u.Location,
+                                       ProfileImage = u.ProfileImage
                                     ,
                                    }).AsNoTracking().SingleOrDefaultAsync();
 
@@ -70,7 +72,8 @@ namespace API.DAL.Implementations
                                        RoleId = u.RoleId,
                                        Role = u.Role,
                                        LocationId = u.LocationId,
-                                       Location = u.Location
+                                       Location = u.Location,
+                                       ProfileImage = u.ProfileImage
 
                                    }).AsNoTracking().ToListAsync();
 
