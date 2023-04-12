@@ -25,6 +25,8 @@ import { EmployeeOverviewComponent } from './components/employee-overview/employ
 import { DeviceInputComponent } from './components/device-input/device-input.component';
 import { OverviewDsoComponent } from './components/overview-dso/overview-dso.component';
 import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
+import { EditDeviceComponent } from './components/edit-device/edit-device.component';
+import { SliderComponent } from './components/slider/slider.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -45,7 +47,9 @@ const routes: Routes = [
   { path: 'prosumer/reset-password', component: PasswordInputComponent},
   { path: 'test-component3', component: EmployeeOverviewComponent},
   { path: 'prosumer/device/:id', component: DeviceDetailsComponent},
-  { path: 'profile-settings', component: ProfileSettingsComponent}
+  { path: 'profile-settings', component: ProfileSettingsComponent},
+  { path: 'test-component', component: EditDeviceComponent},
+  { path: 't-c', component: SliderComponent}
 ];
 
 @NgModule({

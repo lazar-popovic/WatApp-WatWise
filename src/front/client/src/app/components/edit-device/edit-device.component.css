@@ -80,12 +80,12 @@
     justify-content: flex-end;
 }
 
-#device-esc-btn a{
+#device-esc-btn{
     color: black;
     font-size: 30px;
 }
 
-#device-esc-btn a {
+#close-form {
     width: fit-content;
 }
 

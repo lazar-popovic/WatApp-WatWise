@@ -44,6 +44,8 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlider, MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { EditDeviceComponent } from './components/edit-device/edit-device.component';
+import { SliderComponent } from './components/slider/slider.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ProfileSettingsComponent,
     ProfileViewSettingsComponent,
     PasswordViewSettingsComponent,
-    OverviewDsoComponent
+    OverviewDsoComponent,
+    EditDeviceComponent,
+    SliderComponent
   ],
   imports: [
     BrowserModule,
