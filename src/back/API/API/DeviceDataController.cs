@@ -46,6 +46,13 @@ public class DeviceDataController : ControllerBase
     }
 
     [HttpGet]
+    [Route("get-devices-data-prediction-for-nextNdays-by-category-andProsumers-id")]
+    public async Task<IActionResult> GetProsumerDevicesDataPredictionForNextNDaysForCategory(int numberOfDays, int category, int userId)
+    {
+        return Ok(await _deviceDataBl.GetProsumerDevicesDataForNextNDaysForCategory(numberOfDays, category, userId));
+    }
+
+    [HttpGet]
     [Route("get-device-data-for-next-n-days")]
     public async Task<IActionResult> GetDeviceDataForNextNDays(int id, int numberOfDays)
     {

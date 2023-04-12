@@ -16,6 +16,7 @@ public interface IDeviceDataBL
     Task<Response> GetDeviceDataForCategoryAndProsumerIdForYear(int year, int category, int userId);
     Task<Response> GetAllDevicesDataWhereShareWithDsoIsAllowedForNextNDays(int numberOfDays);
     Task<Response> GetDeviceDataForNextNDays(int id, int numberOfDays);
+    Task<Response> GetProsumerDevicesDataForNextNDaysForCategory(int numberOfDays, int category, int userId);
     Task<Response> GetTotalConsumptionForPrevious7HoursAndTotalProductionForNext7HoursForAllUsers();
     Task<Response<object>> GetDayTotalProductionConsumptionByUserId( int day, int month, int year, int userId);
   
