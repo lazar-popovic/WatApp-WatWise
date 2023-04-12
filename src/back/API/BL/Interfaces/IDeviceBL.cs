@@ -9,7 +9,7 @@ namespace API.BL.Interfaces
         Task<Response<List<Device>>> GetDevice();
         Task<Response<String>> AddDevice(Device device);
         Task<Response<Device>> GetByIdAsync(int id);
-        Task<Response<String>> UpdateDevice(int id, Device device);
+        Task<Response<String>> UpdateDevice(int id, DeviceNameAndActivityStatusUpdateViewModel request);
         Task<Response<String>> DeleteDevice(int id);
         Task<Response<String>> AddDeviceViewModel(DeviceViewModel devicee);
         Task<Response<List<DeviceType>>> GetDeviceTypesByCategory(int id);
