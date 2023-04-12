@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DeviceService } from 'src/app/services/device.service';
 import { JWTService } from 'src/app/services/jwt.service';
 import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
@@ -25,7 +26,10 @@ export class DeviceInputComponent implements OnInit{
     storages: [] as any[],
     producers: [] as any[]
   }
- constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService, private route: Router) { }
+
+  busyAddDevice: Subscription | undefined;
+
+  constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService, private route: Router) { }
 
   ngOnInit(): void {
     this.deviceService.getDevicesByUserId(this.jwtService.userId).subscribe(
@@ -61,7 +65,7 @@ export class DeviceInputComponent implements OnInit{
   addDevice()
   {
     this.newDevice.userId = this.jwtService.userId;
-    this.deviceService.insertDevice( this.newDevice).subscribe(
+    this.busyAddDevice = this.deviceService.insertDevice( this.newDevice).subscribe(
       result => {
         if( result.body.success)
         {

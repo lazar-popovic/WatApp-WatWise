@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth-service.service';
 import { Router } from '@angular/router';
 import { ToastrNotifService} from "../../services/toastr-notif.service";
 import {JWTService} from "../../services/jwt.service";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -16,10 +17,12 @@ export class LoginComponent {
     password : ''
   };
 
+  busyLogin: Subscription | undefined;
+
   constructor(private authService: AuthService, private route: Router, private toastrNotifService: ToastrNotifService, private jwtService: JWTService) { }
 
   logIn() {
-      this.authService.login(this.login).subscribe((result: any) => {
+    this.busyLogin = this.authService.login(this.login).subscribe((result: any) => {
         if( result.body.success) {
           localStorage.setItem("token", result.body.data.token);
           this.jwtService.setToken();

@@ -4,39 +4,110 @@
   </div>
   <div class="dashboard">
     <div class="card-group">
-      <div class="card standard-card-style">
-        <h3>Card 1</h3>
+      <div class="card standard-card-style card-small">
+        <div class="card-left">
+          <h4>Currently consuming</h4>
+        </div>
+        <div class="card-right">
+          <h4 class="c-red">{{cards.currentConsumption.toFixed(2)}}kWh</h4>
+        </div>
       </div>
-      <div class="card standard-card-style">
-        <h3>Card 2</h3>
+      <div class="card standard-card-style card-small">
+        <div class="card-left">
+          <h4>Currently producing</h4>
+        </div>
+        <div class="card-right">
+          <h4 class="c-blue">{{cards.currentProduction.toFixed(2)}}kWh</h4>
+        </div>
       </div>
-      <div class="card standard-card-style">
-        <h3>Card 3</h3>
+      <div class="card standard-card-style card-small">
+        <div class="card-left">
+          <h4>Predicted consumption for today</h4>
+        </div>
+        <div class="card-right">
+          <h4 class="c-red">{{cards.totalConsumption.toFixed(2)}}kW</h4>
+        </div>
       </div>
-      <div class="card standard-card-style">
-        <h3>Card 4</h3>
+      <div class="card standard-card-style card-small">
+        <div class="card-left">
+          <h4>Predicted production for today</h4>
+        </div>
+        <div class="card-right">
+          <h4 class="c-blue">{{cards.totalProduction.toFixed(2)}}kWh</h4>
+        </div>
       </div>
     </div>
     <div class="card-group">
       <div class="card card-big standard-card-style">
-        <h3>Card 5</h3>
-        <canvas id="chart1" style=" height: 100%;"></canvas>
+        <h4>Consumption and production of electrical energy for today</h4>
+        <div class="chart-holder">
+          <ngx-charts-line-chart
+            [results]="chart1.data"
+            [legend]="true"
+            [legendPosition]="chart1.legendPosition"
+            [yAxis]="true"
+            [xAxis]="true"
+            [xAxisLabel]="'Hours'"
+            [yAxisLabel]="'Electrical energy'"
+            [showGridLines]="true"
+            [scheme]="chart1.colors"
+            [yAxisTickFormatting]="yAxisTickFormatting"
+          >
+          </ngx-charts-line-chart>
+        </div>
       </div>
       <div class="card card-big standard-card-style">
-        <h3>Card 6</h3>
-        <canvas id="chart2"></canvas>
+        <h4>Consumption and production of electrical energy for tommorow</h4>
+        <div class="chart-holder">
+          <ngx-charts-line-chart
+            [results]="chart2.data"
+            [legend]="true"
+            [legendPosition]="chart2.legendPosition"
+            [yAxis]="true"
+            [xAxis]="true"
+            [xAxisLabel]="'Hours'"
+            [yAxisLabel]="'Electrical energy'"
+            [showGridLines]="true"
+            [scheme]="chart2.colors"
+            [yAxisTickFormatting]="yAxisTickFormatting"
+          >
+          </ngx-charts-line-chart>
+        </div>
       </div>
       <div class="card card-big standard-card-style">
-        <h3>Card 7</h3>
+        <h4>Top consuming devices</h4>
+        <div class="chart-holder chart-holder-pie-grid">
+          <ngx-charts-pie-grid
+            [results]="chart3.data"
+            [scheme]="chart3.colors"
+            [minWidth]="80"
+            [designatedTotal] = "cards.currentConsumption"
+          >
+          </ngx-charts-pie-grid>
+        </div>
       </div>
       <div class="card card-big standard-card-style">
-        <h3>Card 8</h3>
+        <h4>Top producing devices</h4>
+        <div class="chart-holder chart-holder-pie-grid">
+          <ngx-charts-pie-grid class="chart"
+            [results]="chart4.data"
+            [scheme]="chart4.colors"
+            [designatedTotal] = "cards.currentProduction"
+          >
+          </ngx-charts-pie-grid>
+        </div>
       </div>
       <div class="card card-big standard-card-style">
-        <h3>Card 8</h3>
+        <div>
+          <h3>Card 8</h3>
+          <div class="chart-holder">
+          </div>
+        </div>
       </div>
       <div class="card card-big standard-card-style">
-        <h3>Card 8</h3>
+        <div>
+          <h3>Card 8</h3>
+        </div>
       </div>
     </div>
   </div>
