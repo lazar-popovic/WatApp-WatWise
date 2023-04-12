@@ -46,6 +46,7 @@ import { MatSlider, MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EditDeviceComponent } from './components/edit-device/edit-device.component';
 import { SliderComponent } from './components/slider/slider.component';
+import { DeleteDeviceComponent } from './components/delete-device/delete-device.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { SliderComponent } from './components/slider/slider.component';
     PasswordViewSettingsComponent,
     OverviewDsoComponent,
     EditDeviceComponent,
-    SliderComponent
+    SliderComponent,
+    DeleteDeviceComponent
   ],
   imports: [
     BrowserModule,
