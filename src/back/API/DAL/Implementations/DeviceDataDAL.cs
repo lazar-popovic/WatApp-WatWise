@@ -114,6 +114,23 @@ public class DeviceDataDAL : IDeviceDataDAL
         return new { producingEnergyUsageByTimestamp, consumingEnergyUsageByTimestamp };
     }
 
+    public async Task<object> GetDeviceDataForCategoryAndProsumerIdForMonth(int month, int year, int category, int userId)
+    {
+        var energyUsageByTimestamp = await (
+                from energyUsage in _dataContext.DeviceEnergyUsage
+                join device in _dataContext.Devices on energyUsage.DeviceId equals device.Id
+                join deviceType in _dataContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
+                where device.UserId == userId && device.DataShare && energyUsage.Timestamp!.Value.Year == year && energyUsage.Timestamp!.Value.Month == month && energyUsage.Timestamp.Value < DateTime.Now && deviceType.Category == category
+                group energyUsage by energyUsage.Timestamp!.Value.Date into g
+                select new
+                {
+                    Timestamp = g.Key.Date.ToShortDateString(),
+                    Value = g.Sum(eu => eu.Value)
+                }).AsNoTracking().ToListAsync();
+
+        return new { energyUsageByTimestamp };
+    }
+
     public async Task<object> GetAllDevicesDataWhereShareWithDsoIsAllowedForYear(int year)
     {
         var consumingEnergyUsageByTimestamp = await (

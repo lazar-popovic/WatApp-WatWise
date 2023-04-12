@@ -125,6 +125,16 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
+    public async Task<Response> GetDeviceDataForCategoryAndProsumerIdForMonth(int month, int year, int category, int userId)
+    {
+        var response = new Response();
+
+        response.Success = true;
+        response.Data = await _deviceDataDal.GetDeviceDataForCategoryAndProsumerIdForMonth(month, year, category, userId);
+
+        return response;
+    }
+
     public async Task<Response<object>> GetDeviceDataForYear( int year, int deviceId)
     {
         var response = new Response<object>();
@@ -165,5 +175,4 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
-   
 }

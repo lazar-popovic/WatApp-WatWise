@@ -46,6 +46,13 @@ public class DeviceDataController : ControllerBase
     }
 
     [HttpGet]
+    [Route("get-device-data-history-by-category-andProsumers-id-for-month")]
+    public async Task<IActionResult> GetDeviceDataForCategoryAndProsumerIdForMonth(int month,int year, int category, int userId)
+    {
+        return Ok(await _deviceDataBl.GetDeviceDataForCategoryAndProsumerIdForMonth(month, year, category, userId));
+    }
+
+    [HttpGet]
     [Route("get-device-data-for-month")]
     public async Task<IActionResult> GetDeviceDataForMonth(int month, int year, int deviceId)
     {
