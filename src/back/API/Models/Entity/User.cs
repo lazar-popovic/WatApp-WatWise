@@ -24,10 +24,13 @@ public class User
 
     public User()
     {
-        
-        var defaultImageData = System.IO.File.ReadAllBytes("putanja/do/podrazumevane/slike.jpg");
 
-       
+        var defaultImageName = "defaultavatar.jpg";
+        var defaultImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", defaultImageName);
+        var defaultImageData = System.IO.File.ReadAllBytes(defaultImagePath);
+
+
+
         if (ProfileImage == null)
         {
             ProfileImage = defaultImageData;

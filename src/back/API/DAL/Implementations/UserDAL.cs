@@ -2,6 +2,7 @@
 using API.DAL.Interfaces;
 using API.Models.Entity;
 using API.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.DAL.Implementations
@@ -181,7 +182,7 @@ namespace API.DAL.Implementations
             _dbContext.Users.Update(user);
             _dbContext.SaveChanges();
         }
-        public async Task<User> SaveProfilePictureAsync(int userId, byte[] profilePicture)
+        public async Task<User> SaveProfilePictureAsync(int userId, [FromBody]byte[] profilePicture)
         {
             var user = await _dbContext.Users.FindAsync(userId);
 

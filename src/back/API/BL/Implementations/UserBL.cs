@@ -4,6 +4,7 @@ using API.DAL.Interfaces;
 using API.Models;
 using API.Models.Entity;
 using API.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.BL.Implementations
 {
@@ -225,7 +226,7 @@ namespace API.BL.Implementations
             return response;
         }
 
-        public async Task<Response<User>> SaveImageForUser(int id, byte[] profilePicture)
+        public async Task<Response<User>> SaveImageForUser(int id, [FromBody] byte[] profilePicture)
         
         {
             var response = new Response<User>();
