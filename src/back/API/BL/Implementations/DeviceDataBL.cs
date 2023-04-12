@@ -3,6 +3,7 @@ using API.Common;
 using API.DAL.Interfaces;
 using API.Models;
 using API.Models.Entity;
+using System;
 
 namespace API.BL.Implementations;
 
@@ -31,6 +32,16 @@ public class DeviceDataBL : IDeviceDataBL
 
         response.Success = true;
         response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForToday(day, month, year);
+
+        return response;
+    }
+
+    public async Task<Response> GetDeviceDataForCategoryAndProsumerIdForToday(int day, int month, int year, int category, int userId)
+    {
+        var response = new Response();
+
+        response.Success = true;
+        response.Data = await _deviceDataDal.GetDeviceDataForCategoryAndProsumerIdForToday(day, month, year, category, userId);
 
         return response;
     }
@@ -105,6 +116,41 @@ public class DeviceDataBL : IDeviceDataBL
         }
     }
 
+    public async Task<Response> GetProsumerDevicesDataForNextNDaysForCategory(int numberOfDays, int category, int userId)
+    {
+        var response = new Response();
+
+        if (numberOfDays != 1 && numberOfDays != 3 && numberOfDays != 7)
+        {
+            response.Errors.Add("Can only return prediction for 1,3 and 7 days interval!");
+            response.Success = response.Errors.Count == 0;
+
+            return response;
+        }
+
+        if (numberOfDays == 1)
+        {
+            response.Success = true;
+            response.Data = await _deviceDataDal.GetDeviceDataForTomorrowPredictionByCategoryAndUserId(category, userId);
+
+            return response;
+        }
+        else if (numberOfDays == 3)
+        {
+            response.Success = true;
+            response.Data = await _deviceDataDal.GetDeviceDataForNext3DaysPredictionByCategoryAndUserId(category, userId);
+
+            return response;
+        }
+        else
+        {
+            response.Success = true;
+            response.Data = await _deviceDataDal.GetDeviceDataForNext7DaysPredictionByCategoryAndUserId(category, userId);
+
+            return response;
+        }
+    }
+
     public async Task<Response<object>> GetDeviceDataForMonth( int month, int year, int deviceId)
     {
         var response = new Response<object>();
@@ -121,6 +167,16 @@ public class DeviceDataBL : IDeviceDataBL
 
         response.Success = true;
         response.Data = await _deviceDataDal.GetAllDevicesDataWhereShareWithDsoIsAllowedForMonth( month, year);
+
+        return response;
+    }
+
+    public async Task<Response> GetDeviceDataForCategoryAndProsumerIdForMonth(int month, int year, int category, int userId)
+    {
+        var response = new Response();
+
+        response.Success = true;
+        response.Data = await _deviceDataDal.GetDeviceDataForCategoryAndProsumerIdForMonth(month, year, category, userId);
 
         return response;
     }
@@ -145,6 +201,16 @@ public class DeviceDataBL : IDeviceDataBL
         return response;
     }
 
+    public async Task<Response> GetDeviceDataForCategoryAndProsumerIdForYear(int year, int category, int userId)
+    {
+        var response = new Response();
+
+        response.Success = true;
+        response.Data = await _deviceDataDal.GetDeviceDataForCategoryAndProsumerIdForYear(year, category, userId);
+
+        return response;
+    }
+
     public async Task<Response<object>> GetDayTotalProductionConsumptionByUserId( int day, int month, int year, int userId)
     {
         var response = new Response<object>();
@@ -164,6 +230,4 @@ public class DeviceDataBL : IDeviceDataBL
 
         return response;
     }
-
-   
 }

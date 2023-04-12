@@ -1,7 +1,7 @@
 <div class="login-holder">
-  <div class="wrapper" >
+  <div class="wrapper">
     <h2>Login</h2>
-    <form action="#">
+    <form action="#" [ngBusy]="busyLogin">
       <div class="input-box">
         <input type="text" name="email" [(ngModel)]="login.email" placeholder="Email">
       </div>

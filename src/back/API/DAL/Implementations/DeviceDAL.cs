@@ -62,11 +62,11 @@ namespace API.DAL.Implementations
             var device = new Device
             {
                 UserId = devicee.UserId,
-                ActivityStatus = false,
+                ActivityStatus = true,
                 PurchaseDate = DateTime.Now,
                 DeviceTypeId = devicee.DeviceTypeId,
                 Name = devicee.Name,
-                DataShare = false
+                DataShare = true
             };
             await _dbContext.Devices.AddAsync(device);
             await _dbContext.SaveChangesAsync();
@@ -153,12 +153,12 @@ namespace API.DAL.Implementations
                 join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty()
                     on device.Id equals usage.DeviceId into usageGroup
                 where device.UserId == userId && device.ActivityStatus == true
-                group new { device.Id, device.Name, device.ActivityStatus, Value = usageGroup.FirstOrDefault().Value }
+                group new { device.Name, Value = usageGroup.FirstOrDefault().Value }
                     by deviceType.Category into grouped
                 orderby grouped.Max(g => g.Value) descending
                 select new {
                     Category = grouped.Key,
-                    Devices = grouped.OrderByDescending(g => g.Value).Take(3).ToList()
+                    Devices = grouped.OrderByDescending(g => g.Value).Take(4).ToList()
                 };
             return await result.ToListAsync();
         }

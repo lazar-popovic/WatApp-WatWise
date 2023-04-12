@@ -38,10 +38,39 @@
 .card {
   background-color: #fff;
   border: 1px solid #ddd;
-  padding: 20px;
+  padding: 10px;
   width: calc(25% - 20px);
   height: 120px;
   box-sizing: border-box;
+}
+
+.card-small {
+  display: flex;
+  flex-direction: row;
+}
+
+.card-left {
+  display: flex;
+  box-sizing: border-box;
+  height: 100%;
+  width: 65%;
+  align-items: center;
+  justify-items: left;
+}
+.card-right {
+  display: flex;
+  box-sizing: border-box;
+  height: 100%;
+  width: 35%;
+  align-items: center;
+  justify-items: right;
+}
+
+.c-red {
+  color: rgba(191, 65, 65, 1)!important;
+}
+.c-blue {
+  color: rgba(69, 94, 184, 1)!important;
 }
 
 .card-big {
@@ -57,4 +86,18 @@
   .card-big {
     width: calc(100% - 20px);
   }
+}
+
+.chart-holder {
+  height: 280px;
+  width: 100%;
+  position: relative;
+}
+
+.chart-holder-pie-grid {
+  height: 340px!important;
+}
+
+.card h4, .card-big h4 {
+  color: #3e3e3e;
 }
