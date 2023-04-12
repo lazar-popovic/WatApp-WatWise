@@ -38,7 +38,7 @@
 .card {
   background-color: #fff;
   border: 1px solid #ddd;
-  padding: 20px;
+  padding: 10px;
   width: calc(25% - 20px);
   height: 120px;
   box-sizing: border-box;
@@ -57,4 +57,15 @@
   .card-big {
     width: calc(100% - 20px);
   }
+}
+
+.chart-holder {
+  height: 290px;
+  width: 100%;
+  position: relative;
+}
+
+
+.card h4, .card-big h4 {
+  color: #3e3e3e;
 }

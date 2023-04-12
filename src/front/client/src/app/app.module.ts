@@ -44,6 +44,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlider, MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatFormFieldModule,
     MatSelectModule,
     MatSliderModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    NgxChartsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
