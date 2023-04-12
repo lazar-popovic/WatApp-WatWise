@@ -45,6 +45,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlider, MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgBusyModule } from 'ng-busy';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatSelectModule,
     MatSliderModule,
     MatCheckboxModule,
-    NgxChartsModule
+    NgxChartsModule,
+    NgBusyModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
