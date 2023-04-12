@@ -21,4 +21,16 @@ public class User
 
     public List<Device>? Devices { get; set; }
     public byte[]? ProfileImage { get; set; }
+
+    public User()
+    {
+        
+        var defaultImageData = System.IO.File.ReadAllBytes("putanja/do/podrazumevane/slike.jpg");
+
+       
+        if (ProfileImage == null)
+        {
+            ProfileImage = defaultImageData;
+        }
+    }
 }
