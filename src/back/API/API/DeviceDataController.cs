@@ -32,6 +32,13 @@ public class DeviceDataController : ControllerBase
     }
 
     [HttpGet]
+    [Route("get-device-data-history-by-category-andProsumers-id-allowed-share-for-today")]
+    public async Task<IActionResult> GetDeviceDataForCategoryAndProsumerIdForToday(int day, int month, int year, int category, int userId)
+    {
+        return Ok(await _deviceDataBl.GetDeviceDataForCategoryAndProsumerIdForToday(day, month, year, category, userId));
+    }
+
+    [HttpGet]
     [Route("get-devices-data-prediction-allowed-share-for-nextNdays")]
     public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForNextNDays(int numberOfDays)
     {
@@ -39,10 +46,24 @@ public class DeviceDataController : ControllerBase
     }
 
     [HttpGet]
+    [Route("get-devices-data-prediction-for-nextNdays-by-category-andProsumers-id")]
+    public async Task<IActionResult> GetProsumerDevicesDataPredictionForNextNDaysForCategory(int numberOfDays, int category, int userId)
+    {
+        return Ok(await _deviceDataBl.GetProsumerDevicesDataForNextNDaysForCategory(numberOfDays, category, userId));
+    }
+
+    [HttpGet]
     [Route("get-device-data-for-next-n-days")]
     public async Task<IActionResult> GetDeviceDataForNextNDays(int id, int numberOfDays)
     {
         return Ok(await _deviceDataBl.GetDeviceDataForNextNDays(id, numberOfDays));
+    }
+
+    [HttpGet]
+    [Route("get-device-data-history-by-category-andProsumers-id-allowed-share-for-month")]
+    public async Task<IActionResult> GetDeviceDataForCategoryAndProsumerIdForMonth(int month,int year, int category, int userId)
+    {
+        return Ok(await _deviceDataBl.GetDeviceDataForCategoryAndProsumerIdForMonth(month, year, category, userId));
     }
 
     [HttpGet]
@@ -71,6 +92,13 @@ public class DeviceDataController : ControllerBase
     public async Task<IActionResult> GetAllDevicesDataWhereShareWithDsoIsAllowedForYear( int year)
     {
         return Ok(await _deviceDataBl.GetAllDevicesDataWhereShareWithDsoIsAllowedForYear( year));
+    }
+
+    [HttpGet]
+    [Route("get-device-data-history-by-category-andProsumers-id-allowed-share-for-year")]
+    public async Task<IActionResult> GetDeviceDataForCategoryAndProsumerIdForYear(int year, int category, int userId)
+    {
+        return Ok(await _deviceDataBl.GetDeviceDataForCategoryAndProsumerIdForYear(year, category, userId));
     }
 
     [HttpGet]
