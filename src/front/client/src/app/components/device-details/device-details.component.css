@@ -16,7 +16,20 @@
   #container {
     flex-direction: row;
   }
+
+  .device-details-overlay > .device-details-edit, .device-details-delete {
+    left: 10%;
+  }
+
+  .device-details-overlay > .device-details-delete {
+    left: 10%;
+  }
+
+  #header-img > #drop-down-sett {
+    right: 0;
+  }
 }
+
 @media ( max-width: 600px) {
   #container {
     flex-direction: column;
@@ -44,6 +57,11 @@
 #header img {
   width: 40px;
 }
+
+#header-img {
+  cursor: pointer;
+}
+
 #drop-down-sett {
   display: none;
   position: absolute;
@@ -404,9 +422,11 @@ table tbody tr:hover {
   background-color: rgba(87, 86, 86, 0.75);
 }
 
-.device-details-edit {
+.device-details-edit, .device-details-delete {
   display: none;
   position: fixed;
   left: 40%;
   top: 30%;
 }
+
+

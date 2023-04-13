@@ -458,11 +458,13 @@ export class DeviceDetailsComponent implements OnInit
     }
 
     showDeleteForm() {
-
+      (document.querySelector('.device-details-overlay') as HTMLDivElement).style.display = 'block';
+      (document.querySelector('.device-details-delete') as HTMLDivElement).style.display = 'block';
     }
 
     hideForm(status: boolean) {
       (document.querySelector('.device-details-overlay') as HTMLDivElement).style.display = 'none';
+      (document.querySelector('.device-details-edit') as HTMLDivElement).style.display = 'none';
       (document.querySelector('.device-details-delete') as HTMLDivElement).style.display = 'none';
     }
   }

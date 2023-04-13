@@ -76,34 +76,14 @@
       </div>
       </div>
   </div>
+
   <div class="device-details-overlay">
     <div class="device-details-edit">
       <app-edit-device [id]="device.id" [privacyStatus]="device.activityStatus" (exitStatusEvent)="hideForm($event)"></app-edit-device>
     </div>
-  </div>
-  <div class="device-details-overlay">
     <div class="device-details-delete">
-      <app-edit-device [id]="device.id" [privacyStatus]="device.activityStatus" (exitStatusEvent)="hideForm($event)"></app-edit-device>
+      <app-delete-device [id]="device.id" (exitStatusEvent)="hideForm($event)"></app-delete-device>
     </div>
   </div>
 
-
-
-  <!-- <div class="hour-range-picker">
-    <mat-slider [(ngModel)]="startHour" min="0" max="23" tickInterval="1" thumbLabel></mat-slider>
-    <mat-slider [(ngModel)]="endHour" min="0" max="23" tickInterval="1" thumbLabel></mat-slider>
-    <div class="hour-range-labels">
-      <div class="hour-range-label">{{ startHour }}:00</div>
-      <div class="hour-range-label">{{ endHour }}:00</div>
-    </div>
-  </div> -->
-
-   <!-- <label>Select time range :</label>
-        <br>   -->
-
-        <!-- <span> 00:00 h </span>
-        <mat-slider id="slider"  min="0" max="23" step="1" showTickMarks discrete>
-          <input value="1" matSliderStartThumb>
-          <input value="22" matSliderEndThumb>
-        </mat-slider>
-        <span> 23:00 h </span> -->
+    

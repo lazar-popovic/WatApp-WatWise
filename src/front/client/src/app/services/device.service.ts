@@ -31,4 +31,8 @@ constructor( private http: HttpClient) { }
   updateDevice(id: number, data: any) : Observable<any> {
     return this.http.patch(`${environment.apiUrl}device/${id}`, data, {observe: 'response'});
   }
+
+  deleteDevice(id: number) : Observable<any> {
+    return this.http.delete(`${environment.apiUrl}device/${id}`, { observe: 'response'});
+  }
 }
