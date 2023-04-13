@@ -10,12 +10,21 @@
     box-sizing: border-box;
 }
 
+@media (max-width: 400px) {
+    .edit-device-form {
+      width: 300px;
+    }
+
+    .edit-device-form > .input-wraper input {
+        width: 200px;
+    }
+}
 .edit-device-form h3 {
     font-size: 26px;
     color: #3E3E3E;
 }
 
-.edit-device-form input {
+.input-wraper input {
     width: 300px;
     height: 50px;
     border-radius: 10px;
@@ -73,6 +82,7 @@
     font-size: 18px;
     color: white;
     margin-top: 40px;
+    cursor: pointer;
 }
 
 #device-esc-btn {
@@ -87,6 +97,7 @@
 
 #close-form {
     width: fit-content;
+    cursor: pointer;
 }
 
 #slider-text {
