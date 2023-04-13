@@ -8,6 +8,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class DeviceDataService {
   constructor( private http: HttpClient) { }
+  // SINGLE DEVICE DATA
   getDeviceDataForDate( day: number, month: number, year: number, deviceId: number) : Observable<any>
   {
     return this.http.get(`${environment.apiUrl}device-data/get-device-data-for-date?day=${day}&month=${month}&year=${year}&deviceId=${deviceId}`);
@@ -24,14 +25,8 @@ export class DeviceDataService {
   {
     return this.http.get(`${environment.apiUrl}device-data/get-device-data-for-next-n-days?id=${deviceId}&numberOfDays=${days}`);
   }
-  getUserDayStats( day: number, month: number, year: number, userId: number) : Observable<any>
-  {
-    return this.http.get(`${environment.apiUrl}device-data/get-day-total-for-user?day=${day}&month=${month}&year=${year}&userId=${userId}`);
-  }
-  getDSOOverviewLiveData() : Observable<any>
-  {
-    return this.http.get(`${environment.apiUrl}device-data/get-energy-usage-total-7-hours-for-all-devices`);
-  }
+
+  // DSO SUMMED ALLOWED DATA
   getDSOSharedDataForDate( day: number, month: number, year: number) : Observable<any>
   {
     return this.http.get(`${environment.apiUrl}device-data/get-allowed-share-devices-data-for-date?day=${day}&month=${month}&year=${year}`);
@@ -47,5 +42,33 @@ export class DeviceDataService {
   getDSOPredictionForDays( days: number) : Observable<any>
   {
     return this.http.get(`${environment.apiUrl}device-data/get-devices-data-prediction-allowed-share-for-nextNdays?numberOfDays=${days}`);
+  }
+
+  // USERS PERSONAL SUMMED DATA
+  getUsersHistoryUsageByCategoryForDate( day: number, month: number, year: number, category: number, userId: number) : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}device-data/get-users-history-usage-by-category-for-date?day=${day}&month=${month}&year=${year}&category=${category}&userId=${userId}`);
+  }
+  getUsersHistoryUsageByCategoryForMonth( month: number, year: number, category: number, userId: number) : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}device-data/get-users-history-usage-by-category-for-month?month=${month}&year=${year}&category=${category}&userId=${userId}`);
+  }
+  getUsersHistoryUsageByCategoryForYear( year: number, category: number, userId: number) : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}device-data/get-users-history-usage-by-category-for-year?year=${year}&category=${category}&userId=${userId}`);
+  }
+  getUsersPredictionUsageByCategoryForNDays( numberOfDays: number, category: number, userId: number) : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}device-data/get-users-prediction-usage-by-category-for-n-days?numberOfDays=${numberOfDays}&category=${category}&userId=${userId}`);
+  }
+
+  // OVERVIEW DATA
+  getUserDayStats( day: number, month: number, year: number, userId: number) : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}device-data/get-day-total-for-user?day=${day}&month=${month}&year=${year}&userId=${userId}`);
+  }
+  getDSOOverviewLiveData() : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}device-data/get-energy-usage-total-7-hours-for-all-devices`);
   }
 }
