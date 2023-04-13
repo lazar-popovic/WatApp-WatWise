@@ -27,6 +27,7 @@ import { OverviewDsoComponent } from './components/overview-dso/overview-dso.com
 import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
 import { EditDeviceComponent } from './components/edit-device/edit-device.component';
 import { SliderComponent } from './components/slider/slider.component';
+import { DeleteDeviceComponent } from './components/delete-device/delete-device.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -45,11 +46,9 @@ const routes: Routes = [
   { path: 'dso/map', component : MapComponent, canActivate: [EmployeeGuard]},
   { path: 'dso/consumption', component : EnergyUsageComponent, canActivate: [EmployeeGuard]},
   { path: 'prosumer/reset-password', component: PasswordInputComponent},
-  { path: 'test-component3', component: EmployeeOverviewComponent},
   { path: 'prosumer/device/:id', component: DeviceDetailsComponent},
   { path: 'profile-settings', component: ProfileSettingsComponent},
-  { path: 'test-component', component: EditDeviceComponent},
-  { path: 't-c', component: SliderComponent}
+  { path: 'test-component', component: DeleteDeviceComponent},
 ];
 
 @NgModule({
