@@ -15,7 +15,8 @@ export class SidebarComponent {
     'Overview',
     'Devices',
     'Consumption',
-    'Production'
+    'Production',
+    'Scheduler'
   ];
   menuEmployee = [
     'Overview',
