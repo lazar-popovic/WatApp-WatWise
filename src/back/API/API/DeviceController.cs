@@ -39,7 +39,7 @@ namespace API.API
         }
         
         [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdateDevice(int id, DeviceNameAndActivityStatusUpdateViewModel request)
+        public async Task<IActionResult> UpdateDevice(int id, DeviceNameAndDataShareUpdateViewModel request)
         {
             return Ok(await _deviceBL.UpdateDevice(id, request));
         }

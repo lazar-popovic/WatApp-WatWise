@@ -40,28 +40,28 @@
   border: 1px solid #ddd;
   padding: 10px;
   width: calc(25% - 20px);
-  height: 120px;
+  height: 80px;
   box-sizing: border-box;
 }
 
 .card-small {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .card-left {
   display: flex;
   box-sizing: border-box;
   height: 100%;
-  width: 65%;
   align-items: center;
   justify-items: left;
+  width: 50%;
 }
 .card-right {
   display: flex;
   box-sizing: border-box;
   height: 100%;
-  width: 35%;
   align-items: center;
   justify-items: right;
 }
