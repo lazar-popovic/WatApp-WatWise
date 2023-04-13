@@ -12,5 +12,6 @@ namespace API.Models.Entity
         public Device? Device { get; set; }
         public DateTime? Timestamp { get; set; }
         public double? Value { get; set; }
+        public double? PredictedValue { get; set; }
     }
 }
