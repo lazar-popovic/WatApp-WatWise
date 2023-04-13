@@ -1,27 +1,56 @@
-<div class="sidebar-container"> 
+<div class="sidebar-container" [ngClass]="{'sidebar-container-blue': role == 3, 'sidebar-container-green': role == 1 || role == 2}">
     <div class="sidebar-header">
         <div class="sidebar-logo"><img src="\assets\logo.png"></div>
         {{ this.currentTime }}
     </div>
     <div class="sidebar-nav">
-        <div *ngFor="let item of menu">
-            <div *ngIf="item.toLowerCase()== url">
-                <div class="sidebar-item-active" (click)="clickHandler($event)">{{item}}</div>
-            </div>
-            <div *ngIf="item.toLowerCase() !=url">
-                <div class="sidebar-item" (click)="clickHandler($event)">{{item}}</div>
+
+        <div *ngIf="role == 3">
+            <div *ngFor="let item of menuProsumer">
+                <div *ngIf="item.toLowerCase()== url">
+                    <div class="sidebar-item-active" (click)="clickHandler($event, 1)">{{item}}</div>
+                </div>
+                <div *ngIf="item.toLowerCase() !=url">
+                    <div class="sidebar-item" (click)="clickHandler($event, 1)">{{item}}</div>
+                </div>
             </div>
         </div>
-        
-        <div class="sidebar-footer" routerLink="/profile">
-            <div class="sidebar-profile"><img src="\assets\profile.png"></div>
-            {{this.user.firstName + " " + this.user.lastName}}
+
+        <div *ngIf="role <= 2">
+            <div *ngFor="let item of menuEmployee">
+                <div *ngIf="item.toLowerCase()== url">
+                    <div class="sidebar-item-active" (click)="clickHandler($event, 2)">{{item}}</div>
+                </div>
+                <div *ngIf="item.toLowerCase() !=url">
+                    <div class="sidebar-item" (click)="clickHandler($event, 2)">{{item}}</div>
+                </div>
+            </div>
+
+            <div *ngIf="role == 1">
+                <div *ngFor="let item of menuAdmin">
+                    <div *ngIf="item.toLowerCase()== url">
+                        <div class="sidebar-item-active" (click)="clickHandler($event, 2)">{{item}}</div>
+                    </div>
+                    <div *ngIf="item.toLowerCase() !=url">
+                        <div class="sidebar-item" (click)="clickHandler($event, 2)">{{item}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="sidebar-footer" [ngClass]="{'sidebar-footer-blue': role == 3, 'sidebar-footer-green': role == 1 || role == 2}">
+            <div id="profile-wraper" routerLink="/profile">
+                <div class="sidebar-profile"><img src="\assets\profile.png"></div>
+                {{this.user.firstName + " " + this.user.lastName}}
+            </div>
+            <div id="logout" (click)="logOut()"><img src="/assets/logout.png" alt="logout"></div>
         </div>
     </div>
 </div>
 
 
-<div class="sidebar-container-mobile">
+<div class="sidebar-container-mobile" [ngClass]="{'sidebar-container-blue': role == 3, 'sidebar-container-green': role == 1 || role == 2}">
 
     <div class="sidebar-header-mobile">
       <div class="sidebar-logo-mobile"><img id="logoMobile" src="\assets\logo.png"></div>
@@ -32,17 +61,17 @@
             <li id="devices-mobile"     routerLink="/prosumer/devices"    ><a>Devices    </a></li>
             <li id="consumption-mobile" routerLink="/prosumer/consumption"><a>Consumption</a></li>
             <li id="production-mobile"  routerLink="/prosumer/production" ><a>Production </a></li>
-            <br>
+            <li id="production-mobile"  routerLink="/prosumer/scheduler" ><a>Scheduler </a></li>
             <li id="profile-mobile"  routerLink="/profile"><a>Profile</a></li>
           </ul>
       </div>
       <br>
       {{ this.currentTime }}
     </div>
-  
+
 </div>
-  
-  
-  
+
+
+
 
 

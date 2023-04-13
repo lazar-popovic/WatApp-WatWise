@@ -6,7 +6,7 @@ namespace API.Models.Entity
     public class DeviceEnergyUsage
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public int? DeviceId { get; set; }
         [ForeignKey("DeviceId")]
         public Device? Device { get; set; }

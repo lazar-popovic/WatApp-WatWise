@@ -26,17 +26,17 @@ public class GeocodingService : IGeocodingService
                 var responseText = reader.ReadToEnd();
                 var responseJson = JObject.Parse(responseText);
 
-                var resourceSet = responseJson["resourceSets"][0];
-                var resource = resourceSet["resources"][0];
+                var resourceSet = responseJson!["resourceSets"]![0];
+                var resource = resourceSet!["resources"]![0]!;
                 var point = resource["point"];
-                var latitude = (double)point["coordinates"][0];
-                var longitude = (double)point["coordinates"][1];
+                var latitude = (double)point!["coordinates"]![0]!;
+                var longitude = (double)point!["coordinates"]![1]!;
 
                 result.Latitude = latitude;
                 result.Longitude = longitude;
             }
         }
-        catch (Exception ex)
+        catch
         {
             // Handle errors here
         }

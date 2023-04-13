@@ -1,11 +1,19 @@
 <div class="login-holder">
-  <div class="login-container">
-    <form>
-      <h2>Sign In</h2>
-      <input type="email" id="login-email" placeholder="username" name="email" required [(ngModel)]="login.email">
-      <input type="password" id="login-password" placeholder="password" name="password" required [(ngModel)]="login.password">
-      <p id="login-forgot-pass"><a href="forgot-password">Forgot password ?</a></p>
-      <button type="submit" (click)="logIn()">Login</button>
+  <div class="wrapper">
+    <h2>Login</h2>
+    <form action="#" [ngBusy]="busyLogin">
+      <div class="input-box">
+        <input type="text" name="email" [(ngModel)]="login.email" placeholder="Email">
+      </div>
+      <div class="input-box">
+        <input type="password" name="password" [(ngModel)]="login.password" placeholder="Password">
+      </div>
+      <div class="input-box button">
+        <button type="button" (click)="logIn()">Login</button>
+      </div>
+      <div class="input-box button">
+        <p class="policy"><a href="forgot-password">Forgot password ?</a></p>
+      </div>
     </form>
   </div>
 </div>

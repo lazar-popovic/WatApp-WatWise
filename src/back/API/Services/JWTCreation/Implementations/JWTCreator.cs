@@ -17,14 +17,14 @@ namespace API.Services.JWTCreation.Implementations
             _configuration = configuration; 
         }
 
-        public string CreateToken(User request)
+        public string? CreateToken(User request)
         {
 
             List<Claim> claims = new List<Claim> {
-                new Claim(ClaimTypes.Email, request.Email),
-                new Claim(ClaimTypes.Role, request.Role.RoleName),
+                new Claim(ClaimTypes.Email, request.Email!),
+                new Claim(ClaimTypes.Role, request.Role!.RoleName),
                 new Claim("UserID", request.Id.ToString()),
-                new Claim("RoleID", request.RoleId.ToString())
+                new Claim("RoleID", request.Role.Id.ToString())
             };
 
             ClaimsIdentity identity = new ClaimsIdentity(claims, "login claims");
@@ -36,8 +36,8 @@ namespace API.Services.JWTCreation.Implementations
             {
                 Issuer = "http://localhost:5226",
                 Audience = "http://localhost:5226",
-                Expires = DateTime.UtcNow.AddMinutes(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha256Signature)
+                Expires = DateTime.UtcNow.AddHours(3),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!)), SecurityAlgorithms.HmacSha256Signature)
             };
 
             JwtSecurityToken token = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
@@ -58,7 +58,7 @@ namespace API.Services.JWTCreation.Implementations
                 new Claim("purpose", "verification")
             };
 
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
             var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -75,13 +75,13 @@ namespace API.Services.JWTCreation.Implementations
             return encodedToken;
         }
 
-        public string CreateResetToken(int userId, string userEmail, ResetPasswordToken resetToken)
+        public string? CreateResetToken(int userId, string userEmail, ResetPasswordToken resetToken)
         {
             List<Claim> claims = new List<Claim> {
                 new Claim("userId", $"{userId}"),
                 new Claim("userEmail", $"{userEmail}"),
                 new Claim("purpose", "password reset"),
-                new Claim("resetToken", resetToken.Token)
+                new Claim("resetToken", resetToken.Token!)
             };
 
             ClaimsIdentity identity = new ClaimsIdentity(claims, "reset claims");
@@ -94,7 +94,7 @@ namespace API.Services.JWTCreation.Implementations
                 Issuer = "http://localhost:5226",
                 Audience = "http://localhost:5226",
                 Expires = DateTime.UtcNow.AddMinutes(10),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!)), SecurityAlgorithms.HmacSha256Signature)
             };
 
             JwtSecurityToken token = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
@@ -125,7 +125,7 @@ namespace API.Services.JWTCreation.Implementations
                 ValidateAudience = false,
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!)),
                 ValidateLifetime = false 
             };
 
@@ -145,7 +145,7 @@ namespace API.Services.JWTCreation.Implementations
             try
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
                 var validationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -168,9 +168,9 @@ namespace API.Services.JWTCreation.Implementations
             {
                 throw se;
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
 
             return -1;

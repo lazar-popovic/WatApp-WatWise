@@ -1,0 +1,58 @@
+<div class="overview-container">
+    <app-sidebar></app-sidebar>
+    <div class="overview-tab">
+        <div class="overview-filter-holder">
+            <form>
+                <div class="search-input">
+                    <input type="text" name="name" [(ngModel)]="filter.name" (keydown)="getProsumers()" placeholder = "Search by name" autocomplete="off">
+                    <input type="text" name="address" [(ngModel)]="filter.address" (keydown)="getProsumers()" placeholder = "Search by address" autocomplete="off">
+                </div>
+                <button id="add-user-btn" (click)="showAddUProsumer = true">+Add Prosumer</button>
+            </form>
+        </div>
+
+        <div class="overview-users-table">
+            <table>
+                <tr>
+                    <td>First Name</td>
+                    <td><button id="lastname-filter" (click)="inverseOrder()">Lastname ↑</button></td>
+                    <td>Mail</td>
+                    <td>Address</td>
+                    <td></td>
+                </tr>
+                <tr *ngFor="let user of users">
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.mail}}</td>
+                    <td>{{user.address}} {{user.num}} - {{user.city}}</td>
+                    <td><button routerLink="/profile">View</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="overview-pagination">
+            <form>
+                <div class="page-size-holder">
+                    <label for="page-size">Select page size:</label>
+                    <select name="page-size" [(ngModel)]="pageSize" (change)="pageSizeHandler()">
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                    </select>
+                </div>
+                <div class="overview-pagination-pages">
+                    <div class="overview-pagination-page" (click)="handler(1)"><<</div>
+                    <div class="overview-pagination-page-active">
+                        {{currentIndex}}
+                    </div>
+                    <div class="overview-pagination-page" (click)="handler(2)">>></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="users-overview-overlay" *ngIf="showAddUProsumer">
+        <div class="users-overview-add-new">
+            <app-users></app-users>         
+        </div>
+    </div>    
+</div>

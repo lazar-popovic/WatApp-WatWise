@@ -5,6 +5,7 @@ namespace API.Services.DeviceSimulatorService.Interfaces;
 
 public interface IDeviceSimulatorService
 {
-    Task<List<ElectricalUsageViewModel>> GetUsageForDeviceBetweenDates(string device, DateTime startingDate, DateTime endingDate);
     Task HourlyUpdate();
+    Task FillDataSinceJanuary1st(int type, int deviceId);
+    Task SetCurrentDataTo0IfOff();
 }

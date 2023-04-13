@@ -1,0 +1,103 @@
+#container {
+  display: flex;
+}
+@media ( min-width: 600px)
+{
+  #container {
+    flex-direction: row;
+  }
+}
+@media ( max-width: 599px)
+{
+  #container {
+    flex-direction: column;
+  }
+}
+
+.dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+
+  padding: 20px 10px;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+.card-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 20px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  width: calc(25% - 20px);
+  height: 80px;
+  box-sizing: border-box;
+}
+
+.card-small {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card-left {
+  display: flex;
+  box-sizing: border-box;
+  height: 100%;
+  align-items: center;
+  justify-items: left;
+  width: 50%;
+}
+.card-right {
+  display: flex;
+  box-sizing: border-box;
+  height: 100%;
+  align-items: center;
+  justify-items: right;
+}
+
+.c-red {
+  color: rgba(191, 65, 65, 1)!important;
+}
+.c-blue {
+  color: rgba(69, 94, 184, 1)!important;
+}
+
+.card-big {
+  width: calc(50% - 20px);
+  height: 380px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1000px) {
+  .card {
+    width: calc(100% - 20px);
+  }
+  .card-big {
+    width: calc(100% - 20px);
+  }
+}
+
+.chart-holder {
+  height: 280px;
+  width: 100%;
+  position: relative;
+}
+
+.chart-holder-pie-grid {
+  height: 340px!important;
+}
+
+.card h4, .card-big h4 {
+  color: #3e3e3e;
+}

@@ -1,0 +1,40 @@
+<div class="profile-view-settings">
+    <div class="profile-view-image">
+        <img src="https://www.tu-ilmenau.de/unionline/fileadmin/_processed_/0/0/csm_Person_Yury_Prof_Foto_AnLI_Footgrafie__2_.JPG_5845266f99.jpg" alt="Profile picture">
+        <div class="profile-view-image-buttons">
+            <form>
+                <button class="profile-button-blue">Upload new</button>
+                <button id="profile-button-delete">Delete</button>
+            </form>
+        </div>
+    </div>
+    <div class="profile-view-settings-change">
+        <form>
+            <div class="profile-view-upper-form">
+                <div class="profile-view-input-wraper">
+                    <label for="firstname">First name</label>
+                    <input name="firstname"[(ngModel)]="data.firstname">    
+                </div>
+                <div class="profile-view-input-wraper">
+                    <label for="lastname">Last name</label>
+                    <input name="lastname" [(ngModel)]="data.lastname">
+                </div>
+            </div>
+            
+            <div class="profile-view-input-wraper middle-form">
+                <label for="email">E-mail</label>
+                <input name="email" id="email" [(ngModel)]="data.email">
+            </div>
+            
+            <div class="profile-view-bottom-form">
+                <div class="profile-info-address">
+                    <div id="profile-info-address-header">
+                        <h3 id="r">!</h3><h3>Address</h3>
+                    </div>
+                    <p>Address change must be done personally at our office.</p>
+                </div>
+                <button class="profile-button-blue" (click)="emitData()">Save changes</button>
+            </div>
+        </form>
+    </div>
+</div>

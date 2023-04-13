@@ -1,8 +1,6 @@
 ﻿using API.BL.Interfaces;
-using API.Models.Entity;
 using API.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.API

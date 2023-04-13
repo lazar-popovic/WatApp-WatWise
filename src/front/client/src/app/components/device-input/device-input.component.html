@@ -1,0 +1,30 @@
+<div class="wrapper" *ngIf="!showDevices"  [ngBusy]="busyAddDevice">
+    <div style="display: flex; justify-content: right;">
+      <a href="/prosumer/devices" style="color: black;"><i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;" (click)="refresh()"></i></a>
+    </div>
+
+    <h2>Connect device</h2>
+    <form action="#">
+      <div class="input-box">
+        <input type="text" name="name" [(ngModel)]="newDevice.name" placeholder="Device name">
+      </div>
+
+      <div class="input-box">
+        <select name="category" [(ngModel)]="category" (change)="fillTypes()">
+          <option value=-1 selected>Consumer</option>
+          <option value=1>Producer</option>
+          <option value=0> Storage</option>
+        </select>
+      </div>
+
+      <div class="input-box">
+        <select type="text" name="type" [(ngModel)]="newDevice.deviceTypeId">
+          <option *ngFor=" let type of types" [value]="type.id">{{type.type}}</option>
+        </select>
+      </div>
+
+      <div class="input-box button">
+        <button type="button" (click)="addDevice()">Connect</button>
+      </div>
+    </form>
+  </div>
