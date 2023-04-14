@@ -52,8 +52,12 @@ namespace API.DAL.Implementations
 
         public async Task DeleteDeviceAsync(int id)
         {
+            var recordsToDelete = _dbContext.DeviceEnergyUsage.Where(x => x.DeviceId == id);
+            _dbContext.DeviceEnergyUsage.RemoveRange(recordsToDelete);
+
             var device = await GetDeviceByIdAsync(id);
             _dbContext.Devices.Remove(device!);
+
             await _dbContext.SaveChangesAsync();
         }
         public async Task AddDeviceViewModel(DeviceViewModel devicee)

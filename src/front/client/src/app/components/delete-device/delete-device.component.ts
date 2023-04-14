@@ -14,11 +14,11 @@ export class DeleteDeviceComponent {
   constructor(private deviceService: DeviceService, private router: Router) { }
 
   deleteDevice() {
-    /*this.deviceService.deleteDevice(this.id).subscribe((result: any) => {
+    this.deviceService.deleteDevice(this.id).subscribe((result: any) => {
       this.router.navigateByUrl('prosumers/devices');
     }, (error: any) => {
       console.log(error);
-  });*/
+  });
   }
 
   hideForm() {

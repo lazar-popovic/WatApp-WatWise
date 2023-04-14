@@ -180,6 +180,7 @@ export class ProductionComponent
           this.data = result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
           let now = new Date();
           if( this.month == now.getMonth()+1) {
+            console.log( result.data);
             this.datasets = [{
               data: result.data.filter((ceu:any) => new Date(ceu.timestamp).getDate() <= new Date().getDate())
                                                                .map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
@@ -195,6 +196,7 @@ export class ProductionComponent
               borderColor: this.color,
               borderWidth: 2
             }];
+            console.log( this.datasets);
 
           } else if ( this.month > now.getMonth()+1) {
             console.log("pred");
