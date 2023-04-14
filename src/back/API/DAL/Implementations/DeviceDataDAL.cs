@@ -19,7 +19,7 @@ public class DeviceDataDAL : IDeviceDataDAL
         var date = new DateTime( year, month, day, 0, 0, 0 );
         return await _dataContext.DeviceEnergyUsage
             .Where(du => du.DeviceId == deviceId && du.Timestamp!.Value.Date == date)
-            .Select( du => new { Timestamp = du.Timestamp, Value = du.Value})
+            .Select( du => new { Timestamp = du.Timestamp, Value = du.Value, PredictedValue = du.PredictedValue})
             .OrderBy( du => du.Timestamp).AsNoTracking()
             .ToListAsync();
     }
@@ -32,7 +32,8 @@ public class DeviceDataDAL : IDeviceDataDAL
                     select new
                     {
                         Timestamp = usageGroup.Key.Date.ToShortDateString(),
-                        Value = usageGroup.Sum(u => u.Value)
+                        Value = usageGroup.Sum(u => u.Value),
+                        PredictedValue = usageGroup.Sum(u => u.PredictedValue)
                     };
 
         return await query.ToListAsync();
@@ -46,7 +47,8 @@ public class DeviceDataDAL : IDeviceDataDAL
                     select new
                     {
                         Timestamp = usageGroup.Key.Month + "/" + usageGroup.Key.Year,
-                        Value = usageGroup.Sum(u => u.Value)
+                        Value = usageGroup.Sum(u => u.Value),
+                        PredictedValue = usageGroup.Sum(u => u.PredictedValue)
                     };
 
         return await query.ToListAsync();

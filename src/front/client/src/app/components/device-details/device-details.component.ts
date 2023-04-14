@@ -85,11 +85,12 @@ export class DeviceDetailsComponent implements OnInit
       )
       Chart.register(...registerables);
     }
-  ngOnInit(): void {
-    let now = new Date();
-    this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
-    this.historyClick();
-  }
+
+    ngOnInit(): void {
+      let now = new Date();
+      this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
+      this.historyClick();
+    }
 
     historyflag : boolean = true;
     predictionFlag : boolean = false;
@@ -166,8 +167,7 @@ export class DeviceDetailsComponent implements OnInit
                 borderColor: this.color,
                 borderWidth: 2
               },{
-                data: result.data.filter((ceu:any) => new Date(ceu.timestamp) > new Date())
-                                                                 .map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
+                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
                 label: 'Predicted ' + this.categoryLabel,
                 backgroundColor: this.predColor,
                 borderColor: this.color,
@@ -189,6 +189,12 @@ export class DeviceDetailsComponent implements OnInit
                 data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
                 label: this.categoryLabel,
                 backgroundColor: this.color,
+                borderColor: this.color,
+                borderWidth: 2
+              },{
+                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
+                label: 'Predicted ' + this.categoryLabel,
+                backgroundColor: this.predColor,
                 borderColor: this.color,
                 borderWidth: 2
               }];
@@ -234,8 +240,7 @@ export class DeviceDetailsComponent implements OnInit
                 borderColor: this.color,
                 borderWidth: 2
               },{
-                data: result.data.filter((ceu:any) => new Date(ceu.timestamp).getDate() > new Date().getDate())
-                                                                 .map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+                data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
                 label: 'Predicted ' + this.categoryLabel,
                 backgroundColor: this.predColor,
                 borderColor: this.color,
@@ -257,6 +262,12 @@ export class DeviceDetailsComponent implements OnInit
                 data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
                 label: this.categoryLabel,
                 backgroundColor: this.color,
+                borderColor: this.color,
+                borderWidth: 2
+              },{
+                data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
+                label: 'Predicted ' + this.categoryLabel,
+                backgroundColor: this.predColor,
                 borderColor: this.color,
                 borderWidth: 2
               }];
