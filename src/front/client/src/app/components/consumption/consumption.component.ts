@@ -1,16 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {ChartData, ChartDataset, ChartOptions, registerables} from 'chart.js';
-import { Input } from '@angular/core';
-
-
+import { registerables } from 'chart.js';
 import { Chart } from 'chart.js';
-import {AuthService} from "../../services/auth-service.service";
-import {UserService} from "../../services/user.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {DeviceService} from "../../services/device.service";
-import {DeviceDataService} from "../../services/device-data.service";
-import {DatePipe} from "@angular/common";
-import { ViewEncapsulation } from '@angular/core';
+import { AuthService} from "../../services/auth-service.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { DeviceDataService } from "../../services/device-data.service";
+import { DatePipe } from "@angular/common";
 import { JWTService } from 'src/app/services/jwt.service';
 
 @Component({
@@ -18,7 +12,7 @@ import { JWTService } from 'src/app/services/jwt.service';
   templateUrl: './consumption.component.html',
   styleUrls: ['./consumption.component.css']
 })
-export class ConsumptionComponent
+export class ConsumptionComponent implements OnInit
 {
   categoryLabel: string = "Consumption [kWh]";
   color: any = 'rgba(191, 65, 65, 1)';
@@ -120,8 +114,7 @@ export class ConsumptionComponent
               borderColor: this.color,
               borderWidth: 2
             },{
-              data: result.data.filter((ceu:any) => new Date(ceu.timestamp) > new Date())
-                                                               .map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
+              data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
               borderColor: this.color,
@@ -131,7 +124,7 @@ export class ConsumptionComponent
           } else if ( date > now) {
             console.log("pred");
             this.datasets = [{
-              data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
+              data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
               borderColor: this.color,
@@ -143,6 +136,12 @@ export class ConsumptionComponent
               data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
               label: this.categoryLabel,
               backgroundColor: this.color,
+              borderColor: this.color,
+              borderWidth: 2
+            },{
+              data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
+              label: 'Predicted ' + this.categoryLabel,
+              backgroundColor: this.predColor,
               borderColor: this.color,
               borderWidth: 2
             }];
@@ -188,8 +187,7 @@ export class ConsumptionComponent
               borderColor: this.color,
               borderWidth: 2
             },{
-              data: result.data.filter((ceu:any) => new Date(ceu.timestamp).getDate() > new Date().getDate())
-                                                               .map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
               borderColor: this.color,
@@ -199,7 +197,7 @@ export class ConsumptionComponent
           } else if ( this.month > now.getMonth()+1) {
             console.log("pred");
             this.datasets = [{
-              data: result.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+              data: result.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.color,
               borderColor: this.color,
@@ -211,6 +209,12 @@ export class ConsumptionComponent
               data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
               label: this.categoryLabel,
               backgroundColor: this.color,
+              borderColor: this.color,
+              borderWidth: 2
+            },{
+              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
+              label: 'Predicted ' + this.categoryLabel,
+              backgroundColor: this.predColor,
               borderColor: this.color,
               borderWidth: 2
             }];
@@ -249,6 +253,12 @@ export class ConsumptionComponent
             data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
             label: this.categoryLabel,
             backgroundColor: this.color,
+            borderColor: this.color,
+            borderWidth: 2
+          },{
+            data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
+            label: this.categoryLabel,
+            backgroundColor: this.predColor,
             borderColor: this.color,
             borderWidth: 2
           }]
