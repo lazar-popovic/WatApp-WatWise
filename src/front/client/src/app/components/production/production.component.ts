@@ -130,7 +130,7 @@ export class ProductionComponent
           } else if ( date > now) {
             console.log("pred");
             this.datasets = [{
-              data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
+              data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
               borderColor: this.color,
@@ -205,7 +205,7 @@ export class ProductionComponent
           } else if ( this.month > now.getMonth()+1) {
             console.log("pred");
             this.datasets = [{
-              data: result.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+              data: result.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.color,
               borderColor: this.color,
