@@ -63,13 +63,15 @@
         <thead>
         <tr id="thead-tr">
           <th>Timestamp</th>
+          <th>Predicted {{categoryLabel}}</th>
           <th>{{categoryLabel}}</th>
         </tr>
         </thead>
         <tbody>
           <tr *ngFor=" let row of data">
-            <td>{{row.x}}</td>
-            <td>{{row.y.toFixed(3)}}</td>
+            <td>{{row.timestamp}}</td>
+            <td>{{row.predictedValue.toFixed(3)}}</td>
+            <td>{{row.value.toFixed(3)}}</td>
           </tr>
           </tbody>
         </table>
@@ -86,4 +88,3 @@
     </div>
   </div>
 
-    
