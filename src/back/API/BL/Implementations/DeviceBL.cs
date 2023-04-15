@@ -78,7 +78,7 @@ namespace API.BL.Implementations
         public async Task<Response<String>> DeleteDevice(int id)
         {
             var response = new Response<String>();
-            var findwithid = _ideviceDal.GetDeviceByIdAsync(id);
+            var findwithid = await _ideviceDal.GetDeviceByIdAsync(id);
       
             if (findwithid == null)
             {
@@ -87,16 +87,13 @@ namespace API.BL.Implementations
 
                 return response;
             }
-            await _ideviceDal.DeleteDeviceAsync(id);
+            await _ideviceDal.DeleteDeviceAsync(findwithid);
 
-            response.Data = "Pass";
+            response.Data = "Device has been removed successfully!";
 
             response.Success = response.Errors.Count() == 0;
 
             return response;
-
-
-
         }
         public async Task<Response<String>> UpdateDevice(int id, DeviceNameAndDataShareUpdateViewModel request)
         {
