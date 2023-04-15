@@ -153,8 +153,7 @@ namespace API.Services.JWTCreation.Implementations
                     ValidateIssuer = false,
                     ValidateAudience = false,
                 };
-                SecurityToken validatedToken;
-                var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
+                var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
 
                 var userIdClaim = claimsPrincipal.FindFirst("userId");
                 var userId = userIdClaim?.Value;
