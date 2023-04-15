@@ -205,7 +205,17 @@ namespace API.BL.Implementations
 
             if (!string.IsNullOrEmpty(request.Email))
             {
-                user.Email = request.Email;
+                var user2 = await _userDal.GetByEmailAsync(request.Email);
+
+                if (user2 != null)
+                {
+                    response.Errors.Add("Cannot update your email with email of existing user!");
+                    response.Success = false;
+
+                    return response;
+                }
+                else
+                    user.Email = request.Email;
             }
 
             if (!string.IsNullOrEmpty(request.FirstName))
