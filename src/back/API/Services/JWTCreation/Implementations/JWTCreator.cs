@@ -149,6 +149,7 @@ namespace API.Services.JWTCreation.Implementations
                 var validationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
                     IssuerSigningKey = secretKey,
                     ValidateIssuer = false,
                     ValidateAudience = false,
