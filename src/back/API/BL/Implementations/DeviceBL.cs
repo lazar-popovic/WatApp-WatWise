@@ -109,7 +109,9 @@ namespace API.BL.Implementations
                 return response;
             }
 
-            device.Name = request.Name;
+            if(!string.IsNullOrEmpty(request.Name))
+                device.Name = request.Name;
+
             device.DataShare = request.DataShare!.Value;
 
             await _ideviceDal.UpdateDeviceAsync(device);
