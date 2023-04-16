@@ -346,9 +346,9 @@ export class DeviceDetailsComponent implements OnInit
       this.deviceDataService.getDeviceDataForNextNDays( this.device.id, 1).subscribe(
         (result:any) => {
           if( result.success) {
-            this.data = result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
+            this.data = result.data;
             this.datasets = [{
-              data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value})),
+              data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
               borderColor: this.color,
@@ -386,9 +386,9 @@ export class DeviceDetailsComponent implements OnInit
         (result:any) => {
           if( result.success) {
             console.log( result.data);
-            this.data = result.data.map( (ceu:any) => ({x:this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
+            this.data = result.data;
             this.datasets = [{
-              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
               borderColor: this.color,
@@ -425,9 +425,9 @@ export class DeviceDetailsComponent implements OnInit
       this.deviceDataService.getDeviceDataForNextNDays( this.device.id, 7).subscribe(
         (result:any) => {
           if( result.success) {
-            this.data = result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+            this.data = result.data;
             this.datasets = [{
-              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
               borderColor: this.color,
