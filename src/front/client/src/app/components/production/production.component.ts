@@ -109,7 +109,7 @@ export class ProductionComponent
     this.deviceDataService.getUsersHistoryUsageByCategoryForDate( date.getDate(), date.getMonth()+1, date.getFullYear(), 1, this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
-          this.data = result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
+          this.data = result.data;
           let now = new Date();
           if( date.toDateString() == now.toDateString()) {
             this.datasets = [{
@@ -182,7 +182,7 @@ export class ProductionComponent
       (result:any) => {
         console.log( result)
         if( result.success) {
-          this.data = result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+          this.data = result.data;
           let now = new Date();
           if( this.month == now.getMonth()+1) {
             console.log( result.data);
@@ -256,7 +256,7 @@ export class ProductionComponent
     this.deviceDataService.getUsersHistoryUsageByCategoryForYear( this.year, 1, this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
-          this.data = result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+          this.data = result.data;
           this.datasets = [{
             data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
             label: this.categoryLabel,
@@ -301,7 +301,7 @@ export class ProductionComponent
     this.deviceDataService.getUsersPredictionUsageByCategoryForNDays( 1, 1, this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
-          this.data = result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
+          this.data = result.data;
           this.datasets = [{
             data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value})),
             label: 'Predicted ' + this.categoryLabel,
@@ -340,8 +340,7 @@ export class ProductionComponent
     this.deviceDataService.getUsersPredictionUsageByCategoryForNDays( 3, 1, this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
-          console.log( result.data);
-          this.data = result.data.map( (ceu:any) => ({x:this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
+          this.data = result.data;
           this.datasets = [{
             data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
             label: 'Predicted ' + this.categoryLabel,
@@ -380,7 +379,7 @@ export class ProductionComponent
     this.deviceDataService.getUsersPredictionUsageByCategoryForNDays( 7, 1, this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
-          this.data = result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+          this.data = result.data;
           this.datasets = [{
             data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
             label: 'Predicted ' + this.categoryLabel,
