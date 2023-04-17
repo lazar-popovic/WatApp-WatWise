@@ -183,6 +183,9 @@ table tr td {
   color: #3E3E3E;
   height: 30px;
 }
+th, td {
+  width: 20%;
+}
 table tr th {
   text-align: center;
   height: 50px;
