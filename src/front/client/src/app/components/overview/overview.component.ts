@@ -17,6 +17,9 @@ export class OverviewComponent implements OnInit
   yAxisTickFormatting(value: number) {
     return value + ' kW';
   }
+  xAxisTickFormatting( value: string) {
+    return value.split(":")[0];
+  }
 
   currentConsumption: number = 0;
   currentProduction: number = 0;
@@ -98,12 +101,10 @@ export class OverviewComponent implements OnInit
                               .map( (ceu:any) => ({name: this.datePipe.transform(ceu.timestamp,"shortTime"), value: ceu.totalEnergyUsage}))
             },{
               name:"Predicted production[kWh]",
-              series: result.data.producingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) > new Date())
-                              .map( (ceu:any) => ({name: this.datePipe.transform(ceu.timestamp,"shortTime"), value: ceu.totalEnergyUsage}))
+              series: result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({name: this.datePipe.transform(ceu.timestamp,"shortTime"), value: ceu.predictedValue}))
             },{
               name:"Predicted consumption[kWh]",
-              series: result.data.consumingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) > new Date())
-                              .map( (ceu:any) => ({name: this.datePipe.transform(ceu.timestamp,"shortTime"), value: ceu.totalEnergyUsage}))
+              series: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({name: this.datePipe.transform(ceu.timestamp,"shortTime"), value: ceu.predictedValue}))
             }
           ];
 
