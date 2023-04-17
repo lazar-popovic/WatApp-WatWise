@@ -1,1 +1,26 @@
-<p>weather-forecast works!</p>
+<!-- weather.component.html -->
+<div class="weather-widget">
+  <div class="weather-current">
+    <div class="weather-icon">
+      <img [src]="currentWeather?.icon" [alt]="currentWeather?.description">
+    </div>
+    <div class="weather-info">
+      <div class="weather-city">{{ city }}</div>
+      <div class="weather-description">{{ currentWeather?.description }}</div>
+      <div class="weather-temperature">{{ currentWeather?.temperature }}°C</div>
+      <div class="weather-humidity">Humidity: {{ currentWeather?.humidity }}%</div>
+      <div class="weather-wind">Wind: {{ currentWeather?.wind }}m/s</div>
+    </div>
+  </div>
+  <div class="weather-forecast">
+    <div class="weather-forecast-item" *ngFor="let forecast of forecasts">
+      <div class="weather-forecast-day">{{ forecast?.day }}</div>
+      <div class="weather-forecast-icon">
+        <img [src]="forecast?.icon" [alt]="forecast?.description">
+      </div>
+      <div class="weather-forecast-temperature">{{ forecast?.minTemperature }}°C / {{ forecast?.maxTemperature }}°C</div>
+      <div class="weather-forecast-humidity">Humidity: {{ forecast?.humidity }}%</div>
+      <div class="weather-forecast-wind">Wind: {{ forecast?.wind }}m/s</div>
+    </div>
+  </div>
+</div>
