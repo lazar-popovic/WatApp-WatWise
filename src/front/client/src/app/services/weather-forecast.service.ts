@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Weather } from '../Models/Weather';
+import { Forecast } from '../Models/Forecast';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,32 @@ export class WeatherForecastService {
           response.main.humidity,
           response.main.wind
         );
+      })
+      .catch((error: any) => {
+        console.log(error);
+        return null;
+      });
+  }
+
+  getForecast(city: string) {
+    return this.http.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${this.API_KEY}&units=${this.units}&lang=${this.lang}`)
+      .toPromise()
+      .then((response: any) => {
+        const forecast = [];
+        for (let i = 0; i < response.list.length; i += 8) {
+          const item = response.list[i];
+          forecast.push(new Forecast(
+            new Date(item.dt_txt),
+            item.weather[0].description,
+            `http://openweathermap.org/img/w/${item.weather[0].icon}.png`,
+            item.main.temp,
+            item.main.temp_min,
+            item.main.temp_max,
+            item.main.humidity,
+            item.main.wind
+          ));
+        }
+        return forecast;
       })
       .catch((error: any) => {
         console.log(error);
