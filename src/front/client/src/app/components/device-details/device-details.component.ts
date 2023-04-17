@@ -103,6 +103,8 @@ export class DeviceDetailsComponent implements OnInit
     threeDaysFlag : boolean = false;
     sevenDaysFlag : boolean = false;
 
+    showDropdown : boolean = false;
+
     datasets: any[] = [];
 
     dataConsumption: any[] = [];

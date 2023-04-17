@@ -430,52 +430,7 @@ table tbody tr:hover {
   top: 30%;
 }
 
-
-#stats-container
-{
-  
-  margin-left: 110%;
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 300px;
-  height: 200px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
-  margin: 20px;
-  padding: 20px;
-}
-
-.card h2 {
-  font-size: 24px;
-  font-weight: bold;
-  color: #222;
-  margin-bottom: 10px;
-}
-
-.card p {
-  font-size: 18px;
-  font-weight: 500;
-  color: #666;
-  margin-bottom: 10px;
-}
-
-.min-stat {
-  color: #1abc9c;
-}
-
-.max-stat {
-  color: #f1c40f;
-}
-
-.avg-stat {
-  color: #3498db;
-}
+/**/
 
 #stats-button
 {
@@ -504,4 +459,45 @@ table tbody tr:hover {
 {
   color: #fff;
   background-color: #333;
+}
+
+/**/
+
+#stats-button {
+  position: relative;
+}
+
+#stats-dropdown 
+{
+  color: #333;
+  display: none;
+  position: absolute;
+ 
+  width: 300px;
+  top: 100%;
+  right: 0%;
+  background-color: white;
+  border-radius: 10px;
+  background-color: #333;
+  padding: 5px;
+}
+
+#stats-dropdown th
+{
+  border-bottom: 2px solid black;
+} 
+
+
+#stats-dropdown ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#stats-dropdown li {
+  margin-bottom: 5px;
+}
+  
+#stats-dropdown.visible {
+  display: block;
 }
