@@ -106,3 +106,8 @@
   height: 380px;
   box-sizing: border-box;
 }
+
+#live-chart {
+  max-height: 340px;
+  min-height: 340px;
+}

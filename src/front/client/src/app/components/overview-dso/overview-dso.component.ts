@@ -30,8 +30,8 @@ export class OverviewDsoComponent implements OnInit {
         if( result.success) {
           this.liveChartData.consumption = result.data.consumptionEnergyUsage.filter( (ceu:any) => new Date(ceu.timestamp).getTime() <= Date.now()).map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value}));
           this.liveChartData.production = result.data.productionEnergyUsage.filter( (ceu:any) => new Date(ceu.timestamp).getTime() <= Date.now()).map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value}));
-          this.liveChartData.predictedConsumption = result.data.consumptionEnergyUsage.filter( (ceu:any) => new Date(ceu.timestamp).getTime() > Date.now()).map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value}));
-          this.liveChartData.predictedProduction = result.data.productionEnergyUsage.filter( (ceu:any) => new Date(ceu.timestamp).getTime() > Date.now()).map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value}));
+          this.liveChartData.predictedConsumption = result.data.consumptionEnergyUsage.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue}));
+          this.liveChartData.predictedProduction = result.data.productionEnergyUsage.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue}));
           console.log( this.liveChartData);
           this.drawLiveChart();
         }
