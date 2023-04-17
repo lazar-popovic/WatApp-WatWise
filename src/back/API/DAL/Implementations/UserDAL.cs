@@ -118,7 +118,7 @@ namespace API.DAL.Implementations
 
         public async Task<int> getNumberOfProsumersOrEmployees(int id)
         {
-            int numberUsers = await _dbContext.Users.CountAsync(u => u.RoleId == id);
+            int numberUsers = await _dbContext.Users.AsNoTracking().CountAsync(u => u.RoleId == id);
             return numberUsers;
         }
 
@@ -195,6 +195,10 @@ namespace API.DAL.Implementations
             return user;
         }
 
+        public async Task<User?> GetByEmailAsync(string email)
+        {
+            return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email);
+        }
     }
 
 

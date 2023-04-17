@@ -50,13 +50,12 @@ namespace API.DAL.Implementations
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteDeviceAsync(int id)
+        public async Task DeleteDeviceAsync(Device dev)
         {
-            var recordsToDelete = _dbContext.DeviceEnergyUsage.Where(x => x.DeviceId == id);
+            var recordsToDelete = _dbContext.DeviceEnergyUsage.Where(x => x.DeviceId == dev.Id);
             _dbContext.DeviceEnergyUsage.RemoveRange(recordsToDelete);
 
-            var device = await GetDeviceByIdAsync(id);
-            _dbContext.Devices.Remove(device!);
+            _dbContext.Devices.Remove(dev!);
 
             await _dbContext.SaveChangesAsync();
         }

@@ -8,6 +8,7 @@ namespace API.DAL.Interfaces
     {
         Task<User?> GetByIdAsync(int id);
         Task<User?> GetByIdWithPasswordAsync(int id);
+        Task<User?> GetByEmailAsync(string email);
         Task<List<User>?> GetUsersBasedOnRoleAsync(int id, int pageSize, int pageNumber);
         Task<List<User>?> GetUsers();
         Task<List<User>?> GetUsersWithLocationId(int id);
