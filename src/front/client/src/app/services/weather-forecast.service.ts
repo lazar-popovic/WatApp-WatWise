@@ -13,7 +13,7 @@ export class WeatherForecastService {
 
   constructor(private http: HttpClient) {}
 
-  getWeather(city: string) {
+  getWeather(city: string): Promise<Weather | null> {
     return this.http
       .get(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.API_KEY}&units=${this.units}&lang=${this.lang}&exclude=minutely`
@@ -36,7 +36,7 @@ export class WeatherForecastService {
       });
   }
 
-  getForecast(city: string) {
+  getForecast(city: string): Promise<Forecast[] | null> {
     return this.http.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${this.API_KEY}&units=${this.units}&lang=${this.lang}`)
       .toPromise()
       .then((response: any) => {
@@ -62,3 +62,6 @@ export class WeatherForecastService {
       });
   }
 }
+
+export { Weather, Forecast };
+
