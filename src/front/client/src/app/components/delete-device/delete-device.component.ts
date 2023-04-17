@@ -23,6 +23,8 @@ export class DeleteDeviceComponent {
       if( result.body.success) {
         this.toastrNotifService.showSuccess( result.body.data);
         this.router.navigate(['/prosumer/devices']);
+      } else {
+        this.toastrNotifService.showSuccess( result.body.errors);
       }
     }, (error: any) => {
       console.log(error);
