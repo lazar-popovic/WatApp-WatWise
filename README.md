@@ -1,4 +1,4 @@
-<h1>WattApp</h1>
+``<h1>WattApp</h1>
 <h2>About</h2>
 <p>
 This repository contains a web application built using ASP.NET Core 7 for the backend and Angular 15 for the frontend. The application uses a SQLite and a MongoDB database. This readme file provides instructions on how to run the application on a local machine.
@@ -19,7 +19,11 @@ This repository contains a web application built using ASP.NET Core 7 for the ba
 <h3>Running MongoDB server</h3>
 <ol>
 <li>Run MongoDB server.</li>
-<li>Create connection on URL mongodb://localhost:27017</li>
+<li>Set up MongoDB server connection in appsettings.json file in .NET project
+<b><br>"ConnectionStrings": {<br>
+        "MongoDB": "mongodb://localhost:27017"<br>
+  }<br></b>
+</li>
 <li>Create database named <b>database</b> with collection called <b>devices</b></li>
 <li>Import data manually as json file or run the python script in folder <b>src/python/devices_scripts</b> to fill collection with necessary data</li>
 </ol>
@@ -28,6 +32,10 @@ This repository contains a web application built using ASP.NET Core 7 for the ba
 <ol>
 <li>Open a terminal and navigate to the <b>src/back/API</b> folder.</li>
 <li>Run the following command to install the required NuGet packages:<br><b>dotnet restore</b></li>
+<li>Set up SQLite database connection in appsettings.json file in .NET project
+<b><br>"ConnectionStrings": {<br>
+     "DefaultConnection": "Data Source = database.db"<br>
+  }<br></b>
 <li>Run the following command to create SQLite database based of migrations:<br><b>dotnet ef database update</b></li>
 <li>Run the following commands to start the backend server:<br><b>dotnet run</b></li>
 <li>Server is located on http://localhost:5226/ web address</li>
