@@ -9,7 +9,7 @@ import { WeatherForecastService, Weather, Forecast } from '../../services/weathe
 })
 export class WeatherForecastComponent implements OnInit {
 
-  city = 'London'; // Change this to the desired city
+  city = 'Kragujevac'; // Change this to the desired city
   currentWeather: Weather | null = null;
   forecasts: Forecast[] = [];
 
