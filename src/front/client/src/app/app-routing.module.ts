@@ -49,6 +49,7 @@ const routes: Routes = [
   { path: 'prosumer/device/:id', component: DeviceDetailsComponent},
   { path: 'profile-settings', component: ProfileSettingsComponent},
   { path: 'test-component', component: DeleteDeviceComponent},
+  { path: 'test-geo', component: UsersComponent}
 ];
 
 @NgModule({

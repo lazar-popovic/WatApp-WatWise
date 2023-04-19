@@ -45,7 +45,7 @@ import { MatSlider, MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EditDeviceComponent } from './components/edit-device/edit-device.component';
 import { SliderComponent } from './components/slider/slider.component';
-//import { DeleteDeviceComponent } from './components/delete-device/delete-device.component';
+import { DeleteDeviceComponent } from './components/delete-device/delete-device.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgBusyModule } from 'ng-busy';
 @NgModule({
@@ -81,7 +81,7 @@ import { NgBusyModule } from 'ng-busy';
     OverviewDsoComponent,
     EditDeviceComponent,
     SliderComponent,
-    //DeleteDeviceComponent
+    DeleteDeviceComponent
   ],
   imports: [
     BrowserModule,
