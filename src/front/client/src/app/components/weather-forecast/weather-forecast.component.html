@@ -1,6 +1,6 @@
 <!-- weather.component.html -->
 <div class="weather-widget">
-  <div class="weather-current">
+  <div class="weather-current"  *ngIf="currentWeather!=undefined">
     <div class="weather-icon">
       <img [src]="currentWeather?.icon" [alt]="currentWeather?.description">
     </div>
@@ -12,7 +12,7 @@
       <div class="weather-wind">Wind: {{ currentWeather?.wind }}m/s</div>
     </div>
   </div>
-  <div class="weather-forecast">
+  <div class="weather-forecast" *ngIf="forecasts!=[]">
     <div class="weather-forecast-item" *ngFor="let forecast of forecasts">
       <div class="weather-forecast-day">{{ forecast?.day }}</div>
       <div class="weather-forecast-icon">
