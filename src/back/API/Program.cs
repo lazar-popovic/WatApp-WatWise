@@ -18,6 +18,8 @@ using API.Services.E_mail.Interfaces;
 using API.Services.E_mail.Implementations;
 using Hangfire;
 using API.Services.JWTCreation.Implementations;
+using API.Services.WeatherForecast.Implementations;
+using API.Services.WeatherForecast.Interfaces;
 using Hangfire.Storage.SQLite;
 using AspNetCoreRateLimit;
 using API.SignalR.Hubs;

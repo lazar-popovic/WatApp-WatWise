@@ -4,6 +4,6 @@ namespace API.Services.WeatherForecast.Interfaces;
 
 public interface IWeatherForecastService
 {
-    Weather GetCurrentWeather();
-    Forecast Get5DayWeatherForecast();
+    Task<Weather?> GetCurrentWeatherAsync();
+    Task<Forecast?> Get5DayWeatherForecastAsync();
 }
