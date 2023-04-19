@@ -1,5 +1,5 @@
-﻿using API.Services.WeatherForecast.Interfaces;
-using API.Services.WeatherForecast.Models;
+﻿using System.Security.Claims;
+using API.Services.WeatherForecast.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +11,11 @@ namespace API.API;
 public class WeatherController : ControllerBase
 {
     private readonly IWeatherForecastService _weatherForecastService;
-
-    public WeatherController(IWeatherForecastService weatherForecastService)
+    private readonly IHttpContextAccessor _contextAccessor;
+    public WeatherController(IWeatherForecastService weatherForecastService, IHttpContextAccessor contextAccessor)
     {
         _weatherForecastService = weatherForecastService;
+        _contextAccessor = contextAccessor;
     }
     
     [HttpGet("current")]

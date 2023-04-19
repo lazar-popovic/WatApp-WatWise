@@ -1,9 +1,7 @@
-﻿using API.Services.WeatherForecast.Models;
-
-namespace API.Services.WeatherForecast.Interfaces;
+﻿namespace API.Services.WeatherForecast.Interfaces;
 
 public interface IWeatherForecastService
 {
-    Task<Weather?> GetCurrentWeatherAsync();
-    Task<Forecast?> Get5DayWeatherForecastAsync();
+    Task<string?> GetCurrentWeatherAsync();
+    Task<string?> Get5DayWeatherForecastAsync();
 }

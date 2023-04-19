@@ -3,9 +3,7 @@ using API.Common.API_Keys;
 using API.DAL.Interfaces;
 using API.Services.JWTCreation.Interfaces;
 using API.Services.WeatherForecast.Interfaces;
-using API.Services.WeatherForecast.Models;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 
 namespace API.Services.WeatherForecast.Implementations;
 
@@ -14,30 +12,30 @@ public class WeatherForecastService : IWeatherForecastService
     private const string WeatherBaseUrl = "https://api.openweathermap.org/data/2.5/weather?";
     private const string ForecastBaseUrl = "https://api.openweathermap.org/data/2.5/forecast?";
     
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient _httpClient = new HttpClient();
+    private readonly IHttpContextAccessor _context;
+    
     private readonly IJWTCreator _jwtCreator;
     private readonly IUserDAL _userDal;
     
     private const string Units = "metric";
     private double? _lat;
     private double? _lon;
-    private Weather? _weatherData;
-    private Forecast? _forecastData;
-    
-    public WeatherForecastService(HttpClient httpClient, HttpContext context, IJWTCreator jwtCreator, IUserDAL userDal)
+
+    public WeatherForecastService(IJWTCreator jwtCreator, IUserDAL userDal,IHttpContextAccessor context)
     {
-        _httpClient = httpClient;
+        _context = context;
         _jwtCreator = jwtCreator;
         _userDal = userDal;
-        GetUserId(context);
+        GetUserId(_context);
     }
 
-    private async Task GetUserId(HttpContext context)
+    private async Task GetUserId(IHttpContextAccessor context)
     {
         int userId = 0;
-        string authorizationHeader = context.Request.Headers["Authorization"];
+        string authorizationHeader = context.HttpContext.Request.Headers["Authorization"];
 
-        var jwt = authorizationHeader.Substring("Bearer ".Length).Trim();
+        var jwt = authorizationHeader.Substring("bearer ".Length).Trim();
         try
         {
             userId = _jwtCreator.GetUserIdFromToken(jwt);
@@ -67,19 +65,22 @@ public class WeatherForecastService : IWeatherForecastService
         }
     }
     
-    public async Task<Weather?> GetCurrentWeatherAsync()
+    public async Task<string?> GetCurrentWeatherAsync()
     {
+        string responseContent = null;
         try
         {
             var response = await _httpClient.GetAsync($"{WeatherBaseUrl}lat={_lat}&lon={_lon}&appid={WeatherForecastApiKey.Key}&units={Units}");
             response.EnsureSuccessStatusCode();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            responseContent = await response.Content.ReadAsStringAsync();
 
-            if (!string.IsNullOrEmpty(responseContent))
-                _weatherData = JsonConvert.DeserializeObject<Weather>(responseContent);
+            /*
+            //if (!string.IsNullOrEmpty(responseContent))
+                //_weatherData = JsonConvert.DeserializeObject<Weather>(responseContent);
             else
                 throw new Exception("Content response is null");
+                */
         }
         catch (HttpRequestException httpRequestException)
         {
@@ -90,22 +91,25 @@ public class WeatherForecastService : IWeatherForecastService
         {
             Console.WriteLine(e.Message);
         }
-        return _weatherData ?? null;
+        //return _weatherData ?? null;
+        return responseContent;
     }
 
-    public async Task<Forecast?> Get5DayWeatherForecastAsync()
+    public async Task<string?> Get5DayWeatherForecastAsync()
     {
+        string responseContent = null;
         try
         {
             var response = await _httpClient.GetAsync($"{ForecastBaseUrl}lat={_lat}&lon={_lon}&appid={WeatherForecastApiKey.Key}&units={Units}");
             response.EnsureSuccessStatusCode();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
-
+            responseContent = await response.Content.ReadAsStringAsync();
+            /*
             if (!string.IsNullOrEmpty(responseContent))
                 _forecastData = JsonConvert.DeserializeObject<Forecast>(responseContent);
             else
                 throw new Exception("Content from response is NULL!");
+                */
         }
         catch (HttpRequestException httpRequestException)
         {
@@ -116,6 +120,7 @@ public class WeatherForecastService : IWeatherForecastService
         {
             Console.WriteLine(e.Message);
         }
-        return _forecastData ?? null;
+        //return _forecastData ?? null;
+        return responseContent;
     }
 }
