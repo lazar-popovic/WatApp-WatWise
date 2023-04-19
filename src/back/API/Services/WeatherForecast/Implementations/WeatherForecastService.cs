@@ -1,6 +1,10 @@
-﻿using API.Common.API_Keys;
+﻿using API.BL.Interfaces;
+using API.Common.API_Keys;
+using API.DAL.Interfaces;
+using API.Services.JWTCreation.Interfaces;
 using API.Services.WeatherForecast.Interfaces;
 using API.Services.WeatherForecast.Models;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 namespace API.Services.WeatherForecast.Implementations;
@@ -9,19 +13,60 @@ public class WeatherForecastService : IWeatherForecastService
 {
     private const string WeatherBaseUrl = "https://api.openweathermap.org/data/2.5/weather?";
     private const string ForecastBaseUrl = "https://api.openweathermap.org/data/2.5/forecast?";
+    
     private readonly HttpClient _httpClient;
+    private readonly IJWTCreator _jwtCreator;
+    private readonly IUserDAL _userDal;
+    
     private const string Units = "metric";
-    private double _lat;
-    private double _lon;
+    private double? _lat;
+    private double? _lon;
     private Weather? _weatherData;
     private Forecast? _forecastData;
     
-
-    public WeatherForecastService(HttpClient httpClient)
+    public WeatherForecastService(HttpClient httpClient, HttpContext context, IJWTCreator jwtCreator, IUserDAL userDal)
     {
         _httpClient = httpClient;
+        _jwtCreator = jwtCreator;
+        _userDal = userDal;
+        GetUserId(context);
     }
 
+    private async Task GetUserId(HttpContext context)
+    {
+        int userId = 0;
+        string authorizationHeader = context.Request.Headers["Authorization"];
+
+        var jwt = authorizationHeader.Substring("Bearer ".Length).Trim();
+        try
+        {
+            userId = _jwtCreator.GetUserIdFromToken(jwt);
+        }
+        catch(SecurityTokenException se)
+        {
+            Console.WriteLine("Invalid token!" + se.InnerException?.Message);
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine("Invalid token!" + e.Message);;
+        }
+        
+        if(userId == -1)
+            Console.WriteLine("Something went wrong with getting user id from token!");
+        else
+        {
+            var user = await _userDal.GetByIdAsync(userId);
+            
+            if(user == null)
+                Console.WriteLine("User with provided id doesent exist in database");
+            else
+            {
+                _lon = user.Location!.Longitude;
+                _lat = user.Location!.Latitude;
+            }
+        }
+    }
+    
     public async Task<Weather?> GetCurrentWeatherAsync()
     {
         try
