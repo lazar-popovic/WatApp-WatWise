@@ -33,10 +33,10 @@ public class LocationController : ControllerBase
     {
         return Ok(await locationBL.GetAllLocation());
     }
-    [HttpPost("address-autocomplete")]
-    public async Task<IActionResult> GetPossibleAddresses( StreetAddressViewModel streetAddressViewModel)
+    [HttpGet("address-autocomplete")]
+    public async Task<IActionResult> GetPossibleAddresses( string streetAddress)
     {
-        return Ok(await _geocodingService.Autocomplete( streetAddressViewModel.StreetAddress));
+        return Ok(await _geocodingService.Autocomplete( streetAddress));
     }
 
 }
