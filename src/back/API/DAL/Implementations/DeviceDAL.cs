@@ -40,6 +40,10 @@ namespace API.DAL.Implementations
 
         public async Task AddDeviceAsync(Device device)
         {
+            if (device.DeviceType != null && device.DeviceType.Type != "Battery")
+            {
+                device.Capacity = null;
+            }
             await _dbContext.Devices.AddAsync(device);
             await _dbContext.SaveChangesAsync();
         }
