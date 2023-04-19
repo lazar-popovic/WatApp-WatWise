@@ -1,4 +1,4 @@
-﻿namespace API.Services.WeatherForecast.ViewModels;
+﻿namespace API.Services.WeatherForecast.Models;
 
 public class Weather
 {
