@@ -6,8 +6,9 @@
   </div>
   <div id="content">
     <div id="header">
-      <h2><a href="/prosumer/devices">Devices</a> <span style="color: gray;"> /</span> {{device.name}}</h2>
-      <div id="header-img">
+      <h2 *ngIf="myDevice()"><a href="/prosumer/devices">Devices</a> <span style="color: gray;"> /</span> {{device.name}}</h2>
+      <h2 *ngIf="!myDevice()"><a href="/profile/{{device.userId}}">Devices</a> <span style="color: gray;"> /</span> {{device.name}}</h2>
+      <div id="header-img" *ngIf="myDevice()">
         <img src="/assets/sett.png" alt="settings">
         <div id="drop-down-sett">
           <div class="drop-down-item" (click)="showEditForm()">Edit</div>

@@ -21,7 +21,8 @@ export class DevicesInfoComponent implements OnInit{
   prosumeDevices: Device[] = [];
   storageDevices: Device[] = [];
 
- constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService, private route: Router) { }
+ constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService, private route: Router) {
+ }
 
   ngOnInit(): void {
     let idFunc =0;
@@ -34,21 +35,24 @@ export class DevicesInfoComponent implements OnInit{
         if( result.success) {
           for (let devicesType of result.data)
           for(let device of devicesType.devices) {
-            let deviceIns = new Device();
-            deviceIns.id = device.id;
-            deviceIns.name = device.name;
-            deviceIns.activityStatus = device.activityStatus;
-            deviceIns.usage = device.value;
-            deviceIns.type = device.deviceType.type;
-            this.consumeShow= true;
-            this.prosumeShow = true;
-            this.storageShow = true;
-            if(devicesType.category == -1) {
-              this.consumeDevices.push(deviceIns);
-            } else if(devicesType.category == 1) {
-              this.prosumeDevices.push(deviceIns);
-            } else if(devicesType.category == 0) {
-              this.storageDevices.push(deviceIns);
+            if( (idFunc== this.jwtService.userId) || ( device.dataShare == true)) {
+              let deviceIns = new Device();
+              deviceIns.id = device.id;
+              deviceIns.name = device.name;
+              deviceIns.activityStatus = device.activityStatus;
+              deviceIns.usage = device.value;
+              deviceIns.type = device.deviceType.type;
+              this.consumeShow= true;
+              this.prosumeShow = true;
+              this.storageShow = true;
+              if(devicesType.category == -1) {
+                this.consumeDevices.push(deviceIns);
+              } else if(devicesType.category == 1) {
+                this.prosumeDevices.push(deviceIns);
+              } else if(devicesType.category == 0) {
+                this.storageDevices.push(deviceIns);
+              }
+
             }
           }
         }
