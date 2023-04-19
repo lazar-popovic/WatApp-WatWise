@@ -30,8 +30,7 @@ public class GeocodingService : IGeocodingService
                 var result = new List<object>();
                 foreach (var data in datas)
                 {
-                    var address = (Dictionary<string, object>)data["address"];
-
+                    var address = data["address"];               
                     result.Add(address);
                 }
 
