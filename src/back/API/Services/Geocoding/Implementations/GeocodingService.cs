@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using API.Models.ViewModels;
 using API.Services.Geocoding.Interfaces;
@@ -30,8 +31,9 @@ public class GeocodingService : IGeocodingService
                 var result = new List<object>();
                 foreach (var data in datas)
                 {
-                    var address = data["address"];               
-                    result.Add(address);
+                    var address = data["address"];
+                    var addressDetails = data["display_name"];
+                    result.Add( new { addressDetails, address });
                 }
 
                 return result;
