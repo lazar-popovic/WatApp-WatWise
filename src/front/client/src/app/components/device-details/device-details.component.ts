@@ -11,6 +11,7 @@ import {DeviceService} from "../../services/device.service";
 import {DeviceDataService} from "../../services/device-data.service";
 import {DatePipe} from "@angular/common";
 import { ViewEncapsulation } from '@angular/core';
+import { JWTService } from 'src/app/services/jwt.service';
 
 interface DatepickerOptions {
   autoclose?: boolean;
@@ -47,37 +48,49 @@ export class DeviceDetailsComponent implements OnInit
     yearForMonth: number = 2023;
     year: number = 2023;
 
-    constructor( private datePipe: DatePipe, private authService:AuthService, private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private deviceDataService: DeviceDataService) {
+    constructor( private datePipe: DatePipe,
+                 private authService:AuthService,
+                 private deviceService: DeviceService,
+                 private route: ActivatedRoute,
+                 private router: Router,
+                 private deviceDataService: DeviceDataService,
+                 private jwtService: JWTService) {
       this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
         result => {
           if( result.success) {
-            this.device.id = result.data.id;
-            this.device.userId = result.data.userId;
-            this.device.name = result.data.name;
-            this.device.activityStatus = result.data.activityStatus;
-            this.device.deviceType = result.data.deviceType;
-            switch ( result.data.deviceType.category)
-            {
-              case -1:
-                this.categoryLabel = "Consumption [kWh]";
-                this.color = 'rgba(191, 65, 65, 1)';
-                this.predColor = 'rgba(191, 65, 65, 0.4)';
-                break;
-              case 0:
-                this.categoryLabel = "In storage";
-                this.color = 'rgba(27, 254, 127, 1)';
-                this.predColor = 'rgba(27, 254, 127, 0.4)';
-                break;
-              case 1:
-                this.categoryLabel = "Production [kWh]";
-                this.color = 'rgba(69, 94, 184, 1)';
-                this.predColor = 'rgba(69, 94, 184, 0.4)';
-                break;
+            if( (result.data.userId == this.jwtService.userId) || (( this.jwtService.roleId == 1 || this.jwtService.roleId == 2 ) && result.data.dataShare == true)) {
+              this.device.id = result.data.id;
+              this.device.userId = result.data.userId;
+              this.device.name = result.data.name;
+              this.device.activityStatus = result.data.activityStatus;
+              this.device.deviceType = result.data.deviceType;
+              this.device.dataShare = result.data.dataShare;
+              switch ( result.data.deviceType.category)
+              {
+                case -1:
+                  this.categoryLabel = "Consumption [kWh]";
+                  this.color = 'rgba(191, 65, 65, 1)';
+                  this.predColor = 'rgba(191, 65, 65, 0.4)';
+                  break;
+                case 0:
+                  this.categoryLabel = "In storage";
+                  this.color = 'rgba(27, 254, 127, 1)';
+                  this.predColor = 'rgba(27, 254, 127, 0.4)';
+                  break;
+                case 1:
+                  this.categoryLabel = "Production [kWh]";
+                  this.color = 'rgba(69, 94, 184, 1)';
+                  this.predColor = 'rgba(69, 94, 184, 0.4)';
+                  break;
+              }
+              let now = new Date();
+              this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
+              this.historyClick();
+              console.log( this.device);
             }
-            let now = new Date();
-            this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
-            this.historyClick();
-            console.log( this.device);
+            else {
+              this.router.navigate(['/profile',result.data.userId]);
+            }
           }
         }, error => {
           console.log( error);
