@@ -67,8 +67,8 @@
           <td>{{ row.timestamp }}</td>
           <td style="color: rgba(191, 65, 65, 0.8)">{{ row.predictedValue.toFixed(3) }}</td>
           <td style="color: rgba(191, 65, 65, 1)">{{ row.value.toFixed(3) }}</td>
-          <td style="color: rgba(69, 94, 184, 0.8)">{{ data.producingEnergyUsageByTimestamp[i].predictedValue.toFixed(3) }}</td>
-          <td style="color: rgba(69, 94, 184, 1)">{{ data.producingEnergyUsageByTimestamp[i].value.toFixed(3) }}</td>
+          <td style="color: rgba(69, 94, 184, 0.8)">{{ data.producingEnergyUsageByTimestamp[i]?.predictedValue.toFixed(3) }}</td>
+          <td style="color: rgba(69, 94, 184, 1)">{{ data.producingEnergyUsageByTimestamp[i]?.value.toFixed(3) }}</td>
         </tr>
         </tbody>
       </table>
@@ -82,9 +82,9 @@
         </thead>
         <tbody>
         <tr *ngFor="let data of dataConsumption; let i = index">
-          <td>{{ data.x }}</td>
-          <td>{{ data.y.toFixed(3) }}</td>
-          <td>{{ dataProduction[i].y.toFixed(3) }}</td>
+          <td>{{ data?.x }}</td>
+          <td>{{ data?.y.toFixed(3) }}</td>
+          <td>{{ dataProduction[i]?.y.toFixed(3) }}</td>
         </tr>
         </tbody>
       </table>
