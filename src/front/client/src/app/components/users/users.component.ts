@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import {ToastrNotifService} from "../../services/toastr-notif.service";
+import { GeocodingService } from 'src/app/services/geocoding.service';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -19,7 +20,7 @@ export class UsersComponent {
     }
   };
 
-  constructor(private userService: UserService,private router: Router, private toastrNotifService: ToastrNotifService) { }
+  constructor(private userService: UserService,private router: Router, private geoService: GeocodingService ,private toastrNotifService: ToastrNotifService) { }
 
   storeUser()
   {
@@ -34,5 +35,13 @@ export class UsersComponent {
     },(error: any) => {
       console.log(error);
     });
+  }
+
+  getAddress() {
+    this.geoService.getAddress(this.user.location.address, this.user.location.number).subscribe((result: any) => {
+      console.log(result.body);
+    }, (error: any) => {
+      console.log(error);
+    })
   }
 }
