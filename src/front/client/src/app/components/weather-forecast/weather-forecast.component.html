@@ -5,7 +5,7 @@
       <img [src]="currentWeather?.icon" [alt]="currentWeather?.description">
     </div>
     <div class="weather-info">
-      <div class="weather-city">{{ city }}</div>
+      <div class="weather-city">{{ currentWeather?.name }}</div>
       <div class="weather-description">{{ currentWeather?.description }}</div>
       <div class="weather-temperature">{{ currentWeather?.temperature }}°C</div>
       <div class="weather-humidity">Humidity: {{ currentWeather?.humidity }}%</div>

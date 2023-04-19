@@ -2,32 +2,30 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Weather } from '../Models/Weather';
 import { Forecast } from '../Models/Forecast';
+import { environment } from '../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WeatherForecastService {
-  private API_KEY = 'e39e528663e833d20fe7c7aba6813e5e';
-  private units = 'metric';
-  private lang = 'en';
 
   constructor(private http: HttpClient) {}
 
-  getWeather(city: string): Promise<Weather | null> {
-    return this.http
-      .get(
-        `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.API_KEY}&units=${this.units}&lang=${this.lang}&exclude=minutely`
-      )
+  getWeather() :Promise<any>
+  {
+    return this.http.get(`${environment.apiUrl}weather/current`)
       .toPromise()
       .then((response: any) => {
         return new Weather(
+          response.name,
           response.weather[0].description,
           `https://openweathermap.org/img/w/${response.weather[0].icon}.png`,
           response.main.temp,
           response.main.temp_min,
           response.main.temp_max,
           response.main.humidity,
-          response.main.wind
+          response.wind.speed
         );
       })
       .catch((error: any) => {
@@ -36,8 +34,9 @@ export class WeatherForecastService {
       });
   }
 
-  getForecast(city: string): Promise<Forecast[] | null> {
-    return this.http.get(`https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${this.API_KEY}&units=${this.units}&lang=${this.lang}`)
+  getForecast() :Promise<any>
+  {
+    return this.http.get(`${environment.apiUrl}weather/forecast`)
       .toPromise()
       .then((response: any) => {
         const forecast = [];
@@ -51,7 +50,7 @@ export class WeatherForecastService {
             item.main.temp_min,
             item.main.temp_max,
             item.main.humidity,
-            item.main.wind
+            item.wind.speed
           ));
         }
         return forecast;

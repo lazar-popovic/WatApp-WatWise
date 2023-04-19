@@ -9,7 +9,6 @@ import { WeatherForecastService, Weather, Forecast } from '../../services/weathe
 })
 export class WeatherForecastComponent implements OnInit {
 
-  city = 'Kragujevac'; // Change this to the desired city
   currentWeather: Weather | null = null;
   forecasts: Forecast[] = [];
 
@@ -18,14 +17,14 @@ export class WeatherForecastComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.weatherService.getWeather(this.city)
+    this.weatherService.getWeather()
       .then((currentWeather: Weather | null) => {
         if(currentWeather)
           this.currentWeather = currentWeather;
         else
           console.log("PUKLO GET Weather");
       });
-    this.weatherService.getForecast(this.city)
+    this.weatherService.getForecast()
       .then((forecasts: Forecast[] | null) => {
         if(forecasts)
           this.forecasts = forecasts;
