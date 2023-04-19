@@ -40,6 +40,8 @@ export class DeviceDetailsComponent implements OnInit
       dataShare: false
     }
 
+    roleId: number = 3;
+
     showEdit: boolean = false;
     showDelete: boolean = false;
 
@@ -48,6 +50,13 @@ export class DeviceDetailsComponent implements OnInit
     yearForMonth: number = 2023;
     year: number = 2023;
 
+    myDevice() {
+      if( this.device.userId == this.jwtService.userId)
+        return true;
+      else
+        return false;
+    }
+
     constructor( private datePipe: DatePipe,
                  private authService:AuthService,
                  private deviceService: DeviceService,
@@ -55,6 +64,7 @@ export class DeviceDetailsComponent implements OnInit
                  private router: Router,
                  private deviceDataService: DeviceDataService,
                  private jwtService: JWTService) {
+      this.roleId = this.jwtService.roleId;
       this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
         result => {
           if( result.success) {
