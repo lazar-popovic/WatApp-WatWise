@@ -27,13 +27,16 @@ public class LocationController : ControllerBase
     public LongLat GetLongLat( LocationViewModel locationViewModel)
     {
        return _geocodingService.Geocode( locationViewModel);
-
     }
     [HttpGet("all-locations")]
     public async Task<IActionResult> GetAllLocation()
     {
         return Ok(await locationBL.GetAllLocation());
-
+    }
+    [HttpPost("address-autocomplete")]
+    public async Task<IActionResult> GetPossibleAddresses( StreetAddressViewModel streetAddressViewModel)
+    {
+        return Ok(await _geocodingService.Autocomplete( streetAddressViewModel.StreetAddress));
     }
 
 }

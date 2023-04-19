@@ -2,29 +2,61 @@
   <div id="sidebar">
     <app-sidebar></app-sidebar>
   </div>
-  <div id="content">
-    <div id="cards">
-      <div class="card big-card" id="card1">
-        <div class="card-header">
-          <h3>Live electrical energy consumption and production</h3>
+  <div class="dashboard">
+    <!-- TOP 4 SMALL CARDS -->
+    <div class="card-group">
+      <div class="card standard-card-style card-small">
+        <div class="card-left">
+          <h4>Current consumtion of electrical energy</h4>
         </div>
-        <div class="card-body">
-          <canvas id="live-chart" style="width: 90%; height: 85%;"></canvas>
-        </div>
-      </div>
-      <div class="card small-card">
-        <div class="card-header">
-          <h3>Current consumption</h3>
+        <div class="card-right">
+          <h4 class="c-red">-{{cards.currentConsumption.toFixed(3)}}kWh</h4>
         </div>
       </div>
-      <div class="card small-card">
-        <div class="card-header">
-          <h3>Current production</h3>
+      <div class="card standard-card-style card-small">
+        <div class="card-left">
+          <h4>Current production of electrical energy</h4>
+        </div>
+        <div class="card-right">
+          <h4 class="c-blue">+{{cards.currentProduction.toFixed(3)}}kWh</h4>
         </div>
       </div>
-      <div class="card small-card">
-        <div class="card-header">
-          <h3>Number of active devices</h3>
+      <div class="card standard-card-style card-small">
+        <div class="card-left">
+          <h4>Predicted consumption for next hour</h4>
+        </div>
+        <div class="card-right">
+          <h4 class="c-red">-{{cards.nextHourConsumption.toFixed(3)}}kWh</h4>
+        </div>
+      </div>
+      <div class="card standard-card-style card-small">
+        <div class="card-left">
+          <h4>Predicted production for next hour</h4>
+        </div>
+        <div class="card-right">
+          <h4 class="c-blue">+{{cards.nextHourProduction.toFixed(3)}}kWh</h4>
+        </div>
+      </div>
+    </div>
+    <!-- LIVE USAGE HUGE CARD -->
+    <div class="card-group">
+      <div class="card card-huge standard-card-style">
+        <div class="chart-holder">
+          <h4>Live consumption/production of electrical energy</h4>
+          <canvas id="live-chart"></canvas>
+        </div>
+      </div>
+    </div>
+    <!-- BIG CARDs -->
+    <div class="card-group">
+      <div class="card card-big standard-card-style">
+        <h4>Consumption and production of electrical energy for today</h4>
+        <div class="chart-holder">
+        </div>
+      </div>
+      <div class="card card-big standard-card-style">
+        <h4>Consumption and production of electrical energy for tommorow</h4>
+        <div class="chart-holder">
         </div>
       </div>
     </div>

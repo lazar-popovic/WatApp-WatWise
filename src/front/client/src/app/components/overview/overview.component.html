@@ -47,11 +47,13 @@
             [legendPosition]="chart1.legendPosition"
             [yAxis]="true"
             [xAxis]="true"
-            [xAxisLabel]="'Hours'"
-            [yAxisLabel]="'Electrical energy'"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [xAxisLabel]="'Time[h]'"
+            [yAxisLabel]="'Electrical energy[kWh]'"
             [showGridLines]="true"
             [scheme]="chart1.colors"
-            [yAxisTickFormatting]="yAxisTickFormatting"
+            [xAxisTickFormatting]="xAxisTickFormatting"
           >
           </ngx-charts-line-chart>
         </div>
@@ -65,11 +67,13 @@
             [legendPosition]="chart2.legendPosition"
             [yAxis]="true"
             [xAxis]="true"
-            [xAxisLabel]="'Hours'"
-            [yAxisLabel]="'Electrical energy'"
+            [xAxisLabel]="'Time[h]'"
+            [yAxisLabel]="'Electrical energy[kWh]'"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
             [showGridLines]="true"
             [scheme]="chart2.colors"
-            [yAxisTickFormatting]="yAxisTickFormatting"
+            [xAxisTickFormatting]="xAxisTickFormatting"
           >
           </ngx-charts-line-chart>
         </div>

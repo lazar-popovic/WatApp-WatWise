@@ -50,7 +50,10 @@ public class DeviceSimulatorService : IDeviceSimulatorService
                 foreach (var device in deviceType.Devices)
                 {
                     deviceEnergyUsageList.Add(new DeviceEnergyUsage
-                        { DeviceId = device.Id, Value = Math.Round( value!.Value * (1 + rand.NextDouble() * 0.2 - 0.1), 3), Timestamp = timestamp });
+                        { DeviceId = device.Id,
+                          Value = Math.Round(value!.Value * (1 + rand.NextDouble() * 0.4 - 0.2), 3),
+                          PredictedValue = Math.Round((value!.Value+0.01) * (1 + rand.NextDouble() * 0.6 - 0.3), 3), 
+                          Timestamp = timestamp });
                 }
             }
         }
@@ -78,7 +81,7 @@ public class DeviceSimulatorService : IDeviceSimulatorService
 
         foreach (var usageData in usageDatas)
         {
-            deviceEnergyUsageList.Add( new DeviceEnergyUsage{ DeviceId = deviceId, Value = Math.Round(usageData["value"].ToDouble()*(1 + rand.NextDouble() * 0.2 - 0.1), 3), Timestamp = usageData["timestamp"].ToUniversalTime()});
+            deviceEnergyUsageList.Add( new DeviceEnergyUsage{ DeviceId = deviceId, Value = Math.Round(usageData["value"].ToDouble() * (1 + rand.NextDouble() * 0.4 - 0.2), 3), Timestamp = usageData["timestamp"].ToUniversalTime(), PredictedValue = usageData["value"].ToDouble()});
         }
         
         await _context.DeviceEnergyUsage.AddRangeAsync(deviceEnergyUsageList);

@@ -50,10 +50,13 @@ namespace API.DAL.Implementations
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteDeviceAsync(int id)
+        public async Task DeleteDeviceAsync(Device dev)
         {
-            var device = await GetDeviceByIdAsync(id);
-            _dbContext.Devices.Remove(device!);
+            var recordsToDelete = _dbContext.DeviceEnergyUsage.Where(x => x.DeviceId == dev.Id);
+            _dbContext.DeviceEnergyUsage.RemoveRange(recordsToDelete);
+
+            _dbContext.Devices.Remove(dev!);
+
             await _dbContext.SaveChangesAsync();
         }
         public async Task AddDeviceViewModel(DeviceViewModel devicee)
@@ -153,7 +156,7 @@ namespace API.DAL.Implementations
                 join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty()
                     on device.Id equals usage.DeviceId into usageGroup
                 where device.UserId == userId && device.ActivityStatus == true
-                group new { device.Name, Value = usageGroup.FirstOrDefault().Value }
+                group new { device.Name, Value = usageGroup.FirstOrDefault()!.Value }
                     by deviceType.Category into grouped
                 orderby grouped.Max(g => g.Value) descending
                 select new {

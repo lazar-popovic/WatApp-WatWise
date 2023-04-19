@@ -4,6 +4,7 @@ using API.DAL.Interfaces;
 using API.Models;
 using API.Models.Entity;
 using API.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.BL.Implementations
 {
@@ -20,9 +21,9 @@ namespace API.BL.Implementations
         {
             var response = new Response<User>();
 
-            var user =  await _userDal.GetByIdAsync(id);
+            var user = await _userDal.GetByIdAsync(id);
 
-            if(user == null)
+            if (user == null)
             {
                 response.Errors.Add("User doesen't exist!");
                 response.Success = false;
@@ -136,22 +137,22 @@ namespace API.BL.Implementations
         {
             var response = new Response<string>();
 
-            if(string.IsNullOrEmpty(request.OldPassword))
+            if (string.IsNullOrEmpty(request.OldPassword))
             {
                 response.Errors.Add("Old password field cannot be empty!");
             }
 
-            if(string.IsNullOrEmpty(request.NewPassword))
+            if (string.IsNullOrEmpty(request.NewPassword))
             {
                 response.Errors.Add("New password field cannot be empty!");
             }
-            
-            if(string.IsNullOrEmpty(request.ConfirmedPassword)) 
+
+            if (string.IsNullOrEmpty(request.ConfirmedPassword))
             {
                 response.Errors.Add("Confirmed password field cannot be empty!");
             }
 
-            if(request.NewPassword != request.ConfirmedPassword)
+            if (request.NewPassword != request.ConfirmedPassword)
             {
                 response.Errors.Add("Passwords must match!");
             }
@@ -162,7 +163,7 @@ namespace API.BL.Implementations
 
             var user = await _userDal.GetByIdWithPasswordAsync(id);
 
-            if(user == null)
+            if (user == null)
             {
                 response.Errors.Add("User with this id doesen't exist!");
 
@@ -170,7 +171,7 @@ namespace API.BL.Implementations
                 return response;
             }
 
-            if(!BCrypt.Net.BCrypt.Verify(request.OldPassword, user.PasswordHash))
+            if (!BCrypt.Net.BCrypt.Verify(request.OldPassword, user.PasswordHash))
             {
                 response.Errors.Add("Your old password is incorrect!");
 
@@ -194,7 +195,7 @@ namespace API.BL.Implementations
 
             var user = await _userDal.GetByIdWithPasswordAsync(id);
 
-            if(user == null)
+            if (user == null)
             {
                 response.Errors.Add("User with this email doesent exist!");
                 response.Success = false;
@@ -204,7 +205,17 @@ namespace API.BL.Implementations
 
             if (!string.IsNullOrEmpty(request.Email))
             {
-                user.Email =request.Email;
+                var user2 = await _userDal.GetByEmailAsync(request.Email);
+
+                if (user2 != null)
+                {
+                    response.Errors.Add("Cannot update your email with email of existing user!");
+                    response.Success = false;
+
+                    return response;
+                }
+                else
+                    user.Email = request.Email;
             }
 
             if (!string.IsNullOrEmpty(request.FirstName))
@@ -224,5 +235,27 @@ namespace API.BL.Implementations
 
             return response;
         }
+
+        public async Task<Response<User>> SaveImageForUser(int id, [FromBody] byte[] profilePicture)
+        
+        {
+            var response = new Response<User>();
+
+            var user = await _userDal.SaveProfilePictureAsync(id, profilePicture);
+
+            if (user == null)
+            {
+                response.Errors.Add("User doesen't exist!");
+                response.Success = false;
+
+                return response;
+            }
+
+            response.Data = user!;
+            response.Success = response.Errors.Count() == 0;
+
+            return response;
+        }
+
     }
 }
