@@ -183,13 +183,18 @@
 }
 */
 
-
+.main-weather-div {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
 
 .weather-widget {
+
   background-color: #f4f4f4;
   border-radius: 10px;
-  margin-bottom: 20px;
   padding: 10px;
+  box-sizing: border-box;
   text-align: center;
 }
 
@@ -241,10 +246,6 @@
     height: 80px;
     margin-bottom: 10px;
   }
-
-  .forecast-list li {
-    width: calc(100% / 2 - 10px);
-  }
 }
 
 @media (max-width: 480px) {
@@ -255,11 +256,12 @@
   .current-weather-icon img {
     height: 60px;
   }
-
-  .forecast-list li {
-    width: 100%;
-  }
 }
 
 
-
+.weather-forecast {
+  min-width: 500px;
+}
+.of-x {
+  overflow-x: scroll;
+}
