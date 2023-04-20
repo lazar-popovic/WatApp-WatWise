@@ -90,24 +90,34 @@ export class OverviewComponent implements OnInit
     this.deviceDataService.getUserDayStats( date.getDate(), date.getMonth()+1, date.getFullYear(), this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
-
-          this.chart1.data = [{
+          this.chart1.data = [];
+          if( result.data.consumingEnergyUsageByTimestamp.length > 0) {
+            this.chart1.data.push({
               name:"Consumption[kWh]",
               series: result.data.consumingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
                               .map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.totalEnergyUsage}))
-            },{
+            });
+          }
+          if( result.data.producingEnergyUsageByTimestamp.length > 0) {
+            this.chart1.data.push({
               name:"Production[kWh]",
               series: result.data.producingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
                               .map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.totalEnergyUsage}))
-            },{
+            });
+          }
+          if( result.data.producingEnergyUsageByTimestamp.length > 0) {
+            this.chart1.data.push({
               name:"Predicted production[kWh]",
               series: result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.predictedValue}))
-            },{
+            });
+          }
+          if( result.data.consumingEnergyUsageByTimestamp.length > 0) {
+            this.chart1.data.push({
               name:"Predicted consumption[kWh]",
               series: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.predictedValue}))
-            }
-          ];
-
+            });
+          }
+          console.log( this.chart1.data);
           this.cards.totalConsumption = result.data.consumingEnergyUsageByTimestamp.reduce((total:any, current:any) => {
             return total + current.predictedValue;
           }, 0);
