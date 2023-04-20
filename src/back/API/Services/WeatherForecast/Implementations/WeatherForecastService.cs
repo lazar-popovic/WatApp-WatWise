@@ -1,5 +1,4 @@
-﻿using API.BL.Interfaces;
-using API.Common.API_Keys;
+﻿using API.Common.API_Keys;
 using API.DAL.Interfaces;
 using API.Services.JWTCreation.Interfaces;
 using API.Services.WeatherForecast.Interfaces;
@@ -11,8 +10,8 @@ public class WeatherForecastService : IWeatherForecastService
 {
     private const string WeatherBaseUrl = "https://api.openweathermap.org/data/2.5/weather?";
     private const string ForecastBaseUrl = "https://api.openweathermap.org/data/2.5/forecast?";
-    
-    private readonly HttpClient _httpClient = new HttpClient();
+
+    private readonly HttpClient _httpClient;
     private readonly IHttpContextAccessor _context;
     
     private readonly IJWTCreator _jwtCreator;
@@ -24,6 +23,7 @@ public class WeatherForecastService : IWeatherForecastService
 
     public WeatherForecastService(IJWTCreator jwtCreator, IUserDAL userDal,IHttpContextAccessor context)
     {
+         _httpClient = new HttpClient();
         _context = context;
         _jwtCreator = jwtCreator;
         _userDal = userDal;
@@ -46,7 +46,7 @@ public class WeatherForecastService : IWeatherForecastService
         }
         catch(Exception e)
         {
-            Console.WriteLine("Invalid token!" + e.Message);;
+            Console.WriteLine("Invalid token!" + e.Message);
         }
         
         if(userId == -1)
@@ -56,7 +56,7 @@ public class WeatherForecastService : IWeatherForecastService
             var user = await _userDal.GetByIdAsync(userId);
             
             if(user == null)
-                Console.WriteLine("User with provided id doesent exist in database");
+                Console.WriteLine("User with provided id not existing in database");
             else
             {
                 _lon = user.Location!.Longitude;
@@ -67,7 +67,8 @@ public class WeatherForecastService : IWeatherForecastService
     
     public async Task<string?> GetCurrentWeatherAsync()
     {
-        string responseContent = null;
+        //await GetUserId(_context);
+        string? responseContent = null;
         try
         {
             var response = await _httpClient.GetAsync($"{WeatherBaseUrl}lat={_lat}&lon={_lon}&appid={WeatherForecastApiKey.Key}&units={Units}");
@@ -97,7 +98,8 @@ public class WeatherForecastService : IWeatherForecastService
 
     public async Task<string?> Get5DayWeatherForecastAsync()
     {
-        string responseContent = null;
+        //await GetUserId(_context);
+        string? responseContent = null;
         try
         {
             var response = await _httpClient.GetAsync($"{ForecastBaseUrl}lat={_lat}&lon={_lon}&appid={WeatherForecastApiKey.Key}&units={Units}");

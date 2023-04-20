@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Weather } from '../Models/Weather';
-import { Forecast } from '../Models/Forecast';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 
@@ -22,6 +20,4 @@ export class WeatherForecastService {
     return this.http.get(`${environment.apiUrl}weather/forecast`);
   }
 }
-
-export { Weather, Forecast };
 

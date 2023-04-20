@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { WeatherForecastService, Weather, Forecast } from '../../services/weather-forecast.service';
+import { WeatherForecastService} from '../../services/weather-forecast.service';
 import { Subscription } from 'rxjs';
+import { Weather } from 'src/app/Models/Weather';
+import { Forecast } from 'src/app/Models/Forecast';
 
 
 @Component({
@@ -10,18 +12,19 @@ import { Subscription } from 'rxjs';
 })
 export class WeatherForecastComponent implements OnInit {
 
-  currentWeather: Weather | undefined;
-  forecasts: Forecast[] = [];
+  currentWeather: any;
+  forecasts: any;
+  isLoadedW: boolean = false;
+  isLoadedF: boolean = false;
 
   busyWeather: Subscription | undefined;
 
-  constructor(private weatherService: WeatherForecastService) {
-  }
+  constructor(private weatherService: WeatherForecastService) {}
 
   ngOnInit() {
     this.weatherService.getWeather().subscribe((response: any) => {
-        console.log( this.currentWeather);
-        this.currentWeather = new Weather(
+      console.log(this.currentWeather);
+        this.currentWeather = response;/*new Weather(
           response.name,
           response.weather[0].description,
           `https://openweathermap.org/img/w/${response.weather[0].icon}.png`,
@@ -30,12 +33,15 @@ export class WeatherForecastComponent implements OnInit {
           response.main.temp_max,
           response.main.humidity,
           response.wind.speed
-        );
-        console.log( this.currentWeather);
+        );*/
+        console.log(this.currentWeather);
+        this.isLoadedW = true;
       });
 
     this.weatherService.getForecast().subscribe((response: any) => {
-      console.log( this.forecasts);
+      this.forecasts = response.list.filter((data: any) => {
+        return data.dt_txt.includes('12:00:00');
+      /*console.log( this.forecasts);
       const forecast = [];
       for (let i = 0; i < response.list.length; i += 8) {
         const item = response.list[i];
@@ -48,9 +54,10 @@ export class WeatherForecastComponent implements OnInit {
           item.main.temp_max,
           item.main.humidity,
           item.wind.speed
-        ));
-      }
-      this.forecasts = forecast;
+        ));*/
+      });
+      //this.forecasts = forecasts;
+      this.isLoadedF = true;
       console.log( this.forecasts);
     });
   }
