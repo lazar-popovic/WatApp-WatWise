@@ -16,7 +16,9 @@ export class DeviceInputComponent implements OnInit{
   newDevice = {
     userId: 0,
     name: "",
-    deviceTypeId: 0
+    deviceTypeId: 0,
+    category: -1,
+    capacity: 0
   }
   category: number = -1;
   types: any[] = [];
@@ -50,7 +52,7 @@ export class DeviceInputComponent implements OnInit{
   }
 
   fillTypes() {
-    this.deviceService.getDeviceTypesByCategory(this.category).subscribe(
+    this.deviceService.getDeviceTypesByCategory(this.newDevice.category).subscribe(
       result => {
         this.types = result.data;
         if(this.types.length > 0) {
@@ -65,6 +67,7 @@ export class DeviceInputComponent implements OnInit{
   addDevice()
   {
     this.newDevice.userId = this.jwtService.userId;
+    console.log( this.newDevice);
     this.busyAddDevice = this.deviceService.insertDevice( this.newDevice).subscribe(
       result => {
         if( result.body.success)
