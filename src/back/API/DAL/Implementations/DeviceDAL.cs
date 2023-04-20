@@ -62,7 +62,7 @@ namespace API.DAL.Implementations
         }
         public async Task AddDeviceViewModel(DeviceViewModel devicee)
         {
-            var isBattery = devicee.Name.ToLower().Contains("battery");
+            
 
             var device = new Device
             {
@@ -72,7 +72,7 @@ namespace API.DAL.Implementations
                 DeviceTypeId = devicee.DeviceTypeId,
                 Name = devicee.Name,
                 DataShare = true,
-                Capacity = isBattery ? devicee.Capacity : null
+                Capacity = devicee.Category == 0 ? devicee.Capacity : null
 
             };
             await _dbContext.Devices.AddAsync(device);
