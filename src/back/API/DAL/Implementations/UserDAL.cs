@@ -1,7 +1,5 @@
-﻿using API.BL.Implementations;
-using API.DAL.Interfaces;
+﻿using API.DAL.Interfaces;
 using API.Models.Entity;
-using API.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -126,7 +124,7 @@ namespace API.DAL.Implementations
         public async Task<List<User>?> FindUser(int id, string search, string mail, int pageSize, int pageNum, string order)
         {
           
-            var fullName = search?.Trim().ToLower().Split(" ");
+            var fullName = search.Trim().ToLower().Split(" ");
 
             var users = await _dbContext.Users.Where( u => u.RoleId == id).Select(o => new User
                                                 {
@@ -142,7 +140,7 @@ namespace API.DAL.Implementations
 
             if (mail != null && id==3)
             {
-                if (!string.IsNullOrEmpty(mail?.Trim()))
+                if (!string.IsNullOrEmpty(mail.Trim()))
                 {
                     users = users.Where(o =>
                         ($"{o.Location?.Address} {o.Location?.AddressNumber}, {o.Location?.City}".ToLower())
