@@ -48,6 +48,7 @@ import { SliderComponent } from './components/slider/slider.component';
 import { DeleteDeviceComponent } from './components/delete-device/delete-device.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgBusyModule } from 'ng-busy';
+import { WeatherForecastComponent } from './components/weather-forecast/weather-forecast.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +82,8 @@ import { NgBusyModule } from 'ng-busy';
     OverviewDsoComponent,
     EditDeviceComponent,
     SliderComponent,
-    DeleteDeviceComponent
+    DeleteDeviceComponent,
+    WeatherForecastComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,61 @@
+<!-- weather.component.html
+<div class="weather-widget" >
+  <div  class="weather-current">
+    <div class="weather-icon">
+      <img [src]="currentWeather?.icon" [alt]="currentWeather?.description">
+    </div>
+    <div class="weather-info">
+      <div class="weather-city">{{ currentWeather?.name }}</div>
+      <div class="weather-description">{{ currentWeather?.description }}</div>
+      <div class="weather-temperature">{{ currentWeather?.temperature }}°C</div>
+      <div class="weather-humidity">Humidity: {{ currentWeather?.humidity }}%</div>
+      <div class="weather-wind">Wind: {{ currentWeather?.wind }}m/s</div>
+    </div>
+  </div>
+  <div  class="weather-forecast">
+    <div class="weather-forecast-item" *ngFor="let forecast of forecasts">
+      <div class="weather-forecast-day">{{ forecast?.day }}</div>
+      <div class="weather-forecast-icon">
+        <img [src]="forecast.icon" [alt]="forecast.description">
+      </div>
+      <div class="weather-forecast-temperature">{{ forecast.minTemperature }}°C / {{ forecast.maxTemperature }}°C</div>
+      <div class="weather-forecast-humidity">Humidity: {{ forecast.humidity }}%</div>
+      <div class="weather-forecast-wind">Wind: {{ forecast.wind }}m/s</div>
+    </div>
+  </div>
+</div>
+-->
+<div class="weather-widget" *ngIf="currentWeather">
+  <h3>{{ currentWeather.name }}</h3>
+  <div class="current-weather">
+    <div class="current-weather-icon">
+      <img src="http://openweathermap.org/img/w/{{ currentWeather.weather[0].icon }}.png" alt="{{ currentWeather.weather[0].description }}">
+    </div>
+    <div class="current-weather-details">
+      <p class="current-temperature">{{ currentWeather.main.temp }}<sup>°C</sup></p>
+      <p class="feelslike-temperature">FeelsLike: {{ currentWeather.main.feels_like }}<sup>°C</sup></p>
+      <p class="current-weather-description">{{ currentWeather.weather[0].description }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="weather-widget" *ngIf="forecasts">
+  <h4 class="forecast-title">5-day forecast:</h4>
+  <ul class="forecast-list">
+    <li *ngFor="let item of forecasts">
+      <div class="forecast-day">{{ item.dt_txt | date:'EEE' }}</div>
+      <div class="forecast-icon">
+        <img src="http://openweathermap.org/img/w/{{ item.weather[0].icon }}.png" alt="{{ item.weather[0].description }}">
+      </div>
+      <div class="forecast-details">
+        <p class="forecast-temperature">{{ item.main.temp }}<sup>°C</sup></p>
+        <!--<p class="feelslike-temperature">FeelsLike: {{ item.main.feels_like }}<sup>°C</sup></p> -->
+        <p class="forecast-humidity">Humidity:{{ item.main.humidity }}%</p>
+        <p class="forecast-wind-speed">Wind:{{ item.wind.speed }}m/s</p>
+        <p class="forecast-weather-description">{{ item.weather[0].description }}</p>
+      </div>
+    </li>
+  </ul>
+</div>
+
+

@@ -425,7 +425,7 @@ public class DeviceDataDAL : IDeviceDataDAL
     {
         var now = DateTime.Now;
         var startDateTime = new DateTime(now.Year, now.Month, now.Day + 1, 0, 0, 0); // start at midnight tomorrow
-        var endDateTime = new DateTime(now.Year, now.Month, now.Day + 2, 0, 0, 0); // end at midnight two days from now
+        var endDateTime = new DateTime(now.Year, now.Month, now.Day + 1, 23, 0, 0); // end at midnight two days from now
 
         var usage = await(
             from deviceEnergyUsage in _dataContext.DeviceEnergyUsage
@@ -483,7 +483,7 @@ public class DeviceDataDAL : IDeviceDataDAL
            where deviceType.Category == category
                    && device.UserId == userId
                    && deviceEnergyUsage.Timestamp >= startDate
-                   && deviceEnergyUsage.Timestamp <= endDate
+                   && deviceEnergyUsage.Timestamp < endDate
            group deviceEnergyUsage by new { deviceEnergyUsage.Timestamp!.Value.Date, deviceEnergyUsage.Timestamp.Value.Hour } into g
            select new
            {
