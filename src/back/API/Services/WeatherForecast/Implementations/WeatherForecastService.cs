@@ -71,7 +71,7 @@ public class WeatherForecastService : IWeatherForecastService
         string? responseContent = null;
         try
         {
-            var response = await _httpClient.GetAsync($"{WeatherBaseUrl}lat={_lat}&lon={_lon}&appid={WeatherForecastApiKey.Key}&units={Units}");
+            var response = await _httpClient.GetAsync($"{WeatherBaseUrl}lat={_lat}&lon={_lon}&appid={ApiKeys.OpenWeatherKey}&units={Units}");
             response.EnsureSuccessStatusCode();
 
             responseContent = await response.Content.ReadAsStringAsync();
@@ -102,7 +102,7 @@ public class WeatherForecastService : IWeatherForecastService
         string? responseContent = null;
         try
         {
-            var response = await _httpClient.GetAsync($"{ForecastBaseUrl}lat={_lat}&lon={_lon}&appid={WeatherForecastApiKey.Key}&units={Units}");
+            var response = await _httpClient.GetAsync($"{ForecastBaseUrl}lat={_lat}&lon={_lon}&appid={ApiKeys.OpenWeatherKey}&units={Units}");
             response.EnsureSuccessStatusCode();
 
             responseContent = await response.Content.ReadAsStringAsync();

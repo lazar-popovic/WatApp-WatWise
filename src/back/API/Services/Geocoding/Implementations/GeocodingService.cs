@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using API.Common.API_Keys;
 using API.Models.ViewModels;
 using API.Services.Geocoding.Interfaces;
 using Newtonsoft.Json.Linq;
@@ -49,7 +50,7 @@ public class GeocodingService : IGeocodingService
     {
         var address = $"{location.Address} {location.Number}, {location.City}";
         var result = new LongLat();
-        var url = $"{Url}?q={address}&key={ApiKey.Key}";
+        var url = $"{Url}?q={address}&key={ApiKeys.BingKey}";
         try
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
