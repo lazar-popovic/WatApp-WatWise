@@ -10,7 +10,7 @@ import { JWTService } from 'src/app/services/jwt.service';
 @Component({
   selector: 'app-consumption',
   templateUrl: './consumption.component.html',
-  styleUrls: ['./consumption.component.css']
+  styleUrls: ['./consumption.component.css','./consumption.component.2.css']
 })
 export class ConsumptionComponent implements OnInit {
   categoryLabel: string = "Consumption [kWh]";

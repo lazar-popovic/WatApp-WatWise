@@ -20,7 +20,7 @@ interface DatepickerOptions {
 @Component({
   selector: 'app-device-details',
   templateUrl: './device-details.component.html',
-  styleUrls: ['./device-details.component.css'],
+  styleUrls: ['./device-details.component.css','./device-details.component.2.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class DeviceDetailsComponent implements OnInit

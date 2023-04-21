@@ -17,7 +17,7 @@ import { JWTService } from '../../services/jwt.service';
 @Component({
   selector: 'app-production',
   templateUrl: './production.component.html',
-  styleUrls: ['./production.component.css']
+  styleUrls: ['./production.component.css','./production.component.2.css']
 })
 export class ProductionComponent
 {
