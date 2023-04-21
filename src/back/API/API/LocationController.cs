@@ -38,5 +38,4 @@ public class LocationController : ControllerBase
     {
         return Ok(await _geocodingService.Autocomplete( streetAddress));
     }
-
 }

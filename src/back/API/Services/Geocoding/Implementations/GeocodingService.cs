@@ -10,7 +10,14 @@ namespace API.Services.Geocoding.Implementations;
 
 public class GeocodingService : IGeocodingService
 {
-    public static string Url = "https://dev.virtualearth.net/REST/v1/Locations";
+    private static string Url = "https://dev.virtualearth.net/REST/v1/Locations";
+    private string BaseYandexUrl = "https://geocode-maps.yandex.ru/1.x/?";
+    private readonly HttpClient _httpClient;
+
+    public GeocodingService()
+    {
+        _httpClient = new HttpClient();
+    }
 
     public async Task<object> Autocomplete(string? query)
     {
@@ -77,5 +84,33 @@ public class GeocodingService : IGeocodingService
         }
 
         return result;
+    }
+
+    public async Task<string> GeoCodeYandex(LocationViewModel request)
+    {
+        string? responseContent = null;
+        LongLat longlat = new LongLat();
+        try
+        {
+            var response =
+                await _httpClient.GetAsync(
+                    $"{BaseYandexUrl}apikey={ApiKeys.YandexKey}&geocode={request.Address}+{request.Number}, +{request.City},+Serbia&lang=en_US&format=json");
+            response.EnsureSuccessStatusCode();
+
+            responseContent = await response.Content.ReadAsStringAsync();
+        }
+        catch (HttpRequestException requestException)
+        {
+            Console.WriteLine("HttpRequest failed and didn't return 200!" + requestException.Message + requestException.StatusCode);
+            throw;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error: " + e.Message);
+            throw;
+        }
+
+        //longlat.Longitude = responseContent.;
+        return responseContent;
     }
 }
