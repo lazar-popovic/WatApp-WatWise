@@ -40,6 +40,7 @@ namespace API.DAL.Implementations
 
         public async Task AddDeviceAsync(Device device)
         {
+            
             await _dbContext.Devices.AddAsync(device);
             await _dbContext.SaveChangesAsync();
         }
@@ -61,6 +62,7 @@ namespace API.DAL.Implementations
         }
         public async Task AddDeviceViewModel(DeviceViewModel devicee)
         {
+            
 
             var device = new Device
             {
@@ -69,7 +71,9 @@ namespace API.DAL.Implementations
                 PurchaseDate = DateTime.Now,
                 DeviceTypeId = devicee.DeviceTypeId,
                 Name = devicee.Name,
-                DataShare = true
+                DataShare = true,
+                Capacity = devicee.Category == 0 ? devicee.Capacity : null
+
             };
             await _dbContext.Devices.AddAsync(device);
             await _dbContext.SaveChangesAsync();

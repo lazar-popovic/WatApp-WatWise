@@ -1,4 +1,5 @@
-﻿using API.Models;
+﻿using API.Common;
+using API.Models;
 using API.Models.Entity;
 using API.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,6 @@ namespace API.BL.Interfaces
         Task<Response<List<User>>> FindUsers(int id, string search, string mail, int pageSize, int pageNum, string order);
         Task<Response<string>> UpdateUserPassword(UpdateUserPasswordViewModel request, int id);
         Task<Response<string>> UpdateUserNameAndEmail(UpdateUserNameAndEmailViewModel request, int id);
-        Task<Response<User>> SaveImageForUser(int id, [FromBody] byte[] profilePicture);
+        Task<Response> SaveImageForUser(int id, [FromBody] byte[] profilePicture);
     }
 }

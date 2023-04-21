@@ -53,6 +53,52 @@
           <option value="2023">2023</option>
         </select>
       </form>
+
+      <button id="stats-button" (click)="showDropdown = !showDropdown">
+        Aditional stats
+        <div id="stats-dropdown" *ngIf="showDropdown"  [class.visible]="showDropdown">
+          <table>
+            <thead>
+              <tr>
+                <th> Stat  </th>
+                <th> Date  </th>
+                <th> [kWH] </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Max</td>
+                <td>01.02.2022.</td>
+                <td>50</td>
+              </tr>
+              <tr>
+                <td>Min</td>
+                <td>01.02.2022.</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>Average</td>
+                <td>April</td>
+                <td>30</td>
+              </tr>
+              <tr>
+                <td>Median</td>
+                <td>April</td>
+                <td>35</td>
+              </tr>
+              <tr>
+                <td>Deviation</td>
+                <td>April</td>
+                <td>5%</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </button>
+
+
+
     </div>
     <div id="chart">
       <div id="chart-holder" class="standard-card-style">

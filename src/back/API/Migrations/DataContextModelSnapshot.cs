@@ -26,6 +26,9 @@ namespace API.Migrations
                     b.Property<bool?>("ActivityStatus")
                         .HasColumnType("INTEGER");
 
+                    b.Property<double?>("Capacity")
+                        .HasColumnType("REAL");
+
                     b.Property<bool>("DataShare")
                         .HasColumnType("INTEGER");
 

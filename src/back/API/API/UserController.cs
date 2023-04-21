@@ -89,7 +89,7 @@ namespace API.API
         {
             return Ok(await _userBL.UpdateUserNameAndEmail(request, id));
         }
-        [HttpGet("user-image")]
+        [HttpPost("update-user-image")]
         public async Task<IActionResult> SaveImageForUser(int id, [FromBody] byte[] imagePicture)
         {
             return Ok(await _userBL.SaveImageForUser(id, imagePicture));

@@ -20,7 +20,7 @@ interface DatepickerOptions {
 @Component({
   selector: 'app-device-details',
   templateUrl: './device-details.component.html',
-  styleUrls: ['./device-details.component.css'],
+  styleUrls: ['./device-details.component.css','./device-details.component.2.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class DeviceDetailsComponent implements OnInit
@@ -125,6 +125,8 @@ export class DeviceDetailsComponent implements OnInit
     tommorowFlag : boolean = false;
     threeDaysFlag : boolean = false;
     sevenDaysFlag : boolean = false;
+
+    showDropdown : boolean = false;
 
     datasets: any[] = [];
 

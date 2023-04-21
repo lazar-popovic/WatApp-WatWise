@@ -4,13 +4,13 @@
     </div>
 
     <h2>Connect device</h2>
-    <form action="#">
+    <form action="#" (ngSubmit)="addDevice()">
       <div class="input-box">
         <input type="text" name="name" [(ngModel)]="newDevice.name" placeholder="Device name">
       </div>
 
       <div class="input-box">
-        <select name="category" [(ngModel)]="category" (change)="fillTypes()">
+        <select name="category" [(ngModel)]="newDevice.category" (change)="fillTypes()">
           <option value=-1 selected>Consumer</option>
           <option value=1>Producer</option>
           <option value=0> Storage</option>
@@ -18,13 +18,17 @@
       </div>
 
       <div class="input-box">
-        <select type="text" name="type" [(ngModel)]="newDevice.deviceTypeId">
+        <select type="text" name="deviceTypeId" [(ngModel)]="newDevice.deviceTypeId">
           <option *ngFor=" let type of types" [value]="type.id">{{type.type}}</option>
         </select>
       </div>
 
+      <div class="input-box" *ngIf="newDevice.category == 0">
+        <input type="number" name="capacity" [(ngModel)]="newDevice.capacity" placeholder="Storage capacity">
+      </div>
+
       <div class="input-box button">
-        <button type="button" (click)="addDevice()">Connect</button>
+        <button type="submit">Connect</button>
       </div>
     </form>
   </div>

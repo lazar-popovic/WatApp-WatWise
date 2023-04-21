@@ -11,12 +11,13 @@ import {DeviceService} from "../../services/device.service";
 import {DeviceDataService} from "../../services/device-data.service";
 import {DatePipe} from "@angular/common";
 import { ViewEncapsulation } from '@angular/core';
-import { JWTService } from 'src/app/services/jwt.service';
+// import { JWTService } from 'src/app/services/jwt.service';
+import { JWTService } from '../../services/jwt.service';
 
 @Component({
   selector: 'app-production',
   templateUrl: './production.component.html',
-  styleUrls: ['./production.component.css']
+  styleUrls: ['./production.component.css','./production.component.2.css']
 })
 export class ProductionComponent
 {
