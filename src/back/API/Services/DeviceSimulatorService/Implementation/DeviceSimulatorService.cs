@@ -92,6 +92,7 @@ public class DeviceSimulatorService : IDeviceSimulatorService
     {
         var now = DateTime.Now;
         var hourStart = new DateTime(now.Year, now.Month, now.Day, now.Hour, 0, 0, 0);
+        var rand = new Random();
 
         var usages = await _context.DeviceEnergyUsage
             .Where(u => u.Timestamp == hourStart)
@@ -99,8 +100,17 @@ public class DeviceSimulatorService : IDeviceSimulatorService
 
         foreach (var usage in usages)
         {
-            var device = await _context.Devices.FindAsync(usage.DeviceId);
-            if (device?.ActivityStatus == false)
+            var device = await _context.Devices
+                .Where(d => d.Id == usage.DeviceId)
+                .Select(d => new { d.ActivityStatus, d.DeviceType })
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            if (device?.ActivityStatus == true)
+            {
+                usage.Value = Math.Round((double)(device?.DeviceType?.WattageInkW * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+            } 
+            else
             {
                 usage.Value = 0;
             }

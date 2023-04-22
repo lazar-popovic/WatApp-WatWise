@@ -58,7 +58,7 @@ namespace API.Migrations
             migrationBuilder.InsertData(
                 table: "DeviceTypes",
                 columns: new[] { "Id", "Type", "Category", "WattageInkW" },
-                values: new object[] { 10, "Vacuum cleaner", -1, 1.1 }
+                values: new object[] { 10, "Vacuum cleaner", -1, 0.18 }
             );
         }
 
