@@ -64,10 +64,11 @@ public class ExampleDataController : ControllerBase
         return Ok( response);
     }
 
-    [HttpGet("get-all-prosumers")]
-    public async Task<IActionResult> GetAllProsumers( DateTime datum)
+    [HttpGet("set-now")]
+    public async Task<IActionResult> GetAllProsumers()
     {
-        return Ok( datum);
+        await _simulator.SetCurrentDataTo0IfOff();
+        return Ok();
     }
     
 }

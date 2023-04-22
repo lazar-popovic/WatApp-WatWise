@@ -9,4 +9,5 @@ public class DeviceType
     public string? Type { get; set; } = string.Empty;
     public int? Category { get; set; }
     public List<Device>? Devices { get; set; }
+    public double? WattageInkW { get; set; }
 }
