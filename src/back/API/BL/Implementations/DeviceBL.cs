@@ -4,10 +4,11 @@ using API.Models.Entity;
 using API.Models;
 using API.BL.Interfaces;
 using API.Models.ViewModels;
+using API.Common;
 
 namespace API.BL.Implementations
 {
-    public class DeviceBL:IDeviceBL
+    public class DeviceBL : IDeviceBL
     {
         private readonly IDeviceDAL _ideviceDal;
 
@@ -79,7 +80,7 @@ namespace API.BL.Implementations
         {
             var response = new Response<String>();
             var findwithid = await _ideviceDal.GetDeviceByIdAsync(id);
-      
+
             if (findwithid == null)
             {
                 response.Errors.Add("Device doesn't exist");
@@ -109,7 +110,7 @@ namespace API.BL.Implementations
                 return response;
             }
 
-            if(!string.IsNullOrEmpty(request.Name))
+            if (!string.IsNullOrEmpty(request.Name))
                 device.Name = request.Name;
 
             device.DataShare = request.DataShare!.Value;
@@ -128,21 +129,21 @@ namespace API.BL.Implementations
         {
             var response = new Response<String>();
             var dev = device;
-            
-            if (string.IsNullOrEmpty( dev.Name?.Trim()))
+
+            if (string.IsNullOrEmpty(dev.Name?.Trim()))
             {
                 response.Errors.Add("Name is required!");
             }
-            if ( dev.DeviceTypeId <= 0)
+            if (dev.DeviceTypeId <= 0)
             {
                 response.Errors.Add("Type must be selected!");
             }
-            
+
             response.Success = !response.Errors.Any();
 
             if (response.Success == false)
                 return response;
-            
+
             await _ideviceDal.AddDeviceViewModel(device);
 
             response.Data = $"Device {dev.Name} connected successfully!";
@@ -194,7 +195,7 @@ namespace API.BL.Implementations
                 response.Data = new RegisterResponseViewModel { Message = "Devices turned off succesfully!" };
 
                 return response;
-            } 
+            }
             else
             {
                 await _ideviceDal.TurnDevicesOn();
@@ -245,8 +246,8 @@ namespace API.BL.Implementations
             if (request.DevicesOn == false)
             {
                 var resp = await _ideviceDal.TurnDeviceOffById(deviceId);
-                
-                if(resp.Success == false)
+
+                if (resp.Success == false)
                 {
                     resp.Data = new RegisterResponseViewModel { Message = "Error! Failed to turn off the device!" };
                     return resp;
@@ -305,6 +306,28 @@ namespace API.BL.Implementations
 
                 response.Success = true;
                 response.Data = new RegisterResponseViewModel { Message = "Device data sharing with DSO turned on succesfully!" };
+
+                return response;
+            }
+        }
+
+        public async Task<Response> GetDeviceSubtypesByType(int deviceTypeId)
+        {
+            {
+                var response = new Response();
+
+                var subtypes = await _ideviceDal.GetDeviceSubtypesByType(deviceTypeId);
+
+                if (subtypes == null)
+                {
+                    response.Errors.Add("Error with displaying sybtypes from database!");
+                    response.Success = false;
+
+                    return response;
+                }
+
+                response.Data = subtypes!;
+                response.Success = response.Errors.Count() == 0;
 
                 return response;
             }

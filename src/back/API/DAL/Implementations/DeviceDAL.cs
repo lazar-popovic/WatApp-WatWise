@@ -249,5 +249,11 @@ namespace API.DAL.Implementations
             response.Success = response.Errors.Count == 0;
             return response;
         }
+
+        public async Task<List<DeviceSubtype>> GetDeviceSubtypesByType(int deviceTypeId)
+        {
+            return await _dbContext.DeviceSubtypes.Where(dt => dt.DeviceTypeId == deviceTypeId)
+                                               .AsNoTracking().ToListAsync();
+        }
     }
 }
