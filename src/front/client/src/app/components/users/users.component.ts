@@ -39,7 +39,24 @@ export class UsersComponent {
 
   getAddress() {
     this.geoService.getAddress(this.user.location.address, this.user.location.number).subscribe((result: any) => {
-      console.log(result.body);
+      (document.querySelector('#address-show') as HTMLDivElement).style.display = 'block';
+      let content = '';
+      for(let item of result.body) {
+        let city;
+        if (item.address.suburb == null)
+          city = item.address.city;
+        else
+          city = item.address.suburb;
+        content += "<div class='display-item'>"
+                + item.addressDetails.split(', ')[0]
+                + ", " 
+                + city
+                + ", " 
+                + item.address.country 
+                + "</div>";
+      }
+      (document.querySelector('#address-show') as HTMLDivElement).innerHTML = content;
+      (document.querySelector('.users-form-location') as HTMLDivElement).style.marginBottom = "0px";
     }, (error: any) => {
       console.log(error);
     })
