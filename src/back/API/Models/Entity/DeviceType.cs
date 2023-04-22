@@ -10,4 +10,5 @@ public class DeviceType
     public int? Category { get; set; }
     public List<Device>? Devices { get; set; }
     public double? WattageInkW { get; set; }
+    public List<DeviceSubtype>? DeviceSubtypes { get; set; }
 }
