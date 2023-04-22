@@ -62,14 +62,13 @@ namespace API.DAL.Implementations
         }
         public async Task AddDeviceViewModel(DeviceViewModel devicee)
         {
-            
-
             var device = new Device
             {
                 UserId = devicee.UserId,
                 ActivityStatus = true,
                 PurchaseDate = DateTime.Now,
                 DeviceTypeId = devicee.DeviceTypeId,
+                DeviceSubtypeId = devicee.DeviceSubtypeId,
                 Name = devicee.Name,
                 DataShare = true,
                 Capacity = devicee.Category == 0 ? devicee.Capacity : null

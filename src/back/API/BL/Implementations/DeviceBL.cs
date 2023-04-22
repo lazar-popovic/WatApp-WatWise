@@ -138,6 +138,10 @@ namespace API.BL.Implementations
             {
                 response.Errors.Add("Type must be selected!");
             }
+            if (dev.DeviceSubtypeId <= 0)
+            {
+                response.Errors.Add("Subtype must be selected!");
+            }
 
             response.Success = !response.Errors.Any();
 
@@ -146,7 +150,7 @@ namespace API.BL.Implementations
 
             await _ideviceDal.AddDeviceViewModel(device);
 
-            response.Data = $"Device {dev.Name} connected successfully!";
+            response.Data = $"Device {dev.Name} connected successfully! {dev.DeviceSubtypeId}";
 
 
             return response;

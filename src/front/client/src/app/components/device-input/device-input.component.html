@@ -18,8 +18,14 @@
       </div>
 
       <div class="input-box">
-        <select type="text" name="deviceTypeId" [(ngModel)]="newDevice.deviceTypeId">
+        <select type="text" name="deviceTypeId" [(ngModel)]="newDevice.deviceTypeId" (change)="fillSubtypes()">
           <option *ngFor=" let type of types" [value]="type.id">{{type.type}}</option>
+        </select>
+      </div>
+
+      <div class="input-box">
+        <select type="text" name="deviceSubtypeId" [(ngModel)]="newDevice.deviceSubtypeId">
+          <option *ngFor=" let subtype of subtypes" [value]="subtype.id">{{subtype.subtypeName}}</option>
         </select>
       </div>
 
