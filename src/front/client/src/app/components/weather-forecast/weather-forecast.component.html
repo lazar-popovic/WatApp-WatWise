@@ -40,10 +40,9 @@
       </div>
     </div>
   </div>
-
+  <h4 class="forecast-title">5-day forecast:</h4>
   <div class="weather-widget of-x" *ngIf="forecasts">
     <div class="weather-forecast">
-      <h4 class="forecast-title">5-day forecast:</h4>
       <ul class="forecast-list">
         <li *ngFor="let item of forecasts">
           <div class="forecast-day">{{ item.dt_txt | date:'EEE' }}</div>

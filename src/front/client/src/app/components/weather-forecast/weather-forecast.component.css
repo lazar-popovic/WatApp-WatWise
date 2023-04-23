@@ -187,11 +187,20 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  height: 100%;
+  background-color: #1676AC;
+  border-radius: 10px;
+}
+.main-weather-div h3{
+  color: white;
+}
+.main-weather-div h4{
+  color: white;
+  margin-left: 10px;
 }
 
 .weather-widget {
-
-  background-color: #f4f4f4;
+  background-color: #1676AC;
   border-radius: 10px;
   padding: 10px;
   box-sizing: border-box;
@@ -235,6 +244,10 @@
   width: calc(100% / 5 - 10px);
   margin-bottom: 10px;
   margin: 0 5px 10px;
+  border-radius: 10px;
+  background-color: black;
+  box-sizing: border-box;
+  padding: 5px 0;
 }
 
 @media (max-width: 768px) {
@@ -244,7 +257,6 @@
 
   .current-weather-icon img {
     height: 80px;
-    margin-bottom: 10px;
   }
 }
 
@@ -256,12 +268,20 @@
   .current-weather-icon img {
     height: 60px;
   }
+  .of-x {
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
 }
 
 
 .weather-forecast {
   min-width: 600px;
 }
-.of-x {
-  overflow-x: scroll;
+
+p {
+  color: white;
+}
+.forecast-day {
+  color: white;
 }
