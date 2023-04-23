@@ -8,10 +8,14 @@ import {environment} from "../environments/environment";
 })
 export class DeviceService {
 
-constructor( private http: HttpClient) { }
+  constructor( private http: HttpClient) { }
   getDeviceTypesByCategory( category: number) : Observable<any>
   {
     return this.http.get(`${environment.apiUrl}device/get-types-by-category?category=${category}`);
+  }
+  getDeviceSubtypesByType( deviceTypeId: number) : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}device/get-subtypes-by-type?deviceTypeId=${deviceTypeId}`);
   }
   insertDevice( data: any) : Observable<any> {
     return this.http.post(`${environment.apiUrl}device/insert-device`, data, {observe: 'response'});
