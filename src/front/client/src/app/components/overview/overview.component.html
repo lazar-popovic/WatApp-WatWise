@@ -78,7 +78,7 @@
           </ngx-charts-line-chart>
         </div>
       </div>
-      <div class="card card-big standard-card-style">
+      <div class="card card-big standard-card-style" *ngIf="chart3.data.length > 0">
         <h4>Top consuming devices</h4>
         <div class="chart-holder chart-holder-pie-grid">
           <ngx-charts-pie-grid
@@ -90,7 +90,7 @@
           </ngx-charts-pie-grid>
         </div>
       </div>
-      <div class="card card-big standard-card-style">
+      <div class="card card-big standard-card-style" *ngIf="chart4.data.length > 0">
         <h4>Top producing devices</h4>
         <div class="chart-holder chart-holder-pie-grid">
           <ngx-charts-pie-grid class="chart"
