@@ -12,7 +12,6 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { DevicesComponent } from './components/devices/devices.component';
 import { ConsumptionComponent } from './components/consumption/consumption.component';
 import { OverviewComponent } from './components/overview/overview.component';
-import { SidebarDsoComponent } from './components/sidebar-dso/sidebar-dso.component';
 import { UsersComponent } from './components/users/users.component';
 import { MapComponent } from './components/map/map.component';
 import { EnergyUsageComponent } from './components/energy-usage/energy-usage.component';
@@ -22,37 +21,43 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { PasswordInputComponent } from './components/password-input/password-input.component';
 import { AuthInterceptor } from './services/auth.interceptor';
-import {Routes} from "@angular/router";
-
-const routes: Routes = [
-  { path: '', redirectTo: 'prosumer/login', pathMatch: 'full' },
-  { path: 'prosumer/login', component: LoginComponent },
- { path: 'prosumer/verification', component : VerifyComponent},
-
-  { path: 'prosumer/overview',  component:  OverviewComponent },
-  { path: 'dso/overview',  component:  OverviewComponent },
-  { path: 'profile',  component:  ProfileComponent },
-
-  { path: 'prosumer/devices', component : DevicesComponent},
-  { path: 'prosumer/consumption', component : ConsumptionComponent},
-  { path: 'prosumer/production', component : ProductionComponent},
-
-  { path: 'dso/users', component : UsersComponent},
-  { path: 'dso/map', component : MapComponent},
-  { path: 'dso/consumption', component : EnergyUsageComponent}
-
-];
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { ProfileIDComponent } from './components/profile-id/profile-id.component';
+import { MapComponentComponent } from './components/map-component/map-component.component';
+import { LeafletModule} from "@asymmetrik/ngx-leaflet";
+import { DeviceDetailsComponent } from './components/device-details/device-details.component';
+import { NgChartsModule } from 'ng2-charts';
+import { EmployeeOverviewComponent } from './components/employee-overview/employee-overview.component';
+import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
+import { DevicesInfoComponent } from './components/devices-info/devices-info.component';
+import { DeviceInputComponent } from './components/device-input/device-input.component';
+import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
+import { ProfileViewSettingsComponent } from './components/profile-view-settings/profile-view-settings.component';
+import { PasswordViewSettingsComponent } from './components/password-view-settings/password-view-settings.component';
+import { OverviewDsoComponent } from './components/overview-dso/overview-dso.component';
+import { UsersOverviewComponent } from './components/users-overview/users-overview.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlider, MatSliderModule } from '@angular/material/slider';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { EditDeviceComponent } from './components/edit-device/edit-device.component';
+import { SliderComponent } from './components/slider/slider.component';
+import { DeleteDeviceComponent } from './components/delete-device/delete-device.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgBusyModule } from 'ng-busy';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SidebarComponent,
     ProfileComponent,
+    ProfileIDComponent,
     DevicesComponent,
     ConsumptionComponent,
     OverviewComponent,
-    SidebarDsoComponent,
     UsersComponent,
     MapComponent,
     EnergyUsageComponent,
@@ -60,14 +65,42 @@ const routes: Routes = [
     VerifyComponent,
     ChangePasswordComponent,
     ForgotPasswordComponent,
-    PasswordInputComponent
+    PasswordInputComponent,
+    MapComponentComponent,
+    UsersOverviewComponent,
+    DeviceDetailsComponent,
+    EmployeeOverviewComponent,
+    AddEmployeeComponent,
+    DevicesInfoComponent,
+    DeviceInputComponent,
+    MapComponentComponent,
+    DeviceDetailsComponent,
+    ProfileSettingsComponent,
+    ProfileViewSettingsComponent,
+    PasswordViewSettingsComponent,
+    OverviewDsoComponent,
+    EditDeviceComponent,
+    SliderComponent,
+    DeleteDeviceComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    LeafletModule,
+    NgChartsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatCheckboxModule,
+    NgxChartsModule,
+    NgBusyModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,

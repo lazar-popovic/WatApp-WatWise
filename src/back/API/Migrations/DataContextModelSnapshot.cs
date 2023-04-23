@@ -26,7 +26,10 @@ namespace API.Migrations
                     b.Property<bool?>("ActivityStatus")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Category")
+                    b.Property<bool>("DataShare")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("DeviceTypeId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -35,13 +38,12 @@ namespace API.Migrations
                     b.Property<DateTime?>("PurchaseDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("TEXT");
-
                     b.Property<int?>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DeviceTypeId");
 
                     b.HasIndex("UserId");
 
@@ -50,9 +52,9 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Entity.DeviceEnergyUsage", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("DeviceId")
                         .HasColumnType("INTEGER");
@@ -68,6 +70,23 @@ namespace API.Migrations
                     b.HasIndex("DeviceId");
 
                     b.ToTable("DeviceEnergyUsage");
+                });
+
+            modelBuilder.Entity("API.Models.Entity.DeviceType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("Category")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeviceTypes");
                 });
 
             modelBuilder.Entity("API.Models.Entity.Location", b =>
@@ -199,9 +218,15 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Entity.Device", b =>
                 {
+                    b.HasOne("API.Models.Entity.DeviceType", "DeviceType")
+                        .WithMany("Devices")
+                        .HasForeignKey("DeviceTypeId");
+
                     b.HasOne("API.Models.Entity.User", "User")
                         .WithMany("Devices")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("DeviceType");
 
                     b.Navigation("User");
                 });
@@ -251,6 +276,11 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.Entity.Device", b =>
                 {
                     b.Navigation("DeviceEnergyUsages");
+                });
+
+            modelBuilder.Entity("API.Models.Entity.DeviceType", b =>
+                {
+                    b.Navigation("Devices");
                 });
 
             modelBuilder.Entity("API.Models.Entity.Location", b =>

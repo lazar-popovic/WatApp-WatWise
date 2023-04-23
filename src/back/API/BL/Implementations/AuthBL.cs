@@ -222,7 +222,7 @@ namespace API.BL.Implementations
             var response = new Response<LoginResponseViewModel>();
             ClaimsPrincipal claimsPrincipal;
             //User user;
-            string emailClaim;
+            string? emailClaim;
 
             if(string.IsNullOrEmpty(request.Token.Trim()))
             {
@@ -282,7 +282,7 @@ namespace API.BL.Implementations
 
             response.Data = new LoginResponseViewModel
             { 
-                Token = newAccessToken,
+                Token = newAccessToken!,
                 RefreshToken = newRefreshToken
             };
 
@@ -314,7 +314,7 @@ namespace API.BL.Implementations
             }
             catch(Exception e)
             {
-                response.Errors.Add("An error occurred while verifying the email");
+                response.Errors.Add("An error occurred while verifying the email" + e.Message);
             }
             
             if(userId == -1) 
@@ -458,8 +458,17 @@ namespace API.BL.Implementations
 
             if (string.IsNullOrEmpty(request.NewPassword) || string.IsNullOrEmpty(request.ConfirmedNewPassword))
             {
-                response.Errors.Add("Password is empty or passwords don't match!");
+                response.Errors.Add("Passwords are empty");
             }
+            if(request.NewPassword != request.ConfirmedNewPassword)
+            {
+                response.Errors.Add("Passwords doesen't match!");
+            }
+
+            response.Success = response.Errors.Count() == 0;
+
+            if (!response.Success)
+                return response;
 
             try
             {
@@ -468,7 +477,7 @@ namespace API.BL.Implementations
             }
             catch(Exception ex) 
             {
-                response.Errors.Add("Error while validating token!");
+                response.Errors.Add("Error while validating token!" + ex.Message);
                 response.Success = false;
 
                 return response;
@@ -581,7 +590,7 @@ namespace API.BL.Implementations
             return response;
         }
 
-        private string GenerateJWTResetToken(User user, ResetPasswordToken resetToken)
+        private string? GenerateJWTResetToken(User user, ResetPasswordToken resetToken)
         {
             var token = _jwtCreator.CreateResetToken(user.Id, user.Email!, resetToken);
 

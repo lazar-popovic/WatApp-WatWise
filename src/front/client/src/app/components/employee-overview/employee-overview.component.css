@@ -1,0 +1,154 @@
+* {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    color: white;
+}
+
+.overview-container {
+    display: flex;
+    background-color: #E1E1E1;
+    min-height: 100vh;
+}
+
+.overview-container button, #overview-filter {
+    padding: 5px 30px;
+    border-radius: 20px;
+    border: 0px;
+    outline: 0;
+}
+
+#overview-filter {
+    background-color: rgba(22, 118, 172, 0.75);
+}
+
+.overview-tab {
+    width: 1350px;
+    position: relative;
+    margin: 100px auto;
+}
+
+.overview-filter-holder form{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+#add-user-btn {
+    background-color: white;
+    color: #3E3E3E;
+    font-weight: 600;
+}
+
+.search-input input {
+    width: 250px;
+    color: black;
+    height: 35px;
+    outline: 0;
+    border: 0;
+    box-shadow: 1px 4px 10px 4px rgba(0,0,0,0.5);
+    margin-right: 35px;
+}
+
+.search-input button {
+    background-color: #3E3E3E;
+    font-weight: 600;
+    height: 100%;
+}
+
+.search-input button:hover,#add-user-btn:hover {
+    outline: 1px solid black;
+}
+
+/*
+.overview-users-table {
+    overflow-y: scroll;
+    max-height: 80vh;
+}
+*/
+
+.overview-users-table table {
+    width: 100%;
+    background-color: white;
+    border-radius: 30px;
+    border-collapse: collapse;
+    box-shadow: 1px 4px 10px 4px rgba(0,0,0,0.5);
+}
+
+.overview-users-table table tr:first-child{
+    border-bottom: 3px solid black;
+    font-weight: 600;
+    font-size: 26px;
+}
+
+.overview-users-table table tr {
+    border-bottom: 1px solid black;
+}
+
+.overview-users-table table tr:last-child {
+    border: 0;
+}
+
+.overview-users-table table tr td {
+    text-align: center;
+    color: #3E3E3E;
+    height: 60px;
+}
+
+.overview-users-table button{
+    padding: 5px 30px;
+    background-color: #1676AC;
+}
+
+.overview-users-table button:hover{
+    outline: 2px solid black;
+}
+
+#overiew-filter {
+    outline: none;
+}
+
+.overview-pagination form{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.overview-pagination form, select, option, label{
+    color: black;
+    outline: none;
+    border: none;
+}
+
+.page-size-holder {
+    margin-right:50px;
+}
+
+.overview-pagination-pages {
+    display: flex;
+}
+
+.overview-pagination-page, .overview-pagination-page-active {
+    width: 30px;
+    color: black;
+    font-weight: 400;
+    text-align: center;
+    line-height: 30px;
+    height: 30px;
+    border-radius: 5px;
+}
+
+.overview-pagination-page-active {
+    background-color: rgba(22, 118, 172, 0.5)
+}
+
+.overview-pagination-page:hover {
+    background-color: rgba(22, 118, 172, 0.75);
+}
+
+.employee-add {
+    display: none;
+    position: fixed;
+    top: 35%;
+    left: 20%;
+    z-index: 9999;
+}
