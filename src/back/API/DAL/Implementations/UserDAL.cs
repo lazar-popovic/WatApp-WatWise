@@ -1,4 +1,5 @@
 ﻿using API.DAL.Interfaces;
+using API.Models;
 using API.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -121,61 +122,60 @@ namespace API.DAL.Implementations
         }
 
 
-        public async Task<List<User>?> FindUser(int id, string search, string mail, int pageSize, int pageNum, string order)
+        public async Task<List<UserWithCurrentProdAndCons?>> FindUser(int id, string search, string mail, int pageSize,
+            int pageNum, string order)
         {
           
-            var fullName = search.Trim().ToLower().Split(" ");
-
-            var users = await _dbContext.Users.Where( u => u.RoleId == id).Select(o => new User
-                                                {
-                                                    Id = o.Id,
-                                                    Email = o.Email,
-                                                    Firstname = o.Firstname,
-                                                    Lastname = o.Lastname,
-                                                    Verified = o.Verified,
-                                                    LocationId = o.LocationId,
-                                                    Location = o.Location
-
-                                                }).ToListAsync();
-
-            if (mail != null && id==3)
+            var currentDateTime = DateTime.Now;
+        var fullName = search.Trim().ToLower().Split(" ");
+        var userListWithEnergyUsage = await _dbContext.Users
+            .Where(u => u.RoleId == id &&
+                   (mail == null || id != 3 || $"{u.Location.Address} {u.Location.AddressNumber}, {u.Location.City}".ToLower().Contains(mail.ToLower())) &&
+                   (search == null ||
+                        (fullName.Length == 2 && u.Firstname.ToLower().Contains(fullName[0]) && u.Lastname.ToLower().Contains(fullName[1])) ||
+                        (fullName.Length == 1 && (u.Firstname.ToLower().Contains(fullName[0]) || u.Lastname.ToLower().Contains(fullName[0])))))
+            .Select(u => new UserWithCurrentProdAndCons()
             {
-                if (!string.IsNullOrEmpty(mail.Trim()))
-                {
-                    users = users.Where(o =>
-                        ($"{o.Location?.Address} {o.Location?.AddressNumber}, {o.Location?.City}".ToLower())
-                        .Contains(mail.ToLower())).ToList();
-                }
-            }
+                UserId = u.Id,
+                FullName = $"{u.Firstname} {u.Lastname}",
+                Location = $"{u.Location.Address} {u.Location.AddressNumber}, {u.Location.City}",
+                LocationId = u.LocationId,
+                Email = $"{u.Email}",
+                Verified = u.Verified,
+                CurrentConsumption = (from usage in _dbContext.DeviceEnergyUsage
+                                      join device in _dbContext.Devices on usage.DeviceId equals device.Id
+                                      join deviceType in _dbContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
+                                      where device.DataShare && device.UserId == u.Id
+                                      && deviceType.Category == -1
+                                      && usage.Timestamp.Value.Date == currentDateTime.Date
+                                      && usage.Timestamp.Value.TimeOfDay <= currentDateTime.TimeOfDay
+                                      select usage.Value).Sum(),
+                CurrentProduction = (from usage in _dbContext.DeviceEnergyUsage
+                                     join device in _dbContext.Devices on usage.DeviceId equals device.Id
+                                     join deviceType in _dbContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
+                                     where device.DataShare && device.UserId == u.Id
+                                     && deviceType.Category == 1
+                                     && usage.Timestamp.Value.Date == currentDateTime.Date
+                                     && usage.Timestamp.Value.TimeOfDay <= currentDateTime.TimeOfDay
+                                     select usage.Value).Sum(),
+            })
+            .ToListAsync();
 
-            if (search != null)
-            {
-                if (fullName.Length == 2)
-                {
-                    users = users.Where(o => o.Firstname.ToLower().Contains(fullName[0]) && o.Lastname.ToLower().Contains(fullName[1]))
-                        .ToList();
-                }
-                else if (fullName.Length == 1)
-                {
-                    users = users.Where(o => o.Firstname.ToLower().Contains(fullName[0]) || o.Lastname.ToLower().Contains(fullName[0]))
-                        .ToList();
-                }
-            }
-
+        /*
             switch (order)
             {
                 case "asc":
-                    users = users.OrderBy(o => o.Lastname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                    userListWithEnergyUsage = userListWithEnergyUsage.OrderBy(o => o.FullName).Skip((pageNum - 1) * pageSize).Take(pageSize);
                     break;
                 case "desc":
-                    users = users.OrderByDescending(o => o.Lastname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                    users = (List<User>)users.OrderByDescending(o => o.Lastname).Skip((pageNum - 1) * pageSize).Take(pageSize);
                     break;
                 default:
-                    users = users.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                    users = (List<User>)users.Skip((pageNum - 1) * pageSize).Take(pageSize);
                     break;
             }
-
-            return users;
+*/
+            return userListWithEnergyUsage;
         }
 
         public void UpdateUser(User user)

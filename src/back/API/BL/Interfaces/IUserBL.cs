@@ -13,7 +13,7 @@ namespace API.BL.Interfaces
         Task<Response<List<User>>> GetUsers();
         Task<Response<List<User>>> GetUsersWithLocationId(int id);
         Task<Response<int>> getNumberOfUsers(int id);
-        Task<Response<List<User>>> FindUsers(int id, string search, string mail, int pageSize, int pageNum, string order);
+        Task<Response<List<UserWithCurrentProdAndCons?>>> FindUsers(int id, string search, string mail, int pageSize, int pageNum, string order);
         Task<Response<string>> UpdateUserPassword(UpdateUserPasswordViewModel request, int id);
         Task<Response<string>> UpdateUserNameAndEmail(UpdateUserNameAndEmailViewModel request, int id);
         Task<Response> SaveImageForUser(int id, [FromBody] byte[] profilePicture);
