@@ -49,6 +49,9 @@ import { DeleteDeviceComponent } from './components/delete-device/delete-device.
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgBusyModule } from 'ng-busy';
 import { WeatherForecastComponent } from './components/weather-forecast/weather-forecast.component';
+import { TooltipComponent } from './components/tooltip/tooltip.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,7 +86,8 @@ import { WeatherForecastComponent } from './components/weather-forecast/weather-
     EditDeviceComponent,
     SliderComponent,
     DeleteDeviceComponent,
-    WeatherForecastComponent
+    WeatherForecastComponent,
+    TooltipComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +106,8 @@ import { WeatherForecastComponent } from './components/weather-forecast/weather-
     MatSliderModule,
     MatCheckboxModule,
     NgxChartsModule,
-    NgBusyModule
+    NgBusyModule,
+    MatTooltipModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
