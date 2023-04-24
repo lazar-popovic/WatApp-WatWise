@@ -260,13 +260,13 @@
 
 
 
-    #overview-mobile a,#devices-mobile a,#consumption-mobile a,#production-mobile a,#profile-mobile a
+    #overview-mobile a,#devices-mobile a,#consumption-mobile a,#production-mobile a,#profile-mobile a,#profile-logout a
     {
         margin-left: 35px;
         font-size: 25px;
     }
 
-    #overview-mobile,#devices-mobile, #consumption-mobile,#production-mobile,#profile-mobile
+    #overview-mobile,#devices-mobile, #consumption-mobile,#production-mobile,#profile-mobile,#profile-logout
     {
         background-image: url(/assets/overview.png);
         background-size: 30px;
@@ -274,7 +274,7 @@
         background-position: 7px 7px;
     }
 
-    #overview-mobile:hover,#devices-mobile:hover,#consumption-mobile:hover,
+    #overview-mobile:hover,#devices-mobile:hover,#consumption-mobile:hover,#profile-logout:hover
     #production-mobile:hover,#profile-mobile:hover
     {
         color: #fff;
@@ -285,5 +285,5 @@
     #consumption-mobile {   background-image: url(/assets/consumption.png);}
     #production-mobile  {   background-image: url(/assets/production.png);}
     #profile-mobile { background-image: url(/assets/user.png); }
-
+    #profile-logout { background-image: url(/assets/logout.png); }
 }
