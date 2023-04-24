@@ -99,7 +99,7 @@ namespace API.BL.Implementations
         {
             var response = new Response<String>();
 
-            var device = await _ideviceDal.GetDeviceByIdAsync(id);
+            var device = await _ideviceDal.GetWholeDeviceByIdAsync(id);
 
             if (device == null)
             {
