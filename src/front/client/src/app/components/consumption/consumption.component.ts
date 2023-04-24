@@ -5,7 +5,8 @@ import { AuthService } from "../../services/auth-service.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DeviceDataService } from "../../services/device-data.service";
 import { DatePipe } from "@angular/common";
-import { JWTService } from 'src/app/services/jwt.service';
+//import { JWTService } from 'src/app/services/jwt.service';
+import { JWTService } from '../../services/jwt.service';
 
 @Component({
   selector: 'app-consumption',
@@ -50,6 +51,8 @@ export class ConsumptionComponent implements OnInit {
   sevenDaysFlag: boolean = false;
 
   datasets: any[] = [];
+
+  showDropdown : boolean = false;
 
   dataConsumption: any[] = [];
   dataProduction: any[] = [];
