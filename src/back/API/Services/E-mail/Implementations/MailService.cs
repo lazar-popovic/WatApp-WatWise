@@ -48,7 +48,7 @@ namespace API.Services.E_mail.Implementations
 
             mail.Body =
                 "\r\nHi,\r\n\r\nYou are successfully registered to the WattWise. To activate your account and create a password, click on the activation link below:\n\n";
-            mail.Body += $" http://localhost:4200/verification?token={token}";
+            mail.Body += $"http://softeng.pmf.kg.ac.rs:10082/verification?token={token}";
             
             this.sendEmail( mail);
         }
