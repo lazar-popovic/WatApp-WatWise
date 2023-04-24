@@ -36,7 +36,9 @@ export class DeviceDetailsComponent implements OnInit
       userId: 0,
       name: "",
       activityStatus: false,
-      deviceType: null,
+      deviceType: { type: null },
+      deviceSubtype: [] as any[],
+      capacity: null,
       dataShare: false
     }
 
@@ -74,7 +76,9 @@ export class DeviceDetailsComponent implements OnInit
               this.device.name = result.data.name;
               this.device.activityStatus = result.data.activityStatus;
               this.device.deviceType = result.data.deviceType;
+              this.device.deviceSubtype = result.data.deviceSubtype;
               this.device.dataShare = result.data.dataShare;
+              this.device.capacity = result.data.capacity;
               switch ( result.data.deviceType.category)
               {
                 case -1:
