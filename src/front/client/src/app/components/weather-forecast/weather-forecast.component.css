@@ -268,15 +268,15 @@
   .current-weather-icon img {
     height: 60px;
   }
-  .of-x {
-    overflow-x: scroll;
-    overflow-y: hidden;
-  }
 }
 
+.of-x {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
 
 .weather-forecast {
-  min-width: 600px;
+  min-width: 700px;
 }
 
 p {

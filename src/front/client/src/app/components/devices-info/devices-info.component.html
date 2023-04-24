@@ -16,8 +16,9 @@
             {{device.type}}
           </div>
           <div class="device-item-footer c">
-            <div *ngIf="device.activityStatus"><img src="/assets/active.png" alt="active">{{device.usage}} kWh</div>
+            <div *ngIf="device.activityStatus"><img src="/assets/active.png" alt="active"></div>
             <div *ngIf="!device.activityStatus"><img src="/assets/nonactive.png" alt="non-active"></div>
+            {{device.usage}} kWh
           </div>
         </div>
       </div>
