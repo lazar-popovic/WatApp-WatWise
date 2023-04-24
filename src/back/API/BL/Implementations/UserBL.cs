@@ -258,5 +258,34 @@ namespace API.BL.Implementations
             return response;
         }
 
+        public async Task<Response<string>> DeleteProsumer(int id)
+        {
+            Response<string> response = new Response<string>();
+
+            var user = await _userDal.GetByIdAsync(id);
+
+            if (user == null)
+            {
+                response.Errors.Add("User with this id does not exist!");
+                response.Success = response.Errors.Count == 0;
+
+                return response;
+            }
+
+            if (user.RoleId != 3)
+            {
+                response.Errors.Add("Only prosumer can be deleted!");
+                response.Success = response.Errors.Count == 0;
+
+                return response;
+            }
+
+            await _userDal.DeleteUser(user);
+
+            response.Data = "User has been successfully deleted!";
+            response.Success = response.Errors.Count == 0;
+
+            return response;
+        }
     }
 }
