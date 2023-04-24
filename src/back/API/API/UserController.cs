@@ -89,11 +89,17 @@ namespace API.API
         {
             return Ok(await _userBL.UpdateUserNameAndEmail(request, id));
         }
+        
         [HttpPost("update-user-image")]
         public async Task<IActionResult> SaveImageForUser(int id, [FromBody] byte[] imagePicture)
         {
             return Ok(await _userBL.SaveImageForUser(id, imagePicture));
         }
 
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            return Ok(await _userBL.DeleteUser(id));
+        }
     }
 }
