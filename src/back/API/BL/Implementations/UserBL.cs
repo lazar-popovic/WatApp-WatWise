@@ -114,9 +114,9 @@ namespace API.BL.Implementations
             return response;
 
         }
-        public async Task<Response<List<UserWithCurrentProdAndCons?>>> FindUsers(int id, string search, string mail, int pageSize, int pageNum, string order)
+        public async Task<Response<List<User?>>> FindUsers(int id, string search, string mail, int pageSize, int pageNum, string order)
         {
-            var response = new Response<List<UserWithCurrentProdAndCons?>>();
+            var response = new Response<List<User?>>();
 
             var users = await _userDal.FindUser(id, search, mail, pageSize, pageNum, order);
 
