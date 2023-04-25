@@ -124,7 +124,7 @@ namespace API.DAL.Implementations
         public async Task<List<User>?> FindUser(int id, string search, string mail, int pageSize, int pageNum, string order)
         {
           
-            var fullName = search.Trim().ToLower().Split(" ");
+            var fullName = search?.Trim().ToLower().Split(" ");
 
             var users = await _dbContext.Users.Where( u => u.RoleId == id).Select(o => new User
                                                 {
