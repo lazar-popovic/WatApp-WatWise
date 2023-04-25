@@ -12,7 +12,7 @@ This repository contains a web application built using ASP.NET Core 7 for the ba
 <li>MongoDB Server</li>
 </ul>
 
-<h2>Running web application</h2>
+<h2>Running web application on Local</h2>
 
 <p>Clone the repository to your local machine.</p>
 
