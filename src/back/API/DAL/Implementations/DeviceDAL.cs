@@ -38,7 +38,12 @@ namespace API.DAL.Implementations
                 UserId = d.UserId
             }).AsNoTracking().FirstOrDefaultAsync();
         }
-
+        
+        public async Task<Device?> GetWholeDeviceByIdAsync(int id)
+        {
+            return await _dbContext.Devices.FirstOrDefaultAsync(d => d.Id == id);
+        }
+        
         public async Task AddDeviceAsync(Device device)
         {
             
