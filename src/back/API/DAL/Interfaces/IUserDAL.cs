@@ -16,5 +16,6 @@ namespace API.DAL.Interfaces
         Task<List<User>?> FindUser(int id, string search, string mail, int pageSize, int pageNum, string order);
         void UpdateUser(User user);
         Task<User> SaveProfilePictureAsync(int userId, [FromBody] byte[] profilePicture);
+        Task DeleteUser(User user);
     }
 }
