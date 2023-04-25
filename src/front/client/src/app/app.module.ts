@@ -51,6 +51,7 @@ import { NgBusyModule } from 'ng-busy';
 import { WeatherForecastComponent } from './components/weather-forecast/weather-forecast.component';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { LogoHolderComponent } from './components/logo-holder/logo-holder.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     DevicesComponent,
     ConsumptionComponent,
     OverviewComponent,
+    LogoHolderComponent,
     UsersComponent,
     MapComponent,
     EnergyUsageComponent,
