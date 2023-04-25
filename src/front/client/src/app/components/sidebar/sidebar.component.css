@@ -285,5 +285,5 @@
     #consumption-mobile {   background-image: url(/assets/consumption.png);}
     #production-mobile  {   background-image: url(/assets/production.png);}
     #profile-mobile { background-image: url(/assets/user.png); }
-    #profile-logout { background-image: url(/assets/logout.png); }
+    #profile-logout { background-image: url(/assets/logout-mobile.png); }
 }
