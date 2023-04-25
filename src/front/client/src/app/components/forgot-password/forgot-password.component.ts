@@ -24,6 +24,7 @@ export class ForgotPasswordComponent {
       if( result.body.success)
       {
         this.toastrNotifService.showSuccess( result.body.data.message);
+        this.router.navigateByUrl("");
       }
       else
       {
