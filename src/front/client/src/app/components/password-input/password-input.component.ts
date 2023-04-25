@@ -34,8 +34,8 @@ export class PasswordInputComponent implements OnInit {
     this.token.token = this.data.token = this.router.url.split('/')[2].replace("reset-password?token=","");
     this.authService.verifyToken(this.data).subscribe((result: any) => {
       if( result.body.success) {
-        document.getElementById('password-input-mail')!.innerText=result.body.data.message;
-        this.toastrNotifService.showSuccess( result.body.data.message);
+        document.getElementById('prosumer-mail')!.innerText=result.body.data.message;
+        this.toastrNotifService.showSuccess("Token is valid!");
       }
       else {
         this.toastrNotifService.showErrors( result.body.errors);
