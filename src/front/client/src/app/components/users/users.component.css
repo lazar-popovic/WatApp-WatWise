@@ -50,10 +50,11 @@
 
 .add-new-form input
 {
+  box-sizing: border-box;
   text-align: center;
   width: 80%;
   font-weight: 500;
-  padding: 10px 20px;
+  padding: 10px 40px;
   font-size: 24px;
   border: 1px solid #ccc;
   border-bottom: 2px solid #ccc;
@@ -114,22 +115,23 @@
 
 #address-show {
   display: none;
-  background-color: rgba(91, 91, 91, 0.1);
+  background-color: rgba(136, 136, 136, 0.1);
   margin: 0px 30px 20px;
-  padding: 20px;
-  gap: 10px;
+  padding: 10px 20px 0px;
+  border-radius: 10px;
 }
 
 .display-item {
-  margin: 10px;
-  width: 80%;
+  width: 100%;
   box-sizing: border-box;
-  height: 40px;
-  background-color: #6a6a6a;
+  line-height: 0px;
+  background-color: rgb(232, 230, 230);
   padding: 20px;
-  border: 1px solid black;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .display-item:hover {
-  background-color: #3f3f3f;
+  background-color: #a1a0a0;
+  cursor: pointer;
 }

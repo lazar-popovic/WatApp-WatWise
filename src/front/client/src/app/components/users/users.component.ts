@@ -20,6 +20,8 @@ export class UsersComponent {
     }
   };
 
+  items : any;
+
   constructor(private userService: UserService,private router: Router, private geoService: GeocodingService ,private toastrNotifService: ToastrNotifService) { }
 
   storeUser()
@@ -37,25 +39,27 @@ export class UsersComponent {
     });
   }
 
+  pickAddressHandler(event: any) {
+    let element = event.target;
+    this.user.location.city = (element as HTMLDivElement).innerText.split(", ")[0];
+    (document.querySelector(".users-form-location") as HTMLInputElement).value = (element as HTMLDivElement).innerText;
+  }
+
   getAddress() {
     this.geoService.getAddress(this.user.location.address, this.user.location.number).subscribe((result: any) => {
       (document.querySelector('#address-show') as HTMLDivElement).style.display = 'block';
-      let content = '';
-      for(let item of result.body) {
-        let city;
-        if (item.address.suburb == null)
+      let city;
+      this.items = result.body.map((item:any) => {
+        if (item.address.city)
           city = item.address.city;
+        else if (item.address.town)
+          city = item.address.town;
         else
           city = item.address.suburb;
-        content += "<div class='display-item'>"
-                + item.addressDetails.split(', ')[0]
-                + ", " 
-                + city
-                + ", " 
-                + item.address.country 
-                + "</div>";
-      }
-      (document.querySelector('#address-show') as HTMLDivElement).innerHTML = content;
+        item.city = city;
+        return item;
+      });
+
       (document.querySelector('.users-form-location') as HTMLDivElement).style.marginBottom = "0px";
     }, (error: any) => {
       console.log(error);
