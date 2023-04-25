@@ -9,7 +9,7 @@ export class GeocodingService {
 
   constructor(private http: HttpClient) { }
 
-  getAddress(address: string, addressCity: string) {
-    return this.http.get(`${environment.apiUrl}location/address-autocomplete?streetAddress=${encodeURIComponent(address + " " + addressCity)}`, {observe: 'response'});
+  getAddress(address: string) {
+    return this.http.get(`${environment.apiUrl}location/address-autocomplete?streetAddress=${encodeURIComponent(address)}`, {observe: 'response'});
   }
 }

@@ -55,7 +55,7 @@ public class GeocodingService : IGeocodingService
 
     public LongLat Geocode( LocationViewModel location)
     {
-        var address = $"{location.Address} {location.Number}, {location.City}";
+        var address = $"{location.Address} {location.Number}, {location.City}, Serbia";
         var result = new LongLat();
         var url = $"{Url}?q={address}&key={ApiKeys.BingKey}";
         try

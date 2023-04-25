@@ -10,6 +10,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using API.Services.Geocoding.Interfaces;
+using Cyrillic;
+using Cyrillic.Convert.Dictionaries;
+using Cyrillic.Convert;
 
 namespace API.BL.Implementations
 {
@@ -104,8 +107,13 @@ namespace API.BL.Implementations
             {
                 return response;
             }
+
             ///// MAYBE MOVE TO LOCATION BL
             ///// BEGIN
+            var conversion = new Conversion();
+            userRegisterRequest.Location.Address = conversion.SerbianCyrillicToLatin(userRegisterRequest.Location.Address);
+            userRegisterRequest.Location.Neighborhood = conversion.SerbianCyrillicToLatin(userRegisterRequest.Location.Neighborhood);
+            userRegisterRequest.Location.City = conversion.SerbianCyrillicToLatin(userRegisterRequest.Location.City);
             var cords = _geocodingService.Geocode(userRegisterRequest.Location);
             var locationId = _locationDal.GetLocationByLatLongAsync(cords);
             if (locationId == 0)
@@ -113,12 +121,13 @@ namespace API.BL.Implementations
                 locationId = _locationDal.InsertLocation(userRegisterRequest.Location, cords);
             }
             ///// END
+            
             var newUser = _authDAL.RegisterUser(userRegisterRequest, locationId);
 
             _mailService.sendToken(newUser);
 
             response.Data = new RegisterResponseViewModel { Message = "User registration successful!Check your email to complete registration." };
-
+            Console.WriteLine(userRegisterRequest.Location.Neighborhood);
             return response;
 
         }

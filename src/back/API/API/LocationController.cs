@@ -23,7 +23,7 @@ public class LocationController : ControllerBase
         locationBL = location;
     }
 
-    [HttpPost, Authorize(Roles = "User")]
+    [HttpPost("get-coords")]
     public LongLat GetLongLat( LocationViewModel locationViewModel)
     {
        return _geocodingService.Geocode( locationViewModel);
