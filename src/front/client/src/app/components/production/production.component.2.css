@@ -222,3 +222,70 @@ table tbody tr:hover {
   left: 40%;
   top: 30%;
 }
+
+#stats-button {
+  background-image: url(/assets/stats.png);
+  background-size: 15px;
+  background-repeat: no-repeat;
+  background-position: 10px 15px;
+
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+
+  height: 50px;
+  border-radius: 10px;
+  margin-right: 10px;
+  padding-left: 30px;
+  padding-right: 5px;
+  background-color: #fff;
+  border: 0px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+
+#stats-button:hover {
+  color: #fff;
+  background-color: #333;
+}
+
+/**/
+
+#stats-button {
+  position: relative;
+}
+
+#stats-dropdown {
+  color: #333;
+  display: none;
+  position: absolute;
+
+  width: 300px;
+  top: 100%;
+  right: 0%;
+  background-color: white;
+  border-radius: 10px;
+  background-color: #333;
+  padding: 5px;
+}
+
+#stats-dropdown th {
+  border-bottom: 2px solid black;
+}
+
+
+#stats-dropdown ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#stats-dropdown li {
+  margin-bottom: 5px;
+}
+
+#stats-dropdown.visible {
+  display: block;
+}
+
