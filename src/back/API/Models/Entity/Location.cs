@@ -14,4 +14,5 @@ public class Location
     public double? Latitude { get; set; }
 
     public List<User>? Users { get; set; }
+    public string? Neighborhood { get; set; } = string.Empty;
 }
