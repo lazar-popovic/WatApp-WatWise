@@ -37,7 +37,7 @@ export class DeviceDetailsComponent implements OnInit
       name: "",
       activityStatus: false,
       deviceType: { type: null },
-      deviceSubtype: [] as any[],
+      deviceSubtype: { subtypeName: null },
       capacity: null,
       dataShare: false
     }
