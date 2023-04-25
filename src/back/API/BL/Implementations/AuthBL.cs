@@ -365,7 +365,7 @@ namespace API.BL.Implementations
             {
                 response.Errors.Add("Repeat password is required");
             }
-            if (request.Password1 != request.Password2)
+            if (!request.Password1.Equals(request.Password2))
             {
                 response.Errors.Add("Passwords need to match");
             }
