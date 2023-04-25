@@ -30,10 +30,11 @@ namespace API.DAL.Implementations
                 Id = d.Id,
                 Name = d.Name,
                 DataShare = d.DataShare,
-                DeviceTypeId = d.DeviceTypeId,
                 PurchaseDate = d.PurchaseDate,
                 ActivityStatus = d.ActivityStatus,
                 DeviceType = d.DeviceType,
+                DeviceSubtype = d.DeviceSubtype,
+                Capacity = d.Capacity,
                 UserId = d.UserId
             }).AsNoTracking().FirstOrDefaultAsync();
         }
@@ -62,14 +63,13 @@ namespace API.DAL.Implementations
         }
         public async Task AddDeviceViewModel(DeviceViewModel devicee)
         {
-            
-
             var device = new Device
             {
                 UserId = devicee.UserId,
                 ActivityStatus = true,
                 PurchaseDate = DateTime.Now,
                 DeviceTypeId = devicee.DeviceTypeId,
+                DeviceSubtypeId = devicee.DeviceSubtypeId,
                 Name = devicee.Name,
                 DataShare = true,
                 Capacity = devicee.Category == 0 ? devicee.Capacity : null
@@ -248,6 +248,12 @@ namespace API.DAL.Implementations
 
             response.Success = response.Errors.Count == 0;
             return response;
+        }
+
+        public async Task<List<DeviceSubtype>> GetDeviceSubtypesByType(int deviceTypeId)
+        {
+            return await _dbContext.DeviceSubtypes.Where(dt => dt.DeviceTypeId == deviceTypeId)
+                                               .AsNoTracking().ToListAsync();
         }
     }
 }

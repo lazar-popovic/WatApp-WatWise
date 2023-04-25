@@ -6,6 +6,7 @@
     <div class="card-group">
       <div class="card standard-card-style card-small">
         <div class="card-left">
+          <app-tooltip [message]="'Current total consumption of electrical energy in kWh'"></app-tooltip>
           <h4>Currently consuming</h4>
         </div>
         <div class="card-right">
@@ -14,6 +15,7 @@
       </div>
       <div class="card standard-card-style card-small">
         <div class="card-left">
+          <app-tooltip [message]="'Current total production of electrical energy in kWh'"></app-tooltip>
           <h4>Currently producing</h4>
         </div>
         <div class="card-right">
@@ -22,6 +24,7 @@
       </div>
       <div class="card standard-card-style card-small">
         <div class="card-left">
+          <app-tooltip [message]="'Predicted total consumption of electrical energy in kWh for today'"></app-tooltip>
           <h4>Predicted consumption for today</h4>
         </div>
         <div class="card-right">
@@ -30,6 +33,7 @@
       </div>
       <div class="card standard-card-style card-small">
         <div class="card-left">
+          <app-tooltip [message]="'Predicted total production of electrical energy in kWh for today'"></app-tooltip>
           <h4>Predicted production for today</h4>
         </div>
         <div class="card-right">
@@ -78,7 +82,7 @@
           </ngx-charts-line-chart>
         </div>
       </div>
-      <div class="card card-big standard-card-style">
+      <div class="card card-big standard-card-style" *ngIf="chart3.data.length > 0">
         <h4>Top consuming devices</h4>
         <div class="chart-holder chart-holder-pie-grid">
           <ngx-charts-pie-grid
@@ -90,7 +94,7 @@
           </ngx-charts-pie-grid>
         </div>
       </div>
-      <div class="card card-big standard-card-style">
+      <div class="card card-big standard-card-style" *ngIf="chart4.data.length > 0">
         <h4>Top producing devices</h4>
         <div class="chart-holder chart-holder-pie-grid">
           <ngx-charts-pie-grid class="chart"

@@ -56,7 +56,7 @@
 
 .device-container {
   margin-bottom: 20px;
-  width: 1250px;
+  width: 100%;
 }
 
 .device-container-header {
@@ -140,15 +140,15 @@
 }
 
 .device-item-footer.c {
-  color: red;
+  color: rgba(191, 65, 65, 1)!important;
 }
 
 .device-item-footer.p {
-  color: green;
+  color: rgba(69, 94, 184, 1)!important;
 }
 
 .device-item-footer.s {
-  color: yellow;
+  color: rgb(25, 107, 25);
 }
 
 .device-item-footer img{

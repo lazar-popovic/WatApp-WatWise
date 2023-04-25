@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { DeviceService } from 'src/app/services/device.service';
+import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
 
 @Component({
   selector: 'app-edit-device',
@@ -17,7 +18,7 @@ export class EditDeviceComponent implements OnInit{
     dataShare: false
   }
 
-  constructor(private deviceService: DeviceService, private router: Router) { }
+  constructor(private deviceService: DeviceService, private router: Router, private toastrNotifService: ToastrNotifService) { }
 
   ngOnInit(): void {
     if(this.privacyStatus == true)
@@ -37,7 +38,10 @@ export class EditDeviceComponent implements OnInit{
 
   saveChanges() {
     this.deviceService.updateDevice(this.id, this.device).subscribe((result: any) => {
-      this.router.navigateByUrl('/prosumer/devices');
+      if( result.body.success) {
+        this.toastrNotifService.showSuccess(result.body.data);
+        this.router.navigate(['/prosumer/device',this.id]);
+      }
     }, (error: any) => {
       console.log(error);
     })

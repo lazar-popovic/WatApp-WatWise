@@ -38,5 +38,10 @@ public class LocationController : ControllerBase
     {
         return Ok(await _geocodingService.Autocomplete( streetAddress));
     }
-
+    
+    [HttpPost("address-yandex")]
+    public async Task<IActionResult> GetYandexLongLat(LocationViewModel request)
+    {
+        return Ok(await _geocodingService.GeoCodeYandex(request));
+    }
 }

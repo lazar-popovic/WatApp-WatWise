@@ -16,6 +16,16 @@
         </div>
       </div>
     </div>
+    <div id="device-details">
+      <div id="device-details-holder" class="standard-card-style">
+        <div id="device-detail">
+          <p><b>Name</b> {{device.name}}</p>
+        </div>
+        <div id="device-detail">
+          <p><b>Type</b> {{device.deviceType?.type}}</p>
+        </div>
+      </div>
+    </div>
     <div id="nav-bar">
       <h3 id="history-h3" (click)="historyClick()">History</h3>
       <h3 id="prediction-h3" (click)="predictionClick()">Prediction</h3>

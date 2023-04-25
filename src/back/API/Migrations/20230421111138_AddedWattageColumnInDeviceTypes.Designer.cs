@@ -3,6 +3,7 @@ using System;
 using API.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230421111138_AddedWattageColumnInDeviceTypes")]
+    partial class AddedWattageColumnInDeviceTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0-preview.1.23111.4");
@@ -32,9 +35,6 @@ namespace API.Migrations
                     b.Property<bool>("DataShare")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("DeviceSubtypeId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("DeviceTypeId")
                         .HasColumnType("INTEGER");
 
@@ -48,8 +48,6 @@ namespace API.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DeviceSubtypeId");
 
                     b.HasIndex("DeviceTypeId");
 
@@ -81,25 +79,6 @@ namespace API.Migrations
                     b.HasIndex("DeviceId");
 
                     b.ToTable("DeviceEnergyUsage");
-                });
-
-            modelBuilder.Entity("API.Models.Entity.DeviceSubtype", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("DeviceTypeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("SubtypeName")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DeviceTypeId");
-
-                    b.ToTable("DeviceSubtypes");
                 });
 
             modelBuilder.Entity("API.Models.Entity.DeviceType", b =>
@@ -142,9 +121,6 @@ namespace API.Migrations
 
                     b.Property<double?>("Longitude")
                         .HasColumnType("REAL");
-
-                    b.Property<string>("Neighborhood")
-                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -257,10 +233,6 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Entity.Device", b =>
                 {
-                    b.HasOne("API.Models.Entity.DeviceSubtype", "DeviceSubtype")
-                        .WithMany("Devices")
-                        .HasForeignKey("DeviceSubtypeId");
-
                     b.HasOne("API.Models.Entity.DeviceType", "DeviceType")
                         .WithMany("Devices")
                         .HasForeignKey("DeviceTypeId");
@@ -268,8 +240,6 @@ namespace API.Migrations
                     b.HasOne("API.Models.Entity.User", "User")
                         .WithMany("Devices")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("DeviceSubtype");
 
                     b.Navigation("DeviceType");
 
@@ -283,15 +253,6 @@ namespace API.Migrations
                         .HasForeignKey("DeviceId");
 
                     b.Navigation("Device");
-                });
-
-            modelBuilder.Entity("API.Models.Entity.DeviceSubtype", b =>
-                {
-                    b.HasOne("API.Models.Entity.DeviceType", "DeviceType")
-                        .WithMany("DeviceSubtypes")
-                        .HasForeignKey("DeviceTypeId");
-
-                    b.Navigation("DeviceType");
                 });
 
             modelBuilder.Entity("API.Models.Entity.RefreshToken", b =>
@@ -332,15 +293,8 @@ namespace API.Migrations
                     b.Navigation("DeviceEnergyUsages");
                 });
 
-            modelBuilder.Entity("API.Models.Entity.DeviceSubtype", b =>
-                {
-                    b.Navigation("Devices");
-                });
-
             modelBuilder.Entity("API.Models.Entity.DeviceType", b =>
                 {
-                    b.Navigation("DeviceSubtypes");
-
                     b.Navigation("Devices");
                 });
 

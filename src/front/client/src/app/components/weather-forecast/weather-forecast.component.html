@@ -40,10 +40,9 @@
       </div>
     </div>
   </div>
-
+  <h4 class="forecast-title">5-day forecast</h4>
   <div class="weather-widget of-x" *ngIf="forecasts">
     <div class="weather-forecast">
-      <h4 class="forecast-title">5-day forecast:</h4>
       <ul class="forecast-list">
         <li *ngFor="let item of forecasts">
           <div class="forecast-day">{{ item.dt_txt | date:'EEE' }}</div>
@@ -53,8 +52,8 @@
           <div class="forecast-details">
             <p class="forecast-temperature">{{ item.main.temp }}<sup>°C</sup></p>
             <!--<p class="feelslike-temperature">FeelsLike: {{ item.main.feels_like }}<sup>°C</sup></p> -->
-            <p class="forecast-humidity">Humidity:{{ item.main.humidity }}%</p>
-            <p class="forecast-wind-speed">Wind:{{ item.wind.speed }}m/s</p>
+            <p class="forecast-humidity">Humidity {{ item.main.humidity }}%</p>
+            <p class="forecast-wind-speed">Wind {{ item.wind.speed }}m/s</p>
             <p class="forecast-weather-description">{{ item.weather[0].description }}</p>
           </div>
         </li>
