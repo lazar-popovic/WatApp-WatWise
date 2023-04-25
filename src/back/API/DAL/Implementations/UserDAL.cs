@@ -195,33 +195,28 @@ namespace API.DAL.Implementations
 
         public async Task DeleteUser(User user)
         {
-            await using (var context = _dbContext)
+            await using var context = _dbContext;
+            var userToDelete = await context.Users.Include(u => u.Devices)!
+                .ThenInclude(d => d.DeviceEnergyUsages)
+                .SingleOrDefaultAsync(u => u.Id == user.Id);
+
+            if (userToDelete != null)
             {
-                var userToDelete = await context.Users.Include(u => u.Devices)!
-                    .ThenInclude(d => d.DeviceEnergyUsages)
-                    .SingleOrDefaultAsync(u => u.Id == user.Id);
-
-                if (userToDelete != null)
+                var refreshTokensToDelete = context.RefreshTokens.Where(rt => rt.UserId == user.Id);
+                context.RefreshTokens.RemoveRange(refreshTokensToDelete);
+                    
+                foreach (var device in userToDelete.Devices.ToList())
                 {
-                    var refreshTokensToDelete = context.RefreshTokens.Where(rt => rt.UserId == user.Id);
-                    context.RefreshTokens.RemoveRange(refreshTokensToDelete);
-
-                    // Remove the user's associated devices and energy usage records.
-                    foreach (var device in userToDelete.Devices.ToList())
+                    foreach (var energyUsage in device.DeviceEnergyUsages.ToList())
                     {
-                        foreach (var energyUsage in device.DeviceEnergyUsages.ToList())
-                        {
-                            context.DeviceEnergyUsage.Remove(energyUsage);
-                        }
-
-                        context.Devices.Remove(device);
+                        context.DeviceEnergyUsage.Remove(energyUsage);
                     }
 
-                    // Remove the user.
-                    context.Users.Remove(userToDelete);
-                    await context.SaveChangesAsync();
+                    context.Devices.Remove(device);
                 }
-
+                    
+                context.Users.Remove(userToDelete);
+                await context.SaveChangesAsync();
             }
         }
 
