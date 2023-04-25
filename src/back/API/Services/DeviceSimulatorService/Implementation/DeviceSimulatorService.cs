@@ -17,7 +17,7 @@ public class DeviceSimulatorService : IDeviceSimulatorService
     public DeviceSimulatorService(DataContext context)
     {
         _context = context;
-        _client = new MongoClient("mongodb://localhost:27017");
+        _client = new MongoClient("mongodb://localhost:10087");
         _devices = _client.GetDatabase("database");
         _collection = _devices.GetCollection<BsonDocument>("devices");
     }
