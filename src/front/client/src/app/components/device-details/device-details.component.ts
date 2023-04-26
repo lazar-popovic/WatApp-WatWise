@@ -11,7 +11,9 @@ import {DeviceService} from "../../services/device.service";
 import {DeviceDataService} from "../../services/device-data.service";
 import {DatePipe} from "@angular/common";
 import { ViewEncapsulation } from '@angular/core';
-import { JWTService } from 'src/app/services/jwt.service';
+//import { JWTService } from 'src/app/services/jwt.service';
+import { JWTService } from '../../services/jwt.service';
+
 
 interface DatepickerOptions {
   autoclose?: boolean;
@@ -37,7 +39,7 @@ export class DeviceDetailsComponent implements OnInit
       name: "",
       activityStatus: false,
       deviceType: { type: null },
-      deviceSubtype: [] as any[],
+      deviceSubtype: { subtypeName: null },
       capacity: null,
       dataShare: false
     }

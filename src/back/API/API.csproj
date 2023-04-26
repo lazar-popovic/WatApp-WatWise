@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCoreRateLimit" Version="5.0.0" />
+    <PackageReference Include="Cyrillic.Convert" Version="2.2.1" />
     <PackageReference Include="Hangfire" Version="1.7.33" />
     <PackageReference Include="Hangfire.Core" Version="1.7.33" />
     <PackageReference Include="Hangfire.Storage.SQLite" Version="0.3.3" />
@@ -61,7 +62,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="Images\" />
   </ItemGroup>
 

@@ -19,10 +19,28 @@
     <div id="device-details">
       <div id="device-details-holder" class="standard-card-style">
         <div id="device-detail">
-          <p><b>Name</b> {{device.name}}</p>
+          <div>
+            <p>Name</p>
+          </div>
+          <div>
+            <p>{{device.name}}</p>
+          </div>
         </div>
         <div id="device-detail">
-          <p><b>Type</b> {{device.deviceType?.type}}</p>
+          <div>
+            <p>Type</p>
+          </div>
+          <div>
+            <p>{{device.deviceType!.type}}</p>
+          </div>
+        </div>
+        <div id="device-detail">
+          <div>
+            <p>Type</p>
+          </div>
+          <div>
+            <p>{{device.deviceSubtype!.subtypeName}}</p>
+          </div>
         </div>
       </div>
     </div>

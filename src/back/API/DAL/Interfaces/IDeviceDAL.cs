@@ -9,6 +9,7 @@ namespace API.DAL.Interfaces
     {
         Task<List<Device>> GetAllDevicesAsync();
         Task<Device?> GetDeviceByIdAsync(int id);
+        Task<Device?> GetWholeDeviceByIdAsync(int id);
         Task AddDeviceAsync(Device device);
         Task UpdateDeviceAsync(Device device);
         Task DeleteDeviceAsync(Device device);
