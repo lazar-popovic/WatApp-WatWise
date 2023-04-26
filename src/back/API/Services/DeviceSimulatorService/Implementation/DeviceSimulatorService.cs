@@ -30,6 +30,7 @@ public class DeviceSimulatorService : IDeviceSimulatorService
         var devices = await _context.Devices
             .GroupBy(d => d.DeviceTypeId)
             .Select(g => new { DeviceTypeId = g.Key, Devices = g.Select(d => new { d.Id, d.ActivityStatus }).ToList() })
+            .AsNoTracking()
             .ToListAsync();
 
         var deviceEnergyUsageList = new List<DeviceEnergyUsage>();
@@ -106,7 +107,8 @@ public class DeviceSimulatorService : IDeviceSimulatorService
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
-            if (device?.ActivityStatus == true)
+
+            if (device?.ActivityStatus == true && device?.DeviceType?.Id != 3)
             {
                 usage.Value = Math.Round((double)(device?.DeviceType?.WattageInkW * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
             } 
