@@ -12,7 +12,7 @@ This repository contains a web application built using ASP.NET Core 7 for the ba
 <li>MongoDB Server</li>
 </ul>
 
-<h2>Running web application on Local</h2>
+<h2>Running web application on Local machine</h2>
 
 <p>Clone the repository to your local machine.</p>
 
@@ -36,18 +36,59 @@ This repository contains a web application built using ASP.NET Core 7 for the ba
 <b><br>"ConnectionStrings": {<br>
      "DefaultConnection": "Data Source = database.db"<br>
   }<br></b>
-<li>Run the following command to create SQLite database based of migrations:<br><b>dotnet ef database update</b></li>
+<li>Run the following command to create SQLite database based of migrations:<br><b>dotnet ef database update</b>.</li>
 <li>Run the following commands to start the backend server:<br><b>dotnet run</b></li>
-<li>Server is located on http://localhost:5226/ web address</li>
+<li>Server is located on http://localhost:5226/ web address.</li>
+<li>To build project, execute <b>dotnet build</b>. This command builds a .NET application or project by compiling the source code and producing the output files based on the configuration specified in the project file.</li>
+<li>When you want to publish project on server, execute <b>dotnet publish</b>. This command builds and publishes a .NET application or project, producing a self-contained deployment package that can be executed on a target machine without requiring the .NET SDK.</li>
 </ol>
 
 <h3>Running Angular application</h3>
 <ol>
 <li>Open a terminal and navigate to the <b>src/front/client</b> folder.</li>
 <li>Run the following commands to install the required Node.js packages:<br><b>npm install</b></li>
-<li>Run the following commands to start the frontend server:<br><b>ng serve</b></li>
+<li>Run the following commands to start the frontend server:<br><b>ng serve</b>.</li>
 <li>Navigate to http://localhost:4200/. The application will automatically reload if you change any of the source files.</li>
+<li>When you want to build project, execute <b>ng build</b>. This command builds an Angular application, compiling the TypeScript code into JavaScript and creating a production-ready package that can be deployed to a web server.</li>
 </ol>
 
+<h2>Running web application on Web server</h2>
 
+<p>Install RemoteSSH extention for easier configuration of application</p>
+<p>Connect to ssh remote server</p>
 
+<h3>Running MongoDB server on remote</h3>
+<ol>
+<li>Create folder /mongo on remote server.</li>
+<li>To start MongoDb server on remote, run command <b>mongod --dbpath path/to/mongo/folder --port PORT --bind_all</b>.</li>
+<li>You can connect to connection using MongoDbCompass by connecting to <b>mongodb://website-address:PORT/</b>.</li>
+</ol>
+
+<h3>Running .NET project on remote</h3>
+<ol>
+<li>Publish application on your machine using <b>dotnet publish</b>, as said above.</li>
+<li>On remote, create folder <b>/back</b> and copy the content of <b>publish</b> folder into it.</li>
+<li>Set port of application by running command <b>export ASPNETCORE_URLS="http:///website-address:PORT"</b>.</li>
+<li>Start .NET application by running <b>dotnet back/API.dll</b>.</li>
+<li>Your webapi is now active.</li>
+</ol>
+
+<h3>Running Angular project on remote</h3>
+<ol>
+<li>Build application on your machine using <b>ng build</b>, as said above.</li>
+<li>Download and extract <b>[server.rar](https://cdn.discordapp.com/attachments/1100106229482786848/1100110066000081007/server.rar)</b> that is necessary for running ng application.</li>
+<li>Extract folder <b>server.rar</b> and copy content from folder <b>dist</b> into it. <b>dist</b> folder contains builded Angular application.</li>
+<li>On remote, create folder <b>/front</b> and copy the content of <b>server</b> folder into it.</li>
+<li>Start Angular application by navigating to folder <b>/front</b> and running command <b>node index.js</b>.</li>
+<li>Your webapi is now active.</li>
+</ol>
+
+<h2>Informations for testers</h2>
+
+<p>Application is running on url <b>[WattApp](http://softeng.pmf.kg.ac.rs:10082/)</b>
+<p>Accounts for accessing application</p>
+<ul>
+  <li>admin@admin.com - admin123</li>
+  <li>employee@employee.com - epmloyee123</li>
+  <li>prosumer@prosumer.com - prosumer123</li>
+</ul>
