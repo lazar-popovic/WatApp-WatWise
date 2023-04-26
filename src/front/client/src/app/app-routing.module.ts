@@ -47,6 +47,7 @@ const routes: Routes = [
   { path: 'dso/consumption', component : EnergyUsageComponent, canActivate: [EmployeeGuard]},
   { path: 'prosumer/reset-password', component: PasswordInputComponent},
   { path: 'prosumer/device/:id', component: DeviceDetailsComponent},
+  { path: 'dso/employees', component: EmployeeOverviewComponent},
   { path: 'profile-settings', component: ProfileSettingsComponent},
   { path: 'test-component', component: DeleteDeviceComponent},
   { path: 'test-geo', component: UsersComponent}

@@ -104,7 +104,7 @@ namespace API.BL.Implementations
 
             if (device == null)
             {
-                response.Errors.Add("Device with this id doesen't exist!");
+                response.Errors.Add("Device with this id doesn't exist!");
                 response.Success = response.Errors.Count == 0;
 
                 return response;
@@ -117,7 +117,7 @@ namespace API.BL.Implementations
 
             await _ideviceDal.UpdateDeviceAsync(device);
 
-            response.Data = "Device name and activity status has been updated succesfully!";
+            response.Data = "Device name and data share status has been updated succesfully!";
 
             response.Success = response.Errors.Count() == 0;
 
@@ -253,7 +253,7 @@ namespace API.BL.Implementations
 
                 if (resp.Success == false)
                 {
-                    resp.Data = new RegisterResponseViewModel { Message = "Error! Failed to turn off the device!" };
+                    resp.Errors.Add("Error! Failed to turn off the device!");
                     return resp;
                 }
 
@@ -268,7 +268,7 @@ namespace API.BL.Implementations
 
                 if (resp.Success == false)
                 {
-                    resp.Data = new RegisterResponseViewModel { Message = "Error! Failed to turn on the device!" };
+                    resp.Errors.Add("Error! Failed to turn on the device!");
                     return resp;
                 }
 
@@ -289,7 +289,7 @@ namespace API.BL.Implementations
 
                 if (resp.Success == false)
                 {
-                    resp.Data = new RegisterResponseViewModel { Message = "Error! Failed to turn off data sharing!" };
+                    resp.Errors.Add("Error! Failed to turn off data sharing!");
                     return resp;
                 }
 
@@ -304,7 +304,7 @@ namespace API.BL.Implementations
 
                 if (resp.Success == false)
                 {
-                    resp.Data = new RegisterResponseViewModel { Message = "Error! Failed to turn on data sharing!" };
+                    resp.Errors.Add("Error! Failed to turn on data sharing!");
                     return resp;
                 }
 
