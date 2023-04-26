@@ -53,6 +53,8 @@ import { TooltipComponent } from './components/tooltip/tooltip.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { LogoHolderComponent } from './components/logo-holder/logo-holder.component';
 import { DeviceInfoCardComponent } from './components/device-info-card/device-info-card.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { UploadImageComponent } from './components/upload-image/upload-image.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +93,8 @@ import { DeviceInfoCardComponent } from './components/device-info-card/device-in
     SliderComponent,
     DeleteDeviceComponent,
     WeatherForecastComponent,
-    TooltipComponent
+    TooltipComponent,
+    UploadImageComponent
   ],
   imports: [
     BrowserModule,
@@ -111,7 +114,8 @@ import { DeviceInfoCardComponent } from './components/device-info-card/device-in
     MatCheckboxModule,
     NgxChartsModule,
     NgBusyModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ImageCropperModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
