@@ -1,4 +1,4 @@
-``<h1>WattApp</h1>
+<h1>WattApp</h1>
 <h2>About</h2>
 <p>
 This repository contains a web application built using ASP.NET Core 7 for the backend and Angular 15 for the frontend. The application uses a SQLite and a MongoDB database. This readme file provides instructions on how to run the application on a local machine.
