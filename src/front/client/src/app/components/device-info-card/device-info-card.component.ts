@@ -1,4 +1,6 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DeviceService } from 'src/app/services/device.service';
+import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
 
 @Component({
   selector: 'app-device-info-card',
@@ -11,15 +13,29 @@ export class DeviceInfoCardComponent implements OnInit {
     userId: 0,
     name: "",
     activityStatus: false,
-    deviceType: { type: null },
+    deviceType: { type: null, category: null },
     deviceSubtype: { subtypeName: null },
     capacity: null,
-    dataShare: false
+    dataShare: false,
+    currentUsage: null
   }
-  @Output() sliderOutput = null;
-  constructor() { }
+
+  constructor( private deviceService: DeviceService, private toastrNotifService: ToastrNotifService) { }
 
   ngOnInit() {
   }
 
+  onSliderChange( value: boolean) {
+    this.device.activityStatus = value
+    console.log( value);
+
+    this.deviceService.patchDeviceActivityStatus( this.device.id, value).subscribe(
+      (result: any) => {
+        if( result.body.success) {
+          this.toastrNotifService.showSuccess( result.body.data.message);
+          this.device.activityStatus = value;
+        }
+      }
+    );
+  }
 }

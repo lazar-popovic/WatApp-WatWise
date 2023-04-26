@@ -18,10 +18,17 @@ public class DeviceDataController : ControllerBase
     }
 
     [HttpGet]
+    [Route("get-device-current-usage")]
+    public async Task<IActionResult> GetDeviceCurrentUsage( int deviceId)
+    {
+        return Ok(await _deviceDataBl.GetDeviceCurrentUsage( deviceId));
+    }
+
+    [HttpGet]
     [Route("get-device-data-for-date")]
     public async Task<IActionResult> GetDeviceDataForToday(int day, int month, int year, int deviceId)
     {
-        return Ok( await _deviceDataBl.GetDeviceDataForToday(day, month, year, deviceId));
+        return Ok(await _deviceDataBl.GetDeviceDataForToday(day, month, year, deviceId));
     }
 
     [HttpGet]

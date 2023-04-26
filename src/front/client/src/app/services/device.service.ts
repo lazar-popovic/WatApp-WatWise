@@ -39,4 +39,8 @@ export class DeviceService {
   deleteDevice(id: number) : Observable<any> {
     return this.http.delete(`${environment.apiUrl}device/${id}`, { observe: 'response'});
   }
+
+  patchDeviceActivityStatus( deviceId: number, status: boolean) : Observable<any> {
+    return this.http.patch(`${environment.apiUrl}device/device-control-id?deviceId=${deviceId}`, {"devicesOn":status}, { observe: 'response'});
+  }
 }
