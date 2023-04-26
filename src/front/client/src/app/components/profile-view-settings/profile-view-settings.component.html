@@ -1,9 +1,9 @@
 <div class="profile-view-settings">
     <div class="profile-view-image">
-        <img src="https://www.tu-ilmenau.de/unionline/fileadmin/_processed_/0/0/csm_Person_Yury_Prof_Foto_AnLI_Footgrafie__2_.JPG_5845266f99.jpg" alt="Profile picture">
+        <img [src]="user.profileImage" alt="Profile picture">
         <div class="profile-view-image-buttons">
             <form>
-                <button class="profile-button-blue">Upload new</button>
+                <button class="profile-button-blue" (click)="showUpload()">Upload new</button>
                 <button id="profile-button-delete">Delete</button>
             </form>
         </div>
@@ -36,5 +36,10 @@
                 <button class="profile-button-blue" (click)="emitData()">Save changes</button>
             </div>
         </form>
+    </div>
+</div>
+<div class="profile-overview-overlay">
+    <div class="profile-overview-add-new">
+        <app-upload-image></app-upload-image>
     </div>
 </div>

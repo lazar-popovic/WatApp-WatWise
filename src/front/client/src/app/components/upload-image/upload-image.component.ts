@@ -39,8 +39,14 @@ export class UploadImageComponent {
       this.data.id = this.authService.userId;
       this.data.imagePicture = this.croppedImage.split("base64,")[1];
       this.userService.uploadImage(this.data).subscribe((result :any) => {
+        this.hideUpload();
       }, (error: any) => {
 
       })
     }
+
+    hideUpload() {
+      (document.querySelector(".profile-overview-overlay") as HTMLDivElement).style.display = "none";
+    }
+  
 }
