@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable} from 'rxjs';
 import { environment } from '../environments/environment';
 import { User } from '../Models/User';
+import { AuthService } from './auth-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +41,9 @@ export class UserService {
 
   public updateUser(data: any, id: number) : Observable<any> {
     return this.http.patch<any>(`${environment.apiUrl}user/update-user-name-email?id=${id}`, data, {observe: 'response'});
+  }
+
+  public uploadImage(data: any) : Observable<any>{ 
+    return this.http.post<any>(`${environment.apiUrl}user/update-user-image`, data, { observe: 'response'})
   }
 }

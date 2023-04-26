@@ -8,7 +8,12 @@ import {HttpClient} from "@angular/common/http";
 })
 export class DeviceDataService {
   constructor( private http: HttpClient) { }
+
   // SINGLE DEVICE DATA
+  getDeviceCurrentUsage( deviceId: number) : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}device-data/get-device-current-usage?deviceId=${deviceId}`);
+  }
   getDeviceDataForDate( day: number, month: number, year: number, deviceId: number) : Observable<any>
   {
     return this.http.get(`${environment.apiUrl}device-data/get-device-data-for-date?day=${day}&month=${month}&year=${year}&deviceId=${deviceId}`);

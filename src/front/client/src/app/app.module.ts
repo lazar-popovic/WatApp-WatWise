@@ -51,6 +51,10 @@ import { NgBusyModule } from 'ng-busy';
 import { WeatherForecastComponent } from './components/weather-forecast/weather-forecast.component';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { LogoHolderComponent } from './components/logo-holder/logo-holder.component';
+import { DeviceInfoCardComponent } from './components/device-info-card/device-info-card.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { UploadImageComponent } from './components/upload-image/upload-image.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +66,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     DevicesComponent,
     ConsumptionComponent,
     OverviewComponent,
+    LogoHolderComponent,
     UsersComponent,
     MapComponent,
     EnergyUsageComponent,
@@ -73,6 +78,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MapComponentComponent,
     UsersOverviewComponent,
     DeviceDetailsComponent,
+    DeviceInfoCardComponent,
     EmployeeOverviewComponent,
     AddEmployeeComponent,
     DevicesInfoComponent,
@@ -87,7 +93,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     SliderComponent,
     DeleteDeviceComponent,
     WeatherForecastComponent,
-    TooltipComponent
+    TooltipComponent,
+    UploadImageComponent
   ],
   imports: [
     BrowserModule,
@@ -107,7 +114,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatCheckboxModule,
     NgxChartsModule,
     NgBusyModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ImageCropperModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,

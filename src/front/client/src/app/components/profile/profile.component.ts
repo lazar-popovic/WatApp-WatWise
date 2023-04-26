@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/Models/User';
+import { environment } from 'src/app/environments/environment';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -25,6 +26,7 @@ export class ProfileComponent {
         this.user.mail = result.data.email;
         this.user.roleId = result.data.roleId;
         this.user.role = result.data.role.roleName;
+        this.user.profileImage = environment.pictureAppendix + result.data.profileImage;
         if(result.data.location != null) {
           this.user.address = result.data.location.address;
           this.user.num = result.data.location.addressNumber;

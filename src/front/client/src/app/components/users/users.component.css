@@ -50,10 +50,11 @@
 
 .add-new-form input
 {
+  box-sizing: border-box;
   text-align: center;
   width: 80%;
   font-weight: 500;
-  padding: 10px 20px;
+  padding: 10px 40px;
   font-size: 24px;
   border: 1px solid #ccc;
   border-bottom: 2px solid #ccc;
@@ -112,4 +113,25 @@
   background-image: url(/assets/street_num.png);
 }
 
+#address-show {
+  display: none;
+  background-color: rgba(136, 136, 136, 0.1);
+  margin: 0px 30px 20px;
+  padding: 10px 20px 0px;
+  border-radius: 10px;
+}
 
+.display-item {
+  width: 100%;
+  box-sizing: border-box;
+  line-height: 0px;
+  background-color: rgb(232, 230, 230);
+  padding: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.display-item:hover {
+  background-color: #a1a0a0;
+  cursor: pointer;
+}

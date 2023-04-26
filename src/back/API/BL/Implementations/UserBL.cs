@@ -114,9 +114,9 @@ namespace API.BL.Implementations
             return response;
 
         }
-        public async Task<Response<List<User>>> FindUsers(int id, string search, string mail, int pageSize, int pageNum, string order)
+        public async Task<Response<List<User?>>> FindUsers(int id, string search, string mail, int pageSize, int pageNum, string order)
         {
-            var response = new Response<List<User>>();
+            var response = new Response<List<User?>>();
 
             var users = await _userDal.FindUser(id, search, mail, pageSize, pageNum, order);
 
@@ -258,5 +258,34 @@ namespace API.BL.Implementations
             return response;
         }
 
+        public async Task<Response<string>> DeleteProsumer(int id)
+        {
+            Response<string> response = new Response<string>();
+
+            var user = await _userDal.GetByIdAsync(id);
+
+            if (user == null)
+            {
+                response.Errors.Add("User with this id does not exist!");
+                response.Success = response.Errors.Count == 0;
+
+                return response;
+            }
+
+            if (user.RoleId != 3)
+            {
+                response.Errors.Add("Only prosumer can be deleted!");
+                response.Success = response.Errors.Count == 0;
+
+                return response;
+            }
+
+            await _userDal.DeleteUser(user);
+
+            response.Data = "User has been successfully deleted!";
+            response.Success = response.Errors.Count == 0;
+
+            return response;
+        }
     }
 }

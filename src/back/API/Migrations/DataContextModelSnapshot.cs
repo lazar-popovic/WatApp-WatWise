@@ -143,6 +143,9 @@ namespace API.Migrations
                     b.Property<double?>("Longitude")
                         .HasColumnType("REAL");
 
+                    b.Property<string>("Neighborhood")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Locations");

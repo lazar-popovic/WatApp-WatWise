@@ -124,7 +124,7 @@ namespace API.DAL.Implementations
         public async Task<List<User>?> FindUser(int id, string search, string mail, int pageSize, int pageNum, string order)
         {
           
-            var fullName = search.Trim().ToLower().Split(" ");
+            var fullName = search?.Trim().ToLower().Split(" ");
 
             var users = await _dbContext.Users.Where( u => u.RoleId == id).Select(o => new User
                                                 {
@@ -191,6 +191,33 @@ namespace API.DAL.Implementations
             await _dbContext.SaveChangesAsync();
 
             return user;
+        }
+
+        public async Task DeleteUser(User user)
+        {
+            await using var context = _dbContext;
+            var userToDelete = await context.Users.Include(u => u.Devices)!
+                .ThenInclude(d => d.DeviceEnergyUsages)
+                .SingleOrDefaultAsync(u => u.Id == user.Id);
+
+            if (userToDelete != null)
+            {
+                var refreshTokensToDelete = context.RefreshTokens.Where(rt => rt.UserId == user.Id);
+                context.RefreshTokens.RemoveRange(refreshTokensToDelete);
+                    
+                foreach (var device in userToDelete.Devices.ToList())
+                {
+                    foreach (var energyUsage in device.DeviceEnergyUsages.ToList())
+                    {
+                        context.DeviceEnergyUsage.Remove(energyUsage);
+                    }
+
+                    context.Devices.Remove(device);
+                }
+                    
+                context.Users.Remove(userToDelete);
+                await context.SaveChangesAsync();
+            }
         }
 
         public async Task<User?> GetByEmailAsync(string email)

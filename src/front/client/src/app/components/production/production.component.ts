@@ -31,6 +31,8 @@ export class ProductionComponent
   showEdit: boolean = false;
   showDelete: boolean = false;
 
+  showDropdown : boolean = false;
+
   date: any;
   month: number = 4;
   yearForMonth: number = 2023;

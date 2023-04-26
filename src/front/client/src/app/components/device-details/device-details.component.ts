@@ -11,7 +11,9 @@ import {DeviceService} from "../../services/device.service";
 import {DeviceDataService} from "../../services/device-data.service";
 import {DatePipe} from "@angular/common";
 import { ViewEncapsulation } from '@angular/core';
-import { JWTService } from 'src/app/services/jwt.service';
+//import { JWTService } from 'src/app/services/jwt.service';
+import { JWTService } from '../../services/jwt.service';
+
 
 interface DatepickerOptions {
   autoclose?: boolean;
@@ -36,10 +38,11 @@ export class DeviceDetailsComponent implements OnInit
       userId: 0,
       name: "",
       activityStatus: false,
-      deviceType: { type: null },
-      deviceSubtype: [] as any[],
+      deviceType: { type: null, category: null },
+      deviceSubtype: { subtypeName: null },
       capacity: null,
-      dataShare: false
+      dataShare: false,
+      currentUsage: null
     }
 
     roleId: number = 3;
@@ -100,6 +103,13 @@ export class DeviceDetailsComponent implements OnInit
               let now = new Date();
               this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
               this.historyClick();
+              this.deviceDataService.getDeviceCurrentUsage( this.device.id).subscribe(
+                (result:any) => {
+                  if( result.success) {
+                    this.device.currentUsage = result.data.value;
+                  }
+                }
+              )
               console.log( this.device);
             }
             else {

@@ -37,10 +37,9 @@
 }
 
 .sidebar-profile img{
-    height: 38px;
-    width: auto;
-    padding: 13px 0px;
-    margin-left: 14px;
+    height: 40px;
+    padding: 13px 15px;
+    border-radius: 50%;
 }
 
 #profile-wraper {
@@ -285,5 +284,5 @@
     #consumption-mobile {   background-image: url(/assets/consumption.png);}
     #production-mobile  {   background-image: url(/assets/production.png);}
     #profile-mobile { background-image: url(/assets/user.png); }
-    #profile-logout { background-image: url(/assets/logout.png); }
+    #profile-logout { background-image: url(/assets/logout-mobile.png); }
 }
