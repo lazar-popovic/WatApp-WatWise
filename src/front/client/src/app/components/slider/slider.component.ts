@@ -7,10 +7,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class SliderComponent implements OnInit{
   @Output() sliderEvent = new EventEmitter<boolean>();
-  @Input() status = true;
+  @Input() status = false;
 
   ngOnInit(): void {
-    (document.querySelector('#slider-inp') as HTMLInputElement).checked = this.status;
+    console.log( this.status);
   }
 
   emitData(status: boolean) {

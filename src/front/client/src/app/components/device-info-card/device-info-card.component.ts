@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-device-info-card',
@@ -16,6 +16,7 @@ export class DeviceInfoCardComponent implements OnInit {
     capacity: null,
     dataShare: false
   }
+  @Output() sliderOutput = null;
   constructor() { }
 
   ngOnInit() {
