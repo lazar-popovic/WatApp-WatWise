@@ -1,0 +1,30 @@
+#device-details-holder {
+  width: 100%;
+  box-sizing: border-box;
+}
+#device-details-holder {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 599px) {
+  #device-details-holder {
+    grid-template-columns: 0.5fr;
+  }
+}
+.device-detail {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.device-detail .title p {
+  font-weight: bold;
+}
+.device-detail p{
+  margin: 5px;
+  color: #3e3e3e;
+}

@@ -52,6 +52,7 @@ import { WeatherForecastComponent } from './components/weather-forecast/weather-
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { LogoHolderComponent } from './components/logo-holder/logo-holder.component';
+import { DeviceInfoCardComponent } from './components/device-info-card/device-info-card.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { LogoHolderComponent } from './components/logo-holder/logo-holder.compon
     MapComponentComponent,
     UsersOverviewComponent,
     DeviceDetailsComponent,
+    DeviceInfoCardComponent,
     EmployeeOverviewComponent,
     AddEmployeeComponent,
     DevicesInfoComponent,
