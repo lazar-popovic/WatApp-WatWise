@@ -1,11 +1,13 @@
 #upload-image {
     background-color: white;
     min-height: 600px;
+    max-width: 800px;
 }
 
 #images-holder {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
 }
 
 image-cropper {
@@ -15,6 +17,7 @@ image-cropper {
 
 #image-cropper-holder {
     display: flex;
+    align-items: center;
     box-sizing: border-box;
 }
 
@@ -36,6 +39,10 @@ image-cropper {
     padding: 20px;   
 }
 
+#preview img {
+    border-radius: 50%;
+}
+
 input[type="file"] {
     display: none;
 }
@@ -46,3 +53,25 @@ input[type="file"] {
     padding: 6px 12px;
     cursor: pointer;
 }
+
+#preview button {
+    padding: 10px 20px;
+    background-color: #167ac1;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    border: 0;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-button {
+    display: flex;
+    font-size: 30px; 
+    margin: 0;
+    color: black;
+    justify-content: flex-end;
+    padding: 20px;
+}
+  

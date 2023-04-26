@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { AuthService } from 'src/app/services/auth-service.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -8,11 +9,15 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./upload-image.component.css']
 })
 export class UploadImageComponent {
+  data: any = {
+    id: 0,
+    imagePicture: ''
+  }
   imageSize: number = 200;
   imageChangedEvent: any = '';
-    croppedImage: any = '/assets/profile.jpeg';
+  croppedImage: any = '/assets/profile.jpeg';
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private authService: AuthService) { }
 
     fileChangeEvent(event: any): void {
         this.imageChangedEvent = event;
@@ -31,10 +36,9 @@ export class UploadImageComponent {
     }
 
     uploadImage() {
-      console.log(this.croppedImage);
-      let image = this.croppedImage.split("base64,")[1];
-      this.userService.uploadImage(image).subscribe((result :any) => {
-
+      this.data.id = this.authService.userId;
+      this.data.imagePicture = this.croppedImage.split("base64,")[1];
+      this.userService.uploadImage(this.data).subscribe((result :any) => {
       }, (error: any) => {
 
       })
