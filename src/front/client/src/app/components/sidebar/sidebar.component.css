@@ -37,10 +37,9 @@
 }
 
 .sidebar-profile img{
-    height: 38px;
-    width: auto;
-    padding: 13px 0px;
-    margin-left: 14px;
+    height: 40px;
+    padding: 13px 15px;
+    border-radius: 50%;
 }
 
 #profile-wraper {

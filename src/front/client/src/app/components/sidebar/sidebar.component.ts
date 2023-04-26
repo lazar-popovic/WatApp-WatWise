@@ -3,6 +3,8 @@ import { Component, Input } from '@angular/core';
 import { User } from '../../Models/User';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service.service';
+import { environment } from 'src/app/environments/environment';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -27,14 +29,15 @@ export class SidebarComponent {
   menuAdmin = [
     'Employees'
   ];
-  currentTime;
   user = new User();
+  currentTime;
   role = 3;
-  constructor (public datepipe: DatePipe, private route: Router, private authService: AuthService){
+  constructor (public datepipe: DatePipe, private route: Router, private authService: AuthService, private userService: UserService){
     let currentDateTime = this.datepipe.transform((new Date), 'h:mm dd/MM/yyyy');
     this.currentTime = currentDateTime;
     this.url = this.route.url.split('/')[2];
     this.role = authService.roleId;
+    this.getUser();
   }
 
   select(element: EventTarget | null, role: number) {
@@ -51,6 +54,26 @@ export class SidebarComponent {
       this.route.navigateByUrl(`/prosumer/${(element as HTMLDivElement).innerHTML.toLowerCase()}`);
     else if(role == 2)
       this.route.navigateByUrl(`/dso/${(element as HTMLDivElement).innerHTML.toLowerCase()}`);
+  }
+
+  getUser() {
+    this.userService.getUser(this.authService.userId).subscribe((result: any) => {
+      if(result.errors.length > 0) {
+        this.route.navigateByUrl("profile");
+      } else {
+        this.user.firstName = result.data.firstname;
+        this.user.lastName = result.data.lastname;
+        this.user.mail = result.data.email;
+        this.user.roleId = result.data.roleId;
+        this.user.role = result.data.role.roleName;
+        this.user.profileImage = environment.pictureAppendix + result.data.profileImage;
+        if(result.data.location != null) {
+          this.user.address = result.data.location.address;
+          this.user.num = result.data.location.addressNumber;
+          this.user.city = result.data.location.city;
+        }
+      }
+    });
   }
 
   logOut() {
