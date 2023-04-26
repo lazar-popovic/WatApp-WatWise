@@ -14,6 +14,13 @@ public class DeviceDataDAL : IDeviceDataDAL
     {
         _dataContext = dataContext;
     }
+    public async Task<object> GetDeviceCurrentUsage(int deviceId)
+    {
+        var timestamp = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+        return await _dataContext.DeviceEnergyUsage.Where(du => du.DeviceId == deviceId && du.Timestamp == timestamp)
+            .AsNoTracking()
+            .FirstOrDefaultAsync()!;
+    }
     public async Task<object> GetDeviceDataForToday(int day, int month, int year,int deviceId)
     {
         var date = new DateTime( year, month, day, 0, 0, 0 );

@@ -5,6 +5,7 @@ namespace API.BL.Interfaces;
 
 public interface IDeviceDataBL
 {
+    Task<Response> GetDeviceCurrentUsage(int deviceId);
     Task<Response<object>> GetDeviceDataForToday(int day, int month, int year, int deviceId);
     Task<Response> GetDeviceDataForCategoryAndProsumerIdForToday(int day, int month, int year, int category, int userId);
     Task<Response<object>> GetAllDevicesDataWhereShareWithDsoIsAllowedForToday(int day, int month, int year);

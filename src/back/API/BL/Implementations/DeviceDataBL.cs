@@ -230,4 +230,14 @@ public class DeviceDataBL : IDeviceDataBL
 
         return response;
     }
+
+    public async Task<Response> GetDeviceCurrentUsage(int deviceId)
+    {
+        var response = new Response();
+
+        response.Success = true;
+        response.Data = await _deviceDataDal.GetDeviceCurrentUsage( deviceId);
+
+        return response;
+    }
 }

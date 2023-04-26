@@ -17,32 +17,7 @@
       </div>
     </div>
     <div id="device-details">
-      <div id="device-details-holder" class="standard-card-style">
-        <div id="device-detail">
-          <div>
-            <p>Name</p>
-          </div>
-          <div>
-            <p>{{device.name}}</p>
-          </div>
-        </div>
-        <div id="device-detail">
-          <div>
-            <p>Type</p>
-          </div>
-          <div>
-            <p>{{device.deviceType!.type}}</p>
-          </div>
-        </div>
-        <div id="device-detail">
-          <div>
-            <p>Type</p>
-          </div>
-          <div>
-            <p>{{device.deviceSubtype!.subtypeName}}</p>
-          </div>
-        </div>
-      </div>
+      <app-device-info-card [device]="device"></app-device-info-card>
     </div>
     <div id="nav-bar">
       <h3 id="history-h3" (click)="historyClick()">History</h3>
