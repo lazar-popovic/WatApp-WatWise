@@ -91,9 +91,9 @@ namespace API.API
         }
         
         [HttpPost("update-user-image")]
-        public async Task<IActionResult> SaveImageForUser(int id, [FromBody] byte[] imagePicture)
+        public async Task<IActionResult> SaveImageForUser( UpdateImageViewModel updateImageViewModel)
         {
-            return Ok(await _userBL.SaveImageForUser(id, imagePicture));
+            return Ok(await _userBL.SaveImageForUser(updateImageViewModel.Id, updateImageViewModel.imagePicture));
         }
 
         [HttpDelete("delete/{id}")]
