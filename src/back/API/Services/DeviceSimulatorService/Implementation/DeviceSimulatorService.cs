@@ -108,7 +108,11 @@ public class DeviceSimulatorService : IDeviceSimulatorService
                 .FirstOrDefaultAsync();
 
 
-            if (device?.ActivityStatus == true && device?.DeviceType?.Id != 3)
+            if (device?.DeviceType?.Id == 3)
+            {
+                usage.Value = Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+            }
+            else if (device?.ActivityStatus == true)
             {
                 usage.Value = Math.Round((double)(device?.DeviceType?.WattageInkW * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
             } 
