@@ -29,6 +29,7 @@ public class LocationDAL : ILocationDAL
             Longitude = cords.Longitude,
             Address = model.Address,
             City = model.City,
+            Neighborhood = model.Neighborhood,
             AddressNumber = model.Number
         };
         _context.Locations.Add( location);

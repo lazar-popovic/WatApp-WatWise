@@ -1,10 +1,7 @@
 ﻿using API.BL.Interfaces;
-using API.DAL.Implementations;
-using API.DAL.Interfaces;
 using API.Models.Entity;
 using API.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.API
@@ -60,9 +57,16 @@ namespace API.API
         [Route("get-types-by-category")]
         public async Task<IActionResult> GetDeviceTypesByCategory(int category)
         {
-            return Ok(await _deviceBL.GetDeviceTypesByCategory( category));
+            return Ok(await _deviceBL.GetDeviceTypesByCategory(category));
         }
-        
+
+        [HttpGet]
+        [Route("get-subtypes-by-type")]
+        public async Task<IActionResult> GetDeviceSubtypesByType(int deviceTypeId)
+        {
+            return Ok(await _deviceBL.GetDeviceSubtypesByType( deviceTypeId));
+        }
+
         [HttpGet("get-devices-by-user-id")]
         public IActionResult GetDevicesByUserId(int userId)
         {

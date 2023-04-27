@@ -1,7 +1,8 @@
 <div class="login-holder">
-  <div class="wrapper">
+  <app-logo-holder></app-logo-holder>
+  <div class="wrapper standard-card-style">
     <h2>Login</h2>
-    <form action="#" [ngBusy]="busyLogin">
+    <form action="#" [ngBusy]="busyLogin" (ngSubmit)="logIn()">
       <div class="input-box">
         <input type="text" name="email" [(ngModel)]="login.email" placeholder="Email">
       </div>
@@ -9,7 +10,7 @@
         <input type="password" name="password" [(ngModel)]="login.password" placeholder="Password">
       </div>
       <div class="input-box button">
-        <button type="button" (click)="logIn()">Login</button>
+        <button type="submit">Login</button>
       </div>
       <div class="input-box button">
         <p class="policy"><a href="forgot-password">Forgot password ?</a></p>

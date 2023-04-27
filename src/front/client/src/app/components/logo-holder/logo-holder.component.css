@@ -1,6 +1,6 @@
 .logo-holder {
     display: flex;
-    margin-bottom: 30px;
+    padding: 5px;
     font-weight: 600;
     font-family: 'Inter', sans-serif;
 }

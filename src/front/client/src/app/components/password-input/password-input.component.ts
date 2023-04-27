@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service.service';
 import {ToastrNotifService} from "../../services/toastr-notif.service";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-password-input',
@@ -19,6 +20,8 @@ export class PasswordInputComponent implements OnInit {
     token: ''
   }
 
+  busy: Subscription | undefined;
+
   constructor(private authService: AuthService, private router: Router, private toastrNotifService: ToastrNotifService) { }
 
   ngOnInit()
@@ -30,7 +33,14 @@ export class PasswordInputComponent implements OnInit {
   {
     this.token.token = this.data.token = this.router.url.split('/')[2].replace("reset-password?token=","");
     this.authService.verifyToken(this.data).subscribe((result: any) => {
-      document.getElementById('password-input-mail')!.innerText=result.body.data.message;
+      if( result.body.success) {
+        document.getElementById('prosumer-mail')!.innerText=result.body.data.message;
+        this.toastrNotifService.showSuccess("Token is valid!");
+      }
+      else {
+        this.toastrNotifService.showErrors( result.body.errors);
+        this.router.navigateByUrl('');
+      }
     }, (error: any) => {
       console.log(error)
     });
@@ -38,8 +48,7 @@ export class PasswordInputComponent implements OnInit {
 
   restartPassword()
   {
-    console.log( this.data);
-    this.authService.resetPassword(this.data).subscribe((result: any) => {
+    this.busy = this.authService.resetPassword(this.data).subscribe((result: any) => {
       if( result.body.success) {
         this.toastrNotifService.showSuccess( result.body.data.message);
         this.router.navigateByUrl('');

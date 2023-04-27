@@ -48,6 +48,14 @@ import { SliderComponent } from './components/slider/slider.component';
 import { DeleteDeviceComponent } from './components/delete-device/delete-device.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgBusyModule } from 'ng-busy';
+import { WeatherForecastComponent } from './components/weather-forecast/weather-forecast.component';
+import { TooltipComponent } from './components/tooltip/tooltip.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { LogoHolderComponent } from './components/logo-holder/logo-holder.component';
+import { DeviceInfoCardComponent } from './components/device-info-card/device-info-card.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { UploadImageComponent } from './components/upload-image/upload-image.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +66,7 @@ import { NgBusyModule } from 'ng-busy';
     DevicesComponent,
     ConsumptionComponent,
     OverviewComponent,
+    LogoHolderComponent,
     UsersComponent,
     MapComponent,
     EnergyUsageComponent,
@@ -69,6 +78,7 @@ import { NgBusyModule } from 'ng-busy';
     MapComponentComponent,
     UsersOverviewComponent,
     DeviceDetailsComponent,
+    DeviceInfoCardComponent,
     EmployeeOverviewComponent,
     AddEmployeeComponent,
     DevicesInfoComponent,
@@ -81,7 +91,10 @@ import { NgBusyModule } from 'ng-busy';
     OverviewDsoComponent,
     EditDeviceComponent,
     SliderComponent,
-    DeleteDeviceComponent
+    DeleteDeviceComponent,
+    WeatherForecastComponent,
+    TooltipComponent,
+    UploadImageComponent
   ],
   imports: [
     BrowserModule,
@@ -100,7 +113,9 @@ import { NgBusyModule } from 'ng-busy';
     MatSliderModule,
     MatCheckboxModule,
     NgxChartsModule,
-    NgBusyModule
+    NgBusyModule,
+    MatTooltipModule,
+    ImageCropperModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,

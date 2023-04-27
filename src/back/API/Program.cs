@@ -18,6 +18,8 @@ using API.Services.E_mail.Interfaces;
 using API.Services.E_mail.Implementations;
 using Hangfire;
 using API.Services.JWTCreation.Implementations;
+using API.Services.WeatherForecast.Implementations;
+using API.Services.WeatherForecast.Interfaces;
 using Hangfire.Storage.SQLite;
 using AspNetCoreRateLimit;
 using API.SignalR.Hubs;
@@ -41,7 +43,7 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSignalR();
 
 builder.Services.AddHangfire(hangfire => 
@@ -79,6 +81,7 @@ builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounte
 // INJECTIONS
 builder.Services.AddScoped<DataContext>();
 builder.Services.AddScoped<IGeocodingService, GeocodingService>();
+builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
 builder.Services.AddScoped<IJWTCreator, JWTCreator>();
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<IUserDAL, UserDAL>();
@@ -121,8 +124,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         }
     };*/
 });
-
-
+/*
+builder.Services.AddCors((setup) =>
+{
+    setup.AddPolicy("default", (options) =>
+    {
+        options.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().WithOrigins("http://localhost");
+    });
+    setup.AddPolicy("default", (options) =>
+    {
+        options.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().WithOrigins("http://localhost:4200");
+    });
+});*/
 
 
 var app = builder.Build();
@@ -137,8 +150,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200"));
 
+app.UseCors(policy => {
+    policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost");
+    policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200");
+    policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://softeng.pmf.kg.ac.rs:10082");
+});
+//app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200"));
 
 app.UseAuthentication();
 app.UseAuthorization();

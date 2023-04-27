@@ -89,6 +89,17 @@ namespace API.API
         {
             return Ok(await _userBL.UpdateUserNameAndEmail(request, id));
         }
+        
+        [HttpPost("update-user-image")]
+        public async Task<IActionResult> SaveImageForUser( UpdateImageViewModel updateImageViewModel)
+        {
+            return Ok(await _userBL.SaveImageForUser(updateImageViewModel.Id, updateImageViewModel.imagePicture));
+        }
 
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeleteProsumer(int id)
+        {
+            return Ok(await _userBL.DeleteProsumer(id));
+        }
     }
 }

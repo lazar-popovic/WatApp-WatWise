@@ -23,17 +23,25 @@ public class LocationController : ControllerBase
         locationBL = location;
     }
 
-    [HttpPost, Authorize(Roles = "User")]
+    [HttpPost("get-coords")]
     public LongLat GetLongLat( LocationViewModel locationViewModel)
     {
        return _geocodingService.Geocode( locationViewModel);
-
     }
     [HttpGet("all-locations")]
     public async Task<IActionResult> GetAllLocation()
     {
         return Ok(await locationBL.GetAllLocation());
-
     }
-
+    [HttpGet("address-autocomplete")]
+    public async Task<IActionResult> GetPossibleAddresses( string streetAddress)
+    {
+        return Ok(await _geocodingService.Autocomplete( streetAddress));
+    }
+    
+    [HttpPost("address-yandex")]
+    public async Task<IActionResult> GetYandexLongLat(LocationViewModel request)
+    {
+        return Ok(await _geocodingService.GeoCodeYandex(request));
+    }
 }

@@ -1,4 +1,4 @@
-<div id="add-new-container">
+<div id="add-new-container" [ngBusy]="busy">
     <div class="add-new-form">
       <form>
         <div class="close-button">
@@ -8,10 +8,13 @@
         <input type="name" class="users-form-name" placeholder="firstname" name="firstname" required [(ngModel)]="user.firstname">
         <input type="name" class="users-form-name" placeholder="lastname" name="lastname" required [(ngModel)]="user.lastname">
         <input type="email" id="users-form-email" placeholder="email" name="email" required [(ngModel)]="user.email">
-        <input type="name" class="users-form-location" placeholder="street" name="street" [(ngModel)]="user.location.address" required>
+        <input type="name" class="users-form-location" placeholder="street" name="street" [(ngModel)]="searchAddress" (change)="getAddress()" required>
+        <div id="address-show">
+          <div *ngFor="let item of items" class="display-item" (click)="pickAddressHandler($event)">{{item.addressDetails.split(", ")[0]}}, {{item.neighborhood}}, {{item.city}}</div>
+        </div>
         <input type="number" id="users-form-street-num" placeholder="street number" name="streetnumber" [(ngModel)]="user.location.number" required>
-        <input type="name" class="users-form-location" placeholder="city" name="city" [(ngModel)]="user.location.city" required>
-        <button type="submit" (click)="storeUser()">Register</button>
+        <!--<input type="name" class="users-form-location" placeholder="city" name="city" [(ngModel)]="user.location.city" required>-->
+        <button type="button" (click)="storeUser()">Register</button>
       </form>
     </div>
 </div>

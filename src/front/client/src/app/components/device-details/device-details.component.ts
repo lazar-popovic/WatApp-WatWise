@@ -11,6 +11,9 @@ import {DeviceService} from "../../services/device.service";
 import {DeviceDataService} from "../../services/device-data.service";
 import {DatePipe} from "@angular/common";
 import { ViewEncapsulation } from '@angular/core';
+//import { JWTService } from 'src/app/services/jwt.service';
+import { JWTService } from '../../services/jwt.service';
+
 
 interface DatepickerOptions {
   autoclose?: boolean;
@@ -19,7 +22,7 @@ interface DatepickerOptions {
 @Component({
   selector: 'app-device-details',
   templateUrl: './device-details.component.html',
-  styleUrls: ['./device-details.component.css'],
+  styleUrls: ['./device-details.component.css','./device-details.component.2.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class DeviceDetailsComponent implements OnInit
@@ -35,9 +38,14 @@ export class DeviceDetailsComponent implements OnInit
       userId: 0,
       name: "",
       activityStatus: false,
-      deviceType: null,
-      dataShare: false
+      deviceType: { type: null, category: null },
+      deviceSubtype: { subtypeName: null },
+      capacity: null,
+      dataShare: false,
+      currentUsage: null
     }
+
+    roleId: number = 3;
 
     showEdit: boolean = false;
     showDelete: boolean = false;
@@ -47,37 +55,66 @@ export class DeviceDetailsComponent implements OnInit
     yearForMonth: number = 2023;
     year: number = 2023;
 
-    constructor( private datePipe: DatePipe, private authService:AuthService, private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private deviceDataService: DeviceDataService) {
+    myDevice() {
+      if( this.device.userId == this.jwtService.userId)
+        return true;
+      else
+        return false;
+    }
+
+    constructor( private datePipe: DatePipe,
+                 private authService:AuthService,
+                 private deviceService: DeviceService,
+                 private route: ActivatedRoute,
+                 private router: Router,
+                 private deviceDataService: DeviceDataService,
+                 private jwtService: JWTService) {
+      this.roleId = this.jwtService.roleId;
       this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
         result => {
           if( result.success) {
-            this.device.id = result.data.id;
-            this.device.userId = result.data.userId;
-            this.device.name = result.data.name;
-            this.device.activityStatus = result.data.activityStatus;
-            this.device.deviceType = result.data.deviceType;
-            switch ( result.data.deviceType.category)
-            {
-              case -1:
-                this.categoryLabel = "Consumption [kWh]";
-                this.color = 'rgba(191, 65, 65, 1)';
-                this.predColor = 'rgba(191, 65, 65, 0.4)';
-                break;
-              case 0:
-                this.categoryLabel = "In storage";
-                this.color = 'rgba(27, 254, 127, 1)';
-                this.predColor = 'rgba(27, 254, 127, 0.4)';
-                break;
-              case 1:
-                this.categoryLabel = "Production [kWh]";
-                this.color = 'rgba(69, 94, 184, 1)';
-                this.predColor = 'rgba(69, 94, 184, 0.4)';
-                break;
+            if( (result.data.userId == this.jwtService.userId) || (( this.jwtService.roleId == 1 || this.jwtService.roleId == 2 ) && result.data.dataShare == true)) {
+              this.device.id = result.data.id;
+              this.device.userId = result.data.userId;
+              this.device.name = result.data.name;
+              this.device.activityStatus = result.data.activityStatus;
+              this.device.deviceType = result.data.deviceType;
+              this.device.deviceSubtype = result.data.deviceSubtype;
+              this.device.dataShare = result.data.dataShare;
+              this.device.capacity = result.data.capacity;
+              switch ( result.data.deviceType.category)
+              {
+                case -1:
+                  this.categoryLabel = "Consumption [kWh]";
+                  this.color = 'rgba(191, 65, 65, 1)';
+                  this.predColor = 'rgba(191, 65, 65, 0.4)';
+                  break;
+                case 0:
+                  this.categoryLabel = "In storage";
+                  this.color = 'rgba(27, 254, 127, 1)';
+                  this.predColor = 'rgba(27, 254, 127, 0.4)';
+                  break;
+                case 1:
+                  this.categoryLabel = "Production [kWh]";
+                  this.color = 'rgba(69, 94, 184, 1)';
+                  this.predColor = 'rgba(69, 94, 184, 0.4)';
+                  break;
+              }
+              let now = new Date();
+              this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
+              this.historyClick();
+              this.deviceDataService.getDeviceCurrentUsage( this.device.id).subscribe(
+                (result:any) => {
+                  if( result.success) {
+                    this.device.currentUsage = result.data.value;
+                  }
+                }
+              )
+              console.log( this.device);
             }
-            let now = new Date();
-            this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
-            this.historyClick();
-            console.log( this.device);
+            else {
+              this.router.navigate(['/profile',result.data.userId]);
+            }
           }
         }, error => {
           console.log( error);
@@ -85,11 +122,12 @@ export class DeviceDetailsComponent implements OnInit
       )
       Chart.register(...registerables);
     }
-  ngOnInit(): void {
-    let now = new Date();
-    this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
-    this.historyClick();
-  }
+
+    ngOnInit(): void {
+      let now = new Date();
+      this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
+      this.historyClick();
+    }
 
     historyflag : boolean = true;
     predictionFlag : boolean = false;
@@ -101,6 +139,8 @@ export class DeviceDetailsComponent implements OnInit
     tommorowFlag : boolean = false;
     threeDaysFlag : boolean = false;
     sevenDaysFlag : boolean = false;
+
+    showDropdown : boolean = false;
 
     datasets: any[] = [];
 
@@ -155,21 +195,20 @@ export class DeviceDetailsComponent implements OnInit
       this.deviceDataService.getDeviceDataForDate( date.getDate(), date.getMonth()+1, date.getFullYear(), this.device.id).subscribe(
         (result:any) => {
           if( result.success) {
-            this.data = result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
+            this.data = result.data;
             let now = new Date();
             if( date.toDateString() == now.toDateString()) {
               this.datasets = [{
+                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
+                label: 'Predicted ' + this.categoryLabel,
+                backgroundColor: this.predColor,
+                borderColor: this.color,
+                borderWidth: 2
+              },{
                 data: result.data.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
                                                                  .map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
                 label: this.categoryLabel,
                 backgroundColor: this.color,
-                borderColor: this.color,
-                borderWidth: 2
-              },{
-                data: result.data.filter((ceu:any) => new Date(ceu.timestamp) > new Date())
-                                                                 .map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
-                label: 'Predicted ' + this.categoryLabel,
-                backgroundColor: this.predColor,
                 borderColor: this.color,
                 borderWidth: 2
               }];
@@ -186,6 +225,12 @@ export class DeviceDetailsComponent implements OnInit
             } else {
               console.log("hist");
               this.datasets = [{
+                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
+                label: 'Predicted ' + this.categoryLabel,
+                backgroundColor: this.predColor,
+                borderColor: this.color,
+                borderWidth: 2
+              },{
                 data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
                 label: this.categoryLabel,
                 backgroundColor: this.color,
@@ -223,21 +268,20 @@ export class DeviceDetailsComponent implements OnInit
         (result:any) => {
           console.log( result)
           if( result.success) {
-            this.data = result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+            this.data = result.data;
             let now = new Date();
             if( this.month == now.getMonth()+1) {
               this.datasets = [{
+                data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
+                label: 'Predicted ' + this.categoryLabel,
+                backgroundColor: this.predColor,
+                borderColor: this.color,
+                borderWidth: 2
+              },{
                 data: result.data.filter((ceu:any) => new Date(ceu.timestamp).getDate() <= new Date().getDate())
                                                                  .map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
                 label: this.categoryLabel,
                 backgroundColor: this.color,
-                borderColor: this.color,
-                borderWidth: 2
-              },{
-                data: result.data.filter((ceu:any) => new Date(ceu.timestamp).getDate() > new Date().getDate())
-                                                                 .map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
-                label: 'Predicted ' + this.categoryLabel,
-                backgroundColor: this.predColor,
                 borderColor: this.color,
                 borderWidth: 2
               }];
@@ -254,6 +298,12 @@ export class DeviceDetailsComponent implements OnInit
             } else {
               console.log("hist");
               this.datasets = [{
+                data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
+                label: 'Predicted ' + this.categoryLabel,
+                backgroundColor: this.predColor,
+                borderColor: this.color,
+                borderWidth: 2
+              },{
                 data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
                 label: this.categoryLabel,
                 backgroundColor: this.color,
@@ -290,8 +340,14 @@ export class DeviceDetailsComponent implements OnInit
       this.deviceDataService.getDeviceDataForYear(this.year, this.device.id).subscribe(
         (result:any) => {
           if( result.success) {
-            this.data = result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+            this.data = result.data;
             this.datasets = [{
+              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
+              label: this.categoryLabel,
+              backgroundColor: this.predColor,
+              borderColor: this.color,
+              borderWidth: 2
+            },{
               data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
               label: this.categoryLabel,
               backgroundColor: this.color,
@@ -329,9 +385,9 @@ export class DeviceDetailsComponent implements OnInit
       this.deviceDataService.getDeviceDataForNextNDays( this.device.id, 1).subscribe(
         (result:any) => {
           if( result.success) {
-            this.data = result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
+            this.data = result.data;
             this.datasets = [{
-              data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value})),
+              data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
               borderColor: this.color,
@@ -369,9 +425,9 @@ export class DeviceDetailsComponent implements OnInit
         (result:any) => {
           if( result.success) {
             console.log( result.data);
-            this.data = result.data.map( (ceu:any) => ({x:this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
+            this.data = result.data;
             this.datasets = [{
-              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
               borderColor: this.color,
@@ -408,9 +464,9 @@ export class DeviceDetailsComponent implements OnInit
       this.deviceDataService.getDeviceDataForNextNDays( this.device.id, 7).subscribe(
         (result:any) => {
           if( result.success) {
-            this.data = result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+            this.data = result.data;
             this.datasets = [{
-              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
+              data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
               borderColor: this.color,

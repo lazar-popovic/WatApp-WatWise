@@ -28,6 +28,7 @@ import { ProfileSettingsComponent } from './components/profile-settings/profile-
 import { EditDeviceComponent } from './components/edit-device/edit-device.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { DeleteDeviceComponent } from './components/delete-device/delete-device.component';
+import { UploadImageComponent } from './components/upload-image/upload-image.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -47,8 +48,11 @@ const routes: Routes = [
   { path: 'dso/consumption', component : EnergyUsageComponent, canActivate: [EmployeeGuard]},
   { path: 'prosumer/reset-password', component: PasswordInputComponent},
   { path: 'prosumer/device/:id', component: DeviceDetailsComponent},
+  { path: 'dso/employees', component: EmployeeOverviewComponent},
   { path: 'profile-settings', component: ProfileSettingsComponent},
   { path: 'test-component', component: DeleteDeviceComponent},
+  { path: 'test-geo', component: UsersComponent},
+  { path: 'test-upload', component: UploadImageComponent}
 ];
 
 @NgModule({

@@ -1,7 +1,6 @@
-﻿using API.BL.Implementations;
-using API.DAL.Interfaces;
+﻿using API.DAL.Interfaces;
 using API.Models.Entity;
-using API.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.DAL.Implementations
@@ -28,7 +27,8 @@ namespace API.DAL.Implementations
                                        RoleId = u.RoleId,
                                        Role = u.Role,
                                        LocationId = u.LocationId,
-                                       Location = u.Location
+                                       Location = u.Location,
+                                       ProfileImage = u.ProfileImage 
 
                                    }).AsNoTracking().SingleOrDefaultAsync();
 
@@ -49,7 +49,8 @@ namespace API.DAL.Implementations
                                        RoleId = u.RoleId,
                                        Role = u.Role,
                                        LocationId = u.LocationId,
-                                       Location = u.Location
+                                       Location = u.Location,
+                                       ProfileImage = u.ProfileImage
                                     ,
                                    }).AsNoTracking().SingleOrDefaultAsync();
 
@@ -69,7 +70,8 @@ namespace API.DAL.Implementations
                                        RoleId = u.RoleId,
                                        Role = u.Role,
                                        LocationId = u.LocationId,
-                                       Location = u.Location
+                                       Location = u.Location,
+                                       ProfileImage = u.ProfileImage
 
                                    }).AsNoTracking().ToListAsync();
 
@@ -114,7 +116,7 @@ namespace API.DAL.Implementations
 
         public async Task<int> getNumberOfProsumersOrEmployees(int id)
         {
-            int numberUsers = await _dbContext.Users.CountAsync(u => u.RoleId == id);
+            int numberUsers = await _dbContext.Users.AsNoTracking().CountAsync(u => u.RoleId == id);
             return numberUsers;
         }
 
@@ -138,7 +140,7 @@ namespace API.DAL.Implementations
 
             if (mail != null && id==3)
             {
-                if (!string.IsNullOrEmpty(mail?.Trim()))
+                if (!string.IsNullOrEmpty(mail.Trim()))
                 {
                     users = users.Where(o =>
                         ($"{o.Location?.Address} {o.Location?.AddressNumber}, {o.Location?.City}".ToLower())
@@ -181,8 +183,49 @@ namespace API.DAL.Implementations
             _dbContext.Users.Update(user);
             _dbContext.SaveChanges();
         }
+        public async Task<User> SaveProfilePictureAsync(int userId, [FromBody]byte[] profilePicture)
+        {
+            var user = await _dbContext.Users.FindAsync(userId);
+
+            user.ProfileImage = profilePicture;
+            await _dbContext.SaveChangesAsync();
+
+            return user;
+        }
+
+        public async Task DeleteUser(User user)
+        {
+            await using var context = _dbContext;
+            var userToDelete = await context.Users.Include(u => u.Devices)!
+                .ThenInclude(d => d.DeviceEnergyUsages)
+                .SingleOrDefaultAsync(u => u.Id == user.Id);
+
+            if (userToDelete != null)
+            {
+                var refreshTokensToDelete = context.RefreshTokens.Where(rt => rt.UserId == user.Id);
+                context.RefreshTokens.RemoveRange(refreshTokensToDelete);
+                    
+                foreach (var device in userToDelete.Devices.ToList())
+                {
+                    foreach (var energyUsage in device.DeviceEnergyUsages.ToList())
+                    {
+                        context.DeviceEnergyUsage.Remove(energyUsage);
+                    }
+
+                    context.Devices.Remove(device);
+                }
+                    
+                context.Users.Remove(userToDelete);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<User?> GetByEmailAsync(string email)
+        {
+            return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email);
+        }
     }
 
 
-    }
+}
 

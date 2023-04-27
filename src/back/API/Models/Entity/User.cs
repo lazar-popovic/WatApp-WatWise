@@ -20,4 +20,20 @@ public class User
     public Location? Location { get; set; }
 
     public List<Device>? Devices { get; set; }
+    public byte[]? ProfileImage { get; set; }
+
+    public User()
+    {
+
+
+        string imagePath = Path.Combine("Images", "defaultavatar.jpg");
+        var defaultImageData = File.ReadAllBytes(imagePath);
+
+
+
+        if (ProfileImage == null)
+        {
+            ProfileImage = defaultImageData;
+        }
+    }
 }

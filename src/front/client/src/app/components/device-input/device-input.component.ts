@@ -16,10 +16,14 @@ export class DeviceInputComponent implements OnInit{
   newDevice = {
     userId: 0,
     name: "",
-    deviceTypeId: 0
+    deviceTypeId: 0,
+    category: -1,
+    capacity: 0,
+    deviceSubtypeId: 0
   }
   category: number = -1;
   types: any[] = [];
+  subtypes: any[] = [];
 
   userDevices = {
     consumers: [] as any[],
@@ -32,29 +36,29 @@ export class DeviceInputComponent implements OnInit{
   constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService, private route: Router) { }
 
   ngOnInit(): void {
-    this.deviceService.getDevicesByUserId(this.jwtService.userId).subscribe(
-      result => {
-        if(result.success) {
-          this.userDevices.consumers = result.data.filter((obj:any) => obj.category === -1).map((obj:any) => obj.devices)[0];
-          this.userDevices.producers = result.data.filter((obj:any) => obj.category === 1).map((obj:any) => obj.devices)[0];
-          this.userDevices.storages = result.data.filter((obj:any) => obj.category === 0).map((obj:any) => obj.devices)[0];
-        }
-        else {
-          console.log(result.errors);
-        }
-      }, error => {
-        console.log(error);
-      }
-    );
     this.fillTypes();
   }
 
   fillTypes() {
-    this.deviceService.getDeviceTypesByCategory(this.category).subscribe(
+    this.deviceService.getDeviceTypesByCategory(this.newDevice.category).subscribe(
       result => {
         this.types = result.data;
         if(this.types.length > 0) {
           this.newDevice.deviceTypeId = this.types[0].id;
+        }
+        this.fillSubtypes();
+      }, error => {
+        console.log( error.errors);
+      }
+    )
+  }
+
+  fillSubtypes() {
+    this.deviceService.getDeviceSubtypesByType(this.newDevice.deviceTypeId).subscribe(
+      result => {
+        this.subtypes = result.data;
+        if(this.types.length > 0) {
+          this.newDevice.deviceSubtypeId = this.subtypes[0].id;
         }
       }, error => {
         console.log( error.errors);
@@ -65,6 +69,7 @@ export class DeviceInputComponent implements OnInit{
   addDevice()
   {
     this.newDevice.userId = this.jwtService.userId;
+    console.log( this.newDevice);
     this.busyAddDevice = this.deviceService.insertDevice( this.newDevice).subscribe(
       result => {
         if( result.body.success)

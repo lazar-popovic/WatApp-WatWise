@@ -25,7 +25,7 @@
                     <td>{{user.lastName}}</td>
                     <td>{{user.mail}}</td>
                     <td>{{user.address}} {{user.num}} - {{user.city}}</td>
-                    <td><button routerLink="/profile">View</button></td>
+                    <td><button routerLink="/profile/{{user.id}}">View</button></td>
                 </tr>
             </table>
         </div>
@@ -52,7 +52,7 @@
     </div>
     <div class="users-overview-overlay" *ngIf="showAddUProsumer">
         <div class="users-overview-add-new">
-            <app-users></app-users>         
+            <app-users></app-users>
         </div>
-    </div>    
+    </div>
 </div>

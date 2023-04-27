@@ -6,14 +6,18 @@
   </div>
   <div id="content">
     <div id="header">
-      <h2><a href="/prosumer/devices">Devices</a> <span style="color: gray;"> /</span> {{device.name}}</h2>
-      <div id="header-img">
+      <h2 *ngIf="myDevice()"><a href="/prosumer/devices">Devices</a> <span style="color: gray;"> /</span> {{device.name}}</h2>
+      <h2 *ngIf="!myDevice()"><a href="/profile/{{device.userId}}">Devices</a> <span style="color: gray;"> /</span> {{device.name}}</h2>
+      <div id="header-img" *ngIf="myDevice()">
         <img src="/assets/sett.png" alt="settings">
         <div id="drop-down-sett">
           <div class="drop-down-item" (click)="showEditForm()">Edit</div>
           <div class="drop-down-item" (click)="showDeleteForm()">Delete</div>
         </div>
       </div>
+    </div>
+    <div id="device-details">
+      <app-device-info-card [device]="device"></app-device-info-card>
     </div>
     <div id="nav-bar">
       <h3 id="history-h3" (click)="historyClick()">History</h3>
@@ -52,6 +56,52 @@
           <option value="2023">2023</option>
         </select>
       </form>
+
+      <button id="stats-button" (click)="showDropdown = !showDropdown">
+        Aditional stats
+        <div id="stats-dropdown" *ngIf="showDropdown"  [class.visible]="showDropdown">
+          <table>
+            <thead>
+              <tr>
+                <th> Stat  </th>
+                <th> Date  </th>
+                <th> [kWH] </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Max</td>
+                <td>01.02.2022.</td>
+                <td>50</td>
+              </tr>
+              <tr>
+                <td>Min</td>
+                <td>01.02.2022.</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>Average</td>
+                <td>April</td>
+                <td>30</td>
+              </tr>
+              <tr>
+                <td>Median</td>
+                <td>April</td>
+                <td>35</td>
+              </tr>
+              <tr>
+                <td>Deviation</td>
+                <td>April</td>
+                <td>5%</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </button>
+
+
+
     </div>
     <div id="chart">
       <div id="chart-holder" class="standard-card-style">
@@ -59,22 +109,37 @@
       </div>
     </div>
     <div id="table">
-      <table>
+      <table *ngIf="historyflag">
         <thead>
         <tr id="thead-tr">
           <th>Timestamp</th>
+          <th>Predicted {{categoryLabel}}</th>
           <th>{{categoryLabel}}</th>
         </tr>
         </thead>
         <tbody>
           <tr *ngFor=" let row of data">
-            <td>{{row.x}}</td>
-            <td>{{row.y.toFixed(3)}}</td>
+            <td>{{row.timestamp}}</td>
+            <td>{{row.predictedValue.toFixed(3)}}</td>
+            <td>{{row.value.toFixed(3)}}</td>
           </tr>
-          </tbody>
-        </table>
-      </div>
-      </div>
+        </tbody>
+      </table>
+      <table *ngIf="predictionFlag">
+        <thead>
+        <tr id="thead-tr">
+          <th>Timestamp</th>
+          <th>Predicted {{categoryLabel}}</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor=" let row of data">
+            <td>{{row.timestamp}}</td>
+            <td>{{row.predictedValue.toFixed(3)}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div class="device-details-overlay">
@@ -86,4 +151,3 @@
     </div>
   </div>
 
-    

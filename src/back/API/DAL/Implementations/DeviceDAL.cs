@@ -30,16 +30,23 @@ namespace API.DAL.Implementations
                 Id = d.Id,
                 Name = d.Name,
                 DataShare = d.DataShare,
-                DeviceTypeId = d.DeviceTypeId,
                 PurchaseDate = d.PurchaseDate,
                 ActivityStatus = d.ActivityStatus,
                 DeviceType = d.DeviceType,
+                DeviceSubtype = d.DeviceSubtype,
+                Capacity = d.Capacity,
                 UserId = d.UserId
             }).AsNoTracking().FirstOrDefaultAsync();
         }
-
+        
+        public async Task<Device?> GetWholeDeviceByIdAsync(int id)
+        {
+            return await _dbContext.Devices.FirstOrDefaultAsync(d => d.Id == id);
+        }
+        
         public async Task AddDeviceAsync(Device device)
         {
+            
             await _dbContext.Devices.AddAsync(device);
             await _dbContext.SaveChangesAsync();
         }
@@ -50,23 +57,28 @@ namespace API.DAL.Implementations
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteDeviceAsync(int id)
+        public async Task DeleteDeviceAsync(Device dev)
         {
-            var device = await GetDeviceByIdAsync(id);
-            _dbContext.Devices.Remove(device!);
+            var recordsToDelete = _dbContext.DeviceEnergyUsage.Where(x => x.DeviceId == dev.Id);
+            _dbContext.DeviceEnergyUsage.RemoveRange(recordsToDelete);
+
+            _dbContext.Devices.Remove(dev!);
+
             await _dbContext.SaveChangesAsync();
         }
         public async Task AddDeviceViewModel(DeviceViewModel devicee)
         {
-
             var device = new Device
             {
                 UserId = devicee.UserId,
                 ActivityStatus = true,
                 PurchaseDate = DateTime.Now,
                 DeviceTypeId = devicee.DeviceTypeId,
+                DeviceSubtypeId = devicee.DeviceSubtypeId,
                 Name = devicee.Name,
-                DataShare = true
+                DataShare = true,
+                Capacity = devicee.Category == 0 ? devicee.Capacity : null
+
             };
             await _dbContext.Devices.AddAsync(device);
             await _dbContext.SaveChangesAsync();
@@ -89,7 +101,7 @@ namespace API.DAL.Implementations
                 join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty() on
                     device.Id equals usage.DeviceId into usageGroup
                 where device.UserId == userId
-                group new { device.Id, device.Name, device.DeviceType, device.DeviceTypeId, device.ActivityStatus, Value = usageGroup.FirstOrDefault()!.Value } by deviceType.Category into grouped
+                group new { device.Id, device.Name, device.DeviceType, device.DeviceTypeId, device.ActivityStatus, Value = usageGroup.FirstOrDefault()!.Value, DataShare = device.DataShare } by deviceType.Category into grouped
                 select new {
                     Category = grouped.Key,
                     Devices = grouped.ToList()
@@ -153,7 +165,7 @@ namespace API.DAL.Implementations
                 join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty()
                     on device.Id equals usage.DeviceId into usageGroup
                 where device.UserId == userId && device.ActivityStatus == true
-                group new { device.Name, Value = usageGroup.FirstOrDefault().Value }
+                group new { device.Name, Value = usageGroup.FirstOrDefault()!.Value }
                     by deviceType.Category into grouped
                 orderby grouped.Max(g => g.Value) descending
                 select new {
@@ -241,6 +253,12 @@ namespace API.DAL.Implementations
 
             response.Success = response.Errors.Count == 0;
             return response;
+        }
+
+        public async Task<List<DeviceSubtype>> GetDeviceSubtypesByType(int deviceTypeId)
+        {
+            return await _dbContext.DeviceSubtypes.Where(dt => dt.DeviceTypeId == deviceTypeId)
+                                               .AsNoTracking().ToListAsync();
         }
     }
 }

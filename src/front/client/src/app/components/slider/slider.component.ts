@@ -1,16 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.css']
 })
-export class SliderComponent implements OnInit{
+export class SliderComponent implements OnInit, OnChanges{
   @Output() sliderEvent = new EventEmitter<boolean>();
   @Input() status = true;
 
   ngOnInit(): void {
     (document.querySelector('#slider-inp') as HTMLInputElement).checked = this.status;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const currentValue = changes['status'].currentValue;
+    (document.querySelector('#slider-inp') as HTMLInputElement).checked = currentValue;
   }
 
   emitData(status: boolean) {

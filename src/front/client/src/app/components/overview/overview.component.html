@@ -6,34 +6,38 @@
     <div class="card-group">
       <div class="card standard-card-style card-small">
         <div class="card-left">
+          <app-tooltip [message]="'Current total consumption of electrical energy in kWh'"></app-tooltip>
           <h4>Currently consuming</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-red">{{cards.currentConsumption.toFixed(2)}}kWh</h4>
+          <h4 class="c-red">-{{cards.currentConsumption.toFixed(2)}}kWh</h4>
         </div>
       </div>
       <div class="card standard-card-style card-small">
         <div class="card-left">
+          <app-tooltip [message]="'Current total production of electrical energy in kWh'"></app-tooltip>
           <h4>Currently producing</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-blue">{{cards.currentProduction.toFixed(2)}}kWh</h4>
+          <h4 class="c-blue">+{{cards.currentProduction.toFixed(2)}}kWh</h4>
         </div>
       </div>
       <div class="card standard-card-style card-small">
         <div class="card-left">
+          <app-tooltip [message]="'Predicted total consumption of electrical energy in kWh for today'"></app-tooltip>
           <h4>Predicted consumption for today</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-red">{{cards.totalConsumption.toFixed(2)}}kW</h4>
+          <h4 class="c-red">-{{cards.totalConsumption.toFixed(2)}}kW</h4>
         </div>
       </div>
       <div class="card standard-card-style card-small">
         <div class="card-left">
+          <app-tooltip [message]="'Predicted total production of electrical energy in kWh for today'"></app-tooltip>
           <h4>Predicted production for today</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-blue">{{cards.totalProduction.toFixed(2)}}kWh</h4>
+          <h4 class="c-blue">+{{cards.totalProduction.toFixed(2)}}kWh</h4>
         </div>
       </div>
     </div>
@@ -47,11 +51,13 @@
             [legendPosition]="chart1.legendPosition"
             [yAxis]="true"
             [xAxis]="true"
-            [xAxisLabel]="'Hours'"
-            [yAxisLabel]="'Electrical energy'"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [xAxisLabel]="'Time[h]'"
+            [yAxisLabel]="'Electrical energy[kWh]'"
             [showGridLines]="true"
             [scheme]="chart1.colors"
-            [yAxisTickFormatting]="yAxisTickFormatting"
+            [xAxisTickFormatting]="xAxisTickFormatting"
           >
           </ngx-charts-line-chart>
         </div>
@@ -65,16 +71,18 @@
             [legendPosition]="chart2.legendPosition"
             [yAxis]="true"
             [xAxis]="true"
-            [xAxisLabel]="'Hours'"
-            [yAxisLabel]="'Electrical energy'"
+            [xAxisLabel]="'Time[h]'"
+            [yAxisLabel]="'Electrical energy[kWh]'"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
             [showGridLines]="true"
             [scheme]="chart2.colors"
-            [yAxisTickFormatting]="yAxisTickFormatting"
+            [xAxisTickFormatting]="xAxisTickFormatting"
           >
           </ngx-charts-line-chart>
         </div>
       </div>
-      <div class="card card-big standard-card-style">
+      <div class="card card-big standard-card-style" *ngIf="chart3.data.length > 0">
         <h4>Top consuming devices</h4>
         <div class="chart-holder chart-holder-pie-grid">
           <ngx-charts-pie-grid
@@ -86,7 +94,7 @@
           </ngx-charts-pie-grid>
         </div>
       </div>
-      <div class="card card-big standard-card-style">
+      <div class="card card-big standard-card-style" *ngIf="chart4.data.length > 0">
         <h4>Top producing devices</h4>
         <div class="chart-holder chart-holder-pie-grid">
           <ngx-charts-pie-grid class="chart"
@@ -97,12 +105,8 @@
           </ngx-charts-pie-grid>
         </div>
       </div>
-      <div class="card card-big standard-card-style">
-        <div>
-          <h3>Card 8</h3>
-          <div class="chart-holder">
-          </div>
-        </div>
+      <div class="card card-big standard-card-style" style=" padding: 0px!important;">
+        <app-weather-forecast></app-weather-forecast>
       </div>
       <div class="card card-big standard-card-style">
         <div>

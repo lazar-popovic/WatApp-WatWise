@@ -14,12 +14,19 @@ public class DeviceDataDAL : IDeviceDataDAL
     {
         _dataContext = dataContext;
     }
+    public async Task<object> GetDeviceCurrentUsage(int deviceId)
+    {
+        var timestamp = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+        return await _dataContext.DeviceEnergyUsage.Where(du => du.DeviceId == deviceId && du.Timestamp == timestamp)
+            .AsNoTracking()
+            .FirstOrDefaultAsync()!;
+    }
     public async Task<object> GetDeviceDataForToday(int day, int month, int year,int deviceId)
     {
         var date = new DateTime( year, month, day, 0, 0, 0 );
         return await _dataContext.DeviceEnergyUsage
             .Where(du => du.DeviceId == deviceId && du.Timestamp!.Value.Date == date)
-            .Select( du => new { Timestamp = du.Timestamp, Value = du.Value})
+            .Select( du => new { Timestamp = du.Timestamp, Value = du.Value, PredictedValue = du.PredictedValue})
             .OrderBy( du => du.Timestamp).AsNoTracking()
             .ToListAsync();
     }
@@ -32,7 +39,8 @@ public class DeviceDataDAL : IDeviceDataDAL
                     select new
                     {
                         Timestamp = usageGroup.Key.Date.ToShortDateString(),
-                        Value = usageGroup.Sum(u => u.Value)
+                        Value = usageGroup.Sum(u => u.Value),
+                        PredictedValue = usageGroup.Sum(u => u.PredictedValue)
                     };
 
         return await query.ToListAsync();
@@ -46,7 +54,8 @@ public class DeviceDataDAL : IDeviceDataDAL
                     select new
                     {
                         Timestamp = usageGroup.Key.Month + "/" + usageGroup.Key.Year,
-                        Value = usageGroup.Sum(u => u.Value)
+                        Value = usageGroup.Sum(u => u.Value),
+                        PredictedValue = usageGroup.Sum(u => u.PredictedValue)
                     };
 
         return await query.ToListAsync();
@@ -65,7 +74,8 @@ public class DeviceDataDAL : IDeviceDataDAL
             select new
             {
                 Timestamp = new DateTime(now.Year, now.Month, now.Day, g.Key.Hour, 0, 0),
-                Value = g.Sum(eu => eu.Value)
+                Value = g.Sum(eu => eu.Value),
+                PredictedValue =g.Sum(u => u.PredictedValue)
             }
         ).AsNoTracking().ToListAsync();
 
@@ -78,7 +88,8 @@ public class DeviceDataDAL : IDeviceDataDAL
             select new
             {
                 Timestamp = new DateTime(year, month, day, g.Key.Hour, 0, 0),
-                Value = g.Sum(eu => eu.Value)
+                Value = g.Sum(eu => eu.Value),
+                PredictedValue = g.Sum(u => u.PredictedValue)
             }
         ).AsNoTracking().ToListAsync();
 
@@ -104,7 +115,8 @@ public class DeviceDataDAL : IDeviceDataDAL
             select new
             {
                 Timestamp = new DateTime(g.Key.Date.Year, g.Key.Date.Month, g.Key.Date.Day, g.Key.Hour, 0, 0),
-                Value = g.Sum(eu => eu.Value)
+                Value = g.Sum(eu => eu.Value),
+                PredictedValue = g.Sum(u => u.PredictedValue)
             }
         ).AsNoTracking().ToListAsync();
 
@@ -122,7 +134,8 @@ public class DeviceDataDAL : IDeviceDataDAL
              select new
              {
                  Timestamp = g.Key.Date.ToShortDateString(),
-                 Value = g.Sum(eu => eu.Value)
+                 Value = g.Sum(eu => eu.Value),
+                 PredictedValue = g.Sum(u => u.PredictedValue)
              }).AsNoTracking().ToListAsync();
 
         var producingEnergyUsageByTimestamp = await (
@@ -134,7 +147,8 @@ public class DeviceDataDAL : IDeviceDataDAL
              select new
              {
                  Timestamp = g.Key.Date.ToShortDateString(),
-                 Value = g.Sum(eu => eu.Value)
+                 Value = g.Sum(eu => eu.Value),
+                 PredictedValue = g.Sum(eu => eu.PredictedValue)
              }).AsNoTracking().ToListAsync();
 
         return new { producingEnergyUsageByTimestamp, consumingEnergyUsageByTimestamp };
@@ -151,7 +165,8 @@ public class DeviceDataDAL : IDeviceDataDAL
                 select new
                 {
                     Timestamp = g.Key.Date.ToShortDateString(),
-                    Value = g.Sum(eu => eu.Value)
+                    Value = g.Sum(eu => eu.Value),
+                    PredictedValue = g.Sum(eu => eu.PredictedValue)
                 }).AsNoTracking().ToListAsync();
 
         return energyUsageByTimestamp;
@@ -168,7 +183,8 @@ public class DeviceDataDAL : IDeviceDataDAL
             select new
             {
                 Timestamp = g.Key.Month + "/" + g.Key.Year,
-                Value = Math.Abs((decimal)g.Sum(eu => eu.Value)!)
+                Value = Math.Abs((decimal)g.Sum(eu => eu.Value)!),
+                PredictedValue = g.Sum(u => u.PredictedValue)
             }).AsNoTracking().ToListAsync();
 
         var producingEnergyUsageByTimestamp = await (
@@ -180,7 +196,8 @@ public class DeviceDataDAL : IDeviceDataDAL
            select new
            {
                Timestamp = g.Key.Month + "/" + g.Key.Year,
-               Value =g.Sum(eu => eu.Value)
+               Value =g.Sum(eu => eu.Value),
+               PredictedValue = g.Sum(u => u.PredictedValue)
            }).AsNoTracking().ToListAsync();
 
         return new { producingEnergyUsageByTimestamp, consumingEnergyUsageByTimestamp };
@@ -197,7 +214,8 @@ public class DeviceDataDAL : IDeviceDataDAL
                  select new
                  {
                      Timestamp = g.Key.Month + "/" + g.Key.Year,
-                     Value = g.Sum(eu => eu.Value)
+                     Value = g.Sum(eu => eu.Value),
+                     PredictedValue = g.Sum(u => u.PredictedValue)
                  }
              ).AsNoTracking().ToListAsync();
 
@@ -216,7 +234,7 @@ public class DeviceDataDAL : IDeviceDataDAL
             .Join(_dataContext.DeviceTypes, joined => joined.Device.DeviceTypeId, type => type.Id, (joined, type) => new { EnergyUsage = joined.EnergyUsage, Device = joined.Device, Category = type.Category!.Value })
             .Where(joined => joined.EnergyUsage.Timestamp!.Value.Date == startTimestamp.Date && joined.Device.UserId == userId && joined.Category == 1)
             .GroupBy(joined => new { Timestamp = joined.EnergyUsage.Timestamp!.Value})
-            .Select(grouped => new { Timestamp = grouped.Key.Timestamp, TotalEnergyUsage = grouped.Sum(joined => joined.EnergyUsage.Value) })
+            .Select(grouped => new { Timestamp = grouped.Key.Timestamp, TotalEnergyUsage = grouped.Sum(joined => joined.EnergyUsage.Value), PredictedValue = grouped.Sum(joined => joined.EnergyUsage.PredictedValue) })
             .ToListAsync();
 
         var consumingEnergyUsageByTimestamp = await _dataContext.DeviceEnergyUsage
@@ -224,7 +242,7 @@ public class DeviceDataDAL : IDeviceDataDAL
             .Join(_dataContext.DeviceTypes, joined => joined.Device.DeviceTypeId, type => type.Id, (joined, type) => new { EnergyUsage = joined.EnergyUsage, Device = joined.Device, Category = type.Category!.Value })
             .Where(joined => joined.EnergyUsage.Timestamp!.Value.Date == startTimestamp.Date && joined.Device.UserId == userId && joined.Category == -1)
             .GroupBy(joined => new { Timestamp = joined.EnergyUsage.Timestamp!.Value})
-            .Select(grouped => new { Timestamp = grouped.Key.Timestamp, TotalEnergyUsage = Math.Abs(grouped.Sum(joined => joined.EnergyUsage.Value!.Value)) })
+            .Select(grouped => new { Timestamp = grouped.Key.Timestamp, TotalEnergyUsage = Math.Abs(grouped.Sum(joined => joined.EnergyUsage.Value!.Value)), PredictedValue = grouped.Sum(joined => joined.EnergyUsage.PredictedValue) })
             .ToListAsync();
 
         return new { producingEnergyUsageByTimestamp, consumingEnergyUsageByTimestamp};
@@ -241,7 +259,7 @@ public class DeviceDataDAL : IDeviceDataDAL
             .Join(_dataContext.DeviceTypes, joined => joined.Device.DeviceTypeId, type => type.Id, (joined, type) => new { EnergyUsage = joined.EnergyUsage, Device = joined.Device, Category = type.Category!.Value })
             .Where(joined => joined.EnergyUsage.Timestamp!.Value >= startConsumptionTimestamp && joined.EnergyUsage.Timestamp!.Value < endProductionTimestamp && joined.Device.DataShare && joined.Category == -1)
             .GroupBy(joined => new { Timestamp = joined.EnergyUsage.Timestamp!.Value.Date, Hour = joined.EnergyUsage.Timestamp!.Value.Hour })
-            .Select(grouped => new { Timestamp = new DateTime(grouped.Key.Timestamp.Year, grouped.Key.Timestamp.Month, grouped.Key.Timestamp.Day, grouped.Key.Hour, 0, 0), Value = Math.Abs(grouped.Sum(joined => joined.EnergyUsage.Value!.Value)) })
+            .Select(grouped => new { Timestamp = new DateTime(grouped.Key.Timestamp.Year, grouped.Key.Timestamp.Month, grouped.Key.Timestamp.Day, grouped.Key.Hour, 0, 0), Value = Math.Abs(grouped.Sum(joined => joined.EnergyUsage.Value!.Value)), PredictedValue = Math.Abs(grouped.Sum(joined => joined.EnergyUsage.PredictedValue!.Value)) })
             .AsNoTracking().ToListAsync();
 
         var productionEnergyUsage = await _dataContext.DeviceEnergyUsage
@@ -249,7 +267,7 @@ public class DeviceDataDAL : IDeviceDataDAL
             .Join(_dataContext.DeviceTypes, joined => joined.Device.DeviceTypeId, type => type.Id, (joined, type) => new { EnergyUsage = joined.EnergyUsage, Device = joined.Device, Category = type.Category!.Value })
             .Where(joined => joined.EnergyUsage.Timestamp!.Value >= startConsumptionTimestamp && joined.EnergyUsage.Timestamp!.Value <= endProductionTimestamp && joined.Device.DataShare && joined.Category == 1)
             .GroupBy(joined => new { Timestamp = joined.EnergyUsage.Timestamp!.Value.Date, Hour = joined.EnergyUsage.Timestamp!.Value.Hour })
-            .Select(grouped => new { Timestamp = new DateTime(grouped.Key.Timestamp.Year, grouped.Key.Timestamp.Month, grouped.Key.Timestamp.Day, grouped.Key.Hour, 0, 0), Value = grouped.Sum(joined => joined.EnergyUsage.Value!.Value) })
+            .Select(grouped => new { Timestamp = new DateTime(grouped.Key.Timestamp.Year, grouped.Key.Timestamp.Month, grouped.Key.Timestamp.Day, grouped.Key.Hour, 0, 0), Value = grouped.Sum(joined => joined.EnergyUsage.Value!.Value), PredictedValue = Math.Abs(grouped.Sum(joined => joined.EnergyUsage.PredictedValue!.Value)) })
             .AsNoTracking().ToListAsync();
 
         return new { consumptionEnergyUsage, productionEnergyUsage };
@@ -270,7 +288,8 @@ public class DeviceDataDAL : IDeviceDataDAL
             select new
             {
                 Timestamp = new DateTime(g.Key.Date.Year, g.Key.Date.Month, g.Key.Date.Day, g.Key.Hour, 0, 0),
-                Value = g.Sum(eu => eu.Value)
+                Value = g.Sum(eu => eu.Value),
+                PredictedValue = g.Sum(eu => eu.PredictedValue)
             }
         ).AsNoTracking().ToListAsync();
 
@@ -286,7 +305,8 @@ public class DeviceDataDAL : IDeviceDataDAL
             select new
             {
                 Timestamp = new DateTime(g.Key.Date.Year, g.Key.Date.Month, g.Key.Date.Day, g.Key.Hour, 0, 0),
-                Value = g.Sum(eu => eu.Value)
+                Value = g.Sum(eu => eu.Value),
+                PredictedValue = g.Sum(eu => eu.PredictedValue)
             }
         ).AsNoTracking().ToListAsync();
 
@@ -312,7 +332,8 @@ public class DeviceDataDAL : IDeviceDataDAL
             select new
             {
                 Timestamp = new DateTime(g.Key.Date.Year, g.Key.Date.Month, g.Key.Date.Day, g.Key.Hour, 0, 0),
-                Value = g.Sum(eu => eu.Value)
+                Value = g.Sum(eu => eu.Value),
+                PredictedValue = g.Sum(eu => eu.PredictedValue)
             }
         ).AsNoTracking().ToListAsync();
 
@@ -328,7 +349,8 @@ public class DeviceDataDAL : IDeviceDataDAL
             select new
             {
                 Timestamp = new DateTime(g.Key.Date.Year, g.Key.Date.Month, g.Key.Date.Day, g.Key.Hour, 0, 0),
-                Value = g.Sum(eu => eu.Value)
+                Value = g.Sum(eu => eu.Value),
+                PredictedValue = g.Sum(eu => eu.PredictedValue)
             }
         ).AsNoTracking().ToListAsync();
 
@@ -354,7 +376,8 @@ public class DeviceDataDAL : IDeviceDataDAL
             select new
             {
                 Timestamp = g.Key.Date.ToShortDateString(),
-                Value = g.Sum(eu => eu.Value)
+                Value = g.Sum(eu => eu.Value),
+                PredictedValue = g.Sum(eu => eu.PredictedValue)
             }
         ).AsNoTracking().ToListAsync();
 
@@ -371,7 +394,8 @@ public class DeviceDataDAL : IDeviceDataDAL
             {
                 //Timestamp = g.Key,
                 Timestamp = g.Key.Date.ToShortDateString(),
-                Value = g.Sum(eu => eu.Value)
+                Value = g.Sum(eu => eu.Value),
+                PredictedValue = g.Sum(eu => eu.PredictedValue)
             }
         ).AsNoTracking().ToListAsync();
 
@@ -396,7 +420,8 @@ public class DeviceDataDAL : IDeviceDataDAL
             select new
             {
                 Timestamp = new DateTime(g.Key.Date.Year, g.Key.Date.Month, g.Key.Date.Day, g.Key.Hour, 0, 0),
-                Value = g.Select(eu => eu.Value).FirstOrDefault()
+                Value = g.Select(eu => eu.Value).FirstOrDefault(),
+                PredictedValue = g.Select(eu => eu.PredictedValue).FirstOrDefault()
             }
         ).AsNoTracking().ToListAsync();
 
@@ -407,7 +432,7 @@ public class DeviceDataDAL : IDeviceDataDAL
     {
         var now = DateTime.Now;
         var startDateTime = new DateTime(now.Year, now.Month, now.Day + 1, 0, 0, 0); // start at midnight tomorrow
-        var endDateTime = new DateTime(now.Year, now.Month, now.Day + 2, 0, 0, 0); // end at midnight two days from now
+        var endDateTime = new DateTime(now.Year, now.Month, now.Day + 1, 23, 0, 0); // end at midnight two days from now
 
         var usage = await(
             from deviceEnergyUsage in _dataContext.DeviceEnergyUsage
@@ -421,7 +446,8 @@ public class DeviceDataDAL : IDeviceDataDAL
             select new
             {
                 Timestamp = new DateTime(g.Key.Date.Year, g.Key.Date.Month, g.Key.Date.Day, g.Key.Hour, 0, 0),
-                Value = g.Select(eu => eu.Value).FirstOrDefault()
+                Value = g.Select(eu => eu.Value).FirstOrDefault(),
+                PredictedValue = g.Select(eu => eu.PredictedValue).FirstOrDefault()
             }
         ).AsNoTracking().ToListAsync();
 
@@ -444,7 +470,8 @@ public class DeviceDataDAL : IDeviceDataDAL
             select new
             {
                 Timestamp = new DateTime(g.Key.Date.Year, g.Key.Date.Month, g.Key.Date.Day, g.Key.Hour, 0, 0),
-                Value = g.Select(eu => eu.Value).FirstOrDefault()
+                Value = g.Select(eu => eu.Value).FirstOrDefault(),
+                PredictedValue = g.Select(eu => eu.PredictedValue).FirstOrDefault()
             }
         ).AsNoTracking().ToListAsync();
 
@@ -463,12 +490,13 @@ public class DeviceDataDAL : IDeviceDataDAL
            where deviceType.Category == category
                    && device.UserId == userId
                    && deviceEnergyUsage.Timestamp >= startDate
-                   && deviceEnergyUsage.Timestamp <= endDate
+                   && deviceEnergyUsage.Timestamp < endDate
            group deviceEnergyUsage by new { deviceEnergyUsage.Timestamp!.Value.Date, deviceEnergyUsage.Timestamp.Value.Hour } into g
            select new
            {
                Timestamp = new DateTime(g.Key.Date.Year, g.Key.Date.Month, g.Key.Date.Day, g.Key.Hour, 0, 0),
-               Value = g.Select(eu => eu.Value).FirstOrDefault()
+               Value = g.Select(eu => eu.Value).FirstOrDefault(),
+               PredictedValue = g.Select(eu => eu.PredictedValue).FirstOrDefault()
            }
        ).AsNoTracking().ToListAsync();
 
@@ -492,7 +520,8 @@ public class DeviceDataDAL : IDeviceDataDAL
             select new
             {
                 Timestamp = g.Key.Date.ToShortDateString(),
-                Value = g.Sum(eu => eu.Value)
+                Value = g.Sum(eu => eu.Value),
+                PredictedValue = g.Sum(eu => eu.PredictedValue)
             }
         ).AsNoTracking().ToListAsync();
 
@@ -517,7 +546,8 @@ public class DeviceDataDAL : IDeviceDataDAL
            select new
            {
                Timestamp = g.Key.Date.ToShortDateString(),
-               Value = g.Sum(eu => eu.Value)
+               Value = g.Sum(eu => eu.Value),
+               PredictedValue = g.Sum(eu => eu.PredictedValue)
            }
         ).AsNoTracking().ToListAsync();
 

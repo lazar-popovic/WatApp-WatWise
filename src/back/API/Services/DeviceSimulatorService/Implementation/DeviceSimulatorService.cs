@@ -30,6 +30,7 @@ public class DeviceSimulatorService : IDeviceSimulatorService
         var devices = await _context.Devices
             .GroupBy(d => d.DeviceTypeId)
             .Select(g => new { DeviceTypeId = g.Key, Devices = g.Select(d => new { d.Id, d.ActivityStatus }).ToList() })
+            .AsNoTracking()
             .ToListAsync();
 
         var deviceEnergyUsageList = new List<DeviceEnergyUsage>();
@@ -50,7 +51,10 @@ public class DeviceSimulatorService : IDeviceSimulatorService
                 foreach (var device in deviceType.Devices)
                 {
                     deviceEnergyUsageList.Add(new DeviceEnergyUsage
-                        { DeviceId = device.Id, Value = Math.Round( value!.Value * (1 + rand.NextDouble() * 0.2 - 0.1), 3), Timestamp = timestamp });
+                        { DeviceId = device.Id,
+                          Value = Math.Round(value!.Value * (1 + rand.NextDouble() * 0.4 - 0.2), 3),
+                          PredictedValue = Math.Round((value!.Value+0.01) * (1 + rand.NextDouble() * 0.6 - 0.3), 3), 
+                          Timestamp = timestamp });
                 }
             }
         }
@@ -78,7 +82,7 @@ public class DeviceSimulatorService : IDeviceSimulatorService
 
         foreach (var usageData in usageDatas)
         {
-            deviceEnergyUsageList.Add( new DeviceEnergyUsage{ DeviceId = deviceId, Value = Math.Round(usageData["value"].ToDouble()*(1 + rand.NextDouble() * 0.2 - 0.1), 3), Timestamp = usageData["timestamp"].ToUniversalTime()});
+            deviceEnergyUsageList.Add( new DeviceEnergyUsage{ DeviceId = deviceId, Value = Math.Round(usageData["value"].ToDouble() * (1 + rand.NextDouble() * 0.4 - 0.2), 3), Timestamp = usageData["timestamp"].ToUniversalTime(), PredictedValue = usageData["value"].ToDouble()});
         }
         
         await _context.DeviceEnergyUsage.AddRangeAsync(deviceEnergyUsageList);
@@ -89,6 +93,7 @@ public class DeviceSimulatorService : IDeviceSimulatorService
     {
         var now = DateTime.Now;
         var hourStart = new DateTime(now.Year, now.Month, now.Day, now.Hour, 0, 0, 0);
+        var rand = new Random();
 
         var usages = await _context.DeviceEnergyUsage
             .Where(u => u.Timestamp == hourStart)
@@ -96,8 +101,18 @@ public class DeviceSimulatorService : IDeviceSimulatorService
 
         foreach (var usage in usages)
         {
-            var device = await _context.Devices.FindAsync(usage.DeviceId);
-            if (device?.ActivityStatus == false)
+            var device = await _context.Devices
+                .Where(d => d.Id == usage.DeviceId)
+                .Select(d => new { d.ActivityStatus, d.DeviceType })
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+
+            if (device?.ActivityStatus == true && device?.DeviceType?.Id != 3)
+            {
+                usage.Value = Math.Round((double)(device?.DeviceType?.WattageInkW * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+            } 
+            else
             {
                 usage.Value = 0;
             }

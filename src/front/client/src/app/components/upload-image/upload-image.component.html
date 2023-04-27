@@ -1,0 +1,29 @@
+<div id="upload-image">
+    <div id="images-holder">
+        <div id="image-cropper-holder">
+            <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="4 / 4"
+            format="png"
+            (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+            [resizeToWidth]="imageSize"
+            [resizeToHeight]="imageSize"
+        ></image-cropper>
+        </div>
+        <div id="preview">
+            <label for="file-upload" class="custom-file-upload">
+                <i class="fa fa-cloud-upload"></i> Upload file
+            </label>
+            <input id="file-upload" type="file" (change)="fileChangeEvent($event)"/>
+            <img [src]="croppedImage" height="200" width="200"/>
+            <button (click)="uploadImage()">Upload as profile image</button>
+        </div>
+        <div class="close-button" (click)="hideUpload()">
+            <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true"></i>
+        </div>
+    </div>
+</div>
