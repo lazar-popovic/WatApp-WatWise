@@ -26,7 +26,6 @@ export class LoginComponent {
         if( result.body.success) {
           localStorage.setItem("token", result.body.data.token);
           this.jwtService.setToken();
-          console.log( this.jwtService.roleId);
           this.toastrNotifService.showSuccess("Login successful!");
           if( this.jwtService.roleId == 3) {
             this.route.navigate(['/prosumer/overview']);
