@@ -60,21 +60,29 @@ This repository contains a web application built using ASP.NET Core 7 for the ba
 <h3>Running MongoDB server on remote</h3>
 <ol>
 <li>Create folder /mongo on remote server.</li>
-<li>To start MongoDb server on remote, run command <b>mongod --dbpath path/to/mongo/folder --port PORT --bind_all</b>.</li>
-<li>You can connect to connection using MongoDbCompass by connecting to <b>mongodb://website-address:PORT/</b>.</li>
+<li>To start MongoDb server on remote, run command <b>mongod --dbpath path/to/mongo/folder --port MONGO_PORT --bind_all</b>.</li>
+<li>You can connect to connection using MongoDbCompass by connecting to <b>mongodb://website-address:MONGO_PORT/</b>.</li>
 </ol>
 
 <h3>Running .NET project on remote</h3>
 <ol>
+<li>Set up MongoDB server connection in appsettings.json file in .NET project that was set above
+<b><br>"ConnectionStrings": {<br>
+        "MongoDB": "mongodb://website-address:MONGO_PORT/"<br>
+  }<br></b>
+</li>
 <li>Publish application on your machine using <b>dotnet publish</b>, as said above.</li>
 <li>On remote, create folder <b>/back</b> and copy the content of <b>publish</b> folder into it.</li>
-<li>Set port of application by running command <b>export ASPNETCORE_URLS="http:///website-address:PORT"</b>.</li>
+<li>Set port of application by running command <b>export ASPNETCORE_URLS="http:///website-address:API_PORT"</b>.</li>
 <li>Start .NET application by running <b>dotnet back/API.dll</b>.</li>
 <li>Your webapi is now active.</li>
 </ol>
 
 <h3>Running Angular project on remote</h3>
 <ol>
+<li>Set up API server connection in <b>enviroment.ts</b> file in Angular project that was set above
+<b><br>apiUrl: "http:///website-address:API_PORT"</b>
+</li>
 <li>Build application on your machine using <b>ng build</b>, as said above.</li>
 <li>Download and extract <b>[server.rar](https://cdn.discordapp.com/attachments/1100106229482786848/1100110066000081007/server.rar)</b> that is necessary for running ng application.</li>
 <li>Extract folder <b>server.rar</b> and copy content from folder <b>dist</b> into it. <b>dist</b> folder contains builded Angular application.</li>
