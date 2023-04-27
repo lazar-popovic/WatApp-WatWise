@@ -7,8 +7,9 @@
   .devices-container {
     min-width: 300px;
     max-width: 599px;
+    margin-top: 0!important;
   }
-  
+
 }
 
 .devices-page {
@@ -49,11 +50,6 @@
   background-color: rgba(157, 157, 157, 0.5);
   z-index: 9998;
   position: fixed;
-}
-.add-device-position {
-  position: fixed;
-  left: 40%;
-  top: 30%;
 }
 
 h2
