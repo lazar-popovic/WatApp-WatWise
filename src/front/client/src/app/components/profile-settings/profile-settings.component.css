@@ -41,3 +41,23 @@
     height: 25px;
     margin-right: 20px;
 }
+
+@media (max-width: 599px) {
+    .profile-settings-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+    }
+    
+    .profile-settings-container > .profile-settings-holder {
+        margin-top: 20px;
+    }
+
+    .profile-settings-menu-item img, .profile-settings-menu-active-item img {
+        margin-right: 5px;
+    }
+
+    .profile-settings-menu {
+        width: 100%;
+    }
+}

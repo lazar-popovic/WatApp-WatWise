@@ -126,3 +126,69 @@ p {
     left: 40%;
     top: 20%;
 }
+
+@media (max-width: 599px) {
+    .profile-view-settings > .profile-view-image {
+        justify-content: center;
+        margin-bottom: 30px;
+        justify-content: space-around;
+    }
+    .profile-view-settings-change {
+        width: 500px;
+    }
+
+    .profile-view-settings > .profile-view-settings-change form {
+        margin: 30px;
+    }
+
+    .profile-view-settings-change form > .profile-view-upper-form {
+        flex-direction: column;
+        margin-bottom: 0px;
+    }
+    
+    .profile-view-settings-change form > .profile-view-input-wraper input#email {
+        width: 80vw;
+    }
+
+    .profile-view-input-wraper {
+        margin-bottom: 25px;
+    }
+
+    .profile-view-settings-change {
+        width: 90%;
+    }    
+
+    .profile-view-input-wraper input {
+        width: 80vw;
+        margin-right: 0px;
+    }
+
+    .profile-view-bottom-form > .profile-info-address {
+        display: none;
+    }
+
+    .profile-view-image img {
+        margin-right: 0px;
+        width: 150px;
+        height: 150px;
+    }
+
+    .profile-view-image-buttons form {
+        width: 40vw;
+    }
+
+    .profile-view-settings button {
+        width: 100%;
+        height: 50px;
+    }
+    
+    .profile-view-bottom-form {
+        width: 80%;
+    }
+    
+    .profile-view-bottom-form > .profile-button-blue {
+        background-color: #1676AC;
+        color: white;
+        width: 70%;
+    }
+}
