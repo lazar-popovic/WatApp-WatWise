@@ -112,7 +112,7 @@
       <table *ngIf="historyflag">
         <thead>
         <tr id="thead-tr">
-          <th>Timestamp</th>
+          <th>{{tableTitle}}</th>
           <th>Predicted {{categoryLabel}}</th>
           <th>{{categoryLabel}}</th>
         </tr>
@@ -120,22 +120,22 @@
         <tbody>
           <tr *ngFor=" let row of data">
             <td>{{row.timestamp}}</td>
-            <td>{{row.predictedValue.toFixed(3)}}</td>
-            <td>{{row.value.toFixed(3)}}</td>
+            <td>{{row.predictedValue}}</td>
+            <td>{{row.value}}</td>
           </tr>
         </tbody>
       </table>
       <table *ngIf="predictionFlag">
         <thead>
         <tr id="thead-tr">
-          <th>Timestamp</th>
+          <th>{{tableTitle}}</th>
           <th>Predicted {{categoryLabel}}</th>
         </tr>
         </thead>
         <tbody>
           <tr *ngFor=" let row of data">
             <td>{{row.timestamp}}</td>
-            <td>{{row.predictedValue.toFixed(3)}}</td>
+            <td>{{row.predictedValue}}</td>
           </tr>
         </tbody>
       </table>

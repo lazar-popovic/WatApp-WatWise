@@ -24,6 +24,8 @@ export class ConsumptionComponent implements OnInit {
   showEdit: boolean = false;
   showDelete: boolean = false;
 
+  tableTitle: string = "Timestamp";
+
   date: any;
   month: number = 4;
   yearForMonth: number = 2023;
@@ -82,6 +84,7 @@ export class ConsumptionComponent implements OnInit {
   }
 
   todayClick() {
+    this.tableTitle = "Hour";
     this.todayFlag = true; this.monthFlag = false; this.yearFlag = false;
     var todayDiv = document.getElementById("today");
     if (todayDiv) {
@@ -103,7 +106,14 @@ export class ConsumptionComponent implements OnInit {
     this.deviceDataService.getUsersHistoryUsageByCategoryForDate(date.getDate(), date.getMonth() + 1, date.getFullYear(), -1, this.jwtService.userId).subscribe(
       (result: any) => {
         if (result.success) {
-          this.data = result.data;
+          this.data = result.data.map((ceu: any) => {
+            const ceuDate = new Date(ceu.timestamp);
+            const currentDate = new Date();
+            const timestamp = this.datePipe.transform(ceu.timestamp, "shortTime");
+            const predictedValue = ceu.predictedValue.toFixed(3);
+            const value = currentDate < ceuDate ? "/" : ceu.value.toFixed(3);
+            return { timestamp, predictedValue, value };
+          });
           let now = new Date();
           if (date.toDateString() == now.toDateString()) {
             this.datasets = [{
@@ -155,6 +165,7 @@ export class ConsumptionComponent implements OnInit {
   }
 
   monthClick() {
+    this.tableTitle = "Day";
     this.todayFlag = false; this.monthFlag = true; this.yearFlag = false;
     const monthDiv = document.getElementById("month");
     if (monthDiv) {
@@ -174,7 +185,7 @@ export class ConsumptionComponent implements OnInit {
       (result: any) => {
         console.log(result)
         if (result.success) {
-          this.data = result.data;
+          this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
           let now = new Date();
           if (this.month == now.getMonth() + 1) {
             this.datasets = [{
@@ -226,6 +237,7 @@ export class ConsumptionComponent implements OnInit {
   }
 
   yearClick() {
+    this.tableTitle = "Month";
     this.todayFlag = false; this.monthFlag = false; this.yearFlag = true;
     var yearDiv = document.getElementById("year");
     if (yearDiv) {
@@ -244,7 +256,7 @@ export class ConsumptionComponent implements OnInit {
     this.deviceDataService.getUsersHistoryUsageByCategoryForYear(this.year, -1, this.jwtService.userId).subscribe(
       (result: any) => {
         if (result.success) {
-          this.data = result.data;
+          this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
           this.datasets = [{
             data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.predictedValue })),
             label: this.categoryLabel,
@@ -267,6 +279,7 @@ export class ConsumptionComponent implements OnInit {
   }
 
   tommorowClick() {
+    this.tableTitle = "Hour";
     this.tommorowFlag = true;
     this.threeDaysFlag = false;
     this.sevenDaysFlag = false;
@@ -287,7 +300,14 @@ export class ConsumptionComponent implements OnInit {
     this.deviceDataService.getUsersPredictionUsageByCategoryForNDays(1, -1, this.jwtService.userId).subscribe(
       (result: any) => {
         if (result.success) {
-          this.data = result.data;
+          this.data = result.data.map((ceu: any) => {
+            const ceuDate = new Date(ceu.timestamp);
+            const currentDate = new Date();
+            const timestamp = this.datePipe.transform(ceu.timestamp, "shortTime");
+            const predictedValue = ceu.predictedValue.toFixed(3);
+            const value = currentDate < ceuDate ? "/" : ceu.value.toFixed(3);
+            return { timestamp, predictedValue, value };
+          });
           this.datasets = [{
             data: result.data.map((ceu: any) => ({ x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value })),
             label: 'Predicted ' + this.categoryLabel,
@@ -304,6 +324,7 @@ export class ConsumptionComponent implements OnInit {
   }
 
   threeDaysClick() {
+    this.tableTitle = "Hour";
     this.tommorowFlag = false;
     this.threeDaysFlag = true;
     this.sevenDaysFlag = false;
@@ -324,7 +345,14 @@ export class ConsumptionComponent implements OnInit {
     this.deviceDataService.getUsersPredictionUsageByCategoryForNDays(3, -1, this.jwtService.userId).subscribe(
       (result: any) => {
         if (result.success) {
-          this.data = result.data;
+          this.data = result.data.map((ceu: any) => {
+            const ceuDate = new Date(ceu.timestamp);
+            const currentDate = new Date();
+            const timestamp = this.datePipe.transform(ceu.timestamp, "shortTime");
+            const predictedValue = ceu.predictedValue.toFixed(3);
+            const value = currentDate < ceuDate ? "/" : ceu.value.toFixed(3);
+            return { timestamp, predictedValue, value };
+          });
           this.datasets = [{
             data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.value })),
             label: 'Predicted ' + this.categoryLabel,
@@ -341,6 +369,7 @@ export class ConsumptionComponent implements OnInit {
   }
 
   sevenDaysClick() {
+    this.tableTitle = "Day";
     this.tommorowFlag = false;
     this.threeDaysFlag = false;
     this.sevenDaysFlag = true;
@@ -361,7 +390,7 @@ export class ConsumptionComponent implements OnInit {
     this.deviceDataService.getUsersPredictionUsageByCategoryForNDays(7, -1, this.jwtService.userId).subscribe(
       (result: any) => {
         if (result.success) {
-          this.data = result.data;
+          this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
           this.datasets = [{
             data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.value })),
             label: 'Predicted ' + this.categoryLabel,
