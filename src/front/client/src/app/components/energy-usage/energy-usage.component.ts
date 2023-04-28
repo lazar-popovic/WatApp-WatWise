@@ -18,7 +18,7 @@ export class EnergyUsageComponent implements OnInit {
     this.date  =  now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
     this.historyClick();
   }
-
+  tableTitle: string = "Timestamp";
   historyflag : boolean = true;
   predictionFlag : boolean = false;
 

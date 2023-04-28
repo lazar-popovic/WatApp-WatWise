@@ -24,6 +24,8 @@ export class ConsumptionComponent implements OnInit {
   showEdit: boolean = false;
   showDelete: boolean = false;
 
+  tableTitle: string = "Timestamp";
+
   date: any;
   month: number = 4;
   yearForMonth: number = 2023;

@@ -45,6 +45,7 @@ export class DeviceDetailsComponent implements OnInit
       currentUsage: null
     }
 
+    tableTitle: string = "Timestamp";
     roleId: number = 3;
 
     showEdit: boolean = false;
