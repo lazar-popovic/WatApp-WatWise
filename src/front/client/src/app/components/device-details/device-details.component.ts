@@ -174,6 +174,7 @@ export class DeviceDetailsComponent implements OnInit
 
     todayClick()
     {
+      this.tableTitle = "Hour";
       this.todayFlag  = true; this.monthFlag  = false; this.yearFlag = false;
       var todayDiv = document.getElementById("today");
       if(todayDiv)
@@ -196,7 +197,14 @@ export class DeviceDetailsComponent implements OnInit
       this.deviceDataService.getDeviceDataForDate( date.getDate(), date.getMonth()+1, date.getFullYear(), this.device.id).subscribe(
         (result:any) => {
           if( result.success) {
-            this.data = result.data;
+            this.data = result.data.map((ceu: any) => {
+              const ceuDate = new Date(ceu.timestamp);
+              const currentDate = new Date();
+              const timestamp = this.datePipe.transform(ceu.timestamp, "shortTime");
+              const predictedValue = ceu.predictedValue.toFixed(3);
+              const value = currentDate < ceuDate ? "/" : ceu.value.toFixed(3);
+              return { timestamp, predictedValue, value }
+            });
             let now = new Date();
             if( date.toDateString() == now.toDateString()) {
               this.datasets = [{
@@ -249,6 +257,7 @@ export class DeviceDetailsComponent implements OnInit
 
     monthClick()
     {
+      this.tableTitle = "Day";
       this.todayFlag = false; this.monthFlag  = true; this.yearFlag = false;
       const monthDiv = document.getElementById("month");
       if(monthDiv)
@@ -269,7 +278,7 @@ export class DeviceDetailsComponent implements OnInit
         (result:any) => {
           console.log( result)
           if( result.success) {
-            this.data = result.data;
+            this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
             let now = new Date();
             if( this.month == now.getMonth()+1) {
               this.datasets = [{
@@ -322,6 +331,7 @@ export class DeviceDetailsComponent implements OnInit
 
     yearClick()
     {
+      this.tableTitle = "Month";
       this.todayFlag = false; this.monthFlag  = false; this.yearFlag = true;
       var yearDiv = document.getElementById("year");
       if(yearDiv)
@@ -341,7 +351,7 @@ export class DeviceDetailsComponent implements OnInit
       this.deviceDataService.getDeviceDataForYear(this.year, this.device.id).subscribe(
         (result:any) => {
           if( result.success) {
-            this.data = result.data;
+            this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
             this.datasets = [{
               data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
               label: this.categoryLabel,
@@ -386,7 +396,14 @@ export class DeviceDetailsComponent implements OnInit
       this.deviceDataService.getDeviceDataForNextNDays( this.device.id, 1).subscribe(
         (result:any) => {
           if( result.success) {
-            this.data = result.data;
+            this.data = result.data.map((ceu: any) => {
+              const ceuDate = new Date(ceu.timestamp);
+              const currentDate = new Date();
+              const timestamp = this.datePipe.transform(ceu.timestamp, "shortTime");
+              const predictedValue = ceu.predictedValue.toFixed(3);
+              const value = currentDate < ceuDate ? "/" : ceu.value.toFixed(3);
+              return { timestamp, predictedValue, value }
+            });
             this.datasets = [{
               data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
@@ -425,8 +442,14 @@ export class DeviceDetailsComponent implements OnInit
       this.deviceDataService.getDeviceDataForNextNDays(this.device.id, 3).subscribe(
         (result:any) => {
           if( result.success) {
-            console.log( result.data);
-            this.data = result.data;
+            this.data = result.data.map((ceu: any) => {
+              const ceuDate = new Date(ceu.timestamp);
+              const currentDate = new Date();
+              const timestamp = this.datePipe.transform(ceu.timestamp, "shortTime");
+              const predictedValue = ceu.predictedValue.toFixed(3);
+              const value = currentDate < ceuDate ? "/" : ceu.value.toFixed(3);
+              return { timestamp, predictedValue, value }
+            });
             this.datasets = [{
               data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
@@ -465,7 +488,8 @@ export class DeviceDetailsComponent implements OnInit
       this.deviceDataService.getDeviceDataForNextNDays( this.device.id, 7).subscribe(
         (result:any) => {
           if( result.success) {
-            this.data = result.data;
+            this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
+
             this.datasets = [{
               data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
