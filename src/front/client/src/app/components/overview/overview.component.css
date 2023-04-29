@@ -102,11 +102,3 @@
   color: #3e3e3e;
 }
 
-@media (max-width: 600px) {
-  .horizontal-legend {
-    overflow-x: scroll!important;
-  }
-  .legend-title {
-    display: none!important;
-  }
-}
