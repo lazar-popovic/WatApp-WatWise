@@ -18,4 +18,5 @@ public class DataContext : DbContext
     public DbSet<DeviceEnergyUsage> DeviceEnergyUsage { get; set; }
     public DbSet<DeviceType> DeviceTypes { get; set; }
     public DbSet<DeviceSubtype> DeviceSubtypes { get; set; }
+    public DbSet<DeviceJob> DeviceJobs { get; set; }
 }

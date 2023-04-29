@@ -83,6 +83,40 @@ namespace API.Migrations
                     b.ToTable("DeviceEnergyUsage");
                 });
 
+            modelBuilder.Entity("API.Models.Entity.DeviceJob", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("DeviceId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("EndJobId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool?>("Repeat")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("StartJobId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool?>("Turn")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeviceId");
+
+                    b.ToTable("DeviceJobs");
+                });
+
             modelBuilder.Entity("API.Models.Entity.DeviceSubtype", b =>
                 {
                     b.Property<int>("Id")
@@ -280,6 +314,15 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Models.Entity.Device", "Device")
                         .WithMany("DeviceEnergyUsages")
+                        .HasForeignKey("DeviceId");
+
+                    b.Navigation("Device");
+                });
+
+            modelBuilder.Entity("API.Models.Entity.DeviceJob", b =>
+                {
+                    b.HasOne("API.Models.Entity.Device", "Device")
+                        .WithMany()
                         .HasForeignKey("DeviceId");
 
                     b.Navigation("Device");
