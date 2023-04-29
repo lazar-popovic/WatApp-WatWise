@@ -150,7 +150,7 @@ namespace API.BL.Implementations
 
             await _ideviceDal.AddDeviceViewModel(device);
 
-            response.Data = $"Device {dev.Name} connected successfully! {dev.DeviceSubtypeId}";
+            response.Data = $"Device {dev.Name} connected successfully!";
 
 
             return response;

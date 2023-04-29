@@ -96,7 +96,7 @@ export class OverviewComponent implements OnInit
             this.chart1.data.push({
               name:"Consumption[kWh]",
               series: result.data.consumingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
-                              .map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.totalEnergyUsage}))
+                              .map( (ceu:any) => ({name: new Date( ceu.timestamp), value: ceu.totalEnergyUsage}))
             });
             this.chart1.colors.domain.push('rgba(191, 65, 65, 1)');
           }
@@ -105,7 +105,7 @@ export class OverviewComponent implements OnInit
             this.chart1.data.push({
               name:"Production[kWh]",
               series: result.data.producingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
-                              .map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.totalEnergyUsage}))
+                              .map( (ceu:any) => ({name: new Date( ceu.timestamp), value: ceu.totalEnergyUsage}))
             });
             this.chart1.colors.domain.push('rgba(69, 94, 184, 1)');
           }
@@ -113,7 +113,7 @@ export class OverviewComponent implements OnInit
             console.log("pp da");
             this.chart1.data.push({
               name:"Predicted production[kWh]",
-              series: result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.predictedValue}))
+              series: result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({name: new Date( ceu.timestamp), value: ceu.predictedValue}))
             });
             this.chart1.colors.domain.push('rgba(69, 94, 184, 0.4)');
           }
@@ -121,7 +121,7 @@ export class OverviewComponent implements OnInit
             console.log("pc da");
             this.chart1.data.push({
               name:"Predicted consumption[kWh]",
-              series: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.predictedValue}))
+              series: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({name: new Date( ceu.timestamp), value: ceu.predictedValue}))
             });
             this.chart1.colors.domain.push('rgba(191, 65, 65, 0.4)');
           }
@@ -159,10 +159,10 @@ export class OverviewComponent implements OnInit
           if( result.success) {
             this.chart2.data = [{
                 "name":"Predicted consumption[kWh]",//this.datePipe.transform(ceu.timestamp,"shortTime")
-                "series": result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.predictedValue}))
+                "series": result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({name: new Date( ceu.timestamp), value: ceu.predictedValue}))
               },{
                 "name":"Predicted production[kWh]",
-                "series": result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.predictedValue}))
+                "series": result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({name: new Date( ceu.timestamp), value: ceu.predictedValue}))
               }
             ];
           }
