@@ -49,4 +49,9 @@ public class LocationController : ControllerBase
     {
         return Ok(await locationBL.GetAllLocationDistinctCity());
     }
+    [HttpPost("distinct-neighborhood")]
+    public async Task<IActionResult> GetAllNeighborhood(string city)
+    {
+        return Ok(await locationBL.GetAllNeighborhood(city));
+    }
 }

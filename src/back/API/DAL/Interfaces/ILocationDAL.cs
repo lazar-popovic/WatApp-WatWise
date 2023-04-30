@@ -10,4 +10,5 @@ public interface ILocationDAL
     int InsertLocation(LocationViewModel model, LongLat cords);
     Task<List<Location>> GetAllLocationsAsync();
     Task<List<String>> GetAllLocationsCity();
+    Task<List<String>> GetAllNeighborhood(string city);
 }

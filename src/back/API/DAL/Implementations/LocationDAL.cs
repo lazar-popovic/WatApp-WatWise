@@ -51,4 +51,13 @@ public class LocationDAL : ILocationDAL
              .ToList();
         return cities;
     }
+    public async Task<List<String>> GetAllNeighborhood(string city)
+    {
+        var neighborhoods = _context.Locations
+           .Where(l => l.City.Equals(city, StringComparison.OrdinalIgnoreCase))
+           .Select(l => l.Neighborhood)
+           .Distinct()
+           .ToList();
+        return neighborhoods;
+    }
 }

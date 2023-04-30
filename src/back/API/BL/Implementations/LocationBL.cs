@@ -42,12 +42,31 @@ namespace API.BL.Implementations
             var locations = await _ilocationDal.GetAllLocationsCity();
             if (locations == null)
             {
-                response.Errors.Add("Error with displaying location from base!");
+                response.Errors.Add("Error with displaying location!");
                 response.Success = false;
 
                 return response;
             }
             response.Data = locations;
+            response.Success = response.Errors.Count() == 0;
+
+            return response;
+
+
+        }
+        public async Task<Response<List<String>>> GetAllNeighborhood(string city)
+        {
+            var response = new Response<List<String>>();
+
+            var neighborhood = await _ilocationDal.GetAllNeighborhood(city);
+            if (neighborhood == null)
+            {
+                response.Errors.Add("Error with displaying neighborhood!");
+                response.Success = false;
+
+                return response;
+            }
+            response.Data = neighborhood;
             response.Success = response.Errors.Count() == 0;
 
             return response;
