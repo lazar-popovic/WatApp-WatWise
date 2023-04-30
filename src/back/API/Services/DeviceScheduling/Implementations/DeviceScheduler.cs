@@ -42,28 +42,23 @@ public class DeviceScheduler : IDeviceScheduler
             Turn = request.Turn,
             Repeat = request.Repeat
         };
-       
-        TimeSpan utcOffset = TimeZoneInfo.Local.GetUtcOffset(request.StartDate);
-        DateTimeOffset startDate = new DateTimeOffset(request.StartDate, utcOffset);
-        DateTimeOffset endDate = new DateTimeOffset(request.EndDate, utcOffset);
         
-        // Schedule the first job
-        var firstJobId = BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn), startDate);
+        var firstJobId = BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn), request.StartDate.ToLocalTime());
 
         // Schedule the second job
         var secondJobId =
-            BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn), endDate);
+            BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn), request.EndDate.ToLocalTime());
 
-        /*
+        
         // Set up job recurrence if needed
         if (deviceJob.Repeat)
         {
             RecurringJob.AddOrUpdate(firstJobId, () => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn),
-                deviceJob.RepeatInterval);
+                Cron.Daily);
             RecurringJob.AddOrUpdate(secondJobId, () => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn),
-                deviceJob.RepeatInterval);
+                Cron.Daily);
         }
-*/
+
         // Save the job IDs in the database
         deviceJob.StartJobId = int.Parse(firstJobId);
         deviceJob.EndJobId = int.Parse(secondJobId);
