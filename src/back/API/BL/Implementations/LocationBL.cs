@@ -77,15 +77,15 @@ namespace API.BL.Implementations
         {
             var response = new Response<List<Location>>();
 
-            var neighborhoods = await _ilocationDal.GetAllLocationWithNeighborhood(neighborhood);
-            if (neighborhoods == null)
+            var locations = await _ilocationDal.GetAllLocationWithNeighborhood(neighborhood);
+            if (locations == null)
             {
                 response.Errors.Add("Error with displaying location!");
                 response.Success = false;
 
                 return response;
             }
-            response.Data = neighborhoods;
+            response.Data = locations;
             response.Success = response.Errors.Count() == 0;
 
             return response;
