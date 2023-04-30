@@ -35,5 +35,24 @@ namespace API.BL.Implementations
             return response;
         }
 
+        public async Task<Response<List<String>>> GetAllLocationDistinctCity()
+        {
+            var response = new Response<List<String>>();
+
+            var locations = await _ilocationDal.GetAllLocationsCity();
+            if (locations == null)
+            {
+                response.Errors.Add("Error with displaying location from base!");
+                response.Success = false;
+
+                return response;
+            }
+            response.Data = locations;
+            response.Success = response.Errors.Count() == 0;
+
+            return response;
+
+
+        }
     }
 }

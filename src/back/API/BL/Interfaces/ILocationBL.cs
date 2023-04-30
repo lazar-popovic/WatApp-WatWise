@@ -6,5 +6,6 @@ namespace API.BL.Interfaces
     public interface ILocationBL
     {
         Task<Response<List<Location>>> GetAllLocation();
+        Task<Response<List<String>>> GetAllLocationDistinctCity();
     }
 }

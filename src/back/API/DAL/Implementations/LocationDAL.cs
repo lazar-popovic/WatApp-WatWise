@@ -1,4 +1,5 @@
-﻿using API.DAL.Interfaces;
+﻿
+using API.DAL.Interfaces;
 using API.Models.Entity;
 using API.Models.ViewModels;
 using API.Services.Geocoding;
@@ -41,5 +42,13 @@ public class LocationDAL : ILocationDAL
     public async Task<List<Location>> GetAllLocationsAsync()
     {
         return await _context.Locations.Where( l => l.Users.Count( u => u.Verified == true) > 0).ToListAsync();
+    }
+    public async Task<List<String>> GetAllLocationsCity()
+    {
+        var cities = _context.Locations
+             .Select(l => l.City)
+             .Distinct()
+             .ToList();
+        return cities;
     }
 }
