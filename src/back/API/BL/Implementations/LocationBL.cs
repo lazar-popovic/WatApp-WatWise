@@ -80,7 +80,7 @@ namespace API.BL.Implementations
             var neighborhoods = await _ilocationDal.GetAllLocationWithNeighborhood(neighborhood);
             if (neighborhoods == null)
             {
-                response.Errors.Add("Error with displaying neighborhood!");
+                response.Errors.Add("Error with displaying location!");
                 response.Success = false;
 
                 return response;
