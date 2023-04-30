@@ -6,5 +6,5 @@ public class DeviceJobViewModel
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
     public bool? Turn { get; set; }
-    public bool Repeat { get; set; }
+    public bool? Repeat { get; set; }
 }
