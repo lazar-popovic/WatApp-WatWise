@@ -37,8 +37,8 @@ public class DeviceScheduler : IDeviceScheduler
         var deviceJob = new DeviceJob
         {
             DeviceId = request.DeviceId,
-            StartDate = request.StartDate,
-            EndDate = request.EndDate,
+            StartDate = request.StartDate.ToLocalTime(),
+            EndDate = request.EndDate.ToLocalTime(),
             Turn = request.Turn,
             Repeat = request.Repeat
         };
