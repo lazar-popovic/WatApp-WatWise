@@ -434,9 +434,39 @@ export class ConsumptionComponent implements OnInit {
     });
   }
 
+  additionalStatsData = {
+    max: {
+      timestamp: "",
+      value: 0
+    },
+    min: {
+      timestamp: "",
+      value: 0
+    },
+    mean: 0,
+    mae: 0,
+    rmse: 0
+  }
+
   additionalStats() {
     if( this.historyflag) {
-      console.log( this.data);
+      let values = this.data.filter( (ceu:any) => ceu.value != "/");
+      if( values.length > 0) {
+        this.additionalStatsData.max = values.reduce((prev, current) => (parseFloat(current.value) > parseFloat(prev.value) ? current : prev));
+        this.additionalStatsData.min = values.reduce((prev, current) => (parseFloat(current.value) < parseFloat(prev.value) ? current : prev));
+        this.additionalStatsData.mean = values.reduce((total, obj) => {
+          return parseFloat(total) + parseFloat(obj.value);
+        }, 0) / values.length;
+
+        this.additionalStatsData.mae = values.reduce((total, obj) => {
+          return total + Math.abs(parseFloat(obj.value) - parseFloat(obj.predictedValue));
+        }, 0) / values.length;
+
+        this.additionalStatsData.rmse = Math.sqrt(values.reduce((total, obj) => {
+          return total + Math.pow(parseFloat(obj.value) - parseFloat(obj.predictedValue), 2);
+        }, 0) / values.length);
+      }
     }
   }
+
 }

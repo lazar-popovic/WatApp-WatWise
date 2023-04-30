@@ -122,6 +122,7 @@ export class ProductionComponent
             const value = currentDate < ceuDate ? "/" : ceu.value.toFixed(3);
             return { timestamp, predictedValue, value };
           });
+          this.additionalStats();
           let now = new Date();
           if( date.toDateString() == now.toDateString()) {
             this.datasets = [{
@@ -196,6 +197,7 @@ export class ProductionComponent
         console.log( result)
         if( result.success) {
           this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
+          this.additionalStats();
           let now = new Date();
           if( this.month == now.getMonth()+1) {
             console.log( result.data);
@@ -271,6 +273,7 @@ export class ProductionComponent
       (result:any) => {
         if( result.success) {
           this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
+          this.additionalStats();
           this.datasets = [{
             data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
             label: 'Predicted ' + this.categoryLabel,
@@ -453,4 +456,40 @@ export class ProductionComponent
       }
     });
   }
+
+  additionalStatsData = {
+    max: {
+      timestamp: "",
+      value: 0
+    },
+    min: {
+      timestamp: "",
+      value: 0
+    },
+    mean: 0,
+    mae: 0,
+    rmse: 0
+  }
+
+  additionalStats() {
+    if( this.historyflag) {
+      let values = this.data.filter( (ceu:any) => ceu.value != "/");
+      if( values.length > 0) {
+        this.additionalStatsData.max = values.reduce((prev, current) => (parseFloat(current.value) > parseFloat(prev.value) ? current : prev));
+        this.additionalStatsData.min = values.reduce((prev, current) => (parseFloat(current.value) < parseFloat(prev.value) ? current : prev));
+        this.additionalStatsData.mean = values.reduce((total, obj) => {
+          return parseFloat(total) + parseFloat(obj.value);
+        }, 0) / values.length;
+
+        this.additionalStatsData.mae = values.reduce((total, obj) => {
+          return total + Math.abs(parseFloat(obj.value) - parseFloat(obj.predictedValue));
+        }, 0) / values.length;
+
+        this.additionalStatsData.rmse = Math.sqrt(values.reduce((total, obj) => {
+          return total + Math.pow(parseFloat(obj.value) - parseFloat(obj.predictedValue), 2);
+        }, 0) / values.length);
+      }
+    }
+  }
+
 }
