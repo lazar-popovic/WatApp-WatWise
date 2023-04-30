@@ -128,7 +128,7 @@ export class ProductionComponent
               data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             },{
               data: result.data.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
@@ -145,7 +145,7 @@ export class ProductionComponent
               data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             }];
           } else {
@@ -154,7 +154,7 @@ export class ProductionComponent
               data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             },{
               data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
@@ -203,7 +203,7 @@ export class ProductionComponent
               data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             },{
               data: result.data.filter((ceu:any) => new Date(ceu.timestamp).getDate() <= new Date().getDate())
@@ -218,10 +218,10 @@ export class ProductionComponent
           } else if ( this.month > now.getMonth()+1) {
             console.log("pred");
             this.datasets = [{
-              data: result.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
+              data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.predictedValue })),
               label: 'Predicted ' + this.categoryLabel,
-              backgroundColor: this.color,
-              borderColor: this.color,
+              backgroundColor: this.predColor,
+              borderColor: this.predColor,
               borderWidth: 2
             }];
           } else {
@@ -230,7 +230,7 @@ export class ProductionComponent
               data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             },{
               data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
@@ -273,9 +273,9 @@ export class ProductionComponent
           this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
           this.datasets = [{
             data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
-            label: this.categoryLabel,
+            label: 'Predicted ' + this.categoryLabel,
             backgroundColor: this.predColor,
-            borderColor: this.color,
+            borderColor: this.predColor,
             borderWidth: 2
           },{
             data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
@@ -328,7 +328,7 @@ export class ProductionComponent
             data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value})),
             label: 'Predicted ' + this.categoryLabel,
             backgroundColor: this.predColor,
-            borderColor: this.color,
+            borderColor: this.predColor,
             borderWidth: 2
           }];
           this.createBarChart();
@@ -375,7 +375,7 @@ export class ProductionComponent
             data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
             label: 'Predicted ' + this.categoryLabel,
             backgroundColor: this.predColor,
-            borderColor: this.color,
+            borderColor: this.predColor,
             borderWidth: 2
           }];
           this.createBarChart();
@@ -415,7 +415,7 @@ export class ProductionComponent
             data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
             label: 'Predicted ' + this.categoryLabel,
             backgroundColor: this.predColor,
-            borderColor: this.color,
+            borderColor: this.predColor,
             borderWidth: 2
           }];
           this.createBarChart();

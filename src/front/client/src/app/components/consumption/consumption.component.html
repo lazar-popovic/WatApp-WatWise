@@ -46,7 +46,7 @@
         </select>
 
       </form>
-      <button id="stats-button" (click)="showDropdown = !showDropdown">
+      <button id="stats-button" (click)="showDropdown = !showDropdown" *ngIf="historyflag">
         Aditional stats
         <div id="stats-dropdown" *ngIf="showDropdown"  [class.visible]="showDropdown">
           <table>

@@ -101,8 +101,6 @@ export class ConsumptionComponent implements OnInit {
     if (yearDiv) { yearDiv.style.backgroundColor = "transparent"; yearDiv.style.color = "#3E3E3E"; }
 
     let date = new Date(this.date);
-    console.log(date);
-    console.log(date.getDate(), date.getMonth() + 1, date.getFullYear());
     this.deviceDataService.getUsersHistoryUsageByCategoryForDate(date.getDate(), date.getMonth() + 1, date.getFullYear(), -1, this.jwtService.userId).subscribe(
       (result: any) => {
         if (result.success) {
@@ -114,13 +112,14 @@ export class ConsumptionComponent implements OnInit {
             const value = currentDate < ceuDate ? "/" : ceu.value.toFixed(3);
             return { timestamp, predictedValue, value };
           });
+          this.additionalStats();
           let now = new Date();
           if (date.toDateString() == now.toDateString()) {
             this.datasets = [{
               data: result.data.map((ceu: any) => ({ x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.predictedValue })),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             },{
               data: result.data.filter((ceu: any) => new Date(ceu.timestamp) <= new Date())
@@ -137,7 +136,7 @@ export class ConsumptionComponent implements OnInit {
               data: result.data.map((ceu: any) => ({ x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.predictedValue })),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             }];
           } else {
@@ -146,7 +145,7 @@ export class ConsumptionComponent implements OnInit {
               data: result.data.map((ceu: any) => ({ x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.predictedValue })),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             },{
               data: result.data.map((ceu: any) => ({ x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value })),
@@ -186,13 +185,14 @@ export class ConsumptionComponent implements OnInit {
         console.log(result)
         if (result.success) {
           this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
+          this.additionalStats();
           let now = new Date();
           if (this.month == now.getMonth() + 1) {
             this.datasets = [{
               data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.predictedValue })),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             },{
               data: result.data.filter((ceu: any) => new Date(ceu.timestamp).getDate() <= new Date().getDate())
@@ -206,10 +206,10 @@ export class ConsumptionComponent implements OnInit {
           } else if (this.month > now.getMonth() + 1) {
             console.log("pred");
             this.datasets = [{
-              data: result.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.predictedValue })),
+              data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.predictedValue })),
               label: 'Predicted ' + this.categoryLabel,
-              backgroundColor: this.color,
-              borderColor: this.color,
+              backgroundColor: this.predColor,
+              borderColor: this.predColor,
               borderWidth: 2
             }];
           } else {
@@ -218,7 +218,7 @@ export class ConsumptionComponent implements OnInit {
               data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.predictedValue })),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             },{
               data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.value })),
@@ -257,11 +257,12 @@ export class ConsumptionComponent implements OnInit {
       (result: any) => {
         if (result.success) {
           this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
+          this.additionalStats();
           this.datasets = [{
             data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.predictedValue })),
-            label: this.categoryLabel,
+            label: 'Predicted ' + this.categoryLabel,
             backgroundColor: this.predColor,
-            borderColor: this.color,
+            borderColor: this.predColor,
             borderWidth: 2
           },{
             data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.value })),
@@ -309,7 +310,7 @@ export class ConsumptionComponent implements OnInit {
             return { timestamp, predictedValue, value };
           });
           this.datasets = [{
-            data: result.data.map((ceu: any) => ({ x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value })),
+            data: result.data.map((ceu: any) => ({ x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.predictedValue })),
             label: 'Predicted ' + this.categoryLabel,
             backgroundColor: this.predColor,
             borderColor: this.color,
@@ -354,10 +355,10 @@ export class ConsumptionComponent implements OnInit {
             return { timestamp, predictedValue, value };
           });
           this.datasets = [{
-            data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.value })),
+            data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.predictedValue })),
             label: 'Predicted ' + this.categoryLabel,
             backgroundColor: this.predColor,
-            borderColor: this.color,
+            borderColor: this.predColor,
             borderWidth: 2
           }];
           this.createBarChart();
@@ -392,10 +393,10 @@ export class ConsumptionComponent implements OnInit {
         if (result.success) {
           this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
           this.datasets = [{
-            data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.value })),
+            data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.predictedValue })),
             label: 'Predicted ' + this.categoryLabel,
             backgroundColor: this.predColor,
-            borderColor: this.color,
+            borderColor: this.predColor,
             borderWidth: 2
           }];
           this.createBarChart();
@@ -431,5 +432,11 @@ export class ConsumptionComponent implements OnInit {
         }
       }
     });
+  }
+
+  additionalStats() {
+    if( this.historyflag) {
+      console.log( this.data);
+    }
   }
 }
