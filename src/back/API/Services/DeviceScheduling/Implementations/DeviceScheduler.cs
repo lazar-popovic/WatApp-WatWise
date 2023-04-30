@@ -30,10 +30,9 @@ public class DeviceScheduler : IDeviceScheduler
         {
             throw new NullReferenceException("Given device does not exist!");
         }
-       
     }
 
-    public async Task<Response?> ScheduleJob(DeviceJobViewModel request)
+    public async Task ScheduleJob(DeviceJobViewModel request)
     {
         var deviceJob = new DeviceJob
         {
@@ -43,14 +42,19 @@ public class DeviceScheduler : IDeviceScheduler
             Turn = request.Turn,
             Repeat = request.Repeat
         };
-
+       
+        TimeSpan utcOffset = TimeZoneInfo.Local.GetUtcOffset(request.StartDate);
+        DateTimeOffset startDate = new DateTimeOffset(request.StartDate, utcOffset);
+        DateTimeOffset endDate = new DateTimeOffset(request.EndDate, utcOffset);
+        
         // Schedule the first job
-        var firstJobId = BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn), deviceJob.StartDate);
+        var firstJobId = BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn), startDate);
 
         // Schedule the second job
         var secondJobId =
-            BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn), deviceJob.EndDate);
+            BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn), endDate);
 
+        /*
         // Set up job recurrence if needed
         if (deviceJob.Repeat)
         {
@@ -59,10 +63,10 @@ public class DeviceScheduler : IDeviceScheduler
             RecurringJob.AddOrUpdate(secondJobId, () => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn),
                 deviceJob.RepeatInterval);
         }
-
+*/
         // Save the job IDs in the database
-        deviceJob.StartJobId = firstJobId;
-        deviceJob.EndJobId = secondJobId;
+        deviceJob.StartJobId = int.Parse(firstJobId);
+        deviceJob.EndJobId = int.Parse(secondJobId);
         await _dbContext.DeviceJobs.AddAsync(deviceJob);
         await _dbContext.SaveChangesAsync();
     }

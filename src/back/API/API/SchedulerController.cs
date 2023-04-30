@@ -18,6 +18,7 @@ public class SchedulerController : ControllerBase
     [HttpPost("device-job")]
     public async Task<IActionResult> ScheduleDeviceActivity(DeviceJobViewModel request)
     {
-        return Ok(await _deviceScheduler.ScheduleJob(request));
+        await _deviceScheduler.ScheduleJob(request);
+        return Ok();
     }
 }

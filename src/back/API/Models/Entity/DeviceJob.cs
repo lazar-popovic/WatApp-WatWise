@@ -16,5 +16,5 @@ public class DeviceJob
     public int? StartJobId { get; set; }
     public int? EndJobId { get; set; }
     public bool? Turn { get; set; }
-    public bool? Repeat { get; set; }
+    public bool Repeat { get; set; }
 }

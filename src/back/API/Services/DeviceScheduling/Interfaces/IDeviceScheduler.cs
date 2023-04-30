@@ -5,6 +5,6 @@ namespace API.Services.DeviceScheduling.Interfaces;
 
 public interface IDeviceScheduler
 {
-    Task ExecuteJob(int deviceId, bool turn);
-    Task<Response?> ScheduleJob(DeviceJobViewModel request);
+    Task ExecuteJob(int? deviceId, bool? turn);
+    Task ScheduleJob(DeviceJobViewModel request);
 }
