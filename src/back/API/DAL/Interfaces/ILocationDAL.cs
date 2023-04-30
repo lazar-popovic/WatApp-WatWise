@@ -11,4 +11,5 @@ public interface ILocationDAL
     Task<List<Location>> GetAllLocationsAsync();
     Task<List<String>> GetAllLocationsCity();
     Task<List<String>> GetAllNeighborhood(string city);
+    Task<List<Location>> GetAllLocationWithNeighborhood(string neighborhood);
 }

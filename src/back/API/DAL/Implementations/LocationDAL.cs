@@ -60,4 +60,12 @@ public class LocationDAL : ILocationDAL
            .ToList();
         return neighborhoods;
     }
+    public async Task<List<Location>> GetAllLocationWithNeighborhood(string neighborhood)
+    {
+        var locations = _context.Locations
+            .Where(l => l.Neighborhood.Equals(neighborhood, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        return locations;
+    }
 }

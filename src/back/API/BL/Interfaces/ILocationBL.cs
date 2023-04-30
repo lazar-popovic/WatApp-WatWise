@@ -8,5 +8,6 @@ namespace API.BL.Interfaces
         Task<Response<List<Location>>> GetAllLocation();
         Task<Response<List<String>>> GetAllLocationDistinctCity();
         Task<Response<List<String>>> GetAllNeighborhood(string city);
+        Task<Response<List<Location>>> GetAllLocationWithNeighborhood(string neighborhood);
     }
 }

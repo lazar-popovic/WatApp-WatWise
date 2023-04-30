@@ -73,5 +73,24 @@ namespace API.BL.Implementations
 
 
         }
+        public async Task<Response<List<Location>>> GetAllLocationWithNeighborhood(string neighborhood)
+        {
+            var response = new Response<List<Location>>();
+
+            var neighborhoods = await _ilocationDal.GetAllLocationWithNeighborhood(neighborhood);
+            if (neighborhoods == null)
+            {
+                response.Errors.Add("Error with displaying neighborhood!");
+                response.Success = false;
+
+                return response;
+            }
+            response.Data = neighborhoods;
+            response.Success = response.Errors.Count() == 0;
+
+            return response;
+
+
+        }
     }
 }
