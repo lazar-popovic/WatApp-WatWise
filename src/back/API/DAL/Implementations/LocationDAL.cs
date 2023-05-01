@@ -4,6 +4,7 @@ using API.Models.Entity;
 using API.Models.ViewModels;
 using API.Services.Geocoding;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API.DAL.Implementations;
 
@@ -43,13 +44,15 @@ public class LocationDAL : ILocationDAL
     {
         return await _context.Locations.Where( l => l.Users.Count( u => u.Verified == true) > 0).ToListAsync();
     }
-    public async Task<List<String>> GetAllLocationsCity()
+    public async Task<List<string?>?> GetAllLocationsCity()
     {
-        var cities = _context.Locations
+        var cities = await _context.Locations
              .Select(l => l.City)
              .Distinct()
-             .ToList();
+             .ToListAsync();
+        
         return cities;
+
     }
     public async Task<List<String>> GetAllNeighborhood(string city)
     {
