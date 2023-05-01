@@ -15,7 +15,13 @@
   #container {
     flex-direction: row;
   }
-
+  #device-details {
+    display: flex;
+    flex-direction: column;
+  }
+  #device-schedule-holder {
+    margin-top: 20px;
+  }
   .device-details-overlay>.device-details-edit,
   .device-details-delete {
     left: 10%;

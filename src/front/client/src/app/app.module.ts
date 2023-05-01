@@ -56,12 +56,14 @@ import { DeviceInfoCardComponent } from './components/device-info-card/device-in
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
 import { DeviceJobFormComponent } from './components/device-job-form/device-job-form.component';
+import { DeviceScheduleCardComponent } from './components/device-schedule-card/device-schedule-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DeviceJobFormComponent,
+    DeviceScheduleCardComponent,
     SidebarComponent,
     ProfileComponent,
     ProfileIDComponent,
