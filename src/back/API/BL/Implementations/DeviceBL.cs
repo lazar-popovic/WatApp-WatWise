@@ -336,5 +336,13 @@ namespace API.BL.Implementations
                 return response;
             }
         }
+
+        public async Task<Response> GetDevicesIdAndNameByUserId(int userId)
+        {
+            var response = new Response();
+            response.Success = true;
+            response.Data = await _ideviceDal.GetDevicesIdAndNameByUserId(userId);
+            return response;
+        }
     }
 }

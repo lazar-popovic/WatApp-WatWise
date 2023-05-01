@@ -17,12 +17,18 @@
       </div>
     </div>
     <div id="device-details">
-      <app-device-info-card [device]="device"></app-device-info-card>
+      <div id="device-card-holder">
+        <app-device-info-card [device]="device"></app-device-info-card>
+      </div>
+      <div id="device-schedule-holder" class="standard-card-style">
+        <app-device-schedule-card [deviceId]="device.id"></app-device-schedule-card>
+      </div>
     </div>
     <div id="nav-bar">
       <h3 id="history-h3" (click)="historyClick()">History</h3>
       <h3 id="prediction-h3" (click)="predictionClick()">Prediction</h3>
     </div>
+
     <div id="filter">
       <div *ngIf="historyflag==true">
         <div class="slider">
@@ -39,6 +45,7 @@
         </div>
       </div>
     </div>
+
     <div id="additional-filter">
       <form *ngIf="historyflag==true">
         <input type="date" *ngIf="todayFlag==true" [(ngModel)]="date" name="date" (change)="todayClick()">
@@ -107,6 +114,7 @@
 
 
     </div>
+
     <div id="chart">
       <div id="chart-holder" class="standard-card-style">
         <canvas id="chart-canvas" style="height: 100%!important; width: 100%!important;"></canvas>
