@@ -56,11 +56,11 @@ public class LocationDAL : ILocationDAL
     }
     public async Task<List<String>> GetAllNeighborhood(string city)
     {
-        var neighborhoods = _context.Locations
+        var neighborhoods = await _context.Locations
            .Where(l => l.City.Equals(city, StringComparison.OrdinalIgnoreCase))
            .Select(l => l.Neighborhood)
            .Distinct()
-           .ToList();
+           .ToListAsync();
         return neighborhoods;
     }
     public async Task<List<Location>> GetAllLocationWithNeighborhood(string neighborhood)
