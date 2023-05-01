@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DeviceSchedulerService } from 'src/app/services/device-scheduler.service';
 
@@ -21,6 +21,8 @@ export class DeviceScheduleCardComponent implements OnInit, OnChanges {
     }
   }
 
+  @Output() output: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   busy: Subscription | undefined;
 
   @Input() deviceId: number = 0;
@@ -40,5 +42,10 @@ export class DeviceScheduleCardComponent implements OnInit, OnChanges {
     }, (error:any) => {
       console.log( error);
     });
+  }
+
+  outputEmit() {
+    this.output.emit( true);
+    console.log( true);
   }
 }

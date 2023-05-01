@@ -21,7 +21,7 @@
         <app-device-info-card [device]="device"></app-device-info-card>
       </div>
       <div id="device-schedule-holder" class="standard-card-style">
-        <app-device-schedule-card [deviceId]="device.id"></app-device-schedule-card>
+        <app-device-schedule-card [deviceId]="device.id" (output)="formForNewJob = true"></app-device-schedule-card>
       </div>
     </div>
     <div id="nav-bar">
@@ -163,3 +163,7 @@
     </div>
   </div>
 
+
+  <div class="hover-form" *ngIf="formForNewJob">
+    <app-device-job-form [deviceId]="device.id" (output)="formForNewJob = false"></app-device-job-form>
+  </div>

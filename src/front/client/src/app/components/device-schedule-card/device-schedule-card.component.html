@@ -3,12 +3,15 @@
     <p>Device schedules</p>
   </div>
   <div class="no-job" *ngIf="deviceJob == null || deviceJob.id == 0">
-    <p>No active jobs for this device</p>
+    <button (click)="outputEmit()">No active job. Create one</button>
   </div>
   <div class="job" *ngIf="deviceJob != null && deviceJob.id != 0">
     <p>This device is set to be turned
       <span *ngIf="deviceJob.turn" style="color: #3acc5e; font-weight: bold;">On</span>
       <span *ngIf="!deviceJob.turn"  style="color: #c15757; font-weight: bold;">Off</span>
-       from {{deviceJob.startDate}} to {{deviceJob.endDate}}</p>
+      <br>from {{deviceJob.startDate}}<br>to {{deviceJob.endDate}}
+      <span *ngIf="deviceJob.repeat"><br>This will repeat every day</span>
+    </p>
   </div>
 </div>
+

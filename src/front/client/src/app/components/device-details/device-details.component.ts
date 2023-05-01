@@ -63,6 +63,8 @@ export class DeviceDetailsComponent implements OnInit
         return false;
     }
 
+    formForNewJob: boolean = false;
+
     constructor( private datePipe: DatePipe,
                  private authService:AuthService,
                  private deviceService: DeviceService,

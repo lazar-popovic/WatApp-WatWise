@@ -1,14 +1,13 @@
 <div class="device-input-holder">
   <div class="wrapper" [ngBusy]="busyAddDeviceJob">
-      <div style="display: flex; justify-content: right;">
-        <a href="/prosumer/devices" style="color: black;"><i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;"></i></a>
+      <div style="display: flex; justify-content: right;" (click)="refresh()">
+        <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;"></i>
       </div>
 
       <h2>Schedule job</h2>
       <form action="#" (ngSubmit)="addDeviceJob()">
-        <h3>For device</h3>
         <div class="input-box">
-          <select type="text" name="deviceId" [(ngModel)]="newJob.deviceId">
+          <select type="text" name="deviceId" [(ngModel)]="newJob.deviceId" id="device">
             <option  *ngFor=" let element of devices" value="{{element.id}}">{{element.name}}</option>
           </select>
         </div>
@@ -21,7 +20,7 @@
           <input type="datetime-local" id="end-date">
         </div>
         <div class="input-box input-checkbox">
-          <h3>To be</h3>
+          <h3>Turend On/Off</h3>
           <!--<input type="checkbox" [(ngModel)]="newJob.turn" checked>-->
           <app-slider [status]="newJob.turn" (sliderEvent)="newJob.turn = !newJob.turn"></app-slider>
         </div>

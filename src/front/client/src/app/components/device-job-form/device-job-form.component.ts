@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DeviceSchedulerService } from 'src/app/services/device-scheduler.service';
@@ -12,6 +12,9 @@ import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
   styleUrls: ['./device-job-form.component.css']
 })
 export class DeviceJobFormComponent implements OnInit {
+
+  @Input() deviceId: number = 0;
+  @Output() output: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   newJob = {
     deviceId: 0,
@@ -41,6 +44,10 @@ export class DeviceJobFormComponent implements OnInit {
         this.devices = result.data;
         if( this.devices.length > 0) {
           this.newJob.deviceId = this.devices[0].id;
+          if( this.deviceId > 0) {
+            this.newJob.deviceId = this.deviceId;
+            (document.querySelector('#device') as HTMLInputElement).disabled = true;
+          }
         }
       }
     }, ( error: any) => {
@@ -60,5 +67,10 @@ export class DeviceJobFormComponent implements OnInit {
       this.toastrService.showErrors(["Error while creating job. Check all fields!"]);
       console.log( error);
     })
+  }
+
+  refresh() {
+    this.output.emit(false);
+    console.log( false);
   }
 }
