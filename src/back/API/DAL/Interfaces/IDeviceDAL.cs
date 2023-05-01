@@ -26,5 +26,6 @@ namespace API.DAL.Interfaces
         Task TurnDataSharingOn();
         Task<object> Top3DevicesByUserId( int userId);
         Task<List<DeviceSubtype>> GetDeviceSubtypesByType( int deviceTypeId);
+        Task<object> GetDevicesIdAndNameByUserId(int userId);
     }
 }

@@ -29,6 +29,7 @@ import { EditDeviceComponent } from './components/edit-device/edit-device.compon
 import { SliderComponent } from './components/slider/slider.component';
 import { DeleteDeviceComponent } from './components/delete-device/delete-device.component';
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
+import { DeviceJobFormComponent } from './components/device-job-form/device-job-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -52,7 +53,8 @@ const routes: Routes = [
   { path: 'profile-settings', component: ProfileSettingsComponent},
   { path: 'test-component', component: DeleteDeviceComponent},
   { path: 'test-geo', component: UsersComponent},
-  { path: 'test-upload', component: UploadImageComponent}
+  { path: 'test-upload', component: UploadImageComponent},
+  { path: 'test-device-job', component: DeviceJobFormComponent}
 ];
 
 @NgModule({

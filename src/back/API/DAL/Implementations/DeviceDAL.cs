@@ -260,5 +260,14 @@ namespace API.DAL.Implementations
             return await _dbContext.DeviceSubtypes.Where(dt => dt.DeviceTypeId == deviceTypeId)
                                                .AsNoTracking().ToListAsync();
         }
+
+        public async Task<object> GetDevicesIdAndNameByUserId(int userId)
+        {
+            return await _dbContext.Devices.Where(d => d.UserId == userId).Select(d => new
+            {
+                Id = d.Id,
+                Name = d.Name
+            }).AsNoTracking().ToListAsync();
+        }
     }
 }

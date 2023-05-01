@@ -55,11 +55,13 @@ import { LogoHolderComponent } from './components/logo-holder/logo-holder.compon
 import { DeviceInfoCardComponent } from './components/device-info-card/device-info-card.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
+import { DeviceJobFormComponent } from './components/device-job-form/device-job-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    DeviceJobFormComponent,
     SidebarComponent,
     ProfileComponent,
     ProfileIDComponent,
