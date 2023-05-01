@@ -37,8 +37,8 @@ public class DeviceScheduler : IDeviceScheduler
         var deviceJob = new DeviceJob
         {
             DeviceId = request.DeviceId,
-            StartDate = request.StartDate.ToLocalTime(),
-            EndDate = request.EndDate.ToLocalTime(),
+            StartDate = request.StartDate,
+            EndDate = request.EndDate,
             Turn = request.Turn,
             Repeat = request.Repeat
         };
@@ -67,5 +67,25 @@ public class DeviceScheduler : IDeviceScheduler
         deviceJob.EndJobId = int.Parse(secondJobId);
         await _dbContext.DeviceJobs.AddAsync(deviceJob);
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<Response> GetActiveJobForDeviceId(int deviceId)
+    {
+        var response = new Response();
+
+        response.Success = true;
+        response.Data = await _dbContext.DeviceJobs.Where( dj => dj.DeviceId == deviceId && ((dj.Repeat == true) || (dj.Repeat == false && dj.EndDate < DateTime.Now)))
+                                                   .Select( dj => new
+                                                   {
+                                                       Id = dj.Id,
+                                                       StartDate = dj.StartDate,
+                                                       EndDate = dj.EndDate,
+                                                       Turn = dj.Turn,
+                                                       Repeat = dj.Repeat
+                                                   })
+                                                   .AsNoTracking()
+                                                   .FirstOrDefaultAsync();
+
+        return response;
     }
 }

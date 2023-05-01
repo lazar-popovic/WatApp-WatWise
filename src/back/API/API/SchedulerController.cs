@@ -21,4 +21,10 @@ public class SchedulerController : ControllerBase
         await _deviceScheduler.ScheduleJob(request);
         return Ok();
     }
+
+    [HttpGet("get-active-job-for-device-id")]
+    public async Task<IActionResult> GetActiveJobForDeviceId( int deviceId)
+    {
+        return Ok( await _deviceScheduler.GetActiveJobForDeviceId( deviceId));
+    }
 }
