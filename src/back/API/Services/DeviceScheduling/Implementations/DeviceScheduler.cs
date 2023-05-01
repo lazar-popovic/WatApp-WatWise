@@ -53,10 +53,13 @@ public class DeviceScheduler : IDeviceScheduler
         // Set up job recurrence if needed
         if (deviceJob.Repeat)
         {
+            var startDateTime = request.StartDate.AddDays(1);
+            var endDateTime = request.EndDate.AddDays(1);
+            
             RecurringJob.AddOrUpdate(firstJobId, () => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn),
-                Cron.Daily);
+                CronMaker.ToCron(startDateTime));
             RecurringJob.AddOrUpdate(secondJobId, () => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn),
-                Cron.Daily);
+                CronMaker.ToCron(endDateTime));
         }
 
         // Save the job IDs in the database
