@@ -125,9 +125,9 @@ namespace API.BL.Implementations
 
         }
 
-        public async Task<Response<String>> AddDeviceViewModel(DeviceViewModel device)
+        public async Task<Response<object>> AddDeviceViewModel(DeviceViewModel device)
         {
-            var response = new Response<String>();
+            var response = new Response<object>();
             var dev = device;
 
             if (string.IsNullOrEmpty(dev.Name?.Trim()))
@@ -148,9 +148,9 @@ namespace API.BL.Implementations
             if (response.Success == false)
                 return response;
 
-            await _ideviceDal.AddDeviceViewModel(device);
+            var id = await _ideviceDal.AddDeviceViewModel(device);
 
-            response.Data = $"Device {dev.Name} connected successfully!";
+            response.Data = new { Message = $"Device {dev.Name} connected successfully!", DeviceId = id };
 
 
             return response;

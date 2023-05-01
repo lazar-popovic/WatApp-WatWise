@@ -66,7 +66,7 @@ namespace API.DAL.Implementations
 
             await _dbContext.SaveChangesAsync();
         }
-        public async Task AddDeviceViewModel(DeviceViewModel devicee)
+        public async Task<int> AddDeviceViewModel(DeviceViewModel devicee)
         {
             var device = new Device
             {
@@ -84,6 +84,8 @@ namespace API.DAL.Implementations
             await _dbContext.SaveChangesAsync();
 
             await _deviceSimulatorService.FillDataSinceJanuary1st(((int)devicee.DeviceTypeId!), device.Id);
+
+            return device.Id;
         }
 
         public async Task<List<DeviceType>> GetDeviceTypesByCategory(int id)

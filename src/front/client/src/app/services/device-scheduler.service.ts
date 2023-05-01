@@ -7,11 +7,13 @@ import {environment} from "../environments/environment";
   providedIn: 'root'
 })
 export class DeviceSchedulerService {
+  constructor( private http: HttpClient) { }
 
-constructor( private http: HttpClient) { }
-
-insertDeviceJob( data: any) : Observable<any> {
-  return this.http.post(`${environment.apiUrl}scheduler/device-job`, data, {observe: 'response'});
-}
-
+  insertDeviceJob( data: any) : Observable<any> {
+    return this.http.post(`${environment.apiUrl}scheduler/device-job`, data, {observe: 'response'});
+  }
+  getActiveJobForDeviceId( deviceId: number) : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}scheduler/get-active-job-for-device-id?deviceId=${deviceId}`);
+  }
 }

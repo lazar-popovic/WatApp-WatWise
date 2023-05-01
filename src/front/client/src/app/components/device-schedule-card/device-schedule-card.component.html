@@ -1,3 +1,14 @@
-<p>
-  device-schedule-card works!
-</p>
+<div class="card-holder" [ngBusy]="busy">
+  <div class="title">
+    <p>Device schedules</p>
+  </div>
+  <div class="no-job" *ngIf="deviceJob == null || deviceJob.id == 0">
+    <p>No active jobs for this device</p>
+  </div>
+  <div class="job" *ngIf="deviceJob != null && deviceJob.id != 0">
+    <p>This device is set to be turned
+      <span *ngIf="deviceJob.turn" style="color: #3acc5e; font-weight: bold;">On</span>
+      <span *ngIf="!deviceJob.turn"  style="color: #c15757; font-weight: bold;">Off</span>
+       from {{deviceJob.startDate}} to {{deviceJob.endDate}}</p>
+  </div>
+</div>
