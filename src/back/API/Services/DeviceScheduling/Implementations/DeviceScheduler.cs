@@ -34,6 +34,9 @@ public class DeviceScheduler : IDeviceScheduler
 
     public async Task ScheduleJob(DeviceJobViewModel request)
     {
+        string? firstJobId = null;
+        string? secondJobId = null;
+        
         var deviceJob = new DeviceJob
         {
             DeviceId = request.DeviceId,
@@ -43,23 +46,27 @@ public class DeviceScheduler : IDeviceScheduler
             Repeat = request.Repeat
         };
         
-        var firstJobId = BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn), request.StartDate.ToLocalTime());
-
-        // Schedule the second job
-        var secondJobId =
-            BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn), request.EndDate.ToLocalTime());
-
         
         // Set up job recurrence if needed
-        if (deviceJob.Repeat)
+        if (!deviceJob.Repeat)
+        {
+             firstJobId = BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn), request.StartDate.ToLocalTime());
+
+            // Schedule the second job
+             secondJobId =
+                BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn), request.EndDate.ToLocalTime());
+        }
+        else
         {
             var startDateTime = request.StartDate.AddDays(1);
             var endDateTime = request.EndDate.AddDays(1);
+            string firstJobReccuring;
             
-            RecurringJob.AddOrUpdate(firstJobId, () => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn),
+            RecurringJob.AddOrUpdate(firstJobReccuring,() => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn),
                 CronMaker.ToCron(startDateTime));
-            RecurringJob.AddOrUpdate(secondJobId, () => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn),
+            RecurringJob.AddOrUpdate(() => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn),
                 CronMaker.ToCron(endDateTime));
+            
         }
 
         // Save the job IDs in the database
