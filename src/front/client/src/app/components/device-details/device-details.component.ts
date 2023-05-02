@@ -588,4 +588,12 @@ export class DeviceDetailsComponent implements OnInit
       (document.querySelector('.device-details-edit') as HTMLDivElement).style.display = 'none';
       (document.querySelector('.device-details-delete') as HTMLDivElement).style.display = 'none';
     }
+
+    displayTurnDialog: boolean = false;
+
+    turnDeviceForm( status: boolean) {
+      console.log( "Status: " + status);
+
+      this.displayTurnDialog = false;
+    }
   }

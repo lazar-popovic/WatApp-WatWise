@@ -18,7 +18,7 @@
     </div>
     <div id="device-details">
       <div id="device-card-holder">
-        <app-device-info-card [device]="device"></app-device-info-card>
+        <app-device-info-card [device]="device" (output)="displayTurnDialog = true"></app-device-info-card>
       </div>
       <div id="device-schedule-holder" class="standard-card-style">
         <app-device-schedule-card [deviceId]="device.id" (output)="formForNewJob = true"></app-device-schedule-card>
@@ -166,4 +166,8 @@
 
   <div class="hover-form" *ngIf="formForNewJob">
     <app-device-job-form [deviceId]="device.id" (output)="formForNewJob = false"></app-device-job-form>
+  </div>
+
+  <div class="hover-form" *ngIf="displayTurnDialog">
+    <app-confirm-window [text]="'Are you sure that you want to change status of this device?'" (output)="turnDeviceForm($event)"></app-confirm-window>
   </div>
