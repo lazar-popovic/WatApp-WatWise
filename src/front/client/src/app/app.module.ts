@@ -57,13 +57,12 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
 import { DeviceJobFormComponent } from './components/device-job-form/device-job-form.component';
 import { DeviceScheduleCardComponent } from './components/device-schedule-card/device-schedule-card.component';
+import { ConfirmWindowComponent } from './components/confirm-window/confirm-window.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DeviceJobFormComponent,
-    DeviceScheduleCardComponent,
     SidebarComponent,
     ProfileComponent,
     ProfileIDComponent,
@@ -98,7 +97,10 @@ import { DeviceScheduleCardComponent } from './components/device-schedule-card/d
     DeleteDeviceComponent,
     WeatherForecastComponent,
     TooltipComponent,
-    UploadImageComponent
+    UploadImageComponent,
+    DeviceJobFormComponent,
+    DeviceScheduleCardComponent,
+    ConfirmWindowComponent
   ],
   imports: [
     BrowserModule,

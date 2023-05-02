@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DeviceService } from 'src/app/services/device.service';
 import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
 
@@ -20,12 +20,15 @@ export class DeviceInfoCardComponent implements OnInit {
     currentUsage: null
   }
 
+  @Output() output: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   constructor( private deviceService: DeviceService, private toastrNotifService: ToastrNotifService) { }
 
   ngOnInit() {
   }
 
   onSliderChange( value: boolean) {
+    this.output.emit( true);
     this.device.activityStatus = value
     console.log( value);
 
