@@ -3,15 +3,19 @@
     display: flex;
     flex-direction: column;
   }
-
   .devices-container {
     min-width: 300px;
     max-width: 599px;
     margin-top: 0!important;
   }
+  h2 {
+    margin-top: 105px!important;
+  }
 
 }
-
+h2 {
+  color: #3e3e3e;
+}
 .devices-page {
   display: flex;
 }

@@ -12,6 +12,9 @@
   #container {
     flex-direction: column;
   }
+  .dashboard {
+    margin-top: 88px!important;
+  }
 }
 
 .dashboard {
