@@ -40,7 +40,7 @@ export class DeviceDetailsComponent implements OnInit
       activityStatus: false,
       deviceType: { type: null, category: null },
       deviceSubtype: { subtypeName: null },
-      capacity: null,
+      capacity: 1,
       dataShare: false,
       currentUsage: null
     }
@@ -93,7 +93,7 @@ export class DeviceDetailsComponent implements OnInit
                   this.predColor = 'rgba(191, 65, 65, 0.4)';
                   break;
                 case 0:
-                  this.categoryLabel = "In storage";
+                  this.categoryLabel = "In storage [kWh]";
                   this.color = 'rgba(27, 254, 127, 1)';
                   this.predColor = 'rgba(27, 254, 127, 0.4)';
                   break;
@@ -200,11 +200,17 @@ export class DeviceDetailsComponent implements OnInit
         (result:any) => {
           if( result.success) {
             this.data = result.data.map((ceu: any) => {
-              const ceuDate = new Date(ceu.timestamp);
-              const currentDate = new Date();
-              const timestamp = this.datePipe.transform(ceu.timestamp, "shortTime");
-              const predictedValue = ceu.predictedValue.toFixed(3);
-              const value = currentDate < ceuDate ? "/" : ceu.value.toFixed(3);
+              let ceuDate = new Date(ceu.timestamp);
+              let currentDate = new Date();
+              let timestamp = this.datePipe.transform(ceu.timestamp, "shortTime");
+              let predictedValue = ceu.predictedValue.toFixed(3);
+              let value = currentDate < ceuDate ? "/" : ceu.value.toFixed(3);
+              if( this.device.deviceType.category == 0) {
+                predictedValue = (predictedValue * this.device.capacity).toFixed(3);
+                if( value != "/") {
+                  value = ( value * this.device.capacity).toFixed(3);
+                }
+              }
               return { timestamp, predictedValue, value }
             });
             this.additionalStats();
@@ -529,7 +535,7 @@ export class DeviceDetailsComponent implements OnInit
               beginAtZero: true,
               ticks: {
                 callback: function(value, index, ticks) {
-                  return value+'kW';
+                  return value+'kWh';
                 }
               }
             }
