@@ -11,7 +11,8 @@ namespace API.Services.DeviceScheduling.Implementations;
 public class DeviceScheduler : IDeviceScheduler
 {
     private readonly DataContext _dbContext;
-
+    private static int firstJobReccuring = 1;
+    private static int secondJobReccuring = 2;
     public DeviceScheduler(DataContext dbContext)
     {
         _dbContext = dbContext;
@@ -36,7 +37,7 @@ public class DeviceScheduler : IDeviceScheduler
     {
         string? firstJobId = null;
         string? secondJobId = null;
-        
+
         var deviceJob = new DeviceJob
         {
             DeviceId = request.DeviceId,
@@ -55,25 +56,30 @@ public class DeviceScheduler : IDeviceScheduler
             // Schedule the second job
              secondJobId =
                 BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn), request.EndDate.ToLocalTime());
+             
+             deviceJob.StartJobId = int.Parse(firstJobId);
+             deviceJob.EndJobId = int.Parse(secondJobId);
+             await _dbContext.DeviceJobs.AddAsync(deviceJob);
+             await _dbContext.SaveChangesAsync();
         }
         else
         {
             var startDateTime = request.StartDate.AddDays(1);
             var endDateTime = request.EndDate.AddDays(1);
-            string firstJobReccuring;
-            
-            RecurringJob.AddOrUpdate(firstJobReccuring,() => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn),
-                CronMaker.ToCron(startDateTime));
-            RecurringJob.AddOrUpdate(() => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn),
-                CronMaker.ToCron(endDateTime));
-            
-        }
 
-        // Save the job IDs in the database
-        deviceJob.StartJobId = int.Parse(firstJobId);
-        deviceJob.EndJobId = int.Parse(secondJobId);
-        await _dbContext.DeviceJobs.AddAsync(deviceJob);
-        await _dbContext.SaveChangesAsync();
+            RecurringJob.AddOrUpdate(firstJobReccuring.ToString(),() => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn),
+                CronMaker.ToCron(startDateTime));
+            RecurringJob.AddOrUpdate(secondJobReccuring.ToString(),() => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn),
+                CronMaker.ToCron(endDateTime));
+
+            deviceJob.StartJobId = firstJobReccuring;
+            deviceJob.EndJobId = secondJobReccuring;
+            await _dbContext.DeviceJobs.AddAsync(deviceJob);
+            await _dbContext.SaveChangesAsync();
+
+            firstJobReccuring += 2;
+            secondJobReccuring += 2;
+        }
     }
 
     public async Task<Response> GetActiveJobForDeviceId(int deviceId)
