@@ -104,6 +104,13 @@ public class DeviceScheduler : IDeviceScheduler
 
     public async Task<Response> RemoveReccuringJobForJobId(int jobId)
     {
-        throw new NotImplementedException();
+        var response = new Response();
+        
+        RecurringJob.RemoveIfExists(jobId.ToString());
+        
+        response.Data = "Job removed successfully!";
+        response.Success = true;
+
+        return response;
     }
 }
