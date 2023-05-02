@@ -377,7 +377,6 @@ def battery():
     }
     db.devices.insert_one(device_data)
 
-
 def callMethods():  
     fridge()
     water_heater()

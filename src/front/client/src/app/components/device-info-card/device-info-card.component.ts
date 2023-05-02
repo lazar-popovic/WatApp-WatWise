@@ -15,7 +15,7 @@ export class DeviceInfoCardComponent implements OnInit {
     activityStatus: false,
     deviceType: { type: null, category: null },
     deviceSubtype: { subtypeName: null },
-    capacity: null,
+    capacity: 1,
     dataShare: false,
     currentUsage: null
   }
