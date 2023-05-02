@@ -108,9 +108,17 @@ public class DeviceSimulatorService : IDeviceSimulatorService
                 .FirstOrDefaultAsync();
 
 
-            if (device?.DeviceType?.Id == 3)
+            if (device?.DeviceType?.Id == 3 && device?.ActivityStatus == true)
             {
                 usage.Value = Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+            }
+            else if (device?.DeviceType?.Id == 3 && device?.ActivityStatus == false)
+            {
+                usage.Value = 0;
+            }
+            else if (device?.DeviceType?.Id == 11)
+            {
+                usage.Value = Math.Min(Math.Max(Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3), 0), 1);
             }
             else if (device?.ActivityStatus == true)
             {
