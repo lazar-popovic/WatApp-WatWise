@@ -101,4 +101,9 @@ public class DeviceScheduler : IDeviceScheduler
 
         return response;
     }
+
+    public async Task<Response> RemoveReccuringJobForJobId(int jobId)
+    {
+        throw new NotImplementedException();
+    }
 }
