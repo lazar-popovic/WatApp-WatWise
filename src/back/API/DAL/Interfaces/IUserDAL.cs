@@ -19,5 +19,6 @@ namespace API.DAL.Interfaces
         void UpdateUser(User user);
         Task<User> SaveProfilePictureAsync(int userId, [FromBody] byte[] profilePicture);
         Task DeleteUser(User user);
+        Task<User> DeleteProfilePictureAsync(int userId);
     }
 }

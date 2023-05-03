@@ -101,5 +101,10 @@ namespace API.API
         {
             return Ok(await _userBL.DeleteProsumer(id));
         }
+        [HttpDelete("deleteimage/{id}")]
+        public async Task<IActionResult> DeleteImage(int id)
+        {
+            return Ok(await _userBL.DeleteProfilePictureAsync(id));
+        }
     }
 }
