@@ -55,24 +55,29 @@ public class LocationDAL : ILocationDAL
 
 
         var locationDTOs = new List<LocationWithPowerUsageDTO>();
-
+        var now = new DateTime( DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
         foreach (var location in locations)
         {
             double? totalPowerUsage = 0.0;
-            if (location.Users != null)
+            if (location.Users != null && location.Users.Any())
+            {
                 foreach (var user in location.Users)
                 {
-                    if (user.Devices != null)
+                    if (user.Devices != null && user.Devices.Any())
+                    {
                         foreach (var device in user.Devices)
                         {
                             if (device.ActivityStatus == true && device.DataShare == true)
                             {
-                                var energyUsage = await _context.DeviceEnergyUsage.Where(d => d.DeviceId == device.Id)
+                                var energyUsage = await _context.DeviceEnergyUsage
+                                    .Where(d => d.DeviceId == device.Id && d.Timestamp == now)
                                     .SumAsync(d => d.Value);
                                 totalPowerUsage += device.DeviceType.Category * energyUsage;
                             }
                         }
+                    }
                 }
+            }
 
             var locationDTO = new LocationWithPowerUsageDTO()
             {
