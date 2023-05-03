@@ -108,6 +108,17 @@ public class DeviceScheduler : IDeviceScheduler
         
         RecurringJob.RemoveIfExists(jobId.ToString());
         
+        var canceledReccuringJob = await _dbContext.DeviceJobs.Where(job => job.Id == jobId).FirstOrDefaultAsync();
+        if (canceledReccuringJob == null)
+        {
+            response.Errors.Add("Job for given id does not exist!");
+            response.Success = false;
+
+            return response;
+        }
+        canceledReccuringJob.Canceled = true;
+        await _dbContext.SaveChangesAsync();
+        
         response.Data = "Job removed successfully!";
         response.Success = true;
 
