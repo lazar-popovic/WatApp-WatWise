@@ -41,23 +41,60 @@ export class MapComponentComponent implements OnInit {
   markers: any[] = [];
 
   placeMarkers() {
-    const customIcon = L.icon({
-      iconUrl: 'assets/pin.png',
-      iconSize: [26, 40],
-      iconAnchor: [16, 32],
-      popupAnchor: [0, -32]
-    });
+    const customIcons = [
+      L.icon({
+        iconUrl: 'assets/pins/pin-2.png',
+        iconSize: [26, 40],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+      }),
+      L.icon({
+        iconUrl: 'assets/pins/pin-1.png',
+        iconSize: [26, 40],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+      }),
+      L.icon({
+        iconUrl: 'assets/pins/pin0.png',
+        iconSize: [26, 40],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+      }),
+      L.icon({
+        iconUrl: 'assets/pins/pin1.png',
+        iconSize: [26, 40],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+      }),
+      L.icon({
+        iconUrl: 'assets/pins/pin2.png',
+        iconSize: [26, 40],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+      })
+    ];
 
-    // First remove all existing markers from the map
     for (const marker of this.markers) {
       this.map.removeLayer(marker);
     }
 
-    // Then add new markers to the map
-    this.markers = []; // Initialize the markers array
+    this.markers = [];
     for (const location of this.locations) {
-      const marker = L.marker([location.latitude, location.longitude], { icon: customIcon })
-        .bindPopup(`<strong>Address:</strong> ${location.address} ${location.addressNumber}, ${location.city}`)
+      let icon = 0;
+      console.log( location.totalPowerUsage );
+      if( location.totalPowerUsage < -1.5 )
+        icon = 0;
+      else if( location.totalPowerUsage < -1.5 )
+        icon = 1;
+      else if( location.totalPowerUsage < -0.5 )
+        icon = 2;
+      else if( location.totalPowerUsage < 0.5)
+        icon = 3;
+      else if( location.totalPowerUsage > 1.5 )
+        icon = 4;
+      console.log( icon);
+      const marker = L.marker([location.latitude, location.longitude], { icon: customIcons[ icon] })
+        .bindPopup(`<strong>Address:</strong> ${location.address} ${location.addressNumber}<br><strong>Current power usage:</strong> ${location.totalPowerUsage.toFixed(3)}kWh`)
         .addTo(this.map);
 
       marker.on('click', () => {
