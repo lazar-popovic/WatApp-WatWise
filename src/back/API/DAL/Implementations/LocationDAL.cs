@@ -1,5 +1,6 @@
 ﻿
 using API.DAL.Interfaces;
+using API.Models.DTOs;
 using API.Models.Entity;
 using API.Models.ViewModels;
 using API.Services.Geocoding;
@@ -40,10 +41,47 @@ public class LocationDAL : ILocationDAL
         return location.Id;
     }
 
-    public async Task<List<Location>> GetAllLocationsAsync()
+    public async Task<List<LocationWithPowerUsageDTO>> GetAllLocationsAsync()
     {
-        return await _context.Locations.Where( l => l.Users.Count( u => u.Verified == true) > 0).ToListAsync();
+        var locations = await _context.Locations.Include(l => l.Users)
+                            .ThenInclude(u => u.Devices).ThenInclude(u=> u.DeviceEnergyUsages).Where(l => l.Users.Count(u => u.Verified == true) > 0).ToListAsync();
+        var locationDTOs = new List<LocationWithPowerUsageDTO>();
+
+        foreach (var location in locations)
+        {
+            double? totalPowerUsage = 0.0;
+            if (location.Users != null)
+                foreach (var user in location.Users)
+                {
+                    if (user.Devices != null)
+                        foreach (var device in user.Devices)
+                        {
+                            if (device.ActivityStatus == true && device.DataShare == true)
+                            {
+                                var energyUsage = await _context.DeviceEnergyUsage.Where(d => d.DeviceId == device.Id)
+                                    .SumAsync(d => d.Value);
+                                totalPowerUsage += device.DeviceType.Category * energyUsage;
+                            }
+                        }
+                }
+
+            var locationDTO = new LocationWithPowerUsageDTO()
+            {
+                Id = location.Id,
+                Address = location.Address,
+                AddressNumber = location.AddressNumber,
+                City = location.City,
+                Latitude = location.Latitude,
+                Longitude = location.Longitude,
+                Neighborhood = location.Neighborhood,
+                TotalPowerUsage = totalPowerUsage
+            };
+            locationDTOs.Add(locationDTO);
+        }
+
+        return locationDTOs;
     }
+    
     public async Task<List<string?>?> GetAllLocationsCity()
     {
         var cities = await _context.Locations
