@@ -4,7 +4,17 @@
 </div>
 
 <div id="filter">
-
+  <div id="select-city">
+    <select name="city" (change)="getNeighborhoods()" [(ngModel)]="selectedCity">
+      <option *ngFor="let city of cities">{{city}}</option>
+    </select>
+  </div>
+  <div id="select-neighborhood">
+    <select name="neighborhood" (change)="getLocationsForNeighborhood()" [(ngModel)]="selectedNeighborhood">
+      <option>All</option>
+      <option *ngFor="let neighborhood of neighborhoods">{{neighborhood}}</option>
+    </select>
+  </div>
 </div>
 
 <div id="user-overlay"  [ngClass]="{'show': showOverlay}" *ngIf="selectedLocation != null">
