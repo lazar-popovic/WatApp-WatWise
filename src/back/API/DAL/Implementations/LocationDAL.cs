@@ -43,8 +43,17 @@ public class LocationDAL : ILocationDAL
 
     public async Task<List<LocationWithPowerUsageDTO>> GetAllLocationsAsync()
     {
+        
         var locations = await _context.Locations.Include(l => l.Users)
-                            .ThenInclude(u => u.Devices).ThenInclude(u=> u.DeviceEnergyUsages).Where(l => l.Users.Count(u => u.Verified == true) > 0).ToListAsync();
+                                                .ThenInclude(u => u.Devices)
+                                                .ThenInclude(d => d.DeviceEnergyUsages)
+                                            .Include(l => l.Users)
+                                                .ThenInclude(u => u.Devices)
+                                                .ThenInclude(d => d.DeviceType)
+                                                .Where(l => l.Users.Any(u => u.Verified == true))
+                                            .ToListAsync(); 
+
+
         var locationDTOs = new List<LocationWithPowerUsageDTO>();
 
         foreach (var location in locations)
