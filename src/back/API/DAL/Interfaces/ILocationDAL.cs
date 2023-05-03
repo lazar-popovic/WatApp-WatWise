@@ -1,4 +1,5 @@
-﻿using API.Models.Entity;
+﻿using API.Models.DTOs;
+using API.Models.Entity;
 using API.Models.ViewModels;
 using API.Services.Geocoding;
 
@@ -8,8 +9,8 @@ public interface ILocationDAL
 {
     int GetLocationByLatLongAsync( LongLat request);
     int InsertLocation(LocationViewModel model, LongLat cords);
-    Task<List<Location>> GetAllLocationsAsync();
+    Task<List<LocationWithPowerUsageDTO>> GetAllLocationsAsync();
     Task<List<string?>?> GetAllLocationsCity();
     Task<List<String>> GetAllNeighborhood(string city);
-    Task<List<Location>> GetAllLocationWithNeighborhood(string neighborhood);
+    Task<List<LocationWithPowerUsageDTO>> GetAllLocationWithNeighborhood(string city, string neighborhood);
 }
