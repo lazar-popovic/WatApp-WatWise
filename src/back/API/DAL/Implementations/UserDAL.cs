@@ -224,14 +224,24 @@ namespace API.DAL.Implementations
         {
             return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email);
         }
-        public async Task DeleteProfilePictureAsync(int userId)
+        public async Task<User?> DeleteProfilePictureAsync(int userId)
         {
             var user = await _dbContext.Users.FindAsync(userId);
 
-            string defaultImagePath = Path.Combine("Images", "defaultavatar.jpg");
-            user.ProfileImage = File.ReadAllBytes(defaultImagePath);
+            if (user != null)
+            {
+                
+                string defaultImagePath = Path.Combine("Images", "defaultavatar.jpg");
+                var defaultImageData = await File.ReadAllBytesAsync(defaultImagePath);
 
-            await _dbContext.SaveChangesAsync();
+              
+                user.ProfileImage = defaultImageData;
+
+               
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return user;
         }
     }
 

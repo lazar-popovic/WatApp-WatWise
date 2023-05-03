@@ -18,5 +18,6 @@ namespace API.BL.Interfaces
         Task<Response<string>> UpdateUserNameAndEmail(UpdateUserNameAndEmailViewModel request, int id);
         Task<Response> SaveImageForUser(int id, [FromBody] byte[] profilePicture);
         Task<Response<string>> DeleteProsumer(int id);
+        Task<Response<string>> DeleteProfilePictureAsync(int userId);
     }
 }
