@@ -9,6 +9,19 @@
       <option *ngFor="let city of cities">{{city}}</option>
     </select>
   </div>
+  <div id="city-chart" class="standard-card-style">
+    <ngx-charts-bar-vertical-2d
+      [results]="chartData"
+      [xAxis]="true"
+      [yAxis]="true"
+      [legend]="false"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxisLabel]="'Neighborhood'"
+      [yAxisLabel]="'Current power usage [kWh]'"
+      [legendTitle]="'Power usage by neighborhood'"
+    ></ngx-charts-bar-vertical-2d>
+  </div>
   <div id="select-neighborhood">
     <select name="neighborhood" (change)="getLocationsForNeighborhood()" [(ngModel)]="selectedNeighborhood">
       <option>All</option>

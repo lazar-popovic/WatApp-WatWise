@@ -55,8 +55,8 @@ public class LocationController : ControllerBase
         return Ok(await locationBL.GetAllNeighborhood(city));
     }
     [HttpGet("distinct-location")]
-    public async Task<IActionResult> GetAllLocationWithNeighborhood(string neighborhood)
+    public async Task<IActionResult> GetAllLocationWithNeighborhood(string city, string neighborhood)
     {
-        return Ok(await locationBL.GetAllLocationWithNeighborhood(neighborhood));
+        return Ok(await locationBL.GetAllLocationWithNeighborhood(city, neighborhood));
     }
 }

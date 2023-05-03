@@ -92,7 +92,7 @@ export class MapComponentComponent implements OnInit {
       ( result: any) => {
         if( result.success) {
           this.neighborhoods = result.data;
-          this.selectedNeighborhood = this.neighborhoods.length > 0 ? this.neighborhoods[0] : "All";
+          this.selectedNeighborhood = "All";
           this.getLocationsForNeighborhood();
           console.log( this.neighborhoods);
         }
@@ -106,7 +106,7 @@ export class MapComponentComponent implements OnInit {
   }
 
   getLocationsForNeighborhood() {
-    this.locationService.getLocationsForNeighborhood( this.selectedNeighborhood).subscribe(
+    this.locationService.getLocationsForNeighborhood( this.selectedCity, this.selectedNeighborhood).subscribe(
       ( result: any) => {
         if( result.success)
         {
@@ -149,4 +149,56 @@ export class MapComponentComponent implements OnInit {
   goToUser( userId: number) {
     this.router.navigate(['/profile', userId]);
   }
+
+  chartData = [
+    {
+      "name": "Centar",
+      "series": [
+        {
+          "name": "Production",
+          "value": 134
+        },
+        {
+          "name": "Consumption",
+          "value": 223
+        }
+      ]
+    },{
+      "name": "Stanovo",
+      "series": [
+        {
+          "name": "Consumption",
+          "value": 223
+        },
+        {
+          "name": "Production",
+          "value": 134
+        }
+      ]
+    },{
+      "name": "Palilule",
+      "series": [
+        {
+          "name": "Consumption",
+          "value": 223
+        },
+        {
+          "name": "Production",
+          "value": 134
+        }
+      ]
+    },{
+      "name": "Male pčelice",
+      "series": [
+        {
+          "name": "Consumption",
+          "value": 223
+        },
+        {
+          "name": "Production",
+          "value": 134
+        }
+      ]
+    },
+  ];
 }

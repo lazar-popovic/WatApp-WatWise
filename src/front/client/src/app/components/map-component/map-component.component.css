@@ -130,3 +130,10 @@
   border: 0px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
+
+#city-chart {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: white;
+  height: 400px;
+}

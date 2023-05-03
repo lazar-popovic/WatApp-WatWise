@@ -30,8 +30,8 @@ export class LocationService {
     return this.http.get(`${environment.apiUrl}location/distinct-neighborhood?city=${city}`);
   }
 
-  getLocationsForNeighborhood( neighborhood: string) : Observable<any>
+  getLocationsForNeighborhood( city: string, neighborhood: string) : Observable<any>
   {
-    return this.http.get(`${environment.apiUrl}location/distinct-location?neighborhood=${neighborhood}`);
+    return this.http.get(`${environment.apiUrl}location/distinct-location?city=${city}&neighborhood=${neighborhood}`);
   }
 }

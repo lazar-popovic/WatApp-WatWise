@@ -94,12 +94,41 @@ public class LocationDAL : ILocationDAL
            .ToListAsync();
         return neighborhoods;
     }
-    public async Task<List<Location>> GetAllLocationWithNeighborhood(string neighborhood)
+    public async Task<List<LocationWithPowerUsageDTO>> GetAllLocationWithNeighborhood(string city, string neighborhood)
     {
-        var locations = await _context.Locations
-            .Where(l => l.Neighborhood.ToLower() == neighborhood.ToLower())
-            .ToListAsync();
+        var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
 
-        return locations;
+        var locationDTOs = await _context.Locations
+            .Join(_context.Users, l => l.Id, u => u.LocationId, (l, u) => new { Location = l, User = u })
+            .Join(_context.Devices, lu => lu.User.Id, d => d.UserId, (lu, d) => new { lu.Location, Device = d })
+            .Where(ld => ld.Device.ActivityStatus == true &&
+                         ld.Device.DataShare == true && 
+                         ld.Device.DeviceEnergyUsages.Any(usage => usage.Timestamp == now) &&
+                         ((ld.Location.Neighborhood == neighborhood || neighborhood == "All") && ld.Location.City == city))
+            .Select(ld => new {
+                ld.Location.Id,
+                ld.Location.Address,
+                ld.Location.AddressNumber,
+                ld.Location.City,
+                ld.Location.Latitude,
+                ld.Location.Longitude,
+                ld.Location.Neighborhood,
+                PowerUsage = ld.Device.DeviceType.Category * ld.Device.DeviceEnergyUsages.Where(usage => usage.Timestamp == now).Sum(usage => usage.Value)
+            })
+            .GroupBy(l => l.Id)
+            .Select(g => new LocationWithPowerUsageDTO
+            {
+                Id = g.Key,
+                Address = g.First().Address,
+                AddressNumber = g.First().AddressNumber,
+                City = g.First().City,
+                Latitude = g.First().Latitude,
+                Longitude = g.First().Longitude,
+                Neighborhood = g.First().Neighborhood,
+                TotalPowerUsage = g.Sum(x => x.PowerUsage)
+            })
+            .AsNoTracking().ToListAsync();
+
+        return locationDTOs;
     }
 }
