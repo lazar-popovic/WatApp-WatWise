@@ -51,7 +51,7 @@ public class LocationDAL : ILocationDAL
                                                 .ThenInclude(u => u.Devices)
                                                 .ThenInclude(d => d.DeviceType)
                                                 .Where(l => l.Users.Any(u => u.Verified == true))
-                                            .ToListAsync(); 
+                                            .AsNoTracking().ToListAsync(); 
 
 
         var locationDTOs = new List<LocationWithPowerUsageDTO>();
