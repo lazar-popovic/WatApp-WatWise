@@ -31,8 +31,8 @@ export class UserService {
     return this.http.get<any>(`${environment.apiUrl}user/prosumers-number`, {observe: 'response'});
   }
   
-  public getEmployees(pageSize: number, pageNumber: number) : Observable<User[]> {
-    return this.http.get<User[]>(`${environment.apiUrl}user/employees?pageSize=${pageSize}&pageNumber=${pageNumber}`);
+  public getEmployees(name:string, sortOrder:string, pageSize: number, pageNumber: number) : Observable<User[]> {
+    return this.http.get<User[]>(`${environment.apiUrl}user/get-employees-filtered?fullName=${name}&pageSize=${pageSize}&pageNumber=${pageNumber}&sortOrder=${sortOrder}`);
   }
 
   public updatePassword(data: any, id: number) : Observable<any> {
