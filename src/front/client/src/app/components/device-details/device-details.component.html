@@ -17,13 +17,19 @@
       </div>
     </div>
     <div id="device-details">
-      <app-device-info-card [device]="device"></app-device-info-card>
+      <div id="device-card-holder">
+        <app-device-info-card [device]="device" (output)="displayTurnDialog = true"></app-device-info-card>
+      </div>
+      <div id="device-schedule-holder" class="standard-card-style" *ngIf="device.deviceType.category!=0">
+        <app-device-schedule-card [deviceId]="device.id" (output)="formForNewJob = true"></app-device-schedule-card>
+      </div>
     </div>
-    <div id="nav-bar">
+    <div id="nav-bar" *ngIf="device.deviceType.category!=0">
       <h3 id="history-h3" (click)="historyClick()">History</h3>
       <h3 id="prediction-h3" (click)="predictionClick()">Prediction</h3>
     </div>
-    <div id="filter">
+
+    <div id="filter" *ngIf="device.deviceType.category!=0">
       <div *ngIf="historyflag==true">
         <div class="slider">
           <div id="today" (click)="todayClick()">Date</div>
@@ -39,6 +45,7 @@
         </div>
       </div>
     </div>
+
     <div id="additional-filter">
       <form *ngIf="historyflag==true">
         <input type="date" *ngIf="todayFlag==true" [(ngModel)]="date" name="date" (change)="todayClick()">
@@ -57,42 +64,46 @@
         </select>
       </form>
 
-      <button id="stats-button" (click)="showDropdown = !showDropdown">
+      <button id="stats-button" (click)="showDropdown = !showDropdown" *ngIf="historyflag && device.deviceType.category!=0">
         Aditional stats
         <div id="stats-dropdown" *ngIf="showDropdown"  [class.visible]="showDropdown">
           <table>
             <thead>
               <tr>
                 <th> Stat  </th>
-                <th> Date  </th>
-                <th> [kWH] </th>
+                <th> {{tableTitle}}  </th>
+                <th> [kWh] </th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Max</td>
-                <td>01.02.2022.</td>
-                <td>50</td>
+                <td>{{additionalStatsData.max.timestamp}}</td>
+                <td>{{additionalStatsData.max.value}}</td>
               </tr>
               <tr>
                 <td>Min</td>
-                <td>01.02.2022.</td>
-                <td>10</td>
+                <td>{{additionalStatsData.min.timestamp}}</td>
+                <td>{{additionalStatsData.min.value}}</td>
               </tr>
               <tr>
                 <td>Average</td>
-                <td>April</td>
-                <td>30</td>
+                <td></td>
+                <td>{{additionalStatsData.mean.toFixed(3)}}</td>
               </tr>
-              <tr>
-                <td>Median</td>
-                <td>April</td>
-                <td>35</td>
+              <tr [matTooltip]="'MAE stands for Mean Absolute Error, which is a metric used to measure the average difference between the predicted and actual values in a dataset. It is calculated as the average of the absolute differences between predicted and actual values for each data point in the dataset.'">
+                <td>MAE</td>
+                <td></td>
+                <td>
+                  {{additionalStatsData.mae.toFixed(3)}}
+                </td>
               </tr>
-              <tr>
-                <td>Deviation</td>
-                <td>April</td>
-                <td>5%</td>
+              <tr [matTooltip]="'RMSE stands for Root Mean Square Error, which is a commonly used metric to evaluate the accuracy of a prediction model. It is the square root of the average of the squared differences between the predicted values and the actual values. It provides a measure of how close the predicted values are to the actual values on average. RMSE is expressed in the same units as the predicted and actual values. A lower RMSE indicates a better fit of the model to the data.'">
+                <td>RMSE</td>
+                <td></td>
+                <td>
+                  {{additionalStatsData.rmse.toFixed(3)}}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -103,6 +114,7 @@
 
 
     </div>
+
     <div id="chart">
       <div id="chart-holder" class="standard-card-style">
         <canvas id="chart-canvas" style="height: 100%!important; width: 100%!important;"></canvas>
@@ -112,7 +124,7 @@
       <table *ngIf="historyflag">
         <thead>
         <tr id="thead-tr">
-          <th>Timestamp</th>
+          <th>{{tableTitle}}</th>
           <th>Predicted {{categoryLabel}}</th>
           <th>{{categoryLabel}}</th>
         </tr>
@@ -120,22 +132,22 @@
         <tbody>
           <tr *ngFor=" let row of data">
             <td>{{row.timestamp}}</td>
-            <td>{{row.predictedValue.toFixed(3)}}</td>
-            <td>{{row.value.toFixed(3)}}</td>
+            <td>{{row.predictedValue}}</td>
+            <td>{{row.value}}</td>
           </tr>
         </tbody>
       </table>
       <table *ngIf="predictionFlag">
         <thead>
         <tr id="thead-tr">
-          <th>Timestamp</th>
+          <th>{{tableTitle}}</th>
           <th>Predicted {{categoryLabel}}</th>
         </tr>
         </thead>
         <tbody>
           <tr *ngFor=" let row of data">
             <td>{{row.timestamp}}</td>
-            <td>{{row.predictedValue.toFixed(3)}}</td>
+            <td>{{row.predictedValue}}</td>
           </tr>
         </tbody>
       </table>
@@ -151,3 +163,11 @@
     </div>
   </div>
 
+
+  <div class="hover-form" *ngIf="formForNewJob">
+    <app-device-job-form [deviceId]="device.id" (output)="formForNewJob = false"></app-device-job-form>
+  </div>
+
+  <div class="hover-form" *ngIf="displayTurnDialog">
+    <app-confirm-window [text]="'Are you sure that you want to change status of this device?'" (output)="turnDeviceForm($event)"></app-confirm-window>
+  </div>

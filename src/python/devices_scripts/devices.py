@@ -341,7 +341,43 @@ def vacuum_cleaner():
     }
     db.devices.insert_one(device_data)
 
-def callMethods():
+def battery():
+    NUM_DAYS = 365
+    NUM_HOURS_PER_DAY = 24
+    BATTERY_MIN_CONSUMPTION = 0.04
+    BATTERY_MAX_CONSUMPTION = 0.05
+
+    battery_data = []
+
+    start_date = datetime(2023, 1, 1)
+
+    for day in range(NUM_DAYS):
+        for hour in range(NUM_HOURS_PER_DAY):
+            if hour >= 6 and hour < 20:  # daytime
+                battery_consumption = round(random.uniform(BATTERY_MIN_CONSUMPTION, BATTERY_MAX_CONSUMPTION), 3)
+            else:  # nighttime
+                battery_consumption = -round(random.uniform(BATTERY_MIN_CONSUMPTION, BATTERY_MAX_CONSUMPTION), 3)
+            if len(battery_data) > 0:
+                battery_level = battery_data[-1]["value"] - battery_consumption
+            else:
+                battery_level = 1 - battery_consumption
+            battery_level = min(max(battery_level, 0), 1)  # clamp between 0 and 1
+            battery_level = round( battery_level, 3)
+            timestamp = start_date + timedelta(hours=hour)
+            battery_data.append({
+                "timestamp": timestamp,
+                "value": battery_level
+            })
+        start_date += timedelta(days=1)
+
+    device_data = {
+        "type": 11,
+        "name": "Battery",
+        "usage": battery_data
+    }
+    db.devices.insert_one(device_data)
+
+def callMethods():  
     fridge()
     water_heater()
     solar_panel()
@@ -352,6 +388,7 @@ def callMethods():
     night_lamp()
     microwave()
     vacuum_cleaner()
+    battery()
 
 callMethods()
 

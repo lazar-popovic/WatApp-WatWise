@@ -104,10 +104,36 @@
 
 #filter {
   position: absolute;
-  bottom: 0px;
-  left: 0px;
-  width: 100%;
-  height: 60px;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  width: 500px;
+  height: 100%;
   z-index: 3;
-  background-color: wheat;
+  background-color: #E1E1E1;
+  box-shadow: 1px 4px 5px 4px rgba(0,0,0,0.5);
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#filter div {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+#filter select {
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  border: 0px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#city-chart {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: white;
+  height: 400px;
 }

@@ -12,7 +12,7 @@ namespace API.BL.Interfaces
         Task<Response<Device>> GetByIdAsync(int id);
         Task<Response<String>> UpdateDevice(int id, DeviceNameAndDataShareUpdateViewModel request);
         Task<Response<String>> DeleteDevice(int id);
-        Task<Response<String>> AddDeviceViewModel(DeviceViewModel devicee);
+        Task<Response<object>> AddDeviceViewModel(DeviceViewModel devicee);
         Task<Response<List<DeviceType>>> GetDeviceTypesByCategory(int id);
         Response<object> GetDevicesByUserId(int userId);
         Task<Response<RegisterResponseViewModel>> TurnDevicesOnOff(DeviceControlViewModel request);
@@ -21,5 +21,6 @@ namespace API.BL.Interfaces
         Task<Response<RegisterResponseViewModel>> ShareDeviceDataWithDSO(DeviceControlViewModel request);
         Task<Response<object>> Top3DevicesByUserId(int userId);
         Task<Response> GetDeviceSubtypesByType(int deviceTypeId);
+        Task<Response> GetDevicesIdAndNameByUserId(int userId);
     }
 }

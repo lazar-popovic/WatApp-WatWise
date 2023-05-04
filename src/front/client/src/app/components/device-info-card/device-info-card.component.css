@@ -1,25 +1,26 @@
 #device-details-holder {
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   box-sizing: border-box;
 }
-#device-details-holder {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  width: 100%;
+
+.device-detail {
+  display: flex;
+  width: calc(50% - 10px);
+  margin-bottom: 20px;
   box-sizing: border-box;
 }
 
 @media (max-width: 599px) {
-  #device-details-holder {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
   .device-detail {
+    width: 100%;
     flex-direction: row;
-    display: flex;
     justify-content: space-between;
   }
 }
+
 .device-detail {
   padding: 5px;
   box-sizing: border-box;

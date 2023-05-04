@@ -44,4 +44,19 @@ public class LocationController : ControllerBase
     {
         return Ok(await _geocodingService.GeoCodeYandex(request));
     }
+    [HttpGet("distinct-city")]
+    public async Task<IActionResult> GetAllDistinctCity()
+    {
+        return Ok(await locationBL.GetAllLocationDistinctCity());
+    }
+    [HttpGet("distinct-neighborhood")]
+    public async Task<IActionResult> GetAllNeighborhood(string city)
+    {
+        return Ok(await locationBL.GetAllNeighborhood(city));
+    }
+    [HttpGet("distinct-location")]
+    public async Task<IActionResult> GetAllLocationWithNeighborhood(string city, string neighborhood)
+    {
+        return Ok(await locationBL.GetAllLocationWithNeighborhood(city, neighborhood));
+    }
 }

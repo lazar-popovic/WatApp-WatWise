@@ -1,0 +1,17 @@
+<div class="card-holder" [ngBusy]="busy">
+  <div class="title">
+    <p>Device schedules</p>
+  </div>
+  <div class="no-job" *ngIf="deviceJob == null || deviceJob.id == 0">
+    <button (click)="outputEmit()">+ Create job</button>
+  </div>
+  <div class="job" *ngIf="deviceJob != null && deviceJob.id != 0">
+    <p>This device is set to be turned
+      <span *ngIf="deviceJob.turn" style="color: #3acc5e; font-weight: bold;">On</span>
+      <span *ngIf="!deviceJob.turn"  style="color: #c15757; font-weight: bold;">Off</span>
+      <br>from {{deviceJob.startDate}}<br>to {{deviceJob.endDate}}
+      <span *ngIf="deviceJob.repeat"><br>This will repeat every day</span>
+    </p>
+  </div>
+</div>
+

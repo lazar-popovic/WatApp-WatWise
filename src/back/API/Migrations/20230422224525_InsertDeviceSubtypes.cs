@@ -110,6 +110,16 @@ namespace API.Migrations
                     values: new object[] { subtype, 10 }
                 );
             }
+            // BATTERY
+            subtypes = new[] { "Generac", "Tesla", "Panasonic", "LG", "Jackery", "Backcountry" };
+            foreach (string subtype in subtypes)
+            {
+                migrationBuilder.InsertData(
+                    table: "DeviceSubtypes",
+                    columns: new[] { "SubtypeName", "DeviceTypeId" },
+                    values: new object[] { subtype, 11 }
+                );
+            }
 
         }
 

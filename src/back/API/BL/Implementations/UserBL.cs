@@ -6,6 +6,7 @@ using API.Models.Entity;
 using API.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using API.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.BL.Implementations
 {
@@ -286,6 +287,27 @@ namespace API.BL.Implementations
             response.Success = response.Errors.Count == 0;
 
             return response;
+        }
+
+        public async Task<Response<string>> DeleteProfilePictureAsync(int userId)
+        {
+            var response = new Response<string>();
+            var user = _userDal.DeleteProfilePictureAsync(userId);
+
+            if (user == null)
+            {
+                response.Errors.Add("User is null");
+                response.Success = false;
+            }
+           
+            response.Data = "Pass";
+
+            response.Success = response.Errors.Count() == 0;
+
+            return response;
+
+
+
         }
     }
 }
