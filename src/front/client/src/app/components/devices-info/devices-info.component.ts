@@ -24,11 +24,7 @@ export class DevicesInfoComponent implements OnInit{
   prosumeDevices: Device[] = [];
   storageDevices: Device[] = [];
 
-  constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService, private route: Router, private deviceInputComponent: DeviceInputComponent) {
-    this.deviceInputComponent.refreshEvent.subscribe(() => {
-      console.log('catched');
-      this.getDevices(); 
-    });
+  constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService, private route: Router) {
   }
 
   ngOnInit(): void {

@@ -11,8 +11,7 @@ import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
   styleUrls: ['./device-input.component.css']
 })
 export class DeviceInputComponent implements OnInit{
-  @Output() refreshEvent = new EventEmitter<void>();
-  
+
   showDevices : boolean = false;
 
   @Input() showAddDevice = true;
