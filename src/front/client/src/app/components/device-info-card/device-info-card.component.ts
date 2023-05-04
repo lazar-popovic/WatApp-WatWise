@@ -28,8 +28,9 @@ export class DeviceInfoCardComponent implements OnInit {
   }
 
   onSliderChange( value: boolean) {
-    this.output.emit( true);
-    this.device.activityStatus = value
+    this.output.emit( value);
+    console.log( "Value: " + value );
+    /*this.device.activityStatus = value
     console.log( value);
 
     this.deviceService.patchDeviceActivityStatus( this.device.id, value).subscribe(
@@ -39,6 +40,6 @@ export class DeviceInfoCardComponent implements OnInit {
           this.device.activityStatus = value;
         }
       }
-    );
+    );*/
   }
 }

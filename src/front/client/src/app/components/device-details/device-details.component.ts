@@ -13,6 +13,7 @@ import {DatePipe} from "@angular/common";
 import { ViewEncapsulation } from '@angular/core';
 //import { JWTService } from 'src/app/services/jwt.service';
 import { JWTService } from '../../services/jwt.service';
+import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
 
 
 interface DatepickerOptions {
@@ -71,7 +72,8 @@ export class DeviceDetailsComponent implements OnInit
                  private route: ActivatedRoute,
                  private router: Router,
                  private deviceDataService: DeviceDataService,
-                 private jwtService: JWTService) {
+                 private jwtService: JWTService,
+                 private toastrNotifService: ToastrNotifService) {
       this.roleId = this.jwtService.roleId;
       this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
         result => {
@@ -596,10 +598,24 @@ export class DeviceDetailsComponent implements OnInit
     }
 
     displayTurnDialog: boolean = false;
-
+    changeTo: boolean = false;
     turnDeviceForm( status: boolean) {
       console.log( "Status: " + status);
-
+      if( status == true) {
+        this.device.activityStatus = this.changeTo;
+        this.deviceService.patchDeviceActivityStatus( this.device.id, this.changeTo).subscribe(
+          (result: any) => {
+            if( result.body.success) {
+              this.toastrNotifService.showSuccess( result.body.data.message);
+              this.device.activityStatus = this.changeTo;
+            }
+          }
+        );
+      }
+      else {
+        this.device.activityStatus = !this.changeTo;
+        this.toastrNotifService.showErrors(["Status of device was not changed!"]);
+      }
       this.displayTurnDialog = false;
     }
   }
