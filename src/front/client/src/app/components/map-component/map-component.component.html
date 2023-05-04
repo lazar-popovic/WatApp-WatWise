@@ -34,9 +34,9 @@
     <div *ngIf="selectedLocation != null">
       <div id="location-header">
         <h3>{{selectedLocation.address}} {{selectedLocation.addressNumber}}<br>{{selectedLocation.city}}</h3>
-        <h3><span style="color: rgba(191, 65, 65, 1);" *ngIf="selectedLocation.totalPowerUsage<0">{{selectedLocation.totalPowerUsage.toFixed(3)}}kWh </span>
+        <h3><span style="color: #bf4141;" *ngIf="selectedLocation.totalPowerUsage<0">{{selectedLocation.totalPowerUsage.toFixed(3)}}kWh </span>
             <span style="color: #3e3e3e" *ngIf="selectedLocation.totalPowerUsage==0">{{selectedLocation.totalPowerUsage.toFixed(3)}}kWh </span>
-            <span style="color: rgba(69, 94, 184, 1);" *ngIf="selectedLocation.totalPowerUsage>0">{{selectedLocation.totalPowerUsage.toFixed(3)}}kWh </span> <i class="fa fa-info-circle" aria-hidden="true" [matTooltip]="'This number represents power usage for this location. Represents sum of all production and consumption for this hour. If number is below zero, that means there is more consumption of electrical energy at this location. If power usage is bigger than zero, then there is more production of electrical energy.'"></i></h3>
+            <span style="color: #455eb8;" *ngIf="selectedLocation.totalPowerUsage>0">{{selectedLocation.totalPowerUsage.toFixed(3)}}kWh </span> <i class="fa fa-info-circle" aria-hidden="true" [matTooltip]="'This number represents power usage for this location. Represents sum of all production and consumption for this hour. If number is below zero, that means there is more consumption of electrical energy at this location. If power usage is bigger than zero, then there is more production of electrical energy.'"></i></h3>
       </div>
       <div id="user-div" *ngFor="let user of users">
         <h4 style="margin-bottom: 5px">{{user.firstname}} {{user.lastname}}</h4>
