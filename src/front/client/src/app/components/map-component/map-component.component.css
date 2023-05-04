@@ -82,6 +82,7 @@
   position: relative;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 #user-div h3 {
@@ -124,7 +125,7 @@
 }
 
 #filter select {
-  width: 100%;
+  width: calc(100% - 40px);
   height: 40px;
   border-radius: 10px;
   border: 0px;
@@ -136,4 +137,26 @@
   box-sizing: border-box;
   background-color: white;
   height: 400px;
+}
+
+#prosumers {
+  width: 100%;
+  height: calc(100% - 520px);
+  background-color: white;
+  box-sizing: border-box;
+  padding: 15px!important;
+}
+
+#location-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#select-city, #select-neighborhood {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }

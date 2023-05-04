@@ -82,15 +82,15 @@ export class MapComponentComponent implements OnInit {
     for (const location of this.locations) {
       let icon = 0;
       console.log( location.totalPowerUsage );
-      if( location.totalPowerUsage < -1.5 )
+      if( location.totalPowerUsage < -1 )
         icon = 0;
-      else if( location.totalPowerUsage < -1.5 )
+      else if( location.totalPowerUsage < 0 )
         icon = 1;
-      else if( location.totalPowerUsage < -0.5 )
+      else if( location.totalPowerUsage == 0 )
         icon = 2;
-      else if( location.totalPowerUsage < 0.5)
+      else if( location.totalPowerUsage <= 1)
         icon = 3;
-      else if( location.totalPowerUsage > 1.5 )
+      else if( location.totalPowerUsage > 1 )
         icon = 4;
       console.log( icon);
       const marker = L.marker([location.latitude, location.longitude], { icon: customIcons[ icon] })
@@ -150,6 +150,7 @@ export class MapComponentComponent implements OnInit {
           this.locations = result.data;
           console.log( this.locations);
           this.placeMarkers();
+          this.placeRadius();
         }
         else
         {
@@ -160,6 +161,44 @@ export class MapComponentComponent implements OnInit {
       }
     );
   }
+
+  circles: L.Circle[] = [];
+
+  placeRadius() {
+    /*const maxProduction = this.locations.reduce((max, obj) => {
+      return obj.poweruage > max.poweruage ? obj : max;
+    });*/
+
+    const maxConsumption = this.locations.reduce((max, obj) => {
+      return obj.poweruage < max.poweruage ? obj : max;
+    });
+    this.circles.forEach((circle) => {
+      circle.remove();
+    });
+
+    if (maxConsumption) {
+      console.log(maxConsumption);
+      const circleRed = L.circle([maxConsumption.latitude, maxConsumption.longitude], {
+        color: '#bf4141',
+        fillColor: '#bf4141',
+        fillOpacity: 0.4,
+        radius: 500
+      }).addTo(this.map);
+      this.circles.push(circleRed);
+    }
+
+    /*if (maxProduction) {
+      console.log(maxProduction);
+      const circleBlue = L.circle([maxProduction.latitude, maxProduction.longitude], {
+        color: '#455eb8',
+        fillColor: '#455eb8',
+        fillOpacity: 0.4,
+        radius: 500
+      }).addTo(this.map);
+      this.circles.push(circleBlue);
+    }*/
+  }
+
 
   getUsersForLocation(locationId: number) {
     this.selectedLocation = this.locations.find( l => l.id == locationId)

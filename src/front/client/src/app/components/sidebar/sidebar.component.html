@@ -18,20 +18,20 @@
 
         <div *ngIf="role <= 2">
             <div *ngFor="let item of menuEmployee">
-                <div *ngIf="item.toLowerCase()== url">
+                <div *ngIf="item.toLowerCase().replace(' ', '-')== url">
                     <div class="sidebar-item-active" (click)="clickHandler($event, 2)">{{item}}</div>
                 </div>
-                <div *ngIf="item.toLowerCase() !=url">
+                <div *ngIf="item.toLowerCase().replace(' ', '-') !=url">
                     <div class="sidebar-item" (click)="clickHandler($event, 2)">{{item}}</div>
                 </div>
             </div>
 
             <div *ngIf="role == 1">
                 <div *ngFor="let item of menuAdmin">
-                    <div *ngIf="item.toLowerCase()== url">
+                    <div *ngIf="item.toLowerCase().replace(' ', '-') == url">
                         <div class="sidebar-item-active" (click)="clickHandler($event, 2)">{{item}}</div>
                     </div>
-                    <div *ngIf="item.toLowerCase() !=url">
+                    <div *ngIf="item.toLowerCase().replace(' ', '-') !=url">
                         <div class="sidebar-item" (click)="clickHandler($event, 2)">{{item}}</div>
                     </div>
                 </div>
