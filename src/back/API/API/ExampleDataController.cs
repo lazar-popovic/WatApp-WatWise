@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hangfire;
 using API.Models.Entity;
 using Microsoft.EntityFrameworkCore;
+using API.BL.Implementations;
 
 namespace API.API;
 
@@ -70,6 +71,12 @@ public class ExampleDataController : ControllerBase
         await _simulator.SetCurrentDataTo0IfOff();
         return Ok();
     }
-    
+
+    [HttpGet("get-device")]
+    public async Task<IActionResult> get( int deviceId)
+    {
+        return Ok(await _dbContext.Devices.Where(d => d.Id == deviceId).FirstOrDefaultAsync());
+    }
+
 }
 

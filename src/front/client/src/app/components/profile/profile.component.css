@@ -99,7 +99,12 @@
     align-items: center;
   }
   .profile-container > .profile-wraper {
-    margin: 0 auto;
+    margin: 100px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .profile-info-header {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -107,6 +112,7 @@
   .profile-main-info {
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
   .profile-info-header > .profile-main-info h1 {
     font-size: 30px;

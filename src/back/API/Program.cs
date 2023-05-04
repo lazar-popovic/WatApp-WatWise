@@ -11,6 +11,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using API.Services.DeviceScheduling.Implementations;
+using API.Services.DeviceScheduling.Interfaces;
 using API.Services.DeviceSimulatorService.Implementation;
 using API.Services.DeviceSimulatorService.Interfaces;
 using API.Services.JWTCreation.Interfaces;
@@ -96,6 +98,7 @@ builder.Services.AddScoped<ILocationBL, LocationBL>();
 builder.Services.AddTransient<IRecurringJobManager, RecurringJobManager>();
 builder.Services.AddTransient<IDeviceDataDAL, DeviceDataDAL>();
 builder.Services.AddTransient<IDeviceDataBL, DeviceDataBL>();
+builder.Services.AddTransient<IDeviceScheduler, DeviceScheduler>();
 
 //JWT Authenthication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {

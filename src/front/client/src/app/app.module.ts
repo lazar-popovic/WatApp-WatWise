@@ -55,6 +55,9 @@ import { LogoHolderComponent } from './components/logo-holder/logo-holder.compon
 import { DeviceInfoCardComponent } from './components/device-info-card/device-info-card.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
+import { DeviceJobFormComponent } from './components/device-job-form/device-job-form.component';
+import { DeviceScheduleCardComponent } from './components/device-schedule-card/device-schedule-card.component';
+import { ConfirmWindowComponent } from './components/confirm-window/confirm-window.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +97,10 @@ import { UploadImageComponent } from './components/upload-image/upload-image.com
     DeleteDeviceComponent,
     WeatherForecastComponent,
     TooltipComponent,
-    UploadImageComponent
+    UploadImageComponent,
+    DeviceJobFormComponent,
+    DeviceScheduleCardComponent,
+    ConfirmWindowComponent
   ],
   imports: [
     BrowserModule,

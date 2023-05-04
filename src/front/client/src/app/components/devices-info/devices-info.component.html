@@ -34,7 +34,7 @@
         <div class="device-item" *ngFor="let device of prosumeDevices" (click)="toDevice( device.id)">
           <div class="device-item-header">
             <div class="device-item-header-model">
-              <img src="/assets/consumer.png" alt="consumer">
+              <img src="/assets/prosumer.png" alt="consumer">
               <h3>{{device.name}}</h3>
             </div>
             {{device.type}}
@@ -57,15 +57,14 @@
         <div class="device-item" *ngFor="let device of storageDevices" (click)="toDevice( device.id)">
           <div class="device-item-header">
             <div class="device-item-header-model">
-              <img src="/assets/consumer.png" alt="consumer">
+              <img src="/assets/storage.png" alt="consumer">
               <h3>{{device.name}}</h3>
             </div>
             {{device.type}}
           </div>
           <div class="device-item-footer s">
-            <div *ngIf="device.activityStatus"><img src="/assets/active.png" alt="active"></div>
-            <div *ngIf="!device.activityStatus"><img src="/assets/nonactive.png" alt="non-active"></div>
-            {{device.usage}} kWh
+            <div style="width: 60%;"></div>
+            {{(device.usage*100).toFixed(0)}} %
           </div>
         </div>
       </div>

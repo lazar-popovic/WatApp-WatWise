@@ -33,7 +33,7 @@ export class AddEmployeeComponent {
   }
 
   hide() {
-    let thisComponent = document.querySelector('.employee-add') as HTMLDivElement;
-    thisComponent.style.display = "None";
+    let thisComponent = document.querySelector('.employee-overview-overlay') as HTMLDivElement;
+    thisComponent.style.display = "none";
   }
 }
