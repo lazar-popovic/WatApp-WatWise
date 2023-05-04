@@ -23,8 +23,8 @@ export class SidebarComponent {
   menuEmployee = [
     'Overview',
     'Map',
-    'Users',
-    'Consumption'
+    'Prosumers',
+    'Energy usage'
   ];
   menuAdmin = [
     'Employees'
@@ -53,7 +53,7 @@ export class SidebarComponent {
     if(role == 1)
       this.route.navigateByUrl(`/prosumer/${(element as HTMLDivElement).innerHTML.toLowerCase()}`);
     else if(role == 2)
-      this.route.navigateByUrl(`/dso/${(element as HTMLDivElement).innerHTML.toLowerCase()}`);
+      this.route.navigateByUrl(`/dso/${(element as HTMLDivElement).innerHTML.toLowerCase().replace(" ","-")}`);
   }
 
   getUser() {
