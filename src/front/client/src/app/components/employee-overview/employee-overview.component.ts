@@ -13,13 +13,19 @@ export class EmployeeOverviewComponent {
   pagesNum: number = 1;
   pageSize: any = 10;
   showPrompt: boolean = false;
+  filter : any = {
+    name: '',
+    sortOrder: '',
+    mail: ''
+  }
 
   constructor(private userService: UserService) {
     this.getEmployees();
   }
 
   getEmployees() {
-    this.userService.getEmployees(this.pageSize, this.pagesNum).subscribe((result: any) => {
+    this.userService.getEmployees(this.filter.name, this.filter.sortOrder, this.pageSize, this.pagesNum).subscribe((result: any) => {
+      this.users = [];
       for(let item of result.data) {
         let user = new User();
         user.firstName = item.firstname; 
@@ -34,8 +40,7 @@ export class EmployeeOverviewComponent {
   }
 
   addEmployee() {
-    //(document.querySelector('.overview-container') as HTMLDivElement).style.backgroundColor = "light grey";
-    let employeeAddPrompt = document.querySelector('.employee-add') as HTMLDivElement;
+    let employeeAddPrompt = document.querySelector('.employee-overview-overlay') as HTMLDivElement;
     employeeAddPrompt.style.display = "block";
   }
 

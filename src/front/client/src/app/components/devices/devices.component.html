@@ -4,13 +4,13 @@
   <div class="devices-container">
 
     <form>
-      <button (click)="showAddDevice = true">+Add device</button>
+      <button (click)="showAddDevice()">+Add device</button>
     </form>
     <app-devices-info></app-devices-info>
   </div>
-  <div *ngIf="showAddDevice" class="devices-add-device">
+  <div class="devices-add-device">
     <div class="add-device-position">
-      <app-device-input [showAddDevice] = "showAddDevice" (output) = "showAddDevice = false"></app-device-input>
+      <app-device-input></app-device-input>
     </div>
   </div>
 </div>

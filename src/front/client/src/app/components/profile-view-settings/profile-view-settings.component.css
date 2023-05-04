@@ -191,4 +191,11 @@ p {
         color: white;
         width: 70%;
     }
+
+    .profile-overview-add-new {
+        z-index: 9999;
+        position: fixed;
+        left: 15%;
+        top: 20%;
+    }    
 }

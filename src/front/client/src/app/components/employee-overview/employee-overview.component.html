@@ -4,12 +4,7 @@
         <div class="overview-filter-holder">
             <form>
                 <div class="search-input">
-                    <input>
-                    <button>Search by name</button>
-                </div>
-                <div class="search-input">
-                    <input>
-                    <button>Search by Mail</button>
+                    <input name="fullName" [(ngModel)]="filter.name" (keydown)="getEmployees()" placeholder = "Search by name" autocomplete="off">
                 </div>
                 <button id="add-user-btn" (click)="addEmployee()">+Add Employee</button>
             </form>
@@ -53,6 +48,8 @@
         </div>
     </div>
 </div>
-<div class="employee-add">
-    <app-add-employee></app-add-employee>
+<div class="employee-overview-overlay">
+    <div class="employee-overview-add-new">
+        <app-add-employee></app-add-employee>
+    </div>
 </div>

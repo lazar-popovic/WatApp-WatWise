@@ -2,7 +2,7 @@
   <app-sidebar></app-sidebar>
   <div class="profile-wraper">
     <div class="profile-header">
-      <img src="https://www.tu-ilmenau.de/unionline/fileadmin/_processed_/0/0/csm_Person_Yury_Prof_Foto_AnLI_Footgrafie__2_.JPG_5845266f99.jpg" alt="Profile picture">
+      <img [src]="user.profileImage" alt="Profile picture">
       <div class="profile-main">
         <div class="profile-info-header">
           <div class="profile-main-info">
@@ -12,7 +12,7 @@
           </div>  
           <h3>{{user.role}}</h3>
       </div>
-        <div class="profile-location" *ngIf="user.roleId == 3">
+        <div class="profile-location" *ngIf="user.roleId == 1">
           <img src="/assets/pin_grey.png">
           <h2>{{user.city}}, {{user.address}} {{user.num}}</h2>
         </div>

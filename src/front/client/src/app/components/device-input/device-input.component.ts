@@ -11,6 +11,7 @@ import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
   styleUrls: ['./device-input.component.css']
 })
 export class DeviceInputComponent implements OnInit{
+
   showDevices : boolean = false;
 
   @Input() showAddDevice = true;
@@ -72,7 +73,6 @@ export class DeviceInputComponent implements OnInit{
   addDevice()
   {
     this.newDevice.userId = this.jwtService.userId;
-    console.log( this.newDevice);
     this.busyAddDevice = this.deviceService.insertDevice( this.newDevice).subscribe(
       result => {
         if( result.body.success)
@@ -86,10 +86,10 @@ export class DeviceInputComponent implements OnInit{
         }
       }
     )
+    this.refresh();
   }
 
   refresh() {
     this.output.emit(false);
   }
-
 }
