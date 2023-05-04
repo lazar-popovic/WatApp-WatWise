@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Injectable, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DeviceService } from 'src/app/services/device.service';
@@ -10,7 +10,12 @@ import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
   templateUrl: './device-input.component.html',
   styleUrls: ['./device-input.component.css']
 })
+@Injectable({
+  providedIn: 'root'
+})
 export class DeviceInputComponent implements OnInit{
+  @Output() refreshEvent = new EventEmitter<void>();
+  
   showDevices : boolean = false;
 
   newDevice = {
@@ -69,7 +74,6 @@ export class DeviceInputComponent implements OnInit{
   addDevice()
   {
     this.newDevice.userId = this.jwtService.userId;
-    console.log( this.newDevice);
     this.busyAddDevice = this.deviceService.insertDevice( this.newDevice).subscribe(
       result => {
         if( result.body.success)
@@ -82,11 +86,11 @@ export class DeviceInputComponent implements OnInit{
         }
       }
     )
-    this.refresh();
+    this.refreshEvent.emit();
+    this.hideAddDevice();
   }
 
-  refresh() {
-    this.route.navigateByUrl('/prosumer/devices');
+  hideAddDevice() {
+    (document.querySelector('.devices-add-device') as HTMLDivElement).style.display = "none";
   }
-
 }

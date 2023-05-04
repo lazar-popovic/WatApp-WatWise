@@ -14,8 +14,6 @@ import {Router} from "@angular/router";
 })
 export class DevicesComponent
 {
-    showAddDevice : boolean = false;
-
     newDevice: any = {
       userId: 1,
       deviceTypeId: 1,
@@ -41,12 +39,11 @@ export class DevicesComponent
       )
     }
 
-    refresh() {
-      this.route.navigateByUrl('/prosumer/devices');
+    showAddDevice() {
+      (document.querySelector('.devices-add-device') as HTMLDivElement).style.display = "block";
     }
 
     toDevice( id: number) {
-      console.log( id);
       this.route.navigate(['/prosumer/device',id]);
     }
 }
