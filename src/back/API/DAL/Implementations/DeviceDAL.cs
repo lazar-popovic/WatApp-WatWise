@@ -191,6 +191,36 @@ namespace API.DAL.Implementations
             }
 
             device!.ActivityStatus = false;
+
+            var rand = new Random();
+            var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+            var usage = await _dbContext.DeviceEnergyUsage.Where(du => du.DeviceId == device.Id && du.Timestamp == now).FirstOrDefaultAsync();
+            var deviceType = await _dbContext.DeviceTypes.Where(dt => dt.Id == device.DeviceTypeId).FirstOrDefaultAsync();
+            if (usage != null)
+            {
+                Console.WriteLine(usage.Timestamp);
+                if (deviceType?.Id == 3 && device?.ActivityStatus == true)
+                {
+                    usage.Value = Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+                }
+                else if (deviceType?.Id == 3 && device?.ActivityStatus == false)
+                {
+                    usage.Value = 0;
+                }
+                else if (deviceType?.Id == 11)
+                {
+                    usage.Value = Math.Min(Math.Max(Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3), 0), 1);
+                }
+                else if (device?.ActivityStatus == true)
+                {
+                    usage.Value = Math.Round((double)(deviceType?.WattageInkW * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+                }
+                else
+                {
+                    usage.Value = 0;
+                }
+            }
+
             await _dbContext.SaveChangesAsync();
 
             response.Success = response.Errors.Count == 0;
@@ -211,6 +241,36 @@ namespace API.DAL.Implementations
             }
 
             device!.ActivityStatus = true;
+
+            var rand = new Random();
+            var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+            var usage = await _dbContext.DeviceEnergyUsage.Where(du => du.DeviceId == device.Id && du.Timestamp == now).FirstOrDefaultAsync();
+            var deviceType = await _dbContext.DeviceTypes.Where(dt => dt.Id == device.DeviceTypeId).FirstOrDefaultAsync();
+            if (usage != null)
+            {
+                Console.WriteLine(usage.Timestamp);
+                if (deviceType?.Id == 3 && device?.ActivityStatus == true)
+                {
+                    usage.Value = Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+                }
+                else if (deviceType?.Id == 3 && device?.ActivityStatus == false)
+                {
+                    usage.Value = 0;
+                }
+                else if (deviceType?.Id == 11)
+                {
+                    usage.Value = Math.Min(Math.Max(Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3), 0), 1);
+                }
+                else if (device?.ActivityStatus == true)
+                {
+                    usage.Value = Math.Round((double)(deviceType?.WattageInkW * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+                }
+                else
+                {
+                    usage.Value = 0;
+                }
+            }
+
             await _dbContext.SaveChangesAsync();
 
             response.Success = response.Errors.Count == 0;

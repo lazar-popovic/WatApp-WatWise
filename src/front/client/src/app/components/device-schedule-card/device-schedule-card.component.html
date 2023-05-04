@@ -1,9 +1,9 @@
 <div class="card-holder" [ngBusy]="busy">
   <div class="title">
-    <p>Device schedules</p>
+    <p>Device routines</p>
   </div>
   <div class="no-job" *ngIf="deviceJob == null || deviceJob.id == 0">
-    <button (click)="outputEmit()">+ Create job</button>
+    <button (click)="outputEmit()">+ Create routine</button>
   </div>
   <div class="job" *ngIf="deviceJob != null && deviceJob.id != 0">
     <p>This device is set to be turned

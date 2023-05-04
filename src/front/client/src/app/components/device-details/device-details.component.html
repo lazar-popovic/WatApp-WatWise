@@ -18,7 +18,7 @@
     </div>
     <div id="device-details">
       <div id="device-card-holder">
-        <app-device-info-card [device]="device" (output)="displayTurnDialog = true"></app-device-info-card>
+        <app-device-info-card [device]="device" (output)="displayTurnDialog = true; changeTo = $event"></app-device-info-card>
       </div>
       <div id="device-schedule-holder" class="standard-card-style" *ngIf="device.deviceType.category!=0">
         <app-device-schedule-card [deviceId]="device.id" (output)="formForNewJob = true"></app-device-schedule-card>
