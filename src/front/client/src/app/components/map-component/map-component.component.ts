@@ -82,15 +82,15 @@ export class MapComponentComponent implements OnInit {
     for (const location of this.locations) {
       let icon = 0;
       console.log( location.totalPowerUsage );
-      if( location.totalPowerUsage < -1.5 )
+      if( location.totalPowerUsage < -1 )
         icon = 0;
-      else if( location.totalPowerUsage < -1.5 )
+      else if( location.totalPowerUsage < 0 )
         icon = 1;
-      else if( location.totalPowerUsage < -0.5 )
+      else if( location.totalPowerUsage == 0 )
         icon = 2;
-      else if( location.totalPowerUsage < 0.5)
+      else if( location.totalPowerUsage <= 1)
         icon = 3;
-      else if( location.totalPowerUsage > 1.5 )
+      else if( location.totalPowerUsage > 1 )
         icon = 4;
       console.log( icon);
       const marker = L.marker([location.latitude, location.longitude], { icon: customIcons[ icon] })

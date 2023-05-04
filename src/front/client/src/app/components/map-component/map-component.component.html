@@ -5,6 +5,7 @@
 
 <div id="filter">
   <div id="select-city">
+    <app-tooltip [message]="'This select contains all cities in which prosumer has been registered.'"></app-tooltip>
     <select name="city" (change)="getNeighborhoods()" [(ngModel)]="selectedCity">
       <option *ngFor="let city of cities">{{city}}</option>
     </select>
@@ -23,13 +24,29 @@
     ></ngx-charts-bar-vertical-2d>
   </div>
   <div id="select-neighborhood">
+    <app-tooltip [message]="'For selected city above, this select contains all neighborhoods in which prosumer has been registered.'"></app-tooltip>
     <select name="neighborhood" (change)="getLocationsForNeighborhood()" [(ngModel)]="selectedNeighborhood">
       <option>All</option>
       <option *ngFor="let neighborhood of neighborhoods">{{neighborhood}}</option>
     </select>
   </div>
+  <div id="prosumers" class="standard-card-style">
+    <div *ngIf="selectedLocation != null">
+      <div id="location-header">
+        <h3>{{selectedLocation.address}} {{selectedLocation.addressNumber}}<br>{{selectedLocation.city}}</h3>
+        <h3><span style="color: #bf4141;" *ngIf="selectedLocation.totalPowerUsage<0">{{selectedLocation.totalPowerUsage.toFixed(3)}}kWh </span>
+            <span style="color: #3e3e3e" *ngIf="selectedLocation.totalPowerUsage==0">{{selectedLocation.totalPowerUsage.toFixed(3)}}kWh </span>
+            <span style="color: #455eb8;" *ngIf="selectedLocation.totalPowerUsage>0">{{selectedLocation.totalPowerUsage.toFixed(3)}}kWh </span> <i class="fa fa-info-circle" aria-hidden="true" [matTooltip]="'This number represents power usage for this location. Represents sum of all production and consumption for this hour. If number is below zero, that means there is more consumption of electrical energy at this location. If power usage is bigger than zero, then there is more production of electrical energy.'"></i></h3>
+      </div>
+      <div id="user-div" *ngFor="let user of users">
+        <h4 style="margin-bottom: 5px">{{user.firstname}} {{user.lastname}}</h4>
+        <p style="margin-bottom: 5px;">{{user.email}}</p>
+        <button class="btn-grad" (click)="goToUser(user.id)">Details</button>
+      </div>
+    </div>
+  </div>
 </div>
-
+<!--
 <div id="user-overlay"  [ngClass]="{'show': showOverlay}" *ngIf="selectedLocation != null">
 
   <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" (click)="closeOverlay()" style="font-size: 30px; margin: 10px; float: right;"></i>
@@ -41,3 +58,4 @@
     <button class="btn-grad" (click)="goToUser(user.id)">Details</button>
   </div>
 </div>
+-->
