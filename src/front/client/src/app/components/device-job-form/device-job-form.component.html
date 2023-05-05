@@ -1,35 +1,48 @@
 <div class="device-input-holder">
   <div class="wrapper" [ngBusy]="busyAddDeviceJob">
-      <div style="display: flex; justify-content: right;" (click)="refresh()">
+      <div style="display: flex; justify-content: space-between; align-items: center;" (click)="refresh()">
+        <h2>Schedule routine</h2>
         <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;"></i>
       </div>
 
-      <h2>Schedule routine</h2>
       <form action="#" (ngSubmit)="addDeviceJob()">
+        <div id="repeat-buttons">
+          <div id="repeat-buttons-no" (click)="changeRepeat( false)">
+            <h4>Repeat once</h4>
+          </div>
+          <div id="repeat-buttons-yes" (click)="changeRepeat( true)">
+            <h4>Repeat daily</h4>
+          </div>
+        </div>
         <div class="input-box">
           <select type="text" name="deviceId" [(ngModel)]="newJob.deviceId" id="device">
             <option  *ngFor=" let element of devices" value="{{element.id}}">{{element.name}}</option>
           </select>
         </div>
-        <h3>Select starting date</h3>
-        <div class="input-box">
-          <input type="datetime-local" id="start-date">
+        <div *ngIf="!newJob.repeat">
+          <h3>Select starting date</h3>
+          <div class="input-box">
+            <input type="datetime-local" id="start-date">
+          </div>
+          <h3>Select ending date</h3>
+          <div class="input-box">
+            <input type="datetime-local" id="end-date">
+          </div>
         </div>
-        <h3>Select endindg date</h3>
-        <div class="input-box">
-          <input type="datetime-local" id="end-date">
+        <div *ngIf="newJob.repeat">
+          <h3>Select starting time</h3>
+          <div class="input-box">
+            <input type="time" id="start-time">
+          </div>
+          <h3>Select ending time</h3>
+          <div class="input-box">
+            <input type="time" id="end-time">
+          </div>
         </div>
         <div class="input-box input-checkbox">
           <h3>Turend On/Off</h3>
-          <!--<input type="checkbox" [(ngModel)]="newJob.turn" checked>-->
-          <app-slider [status]="newJob.turn" (sliderEvent)="newJob.turn = !newJob.turn"></app-slider>
+          <input type="checkbox" [(ngModel)]="newJob.turn" checked [ngModelOptions]="{standalone: true}">
         </div>
-        <div class="input-box input-checkbox">
-          <h3>Repeat everyday</h3>
-          <!--<input type="checkbox" [(ngModel)]="newJob.repeat" checked style="width: 40px!important;" checked>-->
-          <app-slider [status]="newJob.repeat" (sliderEvent)="newJob.repeat = !newJob.repeat"></app-slider>
-        </div>
-
         <div class="input-box button">
           <button type="submit">Connect</button>
         </div>

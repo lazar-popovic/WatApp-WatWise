@@ -30,6 +30,7 @@
 .wrapper form .input-box{
   height: 52px;
   margin: 3px 0 10px;
+  min-width: 262px;
 }
 form .input-box input{
   height: 100%;
@@ -111,4 +112,37 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+}
+
+#repeat-buttons {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+  justify-content: space-between;
+}
+#repeat-buttons div {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  padding: 15px!important;
+  box-sizing: border-box;
+}
+#repeat-buttons-no {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: #1676AC;
+  color: white;
+  border: 1px solid #1676AC;
+}
+#repeat-buttons-yes {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: white;
+  border: 1px solid #1676AC;
+  color: #3e3e3e;
+}
+#repeat-buttons-no h4, #repeat-buttons-yes h4 {
+  font-weight: normal!important;
 }
