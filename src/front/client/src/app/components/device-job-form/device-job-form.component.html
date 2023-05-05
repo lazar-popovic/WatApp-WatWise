@@ -6,6 +6,11 @@
       </div>
 
       <form action="#" (ngSubmit)="addDeviceJob()">
+        <div class="input-box">
+          <select type="text" name="deviceId" [(ngModel)]="newJob.deviceId" id="device">
+            <option  *ngFor=" let element of devices" value="{{element.id}}">{{element.name}}</option>
+          </select>
+        </div>
         <div id="repeat-buttons">
           <div id="repeat-buttons-no" (click)="changeRepeat( false)">
             <h4>Repeat once</h4>
@@ -13,11 +18,6 @@
           <div id="repeat-buttons-yes" (click)="changeRepeat( true)">
             <h4>Repeat daily</h4>
           </div>
-        </div>
-        <div class="input-box">
-          <select type="text" name="deviceId" [(ngModel)]="newJob.deviceId" id="device">
-            <option  *ngFor=" let element of devices" value="{{element.id}}">{{element.name}}</option>
-          </select>
         </div>
         <div *ngIf="!newJob.repeat">
           <h3>Select starting date</h3>
@@ -40,8 +40,9 @@
           </div>
         </div>
         <div class="input-box input-checkbox">
-          <h3>Turend On/Off</h3>
-          <input type="checkbox" [(ngModel)]="newJob.turn" checked [ngModelOptions]="{standalone: true}">
+          <h3>Turned On/Off</h3>
+          <app-slider [status]="newJob.turn" (sliderEvent)="newJob.turn = !newJob.turn"></app-slider>
+          <!--<input type="checkbox" [(ngModel)]="newJob.turn" checked [ngModelOptions]="{standalone: true}">-->
         </div>
         <div class="input-box button">
           <button type="submit">Connect</button>

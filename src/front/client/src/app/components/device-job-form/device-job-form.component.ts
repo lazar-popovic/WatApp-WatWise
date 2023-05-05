@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -32,7 +33,8 @@ export class DeviceJobFormComponent implements OnInit {
                private jwtService: JWTService,
                private toastrService: ToastrNotifService,
                private route: Router,
-               private deviceScheduler: DeviceSchedulerService) { }
+               private deviceScheduler: DeviceSchedulerService,
+               private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.getDevices();
@@ -73,8 +75,16 @@ export class DeviceJobFormComponent implements OnInit {
   }
 
   addDeviceJob() {
-    this.newJob.startDate = (document.querySelector('#start-date') as HTMLInputElement).value + ":00.000Z";
-    this.newJob.endDate = (document.querySelector('#end-date') as HTMLInputElement).value + ":00.000Z";
+    if( this.newJob.repeat) {
+      const currentDate = new Date();
+      this.newJob.startDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd') + "T" + (document.querySelector('#start-time') as HTMLInputElement).value + ":00.000Z";
+      this.newJob.endDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd') + "T" + (document.querySelector('#end-time') as HTMLInputElement).value + ":00.000Z";
+    }
+    else {
+      this.newJob.startDate = (document.querySelector('#start-date') as HTMLInputElement).value + ":00.000Z";
+      this.newJob.endDate = (document.querySelector('#end-date') as HTMLInputElement).value + ":00.000Z";
+    }
+
     console.log( this.newJob);
 
     this.busyAddDeviceJob = this.deviceScheduler.insertDeviceJob( this.newJob).subscribe( (result:any) => {
