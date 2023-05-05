@@ -37,8 +37,8 @@
       <p *ngIf="device.deviceType.category == 1">Currently producing</p>
     </div>
     <div>
-      <p *ngIf="device.deviceType.category == -1" style="color:rgba(191, 65, 65, 1)">-{{device.currentUsage}}kWh</p>
-      <p *ngIf="device.deviceType.category == 1" style="color:rgba(69, 94, 184, 1)">+{{device.currentUsage}}kWh</p>
+      <p *ngIf="device.deviceType.category == -1" style="color:rgba(191, 65, 65, 1)">{{device.currentUsage}}kWh</p>
+      <p *ngIf="device.deviceType.category == 1" style="color:rgba(69, 94, 184, 1)">{{device.currentUsage}}kWh</p>
     </div>
   </div>
   <div class="device-detail" *ngIf="device.deviceType.category == 0">

@@ -121,12 +121,12 @@ namespace API.DAL.Implementations
         }
 
 
-        public async Task<List<User>?> FindUser(int id, string search, string mail, int pageSize, int pageNum, string order)
+        public async Task<object> FindUser(int id, string search, string mail, int pageSize, int pageNum, string order)
         {
           
             var fullName = search?.Trim().ToLower().Split(" ");
 
-            var users = await _dbContext.Users.Where( u => u.RoleId == id).Select(o => new User
+            var users = await _dbContext.Users.Where( u => u.RoleId == id).Select(o => new
                                                 {
                                                     Id = o.Id,
                                                     Email = o.Email,
@@ -150,14 +150,14 @@ namespace API.DAL.Implementations
 
             if (search != null)
             {
-                if (fullName.Length == 2)
+                if (fullName!.Length == 2)
                 {
-                    users = users.Where(o => o.Firstname.ToLower().Contains(fullName[0]) && o.Lastname.ToLower().Contains(fullName[1]))
+                    users = users.Where(o => o.Firstname!.ToLower().Contains(fullName[0]) && o.Lastname!.ToLower().Contains(fullName[1]))
                         .ToList();
                 }
                 else if (fullName.Length == 1)
                 {
-                    users = users.Where(o => o.Firstname.ToLower().Contains(fullName[0]) || o.Lastname.ToLower().Contains(fullName[0]))
+                    users = users.Where(o => o.Firstname!.ToLower().Contains(fullName[0]) || o.Lastname!.ToLower().Contains(fullName[0]))
                         .ToList();
                 }
             }
