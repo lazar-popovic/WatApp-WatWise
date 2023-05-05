@@ -14,6 +14,8 @@ import {Router} from "@angular/router";
 })
 export class DevicesComponent
 {
+  showInsertDevice: boolean = false;
+
     newDevice: any = {
       userId: 1,
       deviceTypeId: 1,
