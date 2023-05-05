@@ -44,18 +44,19 @@ public class DeviceScheduler : IDeviceScheduler
             StartDate = request.StartDate,
             EndDate = request.EndDate,
             Turn = request.Turn,
-            Repeat = request.Repeat
+            Repeat = request.Repeat,
+            Canceled = false
         };
         
         
         // Set up job recurrence if needed
         if (!deviceJob.Repeat)
         {
-             firstJobId = BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn), request.StartDate.ToLocalTime());
+             firstJobId = BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn), request.StartDate.AddHours(-2));
 
             // Schedule the second job
              secondJobId =
-                BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn), request.EndDate.ToLocalTime());
+                BackgroundJob.Schedule(() => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn), request.EndDate.AddHours(-2));
              
              deviceJob.StartJobId = int.Parse(firstJobId);
              deviceJob.EndJobId = int.Parse(secondJobId);
