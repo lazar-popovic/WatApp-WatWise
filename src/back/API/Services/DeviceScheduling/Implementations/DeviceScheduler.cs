@@ -5,6 +5,7 @@ using API.Models.ViewModels;
 using API.Services.DeviceScheduling.Interfaces;
 using Hangfire;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services.DeviceScheduling.Implementations;
 
@@ -101,6 +102,50 @@ public class DeviceScheduler : IDeviceScheduler
                                                    .FirstOrDefaultAsync();
 
         return response;
+    }
+
+    public async Task<Response<List<DeviceJob>>> GetAllReccuringJobs(bool active)
+    {
+        var response = new Response<List<DeviceJob>>();
+
+        if (active)
+        {
+            var activeReccuringJobs = await _dbContext.DeviceJobs
+                .Where(jobs => jobs.Repeat && jobs.EndDate < DateTime.Now && jobs.Canceled == false).AsNoTracking()
+                .ToListAsync();
+            
+            if (activeReccuringJobs.IsNullOrEmpty())
+            {
+                response.Errors.Add("There are no active device jobs currently scheduled!");
+                response.Success = false;
+
+                return response;
+            }
+            
+            response.Data = activeReccuringJobs;
+            response.Success = true;
+
+            return response;
+        }
+        else
+        {
+            var canceledReccuringJobs = await _dbContext.DeviceJobs.Where(jobs => jobs.Canceled == true).AsNoTracking()
+                .ToListAsync();
+            
+            if (canceledReccuringJobs.IsNullOrEmpty())
+            {
+                response.Errors.Add("There are no canceled device jobs!");
+                response.Success = false;
+
+                return response;
+            }
+            
+            response.Data = canceledReccuringJobs;
+            response.Success = true;
+
+            return response;
+        }
+        
     }
 
     public async Task<Response> RemoveReccuringJobForJobId(int jobId)
