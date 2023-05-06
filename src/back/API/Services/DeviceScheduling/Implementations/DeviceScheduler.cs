@@ -11,8 +11,8 @@ namespace API.Services.DeviceScheduling.Implementations;
 public class DeviceScheduler : IDeviceScheduler
 {
     private readonly DataContext _dbContext;
-    private static int firstJobReccuring = 1;
-    private static int secondJobReccuring = 2;
+    private static int firstJobReccuring = 2000;
+    private static int secondJobReccuring = 2001;
     public DeviceScheduler(DataContext dbContext)
     {
         _dbContext = dbContext;
@@ -88,7 +88,7 @@ public class DeviceScheduler : IDeviceScheduler
         var response = new Response();
 
         response.Success = true;
-        response.Data = await _dbContext.DeviceJobs.Where( dj => dj.DeviceId == deviceId && ((dj.Repeat == true) || (dj.Repeat == false && dj.EndDate < DateTime.Now)))
+        response.Data = await _dbContext.DeviceJobs.Where( dj => dj.DeviceId == deviceId && ((dj.Repeat == true) || (dj.Repeat == false && dj.EndDate < DateTime.Now)) && dj.Canceled == false)
                                                    .Select( dj => new
                                                    {
                                                        Id = dj.Id,
@@ -106,18 +106,22 @@ public class DeviceScheduler : IDeviceScheduler
     public async Task<Response> RemoveReccuringJobForJobId(int jobId)
     {
         var response = new Response();
-        
-        RecurringJob.RemoveIfExists(jobId.ToString());
-        
-        var canceledReccuringJob = await _dbContext.DeviceJobs.Where(job => job.Id == jobId).FirstOrDefaultAsync();
-        if (canceledReccuringJob == null)
+
+        var job = await _dbContext.DeviceJobs.FirstOrDefaultAsync(job => job.Id == jobId);
+
+        if (job == null)
         {
             response.Errors.Add("Job for given id does not exist!");
             response.Success = false;
 
             return response;
         }
-        canceledReccuringJob.Canceled = true;
+        
+        RecurringJob.RemoveIfExists(job.StartJobId.ToString());
+        RecurringJob.RemoveIfExists(job.EndJobId.ToString());
+
+        job.Canceled = true; //set cancelled as true in order to flag it so we can use it as history for dashboard
+
         await _dbContext.SaveChangesAsync();
         
         response.Data = "Job removed successfully!";
