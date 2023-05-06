@@ -84,22 +84,22 @@ public class DeviceScheduler : IDeviceScheduler
         }
     }
 
-    public async Task<Response> GetActiveJobForDeviceId(int deviceId)
+    public async Task<Response<List<DeviceJob>>> GetActiveJobsForDeviceId(int deviceId)
     {
-        var response = new Response();
+        var response = new Response<List<DeviceJob>>();
 
         response.Success = true;
         response.Data = await _dbContext.DeviceJobs.Where( dj => dj.DeviceId == deviceId && ((dj.Repeat == true) || (dj.Repeat == false && dj.EndDate < DateTime.Now)) && dj.Canceled == false)
-                                                   .Select( dj => new
+                                                   /*.Select( dj => new
                                                    {
                                                        Id = dj.Id,
                                                        StartDate = dj.StartDate,
                                                        EndDate = dj.EndDate,
                                                        Turn = dj.Turn,
                                                        Repeat = dj.Repeat
-                                                   })
+                                                   })*/
                                                    .AsNoTracking()
-                                                   .FirstOrDefaultAsync();
+                                                   .ToListAsync();
 
         return response;
     }

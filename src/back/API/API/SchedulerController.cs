@@ -25,7 +25,7 @@ public class SchedulerController : ControllerBase
     [HttpGet("get-active-job-for-device-id")]
     public async Task<IActionResult> GetActiveJobForDeviceId( int deviceId)
     {
-        return Ok( await _deviceScheduler.GetActiveJobForDeviceId( deviceId));
+        return Ok( await _deviceScheduler.GetActiveJobsForDeviceId( deviceId));
     }
 
     [HttpPost("cancel-reccuring-job")]
