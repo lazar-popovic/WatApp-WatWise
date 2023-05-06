@@ -33,4 +33,10 @@ public class SchedulerController : ControllerBase
     {
         return Ok(await _deviceScheduler.RemoveReccuringJobForJobId(jobId));
     }
+
+    [HttpPost("get-all-reccuring-jobs")]
+    public async Task<IActionResult> GetAllReccuringJobs(bool active)
+    {
+        return Ok(await _deviceScheduler.GetAllReccuringJobs(active));
+    }
 }
