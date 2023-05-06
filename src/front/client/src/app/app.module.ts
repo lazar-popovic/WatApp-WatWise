@@ -58,6 +58,7 @@ import { UploadImageComponent } from './components/upload-image/upload-image.com
 import { DeviceJobFormComponent } from './components/device-job-form/device-job-form.component';
 import { DeviceScheduleCardComponent } from './components/device-schedule-card/device-schedule-card.component';
 import { ConfirmWindowComponent } from './components/confirm-window/confirm-window.component';
+import { SchedulerComponent } from './components/scheduler/scheduler.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { ConfirmWindowComponent } from './components/confirm-window/confirm-wind
     UploadImageComponent,
     DeviceJobFormComponent,
     DeviceScheduleCardComponent,
+    SchedulerComponent,
     ConfirmWindowComponent
   ],
   imports: [
