@@ -69,9 +69,9 @@ public class DeviceScheduler : IDeviceScheduler
             var endDateTime = request.EndDate.AddDays(1);
 
             RecurringJob.AddOrUpdate(firstJobReccuring.ToString(),() => ExecuteJob(deviceJob.DeviceId, deviceJob.Turn),
-                CronMaker.ToCron(startDateTime));
+                CronMaker.ToCron(startDateTime.AddHours(-2)));
             RecurringJob.AddOrUpdate(secondJobReccuring.ToString(),() => ExecuteJob(deviceJob.DeviceId, !deviceJob.Turn),
-                CronMaker.ToCron(endDateTime));
+                CronMaker.ToCron(endDateTime.AddHours(-2)));
 
             deviceJob.StartJobId = firstJobReccuring;
             deviceJob.EndJobId = secondJobReccuring;
