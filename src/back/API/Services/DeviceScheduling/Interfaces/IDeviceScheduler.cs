@@ -13,4 +13,5 @@ public interface IDeviceScheduler
     Task<Response> GetActiveJobForDeviceId(int deviceId);
     Task<Response<List<DeviceJob>>> GetAllReccuringJobs(bool active);
     Task<Response> RemoveReccuringJobForJobId(int jobId);
+    Task<Response> RemoveScheduledJobForJobId(int jobId);
 }

@@ -127,32 +127,30 @@ public class DeviceScheduler : IDeviceScheduler
 
             return response;
         }
-        else
-        {
-            var canceledReccuringJobs = await _dbContext.DeviceJobs.Where(jobs => jobs.Canceled == true).AsNoTracking()
-                .ToListAsync();
-            
-            if (canceledReccuringJobs.IsNullOrEmpty())
-            {
-                response.Errors.Add("There are no canceled device jobs!");
-                response.Success = false;
 
-                return response;
-            }
-            
-            response.Data = canceledReccuringJobs;
-            response.Success = true;
+        var canceledReccuringJobs = await _dbContext.DeviceJobs.Where(jobs => jobs.Canceled == true).AsNoTracking()
+            .ToListAsync();
+
+        if (canceledReccuringJobs.IsNullOrEmpty())
+        {
+            response.Errors.Add("There are no canceled device jobs!");
+            response.Success = false;
 
             return response;
         }
-        
+
+        response.Data = canceledReccuringJobs;
+        response.Success = true;
+
+        return response;
+
     }
 
     public async Task<Response> RemoveReccuringJobForJobId(int jobId)
     {
         var response = new Response();
 
-        var job = await _dbContext.DeviceJobs.FirstOrDefaultAsync(job => job.Id == jobId);
+        var job = await _dbContext.DeviceJobs.FirstOrDefaultAsync(job => job.Id == jobId && job.Repeat == true);
 
         if (job == null)
         {
@@ -171,6 +169,43 @@ public class DeviceScheduler : IDeviceScheduler
         
         response.Data = "Job removed successfully!";
         response.Success = true;
+
+        return response;
+    }
+
+    public async Task<Response> RemoveScheduledJobForJobId(int jobId)
+    {
+        var response = new Response();
+
+        var scheduledJob = await _dbContext.DeviceJobs.FirstOrDefaultAsync(job => job.Id == jobId && job.Repeat == false);
+        
+        if (scheduledJob == null)
+        {
+            response.Errors.Add("Job for given id does not exist!");
+            response.Success = false;
+
+            return response;
+        }
+
+        var deletedStartJob = BackgroundJob.Delete(scheduledJob.StartJobId.ToString());
+        var deletedEndJob = BackgroundJob.Delete(scheduledJob.EndJobId.ToString());
+        scheduledJob.Canceled = true;
+        await _dbContext.SaveChangesAsync();
+        
+        if (deletedStartJob && deletedEndJob)
+        {
+            response.Data = "You have successfully canceled your scheduled job!";
+            response.Success = true;
+
+            return response;
+        }
+        
+        if(deletedStartJob == false)
+            response.Errors.Add("Error while deleting job for start date");
+        if(deletedEndJob == false)
+            response.Errors.Add("Error while deleting job for end date");
+
+        response.Success = response.Errors.Count == 0;
 
         return response;
     }
