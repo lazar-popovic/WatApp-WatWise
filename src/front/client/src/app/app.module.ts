@@ -59,6 +59,7 @@ import { DeviceJobFormComponent } from './components/device-job-form/device-job-
 import { DeviceScheduleCardComponent } from './components/device-schedule-card/device-schedule-card.component';
 import { ConfirmWindowComponent } from './components/confirm-window/confirm-window.component';
 import { SchedulerComponent } from './components/scheduler/scheduler.component';
+import { SchedulerJobsListComponent } from './components/scheduler-jobs-list/scheduler-jobs-list.component';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { SchedulerComponent } from './components/scheduler/scheduler.component';
     DeviceJobFormComponent,
     DeviceScheduleCardComponent,
     SchedulerComponent,
+    SchedulerJobsListComponent,
     ConfirmWindowComponent
   ],
   imports: [
