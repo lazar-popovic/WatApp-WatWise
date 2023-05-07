@@ -11,7 +11,7 @@ public interface IDeviceScheduler
     Task ExecuteJob(int? deviceId, bool? turn);
     Task ScheduleJob(DeviceJobViewModel request);
     Task<Response<List<DeviceJob>>> GetActiveJobsForDeviceId(int deviceId);
-    Task<Response<List<DeviceJob>>> GetAllReccuringJobs(bool active);
+    Task<Response<List<DeviceJob>>> GetAllJobs(int userId, bool active);
     Task<Response> RemoveReccuringJobForJobId(int jobId);
     Task<Response> RemoveScheduledJobForJobId(int jobId);
 }

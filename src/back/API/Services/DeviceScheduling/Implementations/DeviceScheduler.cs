@@ -89,7 +89,7 @@ public class DeviceScheduler : IDeviceScheduler
         var response = new Response<List<DeviceJob>>();
 
         response.Success = true;
-        response.Data = await _dbContext.DeviceJobs.Where( dj => dj.DeviceId == deviceId && ((dj.Repeat == true) || (dj.Repeat == false && dj.EndDate < DateTime.Now)) && dj.Canceled == false)
+        response.Data = await _dbContext.DeviceJobs.Where( dj => dj.DeviceId == deviceId && ((dj.Repeat == true) || (dj.Repeat == false && dj.EndDate > DateTime.Now)) && dj.Canceled == false)
                                                    /*.Select( dj => new
                                                    {
                                                        Id = dj.Id,
@@ -104,17 +104,23 @@ public class DeviceScheduler : IDeviceScheduler
         return response;
     }
 
-    public async Task<Response<List<DeviceJob>>> GetAllReccuringJobs(bool active)
+    public async Task<Response<List<DeviceJob>>> GetAllJobs(int userId, bool active)
     {
         var response = new Response<List<DeviceJob>>();
 
         if (active)
         {
-            var activeReccuringJobs = await _dbContext.DeviceJobs
-                .Where(jobs => jobs.Repeat && jobs.EndDate < DateTime.Now && jobs.Canceled == false).AsNoTracking()
+            var activeJobs = await _dbContext.DeviceJobs
+                .Where(jobs => (jobs.Repeat || ( jobs.EndDate > DateTime.Now && !jobs.Repeat)) && jobs.Canceled == false)
+                .Join(_dbContext.Devices,
+                      jobs => jobs.DeviceId,
+                      devices => devices.Id,
+                      (jobs, devices) => new { Job = jobs, Device = devices })
+                .Where(j => j.Device.UserId == userId)
+                .Select(j => j.Job)
                 .ToListAsync();
-            
-            if (activeReccuringJobs.IsNullOrEmpty())
+
+            if (activeJobs.IsNullOrEmpty())
             {
                 response.Errors.Add("There are no active device jobs currently scheduled!");
                 response.Success = false;
@@ -122,16 +128,23 @@ public class DeviceScheduler : IDeviceScheduler
                 return response;
             }
             
-            response.Data = activeReccuringJobs;
+            response.Data = activeJobs;
             response.Success = true;
 
             return response;
         }
 
-        var canceledReccuringJobs = await _dbContext.DeviceJobs.Where(jobs => jobs.Canceled == true).AsNoTracking()
-            .ToListAsync();
+        var canceledJobs = await _dbContext.DeviceJobs
+                .Where(jobs => jobs.Canceled == true)
+                .Join(_dbContext.Devices,
+                      jobs => jobs.DeviceId,
+                      devices => devices.Id,
+                      (jobs, devices) => new { Job = jobs, Device = devices })
+                .Where(j => j.Device.UserId == userId)
+                .Select(j => j.Job)
+                .ToListAsync();
 
-        if (canceledReccuringJobs.IsNullOrEmpty())
+        if (canceledJobs.IsNullOrEmpty())
         {
             response.Errors.Add("There are no canceled device jobs!");
             response.Success = false;
@@ -139,7 +152,7 @@ public class DeviceScheduler : IDeviceScheduler
             return response;
         }
 
-        response.Data = canceledReccuringJobs;
+        response.Data = canceledJobs;
         response.Success = true;
 
         return response;
