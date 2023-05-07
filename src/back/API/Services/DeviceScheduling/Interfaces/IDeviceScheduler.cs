@@ -14,4 +14,5 @@ public interface IDeviceScheduler
     Task<Response<List<DeviceJob>>> GetAllJobs(int userId, bool active);
     Task<Response> RemoveReccuringJobForJobId(int jobId);
     Task<Response> RemoveScheduledJobForJobId(int jobId);
+    Task<Response> RemoveJobForId(int jobId);
 }

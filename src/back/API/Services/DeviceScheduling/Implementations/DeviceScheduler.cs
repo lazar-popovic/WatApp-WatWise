@@ -222,4 +222,55 @@ public class DeviceScheduler : IDeviceScheduler
 
         return response;
     }
+
+    public async Task<Response> RemoveJobForId(int jobId)
+    {
+        var response = new Response();
+        var job = await _dbContext.DeviceJobs.FirstOrDefaultAsync(job => job.Id == jobId && job.Canceled == false);
+
+        if (job == null)
+        {
+            response.Errors.Add("Job for given id does not exist!");
+            response.Success = false;
+
+            return response;
+        }
+
+        if (job.Repeat)
+        {
+            RecurringJob.RemoveIfExists(job.StartJobId.ToString());
+            RecurringJob.RemoveIfExists(job.EndJobId.ToString());
+
+            job.Canceled = true; //set cancelled as true in order to flag it so we can use it as history for dashboard
+
+            await _dbContext.SaveChangesAsync();
+
+            response.Data = "Job removed successfully!";
+            response.Success = true;
+        }
+        else
+        {
+            var deletedStartJob = BackgroundJob.Delete(job.StartJobId.ToString());
+            var deletedEndJob = BackgroundJob.Delete(job.EndJobId.ToString());
+            job.Canceled = true;
+            await _dbContext.SaveChangesAsync();
+
+            if (deletedStartJob && deletedEndJob)
+            {
+                response.Data = "You have successfully canceled your scheduled job!";
+                response.Success = true;
+
+                return response;
+            }
+
+            if (deletedStartJob == false)
+                response.Errors.Add("Error while deleting job for start date");
+            if (deletedEndJob == false)
+                response.Errors.Add("Error while deleting job for end date");
+
+            response.Success = response.Errors.Count == 0;
+        }
+
+        return response;
+    }
 }
