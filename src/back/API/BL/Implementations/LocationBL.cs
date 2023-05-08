@@ -93,5 +93,41 @@ namespace API.BL.Implementations
 
 
         }
+
+        public async Task<Response<List<object>>> Top5NeighborhoodsForCityAndCategory(string city, int category)
+        {
+            var response = new Response<List<object>>();
+
+            if (category == -1)
+            {
+                var neighborhoods = await _ilocationDal.Top5NeighborhoodsForCityConsumptionAndPredictedConsumption(city);
+
+                if (neighborhoods == null)
+                {
+                    response.Errors.Add("Neighborhoods for given city does not exist or are null!");
+                    response.Success = false;
+                    return response;
+                }
+                
+                response.Data = neighborhoods;
+                response.Success = true;
+                return response;
+            }
+            else
+            {
+                var neighborhoods = await _ilocationDal.Top5NeighborhoodsForCityProductionAndPredictedProduction(city);
+
+                if (neighborhoods == null)
+                {
+                    response.Errors.Add("Neighborhoods for given city does not exist or are null!");
+                    response.Success = false;
+                    return response;
+                }
+                
+                response.Data = neighborhoods;
+                response.Success = true;
+                return response;
+            }
+        }
     }
 }
