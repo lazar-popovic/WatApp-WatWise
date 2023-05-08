@@ -8,6 +8,20 @@
     <div id="header">
       <h2>Scheduler</h2>
     </div>
-
+    <div id="nav-bar">
+      <div id="filter">
+        <select>
+          <option value="0">All devices</option>
+          <option *ngFor="let device of devices" value="{{device.id}}">{{device.name}}</option>
+        </select>
+      </div>
+      <div id="add-new-routine">
+        <button (click)="showForm = true">+ Create routine</button>
+      </div>
+    </div>
+    <div class="hover-form" *ngIf="showForm">
+      <app-device-job-form (output)="showForm = false"></app-device-job-form>
+    </div>
   </div>
 </div>
+

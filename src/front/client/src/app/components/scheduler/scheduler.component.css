@@ -38,3 +38,36 @@
 #header h2 {
   color: #3e3e3e;
 }
+
+#nav-bar {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+#filter select {
+  width: 120px;
+  height: 30px;
+  border-radius: 10px;
+  margin-right: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#add-new-routine button {
+  border-radius: 10px;
+  height: 30px;
+  color: #3e3e3e;
+  width: 120px;
+  border: 0;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  font-size: 14px;
+
+}
+
+#add-new-routine button:hover {
+  background-color: rgba(67, 108, 144, 0.2);
+}
