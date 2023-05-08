@@ -3,6 +3,6 @@
 public class NeighborhoodPowerUsageDTO
 {
     public string Neighborhood { get; set; } = string.Empty;
-    public double PowerUsage { get; set; }
-    public double PredictedPowerUsage { get; set; }
+    public double? PowerUsage { get; set; }
+    public double? PredictedPowerUsage { get; set; }
 }
