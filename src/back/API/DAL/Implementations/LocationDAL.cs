@@ -133,4 +133,14 @@ public class LocationDAL : ILocationDAL
         return locationDTOs;
 
     }
+
+    public Task<List<NeighborhoodPowerUsageDTO>> Top5NeighborhoodsForCityConsumptionAndPredictedConsumption(string city)
+    {
+        var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+    }
+
+    public Task<List<NeighborhoodPowerUsageDTO>> Top5NeighborhoodsForCityProductionAndPredictedProduction(string city)
+    {
+        var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+    }
 }

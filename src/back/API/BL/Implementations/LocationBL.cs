@@ -3,6 +3,7 @@ using API.DAL.Interfaces;
 using API.Models.Entity;
 using API.Models;
 using API.BL.Interfaces;
+using API.Common;
 using API.Models.DTOs;
 using Microsoft.IdentityModel.Tokens;
 
@@ -95,11 +96,11 @@ namespace API.BL.Implementations
 
         }
 
-        public async Task<Response<List<object>>> Top5NeighborhoodsForCityAndCategory(string city, int category)
+        public async Task<Response<List<NeighborhoodPowerUsageDTO>>> Top5NeighborhoodsForCityAndCategory(string city, int category)
         {
-            var response = new Response<List<object>>();
+            var response = new Response<List<NeighborhoodPowerUsageDTO>>();
 
-            if (category == -1)
+            if (category == (int)DeviceCategoryEnum.Consumer)
             {
                 var neighborhoods = await _ilocationDal.Top5NeighborhoodsForCityConsumptionAndPredictedConsumption(city);
 
