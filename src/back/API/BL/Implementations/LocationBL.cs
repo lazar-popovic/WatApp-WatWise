@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace API.BL.Implementations
 {
-    public class LocationBL:ILocationBL
+    public class LocationBL : ILocationBL
     {
         private readonly ILocationDAL _ilocationDal;
 
@@ -50,6 +50,7 @@ namespace API.BL.Implementations
 
                 return response;
             }
+
             response.Data = locations;
             response.Success = response.Errors.Count == 0;
 
@@ -57,6 +58,7 @@ namespace API.BL.Implementations
 
 
         }
+
         public async Task<Response<List<String>>> GetAllNeighborhood(string city)
         {
             var response = new Response<List<String>>();
@@ -69,6 +71,7 @@ namespace API.BL.Implementations
 
                 return response;
             }
+
             response.Data = neighborhood;
             response.Success = response.Errors.Count == 0;
 
@@ -76,11 +79,13 @@ namespace API.BL.Implementations
 
 
         }
-        public async Task<Response<List<LocationWithPowerUsageDTO>>> GetAllLocationWithNeighborhood(string city, string neighborhood)
+
+        public async Task<Response<List<LocationWithPowerUsageDTO>>> GetAllLocationWithNeighborhood(string city,
+            string neighborhood)
         {
             var response = new Response<List<LocationWithPowerUsageDTO>>();
 
-            var locations = await _ilocationDal.GetAllLocationWithNeighborhood(city,neighborhood);
+            var locations = await _ilocationDal.GetAllLocationWithNeighborhood(city, neighborhood);
             if (locations.IsNullOrEmpty())
             {
                 response.Errors.Add("Error with displaying location!");
@@ -88,6 +93,7 @@ namespace API.BL.Implementations
 
                 return response;
             }
+
             response.Data = locations;
             response.Success = response.Errors.Count == 0;
 
@@ -96,40 +102,24 @@ namespace API.BL.Implementations
 
         }
 
-        public async Task<Response<List<NeighborhoodPowerUsageDTO>>> Top5NeighborhoodsForCityAndCategory(string city, int category)
+        public async Task<Response<List<NeighborhoodPowerUsageDTO>>> Top5NeighborhoodsForCityAndCategory(string city,
+            int category)
         {
             var response = new Response<List<NeighborhoodPowerUsageDTO>>();
 
-            if (category == (int)DeviceCategoryEnum.Consumer)
-            {
-                var neighborhoods = await _ilocationDal.Top5NeighborhoodsForCityConsumptionAndPredictedConsumption(city);
+            var neighborhoods =
+                await _ilocationDal.Top5NeighborhoodsForCityPowerUsageAndPredictedPowerUsage(city, category);
 
-                if (neighborhoods.IsNullOrEmpty())
-                {
-                    response.Errors.Add("Neighborhoods for given city does not exist or are null!");
-                    response.Success = false;
-                    return response;
-                }
-                
-                response.Data = neighborhoods;
-                response.Success = true;
+            if (neighborhoods.IsNullOrEmpty())
+            {
+                response.Errors.Add("Neighborhoods for given city does not exist or are null!");
+                response.Success = false;
                 return response;
             }
-            else
-            {
-                var neighborhoods = await _ilocationDal.Top5NeighborhoodsForCityProductionAndPredictedProduction(city);
 
-                if (neighborhoods.IsNullOrEmpty())
-                {
-                    response.Errors.Add("Neighborhoods for given city does not exist or are null!");
-                    response.Success = false;
-                    return response;
-                }
-                
-                response.Data = neighborhoods;
-                response.Success = true;
-                return response;
-            }
+            response.Data = neighborhoods;
+            response.Success = true;
+            return response;
         }
     }
 }
