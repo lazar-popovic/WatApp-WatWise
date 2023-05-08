@@ -45,6 +45,7 @@ export class DeviceDetailsComponent implements OnInit
       dataShare: false,
       currentUsage: null
     }
+    capacity: number = 1;
 
     tableTitle: string = "Timestamp";
     roleId: number = 3;
@@ -104,6 +105,9 @@ export class DeviceDetailsComponent implements OnInit
                   this.color = 'rgba(69, 94, 184, 1)';
                   this.predColor = 'rgba(69, 94, 184, 0.4)';
                   break;
+              }
+              if( this.device.deviceType.category == 0) {
+                this.capacity = this.device.capacity;
               }
               let now = new Date();
               this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
@@ -219,14 +223,14 @@ export class DeviceDetailsComponent implements OnInit
             let now = new Date();
             if( date.toDateString() == now.toDateString()) {
               this.datasets = [{
-                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
+                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue * this.capacity})),
                 label: 'Predicted ' + this.categoryLabel,
                 backgroundColor: this.predColor,
                 borderColor: this.predColor,
                 borderWidth: 2
               },{
                 data: result.data.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
-                                                                 .map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
+                                                                 .map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value * this.capacity})),
                 label: this.categoryLabel,
                 backgroundColor: this.color,
                 borderColor: this.color,
@@ -236,7 +240,7 @@ export class DeviceDetailsComponent implements OnInit
             } else if ( date > now) {
               console.log("pred");
               this.datasets = [{
-                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
+                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue * this.capacity})),
                 label: 'Predicted ' + this.categoryLabel,
                 backgroundColor: this.predColor,
                 borderColor: this.predColor,
@@ -245,13 +249,13 @@ export class DeviceDetailsComponent implements OnInit
             } else {
               console.log("hist");
               this.datasets = [{
-                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
+                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue * this.capacity})),
                 label: 'Predicted ' + this.categoryLabel,
                 backgroundColor: this.predColor,
                 borderColor: this.predColor,
                 borderWidth: 2
               },{
-                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
+                data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value * this.capacity})),
                 label: this.categoryLabel,
                 backgroundColor: this.color,
                 borderColor: this.color,
