@@ -167,13 +167,13 @@ public class LocationDAL : ILocationDAL
             .SelectMany(ld => ld.Devices.DefaultIfEmpty(), (ld, device) => new { ld.Location, ld.User, Device = device })
             .GroupJoin(_context.DeviceEnergyUsage, ld => ld.Device.Id, edu => edu.DeviceId, (ld, energyUsage) => new { ld.Location, ld.User, ld.Device, EnergyUsage = energyUsage })
             .SelectMany(le => le.EnergyUsage.DefaultIfEmpty(), (le, edu) => new { le.Location, le.User, le.Device, EnergyUsage = edu })
-            .Where(le => le.EnergyUsage == null || le.EnergyUsage.Timestamp == now)
+            .Where(le => le.EnergyUsage == null || le.EnergyUsage.Timestamp == now && le.Device.DeviceType.Category == -1)
             .GroupBy(le => le.Location.Neighborhood)
             .Select(g => new NeighborhoodPowerUsageDTO
             {
                 Neighborhood = g.Key,
-                PowerUsage = g.Sum(x => x.Device == null ? 0 : (x.Device.DeviceType.Category == -1 ? x.EnergyUsage.Value : (x.Device.DeviceType.Category == 1 ? -x.EnergyUsage.Value : 0))),
-                PredictedPowerUsage = g.Sum(x => x.Device == null ? 0 : (x.Device.DeviceType.Category == -1 ? x.EnergyUsage.PredictedValue : (x.Device.DeviceType.Category == 1 ? -x.EnergyUsage.PredictedValue : 0))),
+                PowerUsage = g.Sum(x => x.Device == null ? 0 : x.EnergyUsage.Value),
+                PredictedPowerUsage = g.Sum(x => x.Device == null ? 0 : x.EnergyUsage.PredictedValue),
                 //Category = category,
                 //Timestamp = now
             })
@@ -188,6 +188,31 @@ public class LocationDAL : ILocationDAL
 
 public async Task<List<NeighborhoodPowerUsageDTO>> Top5NeighborhoodsForCityProductionAndPredictedProduction(string city)
 {
-    throw new NotImplementedException();
+    var now = DateTime.Now;
+        
+    var neighborhoodDTOs = await _context.Locations
+        .Where(l => l.City == city)
+        .GroupJoin(_context.Users, l => l.Id, u => u.LocationId, (l, users) => new { Location = l, Users = users })
+        .SelectMany(lu => lu.Users.DefaultIfEmpty(), (lu, user) => new { lu.Location, User = user })
+        .GroupJoin(_context.Devices, lu => lu.User.Id, d => d.UserId, (lu, devices) => new { lu.Location, lu.User, Devices = devices })
+        .SelectMany(ld => ld.Devices.DefaultIfEmpty(), (ld, device) => new { ld.Location, ld.User, Device = device })
+        .GroupJoin(_context.DeviceEnergyUsage, ld => ld.Device.Id, edu => edu.DeviceId, (ld, energyUsage) => new { ld.Location, ld.User, ld.Device, EnergyUsage = energyUsage })
+        .SelectMany(le => le.EnergyUsage.DefaultIfEmpty(), (le, edu) => new { le.Location, le.User, le.Device, EnergyUsage = edu })
+        .Where(le => le.EnergyUsage == null || le.EnergyUsage.Timestamp == now && le.Device.DeviceType.Category == 1)
+        .GroupBy(le => le.Location.Neighborhood)
+        .Select(g => new NeighborhoodPowerUsageDTO
+        {
+            Neighborhood = g.Key,
+            PowerUsage = g.Sum(x => x.Device == null ? 0 : x.EnergyUsage.Value),
+            PredictedPowerUsage = g.Sum(x => x.Device == null ? 0 : x.EnergyUsage.PredictedValue),
+            //Category = category,
+            //Timestamp = now
+        })
+        .OrderByDescending(g => g.PowerUsage)
+        .Take(5)
+        .AsNoTracking()
+        .ToListAsync();
+
+    return neighborhoodDTOs;
 }
 }
