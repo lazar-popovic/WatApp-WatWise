@@ -19,6 +19,48 @@
         <button (click)="showForm = true">+ Create routine</button>
       </div>
     </div>
+
+    <div id="list" class="standard-card-style">
+      <div class="routine routine-green">
+        <div class="routine-repeat-icon">
+          <img src="/assets/repeat-daily.png"/>
+        </div>
+        <div class="routine-content">
+
+        </div>
+      </div>
+      <div class="routine routine-green">
+        <div class="routine-repeat-icon">
+          <img src="/assets/scheduler.png"/>
+        </div>
+        <div class="routine-content">
+
+        </div>
+      </div>
+      <div class="routine routine-green"></div>
+      <div class="routine routine-green"></div>
+      <div class="routine routine-red"></div>
+      <div class="routine routine-red">
+        <div class="routine-repeat-icon">
+          <img src="/assets/repeat-daily.png"/>
+        </div>
+        <div class="routine-content">
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="hover-form" *ngIf="showForm">
       <app-device-job-form (output)="showForm = false"></app-device-job-form>
     </div>
