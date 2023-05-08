@@ -10,5 +10,6 @@ namespace API.BL.Interfaces
         Task<Response<List<String>>> GetAllLocationDistinctCity();
         Task<Response<List<String>>> GetAllNeighborhood(string city);
         Task<Response<List<LocationWithPowerUsageDTO>>> GetAllLocationWithNeighborhood(string city, string neighborhood);
+        Task<Response<List<NeighborhoodWithPowerUsageForCurrentHourDTO>>> Top5NeighborhoodsForCityAndCategory(string city, int category);
     }
 }
