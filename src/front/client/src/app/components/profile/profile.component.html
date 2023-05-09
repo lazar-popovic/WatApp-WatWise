@@ -16,18 +16,10 @@
         <div class="profile-location" *ngIf="user.roleId == 3">
           <img src="/assets/pin_grey.png">
           <h2>{{user.city}}, {{user.address}} {{user.num}}</h2>
+          <button id="user-settings">Edit profile</button>
         </div>
       </div>
     </div>
+    
   </div>
-
-  <br>
-  <div class="profile-wraper">
-    <div class="profile">
-      <img id="profile-image" [src]="user.profileImage" alt="Profile picture">
-      <h3>User info</h3>
-      <h1>{{user.firstName}} {{user.lastName}}</h1>
-    </div>
-  </div>
-
 </div>
