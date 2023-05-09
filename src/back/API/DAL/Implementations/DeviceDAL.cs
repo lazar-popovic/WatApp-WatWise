@@ -62,7 +62,7 @@ namespace API.DAL.Implementations
             var recordsToDelete = _dbContext.DeviceEnergyUsage.Where(x => x.DeviceId == dev.Id);
             _dbContext.DeviceEnergyUsage.RemoveRange(recordsToDelete);
 
-            _dbContext.Devices.Remove(dev!);
+            _dbContext.Devices.Remove(dev);
 
             await _dbContext.SaveChangesAsync();
         }
