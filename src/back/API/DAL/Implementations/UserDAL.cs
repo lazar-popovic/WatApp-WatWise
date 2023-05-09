@@ -202,19 +202,12 @@ namespace API.DAL.Implementations
 
             if (userToDelete != null)
             {
+                context.DeviceEnergyUsage.RemoveRange(userToDelete.Devices.SelectMany(d => d.DeviceEnergyUsages));
+                context.Devices.RemoveRange(userToDelete.Devices);
+                
                 var refreshTokensToDelete = context.RefreshTokens.Where(rt => rt.UserId == user.Id);
                 context.RefreshTokens.RemoveRange(refreshTokensToDelete);
-                    
-                foreach (var device in userToDelete.Devices.ToList())
-                {
-                    foreach (var energyUsage in device.DeviceEnergyUsages.ToList())
-                    {
-                        context.DeviceEnergyUsage.Remove(energyUsage);
-                    }
-
-                    context.Devices.Remove(device);
-                }
-                    
+                
                 context.Users.Remove(userToDelete);
                 await context.SaveChangesAsync();
             }
