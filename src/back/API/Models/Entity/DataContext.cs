@@ -39,5 +39,11 @@ public class DataContext : DbContext
             .WithOne(j => j.Device)
             .HasForeignKey(j => j.DeviceId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<RefreshToken>()
+            .HasOne(rt => rt.user)
+            .WithMany(u => u.RefreshTokens)
+            .HasForeignKey(rt => rt.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
