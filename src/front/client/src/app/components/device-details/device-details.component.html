@@ -152,6 +152,14 @@
         </tbody>
       </table>
     </div>
+
+    <div class="hover-form" *ngIf="formForNewJob">
+      <app-device-job-form [deviceId]="device.id" (output)="formForNewJob = false"></app-device-job-form>
+    </div>
+
+    <div class="hover-form" *ngIf="displayTurnDialog">
+      <app-confirm-window [text]="'Are you sure that you want to change status of this device?'" (output)="turnDeviceForm($event)"></app-confirm-window>
+    </div>
   </div>
 
   <div class="device-details-overlay">
@@ -163,11 +171,4 @@
     </div>
   </div>
 
-
-  <div class="hover-form" *ngIf="formForNewJob">
-    <app-device-job-form [deviceId]="device.id" (output)="formForNewJob = false"></app-device-job-form>
-  </div>
-
-  <div class="hover-form" *ngIf="displayTurnDialog">
-    <app-confirm-window [text]="'Are you sure that you want to change status of this device?'" (output)="turnDeviceForm($event)"></app-confirm-window>
-  </div>
+</div>

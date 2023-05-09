@@ -84,40 +84,54 @@ public class DeviceScheduler : IDeviceScheduler
         }
     }
 
-    public async Task<Response<List<DeviceJob>>> GetActiveJobsForDeviceId(int deviceId)
+    public async Task<Response> GetActiveJobsForDeviceId(int deviceId)
     {
-        var response = new Response<List<DeviceJob>>();
+        var response = new Response();
 
         response.Success = true;
         response.Data = await _dbContext.DeviceJobs.Where( dj => dj.DeviceId == deviceId && ((dj.Repeat == true) || (dj.Repeat == false && dj.EndDate > DateTime.Now)) && dj.Canceled == false)
-                                                   /*.Select( dj => new
+                                                   .Select( dj => new
                                                    {
                                                        Id = dj.Id,
                                                        StartDate = dj.StartDate,
                                                        EndDate = dj.EndDate,
                                                        Turn = dj.Turn,
                                                        Repeat = dj.Repeat
-                                                   })*/
+                                                   })
                                                    .AsNoTracking()
                                                    .ToListAsync();
 
         return response;
     }
 
-    public async Task<Response<List<DeviceJob>>> GetAllJobs(int userId, bool active)
+    public async Task<Response> GetAllJobs(int userId, bool active)
     {
-        var response = new Response<List<DeviceJob>>();
+        var response = new Response();
 
         if (active)
         {
             var activeJobs = await _dbContext.DeviceJobs
-                .Where(jobs => (jobs.Repeat || ( jobs.EndDate > DateTime.Now && !jobs.Repeat)) && jobs.Canceled == false)
+                .Where(jobs => (jobs.Repeat || (jobs.EndDate > DateTime.Now && !jobs.Repeat)) && jobs.Canceled == false)
                 .Join(_dbContext.Devices,
                       jobs => jobs.DeviceId,
                       devices => devices.Id,
                       (jobs, devices) => new { Job = jobs, Device = devices })
                 .Where(j => j.Device.UserId == userId)
-                .Select(j => j.Job)
+                .Select(j => new
+                {
+                    Id = j.Job.Id,
+                    StartDate = j.Job.StartDate,
+                    EndDate = j.Job.EndDate,
+                    DeviceName = j.Job.Device!.Name,
+                    DeviceId = j.Job.DeviceId,
+                    Repeat = j.Job.Repeat,
+                    Turn = j.Job.Turn,
+                    Canceled = j.Job.Canceled
+                })
+                .OrderBy(j => j.Canceled) // sort by Canceled (false first, then true)
+                .ThenByDescending(j => j.Repeat) // sort by Repeat (true first, then false)
+                .ThenBy(j => j.StartDate) // sort by StartDate
+                .AsNoTracking()
                 .ToListAsync();
 
             if (activeJobs.IsNullOrEmpty())
@@ -135,14 +149,29 @@ public class DeviceScheduler : IDeviceScheduler
         }
 
         var canceledJobs = await _dbContext.DeviceJobs
-                .Where(jobs => jobs.Canceled == true)
-                .Join(_dbContext.Devices,
-                      jobs => jobs.DeviceId,
-                      devices => devices.Id,
-                      (jobs, devices) => new { Job = jobs, Device = devices })
-                .Where(j => j.Device.UserId == userId)
-                .Select(j => j.Job)
-                .ToListAsync();
+            .Where(jobs => jobs.Canceled == true)
+            .Join(_dbContext.Devices,
+                  jobs => jobs.DeviceId,
+                  devices => devices.Id,
+                  (jobs, devices) => new { Job = jobs, Device = devices })
+            .Where(j => j.Device.UserId == userId)
+            .Select(j => new
+            {
+                Id = j.Job.Id,
+                StartDate = j.Job.StartDate,
+                EndDate = j.Job.EndDate,
+                DeviceName = j.Job.Device!.Name,
+                DeviceId = j.Job.DeviceId,
+                Repeat = j.Job.Repeat,
+                Turn = j.Job.Turn,
+                Canceled = j.Job.Canceled
+            })
+            .OrderBy(j => j.Canceled) // sort by Canceled (false first, then true)
+            .ThenByDescending(j => j.Repeat) // sort by Repeat (true first, then false)
+            .ThenBy(j => j.StartDate) // sort by StartDate
+            .AsNoTracking()
+            .ToListAsync();
+
 
         if (canceledJobs.IsNullOrEmpty())
         {
