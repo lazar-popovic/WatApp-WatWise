@@ -7,6 +7,13 @@
 .profile-wraper {
   margin: 100px 0 0 100px;
   position: relative;
+  
+  
+  border: 1px solid black;
+  padding-top: 50px;
+  padding: 10px;
+  background-color: #9f9d9d;
+  border-radius: 10px;
 }
 
 .profile-header {
@@ -128,3 +135,46 @@
     margin: 0;
   }
 }
+
+#profile-image
+{
+  margin-bottom: 50px;
+}
+
+/**/
+
+.profile {
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #f8f8f8;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile h1 {
+  font-size: 36px;
+  margin-top: 0;
+}
+
+/* .profile h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.profile p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.profile ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.profile li {
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 5px 0;
+} */
