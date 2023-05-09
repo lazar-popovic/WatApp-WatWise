@@ -10,8 +10,8 @@
     </div>
     <div id="nav-bar">
       <div id="filter">
-        <select>
-          <option value="0">All devices</option>
+        <select [(ngModel)]="selectedDevice" (change)="filter()">
+          <option value="0" selected>All devices</option>
           <option *ngFor="let device of devices" value="{{device.id}}">{{device.name}}</option>
         </select>
       </div>
@@ -20,32 +20,33 @@
       </div>
     </div>
 
-    <div id="list" class="standard-card-style">
-      <div class="routine routine-green">
-        <div class="routine-repeat-icon">
-          <img src="/assets/repeat-daily.png"/>
-        </div>
-        <div class="routine-content">
-
-        </div>
+    <div id="list">
+      <div *ngIf="routinesDisplay.length == 0">
+        <h3>No routines</h3>
       </div>
-      <div class="routine routine-green">
-        <div class="routine-repeat-icon">
-          <img src="/assets/scheduler.png"/>
-        </div>
-        <div class="routine-content">
-
-        </div>
-      </div>
-      <div class="routine routine-green"></div>
-      <div class="routine routine-green"></div>
-      <div class="routine routine-red"></div>
-      <div class="routine routine-red">
-        <div class="routine-repeat-icon">
-          <img src="/assets/repeat-daily.png"/>
-        </div>
-        <div class="routine-content">
-
+      <div *ngFor="let routine of routinesDisplay">
+        <div class="routine">
+          <div class="routine-repeat-icon" [ngClass]="{'routine-repeat-icon': true, 'routine-red': routine.canceled, 'routine-green': !routine.canceled}">
+            <img *ngIf="routine.repeat == true" src="/assets/repeat-daily.png"/>
+            <img *ngIf="routine.repeat == false" src="/assets/scheduler.png"/>
+          </div>
+          <div class="routine-content">
+            <div class="routine-header">
+              <h3>{{routine.deviceName}}</h3>
+              <p>
+                <span *ngIf="routine.canceled == false">will be </span>
+                <span *ngIf="routine.canceled == true">was </span>
+                <span *ngIf="routine.turn == true" style="color: green;">On</span>
+                <span *ngIf="routine.turn == false" style="color: red">Off</span>
+              </p>
+            </div>
+            <div class="routine-time">
+              <p *ngIf="routine.repeat == true">{{routine.startDate.split('T')[1].replace(':00','')}}</p>
+              <p *ngIf="routine.repeat == true">{{routine.endDate.split('T')[1].replace(':00','')}}</p>
+              <p *ngIf="routine.repeat == false">{{routine.startDate.split('T')[1].replace(':00','')}} {{formatDate(routine.startDate.split('T')[0])}}</p>
+              <p *ngIf="routine.repeat == false">{{routine.endDate.split('T')[1].replace(':00','')}} {{formatDate(routine.endDate.split('T')[0])}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

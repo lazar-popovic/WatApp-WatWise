@@ -99,15 +99,28 @@ namespace API.DAL.Implementations
         {
             var timestamp = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
             var result = from device in _dbContext.Devices
-                join deviceType in _dbContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
-                join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty() on
-                    device.Id equals usage.DeviceId into usageGroup
-                where device.UserId == userId
-                group new { device.Id, device.Name, device.DeviceType, device.DeviceTypeId, device.ActivityStatus, Value = usageGroup.FirstOrDefault()!.Value, DataShare = device.DataShare } by deviceType.Category into grouped
-                select new {
-                    Category = grouped.Key,
-                    Devices = grouped.ToList()
-                };
+                         join deviceType in _dbContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
+                         join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty()
+                             on device.Id equals usage.DeviceId into usageGroup
+                         where device.UserId == userId
+                         group new
+                         {
+                             device.Id,
+                             device.Name,
+                             device.DeviceType,
+                             device.DeviceTypeId,
+                             device.ActivityStatus,
+                             Value = usageGroup.FirstOrDefault()!.Value,
+                             DataShare = device.DataShare
+                         } by deviceType.Category into grouped
+                         select new
+                         {
+                             Category = grouped.Key,
+                             Devices = grouped.OrderByDescending(d => d.ActivityStatus)
+                                             .ThenByDescending(d => d.Value)
+                                             .ToList()
+                         };
+
             return result;
         }
         
@@ -325,11 +338,15 @@ namespace API.DAL.Implementations
 
         public async Task<object> GetDevicesIdAndNameByUserId(int userId)
         {
-            return await _dbContext.Devices.Where(d => d.UserId == userId).Select(d => new
-            {
-                Id = d.Id,
-                Name = d.Name
-            }).AsNoTracking().ToListAsync();
+            return await _dbContext.Devices.Where(d => d.UserId == userId)
+                .Where( device => device.DeviceType!.Category != 0)
+                .Select(d => new
+                {
+                    Id = d.Id,
+                    Name = d.Name
+                })
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }
