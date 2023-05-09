@@ -107,7 +107,7 @@ select{
 
 .device-input-holder
 {
-height: 100vh;
+height: calc(100vh - 88px);
 display: flex;
 flex-direction: column;
 justify-content: center;

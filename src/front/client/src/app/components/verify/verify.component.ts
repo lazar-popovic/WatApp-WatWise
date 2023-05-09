@@ -62,7 +62,12 @@ export class VerifyComponent implements OnInit {
           if( result.body.success) {
             localStorage.setItem("token", result.body.data.token);
             this.jwtService.setToken();
-            this.router.navigateByUrl('/prosumer/devices');
+            if( this.jwtService.roleId == 3) {
+              this.router.navigateByUrl('/prosumer/overview');
+            }
+            else {
+              this.router.navigateByUrl('/dso/overview');
+            }
           }
         }, (error : any) => {
           console.log(error)

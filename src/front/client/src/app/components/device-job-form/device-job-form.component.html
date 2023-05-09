@@ -42,7 +42,6 @@
         <div class="input-box input-checkbox">
           <h3>Turned On/Off</h3>
           <app-slider [status]="newJob.turn" (sliderEvent)="newJob.turn = !newJob.turn"></app-slider>
-          <!--<input type="checkbox" [(ngModel)]="newJob.turn" checked [ngModelOptions]="{standalone: true}">-->
         </div>
         <div class="input-box button">
           <button type="submit">Schedule</button>

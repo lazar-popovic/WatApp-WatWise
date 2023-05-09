@@ -24,7 +24,7 @@
       <div *ngIf="routinesDisplay.length == 0">
         <h3>No routines</h3>
       </div>
-      <div *ngFor="let routine of routinesDisplay">
+      <div *ngFor="let routine of routinesDisplay" (click) = "showRoutine( routine)">
         <div class="routine">
           <div class="routine-repeat-icon" [ngClass]="{'routine-repeat-icon': true, 'routine-red': routine.canceled, 'routine-green': !routine.canceled}">
             <img *ngIf="routine.repeat == true" src="/assets/repeat-daily.png"/>
@@ -57,7 +57,23 @@
 
 
 
+    <div class="hover-form" *ngIf="selectedRoutine != null">
+      <div class="routine-holder">
+        <div class="routine-wrapper" [ngBusy]="busy">
+          <div style="display: flex; justify-content: space-between; align-items: center;" (click)="closeRoutine()">
+            <h2>Routine {{selectedRoutine.id}}</h2>
+            <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;"></i>
+          </div>
+          <div class="remove-icon" (click)="showDialog = true">
+            <img src="/assets/bin.png"/>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <div class="hover-form" *ngIf="showDialog">
+      <app-id-delete-dialog [id]="selectedRoutine.id" (output)="deleteRoutine($event)"></app-id-delete-dialog>
+    </div>
 
 
 
