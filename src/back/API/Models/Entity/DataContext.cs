@@ -34,5 +34,10 @@ public class DataContext : DbContext
             .HasForeignKey(eu => eu.DeviceId)
             .OnDelete(DeleteBehavior.Cascade);
         
+        modelBuilder.Entity<Device>()
+            .HasMany(d => d.DeviceJobs)
+            .WithOne(j => j.Device)
+            .HasForeignKey(j => j.DeviceId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
