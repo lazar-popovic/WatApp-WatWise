@@ -89,7 +89,12 @@ export class DeviceJobFormComponent implements OnInit {
 
     this.busyAddDeviceJob = this.deviceScheduler.insertDeviceJob( this.newJob).subscribe( (result:any) => {
       this.toastrService.showSuccess( "Device routine successfully scheduled!");
-      this.route.navigateByUrl("prosumer/device/"+this.newJob.deviceId);
+      if( this.deviceId != 0) {
+        this.route.navigateByUrl("prosumer/device/"+this.newJob.deviceId);
+      }
+      else {
+        window.location.reload();
+      }
     }, (error:any) => {
       this.toastrService.showErrors(["Error while creating routine. Check if all fields are filled!"]);
       console.log( error);

@@ -11,12 +11,13 @@
             <option  *ngFor=" let element of devices" value="{{element.id}}">{{element.name}}</option>
           </select>
         </div>
+        <h3>Repeat</h3>
         <div id="repeat-buttons">
           <div id="repeat-buttons-no" (click)="changeRepeat( false)">
-            <h4>Repeat once</h4>
+            <h4><i class="fa fa-calendar" aria-hidden="true"></i> once</h4>
           </div>
           <div id="repeat-buttons-yes" (click)="changeRepeat( true)">
-            <h4>Repeat daily</h4>
+            <h4><i class="fa fa-refresh" aria-hidden="true"></i> daily</h4>
           </div>
         </div>
         <div *ngIf="!newJob.repeat">
@@ -42,7 +43,6 @@
         <div class="input-box input-checkbox">
           <h3>Turned On/Off</h3>
           <app-slider [status]="newJob.turn" (sliderEvent)="newJob.turn = !newJob.turn"></app-slider>
-          <!--<input type="checkbox" [(ngModel)]="newJob.turn" checked [ngModelOptions]="{standalone: true}">-->
         </div>
         <div class="input-box button">
           <button type="submit">Schedule</button>
