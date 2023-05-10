@@ -67,8 +67,8 @@ namespace API.Migrations
             );
             migrationBuilder.InsertData(
                 table: "Locations",
-                columns: new[] { "Id", "Address", "AddressNumber", "City", "Latitude", "Longitude" },
-                values: new object[] { 1, "Skerliceva", 12, "Kragujevac", 44.0138, 20.90793 }
+                columns: new[] { "Id", "Address", "AddressNumber", "City", "Latitude", "Longitude", "Neighborhood" },
+                values: new object[] { 1, "Skerliceva", 12, "Grad Kragujevac", 44.0138, 20.90793, "Kragujevac" }
             );
             migrationBuilder.Sql("UPDATE Users SET LocationId = 1 WHERE Id = 3;");
         }
