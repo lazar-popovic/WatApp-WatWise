@@ -65,7 +65,7 @@ justify-content: center;
 }
 
 .sidebar-nav {
-  margin-top: 30px;
+  margin-top: 40px;
 }
 
 .sidebar-nav a {
@@ -75,13 +75,15 @@ justify-content: center;
 
 .sidebar-item, .sidebar-item-active {
   cursor: pointer;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   margin-right: 10px;
   margin-left: 10px;
 }
 
 .sidebar-item {
   width: 242px;
+  margin-bottom: 30px;
+  margin-right: 20px;
   margin-left: 20px;
 }
 
@@ -116,180 +118,179 @@ background-color: #115746;
 
 @media (min-width: 599px)
 {
-    .sidebar-container-mobile
-    {
-        display: none;
-    }
+  .sidebar-container-mobile
+  {
+      display: none;
+  }
 }
 
 /* Maximum width */
 @media (max-width: 600px)
 {
-    .sidebar-container
-    {
-        display: none;
+  .sidebar-container
+  {
+      display: none;
+  }
+
+  .sidebar-container-mobile
+  {
+      padding-top: 10px;
+      padding-left: 10px;
+      padding-right: 10px;
+      box-sizing: border-box;
+      width: 100vw;
+  }
+
+  #logoMobile
+  {
+      height: 50px;
+      margin-left: 40px;
+  }
+
+  .sidebar-logo-mobile
+  {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+  }
+
+  .sidebar-nav-mobile {
+      align-items: center;
+      justify-content: flex-end;
+
+      float: right;
+      margin-top: 0px;
+      margin-right: 30px;
     }
 
-    .sidebar-container-mobile
-    {
-        padding-top: 10px;
-        padding-left: 10px;
-        padding-right: 10px;
-        box-sizing: border-box;
-        width: 100vw;
-    }
 
-    #logoMobile
-    {
-        height: 50px;
-        margin-left: 40px;
-    }
+  /* Buger */
 
-    .sidebar-logo-mobile
-    {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-    }
+  /* Burger menu styles */
+  button.burger-menu
+  {
+      background-color: transparent;
+  }
 
-    .sidebar-nav-mobile {
-        align-items: center;
-        justify-content: flex-end;
+  .burger-menu
+  {
 
-        float: right;
-        margin-top: 0px;
-        margin-right: 30px;
-      }
+      top: 0;
+      right: 0;
 
+      display: inline-block;
 
-    /* Buger */
+      flex-direction: column;
+      justify-content: space-between;
+      width: 50px;
+      height: 50px;
+      margin-bottom: 20px;
+      margin-right: 10px;
+      cursor: pointer;
+      border: none;
+      padding: 0;
 
-    /* Burger menu styles */
-    button.burger-menu
-    {
-        background-color: transparent;
-    }
+      background-image: url(/assets/burger.png);
+      background-size: 50px;
+      background-repeat: no-repeat;
+      background-position: 7px 10px;
 
-    .burger-menu
-    {
+  }
 
-        top: 0;
-        right: 0;
+  .burger-menu span {
+      width: 50%;
+      height: 3px;
+      background-color: #3E3E3E;
+      transition: all 0.3s ease-in-out;
+  }
 
-        display: inline-block;
+  .burger-menu span:first-child {
+      transform-origin: top left;
+  }
 
-        flex-direction: column;
-        justify-content: space-between;
-        width: 50px;
-        height: 50px;
-        margin-bottom: 20px;
-        margin-right: 10px;
-        cursor: pointer;
-        border: none;
-        padding: 0;
+  .burger-menu span:last-child {
+      transform-origin: bottom left;
+  }
 
-        background-image: url(/assets/burger.png);
-        background-size: 50px;
-        background-repeat: no-repeat;
-        background-position: 7px 10px;
+  /* Open menu styles */
+  .menu-list {
+      position: absolute;
+      top: 80 px;
+      right: 5px;
+      width: 250px;
+      max-height: 0;
+      overflow: hidden;
+      list-style: none;
+      background-color: #fff;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease-in-out;
 
-    }
+      padding-bottom: 10px;
+  }
 
-    .burger-menu span {
-        width: 50%;
-        height: 3px;
-        background-color: #3E3E3E;
-        transition: all 0.3s ease-in-out;
-    }
+  .menu-list li {
+      padding: 10px 20px;
+  }
 
-    .burger-menu span:first-child {
-        transform-origin: top left;
-    }
+  .menu-list a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+  }
 
-    .burger-menu span:last-child {
-        transform-origin: bottom left;
-    }
+  .menu-list
+  {
+      background-color: #3E3E3E;
 
-    /* Open menu styles */
-    .menu-list {
-        position: absolute;
-        top: 80 px;
-        right: 5px;
-        width: 250px;
-        max-height: 0;
-        overflow: hidden;
-        list-style: none;
-        background-color: #fff;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-        transition: all 0.3s ease-in-out;
+      box-shadow: none;
+      padding-bottom: 0px;
+    margin-top: 10px;
+    z-index: 2;
+  }
 
-        padding-bottom: 10px;
-    }
-
-    .menu-list li {
-        padding: 10px 20px;
-    }
-
-    .menu-list a {
-        text-decoration: none;
-        color: #333;
-        font-size: 16px;
-    }
-
-    .menu-list
-    {
-        background-color: #3E3E3E;
-
-        box-shadow: none;
-        padding-bottom: 0px;
-      margin-top: 10px;
+  .menu-list.open {
+      background-color: #fff;
+      max-height: 330px;
+      border-radius: 10px;
+      border: 1px solid #3E3E3E;
       z-index: 2;
-    }
-
-    .menu-list.open {
-        background-color: #fff;
-        max-height: 400px;
-        border-radius: 10px;
-        border: 1px solid #3E3E3E;
-        z-index: 2;
 
 
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
 
-    }
+  }
 
-    .sidebar-item-active-mobile,.sidebar-item-mobile
-    {
-        color: #0C4869;
-    }
+  .sidebar-item-active-mobile,.sidebar-item-mobile
+  {
+      color: #0C4869;
+  }
 
 
 
-    #overview-mobile a,#devices-mobile a,#consumption-mobile a,#production-mobile a,#profile-mobile a,#profile-logout a,#scheduler-mobile a
-    {
-        margin-left: 35px;
-        font-size: 25px;
-    }
+  #overview-mobile a,#devices-mobile a,#consumption-mobile a,#production-mobile a,#profile-mobile a,#profile-logout a
+  {
+      margin-left: 35px;
+      font-size: 25px;
+  }
 
-    #overview-mobile,#devices-mobile, #consumption-mobile,#production-mobile,#profile-mobile,#profile-logout,#scheduler-mobile
-    {
-        background-image: url(/assets/overview.png);
-        background-size: 30px;
-        background-repeat: no-repeat;
-        background-position: 7px 7px;
-    }
+  #overview-mobile,#devices-mobile, #consumption-mobile,#production-mobile,#profile-mobile,#profile-logout
+  {
+      background-image: url(/assets/overview.png);
+      background-size: 30px;
+      background-repeat: no-repeat;
+      background-position: 7px 7px;
+  }
 
-    #overview-mobile:hover,#devices-mobile:hover,#consumption-mobile:hover,#profile-logout:hover
-    #production-mobile:hover,#profile-mobile:hover,#scheduler-mobile:hover
-    {
-        color: #fff;
-        background-color: #dddddd;
-    }
+  #overview-mobile:hover,#devices-mobile:hover,#consumption-mobile:hover,#profile-logout:hover
+  #production-mobile:hover,#profile-mobile:hover
+  {
+      color: #fff;
+      background-color: #dddddd;
+  }
 
-    #devices-mobile     {   background-image: url(/assets/devices.png);}
-    #consumption-mobile {   background-image: url(/assets/consumption.png);}
-    #production-mobile  {   background-image: url(/assets/production.png);}
-    #scheduler-mobile  {   background-image: url(/assets/scheduler.png);}
-    #profile-mobile { background-image: url(/assets/user.png); }
-    #profile-logout { background-image: url(/assets/logout-mobile.png); }
+  #devices-mobile     {   background-image: url(/assets/devices.png);}
+  #consumption-mobile {   background-image: url(/assets/consumption.png);}
+  #production-mobile  {   background-image: url(/assets/production.png);}
+  #profile-mobile { background-image: url(/assets/user.png); }
+  #profile-logout { background-image: url(/assets/logout-mobile.png); }
 }
