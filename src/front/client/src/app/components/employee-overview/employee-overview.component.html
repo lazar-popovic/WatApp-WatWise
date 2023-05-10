@@ -4,7 +4,7 @@
         <div class="overview-filter-holder">
             <form>
                 <div class="search-input">
-                    <input name="fullName" [(ngModel)]="filter.name" (keydown)="getEmployees()" placeholder = "Search by name" autocomplete="off">
+                    <input name="fullName" [(ngModel)]="filter.name" (keyup)="getEmployees()" placeholder = "Search by name" autocomplete="off">
                 </div>
                 <button id="add-user-btn" (click)="addEmployee()">+Add Employee</button>
             </form>

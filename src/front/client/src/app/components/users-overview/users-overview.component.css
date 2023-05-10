@@ -40,6 +40,7 @@
     background-color: white;
     color: #3E3E3E;
     font-weight: 600;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .search-input input {
@@ -48,7 +49,7 @@
     height: 35px;
     outline: 0;
     border: 0;
-    box-shadow: 1px 4px 10px 4px rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     margin-right: 35px;
 }
 
@@ -67,7 +68,7 @@
     background-color: white;
     border-radius: 10px;
     border-collapse: collapse;
-    box-shadow: 1px 4px 10px 4px rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .overview-users-table table tr:first-child{
