@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { error } from 'jquery';
 import { Subscription } from 'rxjs';
 import { DeviceSchedulerService } from 'src/app/services/device-scheduler.service';
 import { DeviceService } from 'src/app/services/device.service';
@@ -54,9 +53,9 @@ export class SchedulerComponent implements OnInit {
         this.filter();
         console.log( this.routines);
       }
-    }, (erros:any) => {
-      console.log( error);
-    })
+    }, (errors:any) => {
+      console.log( errors);
+    });
   }
 
   formatDate( date: string) {
@@ -79,19 +78,41 @@ export class SchedulerComponent implements OnInit {
 
   deleteRoutine( id: number) : void {
     this.showDialog = false;
-    console.log(id);
     if( id > 0) {
       this.busy = this.deviceSchedulerService.removeJob( id).subscribe((result:any) => {
         if( result.body.success) {
           this.toastrNotifService.showSuccess( result.body.data);
-          this.router.navigate(["/prosumer/scheduler"]);
+          window.location.reload();
         }
         else {
           this.toastrNotifService.showErrors( result.body.errors);
         }
-      }, (erros:any) => {
-        console.log( error);
+      }, (errors:any) => {
+        console.log( errors);
       })
+    }
+  }
+
+  routineFinished( routine: any) : boolean {
+    let endDate = new Date( routine.endDate);
+    let dateNow = new Date();
+    if( routine.canceled || (routine.repeat == false && endDate < dateNow) ) {
+      return false;
+    }
+    return true;
+  }
+
+  getRoutineStatus( routine: any) : string {
+    let endDate = new Date( routine.endDate);
+    let dateNow = new Date();
+    if( routine.canceled) {
+      return "CANCELED";
+    }
+    else if( routine.repeat == false && endDate < dateNow) {
+      return "FINISHED";
+    }
+    else {
+      return "ACTIVE";
     }
   }
 }

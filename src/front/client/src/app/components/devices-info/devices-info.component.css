@@ -117,7 +117,8 @@
   align-items: center;
   font-size: 20px;
   font-weight: 300;
-  color: #6F6F6F;
+  color: #3e3e3e;
+  overflow-x: hidden;
 }
 
 .device-item-header h3 {

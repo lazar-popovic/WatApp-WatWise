@@ -117,7 +117,7 @@ align-items: center;
 #repeat-buttons {
   display: flex;
   flex-direction: row;
-  margin: 15px 0 10px;
+  margin: 5px 0 10px;
   justify-content: space-between;
 }
 #repeat-buttons div {

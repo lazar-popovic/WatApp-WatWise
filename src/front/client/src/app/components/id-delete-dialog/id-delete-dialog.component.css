@@ -1,6 +1,6 @@
 .dialog {
   position: absolute;
-  top: 50%;
+  top: calc(50% - 88px);
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;

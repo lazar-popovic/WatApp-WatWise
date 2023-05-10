@@ -149,7 +149,7 @@ public class DeviceScheduler : IDeviceScheduler
         }
 
         var canceledJobs = await _dbContext.DeviceJobs
-            .Where(jobs => jobs.Canceled == true)
+            .Where(jobs => jobs.Canceled == true || (jobs.Repeat == false && jobs.EndDate < DateTime.Now))
             .Join(_dbContext.Devices,
                   jobs => jobs.DeviceId,
                   devices => devices.Id,
