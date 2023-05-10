@@ -172,7 +172,7 @@ public class LocationDAL : ILocationDAL
                           (devType == null || devType.Category == category) &&
                           (dev == null || dev.DataShare == true) &&
                           (energy == null || energy.Timestamp == now)
-                    group new { energy.Value, energy.PredictedValue } by new { loc.Id, loc.Neighborhood } into g
+                    group new { energy.Value, energy.PredictedValue } by new { loc.Neighborhood } into g
                     select new NeighborhoodPowerUsageDTO
                     {
                         Neighborhood = g.Key.Neighborhood,
