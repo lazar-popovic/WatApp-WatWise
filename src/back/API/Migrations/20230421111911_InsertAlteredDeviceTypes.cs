@@ -65,12 +65,6 @@ namespace API.Migrations
                 columns: new[] { "Id", "Type", "Category", "WattageInkW" },
                 values: new object[] { 11, "Battery", 0, 0.045 }
             );
-            migrationBuilder.InsertData(
-                table: "Locations",
-                columns: new[] { "Id", "Address", "AddressNumber", "City", "Latitude", "Longitude" },
-                values: new object[] { 1, "Skerliceva", 12, "Kragujevac", 44.0138, 20.90793 }
-            );
-            migrationBuilder.Sql("UPDATE Users SET LocationId = 1 WHERE Id = 3;");
         }
 
         /// <inheritdoc />

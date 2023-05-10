@@ -110,12 +110,12 @@ namespace API.BL.Implementations
             var neighborhoods =
                 await _ilocationDal.Top5NeighborhoodsForCityPowerUsageAndPredictedPowerUsage(city, category);
 
-            if (neighborhoods.IsNullOrEmpty())
+            /*if (neighborhoods.IsNullOrEmpty())
             {
                 response.Errors.Add("Neighborhoods for given city does not exist or are null!");
                 response.Success = false;
                 return response;
-            }
+            }*/
 
             response.Data = neighborhoods;
             response.Success = true;

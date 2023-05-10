@@ -41,7 +41,7 @@
     <!-- LIVE USAGE HUGE CARD -->
     <div class="card-group">
       <div class="card card-huge standard-card-style">
-        <div class="chart-holder">
+        <div class="chart-holder" style="margin-top:0!important">
           <h4>Live consumption/production of electrical energy</h4>
           <canvas id="live-chart"></canvas>
         </div>
@@ -50,13 +50,47 @@
     <!-- BIG CARDs -->
     <div class="card-group">
       <div class="card card-big standard-card-style">
-        <h4>Consumption and production of electrical energy for today</h4>
+        <div class="card-header">
+          <h4>Current consumption of electrical energy by city</h4>
+          <select name="city" (change)="getTop5ConsumingNeighborhoods()" [(ngModel)]="selectedCityConsumption">
+            <option *ngFor="let city of cities">{{city}}</option>
+          </select>
+        </div>
         <div class="chart-holder">
+          <ngx-charts-bar-vertical-2d
+            [results]="chartDataConsumption"
+            [scheme]="colorSchemeConsumption"
+            [xAxis]="true"
+            [yAxis]="true"
+            [legend]="false"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [xAxisLabel]="'Neighborhood'"
+            [yAxisLabel]="'Current electrical energy consumption [kWh]'"
+            [legendTitle]="'Electrical energy usage by neighborhood'">
+          </ngx-charts-bar-vertical-2d>
         </div>
       </div>
       <div class="card card-big standard-card-style">
-        <h4>Consumption and production of electrical energy for tommorow</h4>
+        <div class="card-header">
+          <h4>Current production of electrical energy by city</h4>
+          <select name="city" (change)="getTop5ProducingNeighborhoods()" [(ngModel)]="selectedCityProduction">
+            <option *ngFor="let city of cities">{{city}}</option>
+          </select>
+        </div>
         <div class="chart-holder">
+          <ngx-charts-bar-vertical-2d
+            [results]="chartDataProduction"
+            [scheme]="colorSchemeProduction"
+            [xAxis]="true"
+            [yAxis]="true"
+            [legend]="false"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [xAxisLabel]="'Neighborhood'"
+            [yAxisLabel]="'Current electrical energy production [kWh]'"
+            [legendTitle]="'Electrical energy usage by neighborhood'">
+          </ngx-charts-bar-vertical-2d>
         </div>
       </div>
     </div>

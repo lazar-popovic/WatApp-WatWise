@@ -75,7 +75,7 @@
 
 .card-big {
   width: calc(50% - 20px);
-  height: 380px;
+  height: 420px;
   box-sizing: border-box;
 }
 
@@ -89,7 +89,8 @@
 }
 
 .chart-holder {
-  height: 280px;
+  margin-top: 20px;
+  height: 350px;
   width: 100%;
   position: relative;
 }
@@ -110,4 +111,18 @@
 #live-chart {
   max-height: 340px;
   min-height: 340px;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-header select {
+  height: 20px;
+  border-radius: 10px;
+  border: 1px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }

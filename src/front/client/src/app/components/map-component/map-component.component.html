@@ -6,22 +6,31 @@
 <div id="filter">
   <div id="select-city">
     <app-tooltip [message]="'This select contains all cities in which prosumer has been registered.'"></app-tooltip>
-    <select name="city" (change)="getNeighborhoods()" [(ngModel)]="selectedCity">
+    <select name="city" (change)="getNeighborhoods();getTop5Neighborhoods();" [(ngModel)]="selectedCity">
       <option *ngFor="let city of cities">{{city}}</option>
     </select>
   </div>
   <div id="city-chart" class="standard-card-style">
-    <ngx-charts-bar-vertical-2d
-      [results]="chartData"
-      [xAxis]="true"
-      [yAxis]="true"
-      [legend]="false"
-      [showXAxisLabel]="true"
-      [showYAxisLabel]="true"
-      [xAxisLabel]="'Neighborhood'"
-      [yAxisLabel]="'Current power usage [kWh]'"
-      [legendTitle]="'Power usage by neighborhood'"
-    ></ngx-charts-bar-vertical-2d>
+    <div style="margin: 0!important">
+      <select (change)="getTop5Neighborhoods()" [(ngModel)]="selectedCategory" style="width:100%!important">
+        <option value="-1" selected>Consumption</option>
+        <option value="1" selected>Production</option>
+      </select>
+    </div>
+    <div style="margin: 0!important">
+      <ngx-charts-bar-vertical-2d
+        [results]="chartData"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="false"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Neighborhood'"
+        [yAxisLabel]="'Current electrical energy usage [kWh]'"
+        [legendTitle]="'Electrical energy usage by neighborhood'"
+        [scheme]="colorScheme"
+      ></ngx-charts-bar-vertical-2d>
+    </div>
   </div>
   <div id="select-neighborhood">
     <app-tooltip [message]="'For selected city above, this select contains all neighborhoods in which prosumer has been registered.'"></app-tooltip>
