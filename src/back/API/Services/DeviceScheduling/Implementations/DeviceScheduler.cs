@@ -133,14 +133,6 @@ public class DeviceScheduler : IDeviceScheduler
                 .ThenBy(j => j.StartDate) // sort by StartDate
                 .AsNoTracking()
                 .ToListAsync();
-
-            if (activeJobs.IsNullOrEmpty())
-            {
-                response.Errors.Add("There are no active device jobs currently scheduled!");
-                response.Success = false;
-
-                return response;
-            }
             
             response.Data = activeJobs;
             response.Success = true;
@@ -171,15 +163,6 @@ public class DeviceScheduler : IDeviceScheduler
             .ThenBy(j => j.StartDate) // sort by StartDate
             .AsNoTracking()
             .ToListAsync();
-
-
-        if (canceledJobs.IsNullOrEmpty())
-        {
-            response.Errors.Add("There are no canceled device jobs!");
-            response.Success = false;
-
-            return response;
-        }
 
         response.Data = canceledJobs;
         response.Success = true;
