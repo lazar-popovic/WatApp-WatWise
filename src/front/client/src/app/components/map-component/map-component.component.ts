@@ -17,6 +17,7 @@ export class MapComponentComponent implements OnInit {
   selectedLocation: any;
   selectedCity: string = "All";
   selectedNeighborhood: string = "All";
+  chartData = [];
   users: any[] = [];
   showOverlay = false;
   constructor( private locationService: LocationService, private router: Router) { }
@@ -113,6 +114,7 @@ export class MapComponentComponent implements OnInit {
           this.cities = result.data;
           this.selectedCity = this.cities[0];
           this.getNeighborhoods();
+          this.getTop5Neighborhoods();
           console.log( result.data);
         }
         else {
@@ -122,6 +124,24 @@ export class MapComponentComponent implements OnInit {
         console.log( error);
       }
     );
+  }
+  selectedCategory: number = -1;
+  getTop5Neighborhoods() {
+    this.locationService.getTop5Neighborhoods( this.selectedCity, this.selectedCategory).subscribe((result:any) => {
+      if( result.success) {
+        let title =
+        this.chartData = result.data.map((item:any) => ({
+          name: item.neighborhood,
+          series: [
+            { name: "powerUsage", value: item.powerUsage },
+            { name: "predictedPowerUsage", value: item.predictedPowerUsage }
+          ]
+        }));
+        console.log( this.chartData);
+      }
+    }, (errors:any) => {
+      console.log( errors);
+    })
   }
 
   getNeighborhoods() {
@@ -225,56 +245,4 @@ export class MapComponentComponent implements OnInit {
   goToUser( userId: number) {
     this.router.navigate(['/profile', userId]);
   }
-
-  chartData = [
-    {
-      "name": "Centar",
-      "series": [
-        {
-          "name": "Production",
-          "value": 134
-        },
-        {
-          "name": "Consumption",
-          "value": 223
-        }
-      ]
-    },{
-      "name": "Stanovo",
-      "series": [
-        {
-          "name": "Consumption",
-          "value": 223
-        },
-        {
-          "name": "Production",
-          "value": 134
-        }
-      ]
-    },{
-      "name": "Palilule",
-      "series": [
-        {
-          "name": "Consumption",
-          "value": 223
-        },
-        {
-          "name": "Production",
-          "value": 134
-        }
-      ]
-    },{
-      "name": "Male pčelice",
-      "series": [
-        {
-          "name": "Consumption",
-          "value": 223
-        },
-        {
-          "name": "Production",
-          "value": 134
-        }
-      ]
-    },
-  ];
 }
