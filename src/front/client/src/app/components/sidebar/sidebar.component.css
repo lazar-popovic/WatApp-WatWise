@@ -28,40 +28,40 @@ background-color: #239F81;
 }
 
 .sidebar-header {
-    padding-top : 10px;
-    padding-left: 26px;
-    padding-right: 15px;
-    display: flex;
-    align-items: center;
+  padding-top : 10px;
+  padding-left: 26px;
+  padding-right: 15px;
+  display: flex;
+  align-items: center;
 }
 
 .sidebar-logo img{
-    height: 56px;
-    width: auto;
-    margin-right: 15px;
+  height: 56px;
+  width: auto;
+  margin-right: 15px;
 }
 
 .sidebar-profile img{
-    height: 40px;
-    padding: 13px 15px;
-    border-radius: 50%;
+  height: 40px;
+  padding: 13px 15px;
+  border-radius: 50%;
 }
 
 #profile-wraper {
-    display: flex;
-    align-items: center;
-    width: 80%;
+  display: flex;
+  align-items: center;
+  width: 80%;
 }
 
 .sidebar-footer img {
-    height: 30px;
+  height: 30px;
 }
 
 #logout {
-  width: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+width: 20%;
+display: flex;
+align-items: center;
+justify-content: center;
 }
 
 .sidebar-nav {
