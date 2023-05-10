@@ -39,18 +39,21 @@ background-color: #239F81;
   height: 56px;
   width: auto;
   margin-right: 15px;
+  cursor: pointer;
 }
 
 .sidebar-profile img{
   height: 40px;
   padding: 13px 15px;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 #profile-wraper {
   display: flex;
   align-items: center;
   width: 80%;
+  cursor: pointer;
 }
 
 .sidebar-footer img {
@@ -62,6 +65,7 @@ width: 20%;
 display: flex;
 align-items: center;
 justify-content: center;
+cursor: pointer;
 }
 
 .sidebar-nav {
