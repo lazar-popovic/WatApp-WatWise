@@ -1,25 +1,30 @@
 * {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-    color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  color: white;
 }
 
+
 .sidebar-container {
-    width: 302px;
-    height: 100vh;
-    position: sticky;
-    top: 0;
-    display: flex;
-    flex-direction: column;
+  width: 250px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+hr {
+  margin: 10px;
 }
 
 .sidebar-container-blue {
-  background-color: #1676AC;
+background-color: #1676AC;
 }
 
 .sidebar-container-green {
-  background-color: #239F81;
+background-color: #239F81;
 }
 
 .sidebar-header {
