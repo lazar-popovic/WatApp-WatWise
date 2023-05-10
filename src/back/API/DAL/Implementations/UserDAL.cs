@@ -1,4 +1,6 @@
-﻿using API.DAL.Interfaces;
+﻿using API.Common;
+using API.DAL.Interfaces;
+using API.Models.DTOs;
 using API.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -125,18 +127,7 @@ namespace API.DAL.Implementations
         {
           
             var fullName = search?.Trim().ToLower().Split(" ");
-
-            var users = await _dbContext.Users.Where( u => u.RoleId == id).Select(o => new
-                                                {
-                                                    Id = o.Id,
-                                                    Email = o.Email,
-                                                    Firstname = o.Firstname,
-                                                    Lastname = o.Lastname,
-                                                    Verified = o.Verified,
-                                                    LocationId = o.LocationId,
-                                                    Location = o.Location
-
-                                                }).ToListAsync();
+            var users = await ProsumersWithConsumptionProductionAndNumberOfWorkingDevices();
 
             if (mail != null && id==3)
             {
@@ -235,6 +226,52 @@ namespace API.DAL.Implementations
             }
 
             return user;
+        }
+        public async Task<List<AllProsumersWithConsumptionProductionDTO>> ProsumersWithConsumptionProductionAndNumberOfWorkingDevices()
+        {
+            var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+
+            var userDTOs = await _dbContext.Users
+                .Where(u => u.RoleId == (int?)RoleEnum.Role.User)
+                .Select(u => new
+                {
+                    User = u,
+                    Devices = u.Devices.Where(d => d.ActivityStatus == true),
+                    EnergyUsage = u.Devices
+                        .SelectMany(d => d.DeviceEnergyUsages)
+                        .Where(eu => eu.Timestamp == now)
+                })
+                .Select(u => new AllProsumersWithConsumptionProductionDTO()
+                {
+                    Id = u.User.Id,
+                    Email = u.User.Email,
+                    Firstname = u.User.Firstname,
+                    Lastname = u.User.Lastname,
+                    Verified = u.User.Verified,
+                    LocationId = u.User.LocationId,
+                    Location = u.User.Location,
+                    CurrentConsumption = u.EnergyUsage
+                        .Where(eu => eu.Device.DeviceType.Category == -1)
+                        .Sum(eu => eu.Value),
+                    PredictedCurrentConsumption = u.EnergyUsage
+                        .Where(eu => eu.Device.DeviceType.Category == -1)
+                        .Sum(eu => eu.PredictedValue),
+                    CurrentProduction = u.EnergyUsage
+                        .Where(eu => eu.Device.DeviceType.Category == 1)
+                        .Sum(eu => eu.Value),
+                    PredictedCurrentProduction = u.EnergyUsage
+                        .Where(eu => eu.Device.DeviceType.Category == 1)
+                        .Sum(eu => eu.PredictedValue),
+                    DevicesTurnedOn = u.Devices
+                        .Where(d => d.DeviceType.Category != 0 && d.ActivityStatus == true)
+                        .Count()
+                })
+                .OrderByDescending(u => u.CurrentConsumption)
+                .ThenByDescending(u => u.CurrentProduction)
+                .ToListAsync();
+
+            return userDTOs;
+
         }
     }
 
