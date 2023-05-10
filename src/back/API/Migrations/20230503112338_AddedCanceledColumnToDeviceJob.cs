@@ -26,6 +26,14 @@ namespace API.Migrations
                 type: "INTEGER",
                 nullable: false,
                 defaultValue: false);
+
+            migrationBuilder.InsertData(
+                table: "Locations",
+                columns: new[] { "Id", "Address", "AddressNumber", "City", "Latitude", "Longitude", "Neighborhood" },
+                values: new object[] { 1, "Skerliceva", 12, "Grad Kragujevac", 44.0138, 20.90793, "Kragujevac" }
+            );
+
+            migrationBuilder.Sql("UPDATE Users SET LocationId = 1 WHERE Id = 3;");
         }
 
         /// <inheritdoc />

@@ -34,4 +34,8 @@ export class LocationService {
   {
     return this.http.get(`${environment.apiUrl}location/distinct-location?city=${city}&neighborhood=${neighborhood}`);
   }
+
+  getTop5Neighborhoods( city: string, category: number) : Observable<any> {
+    return this.http.get(`${environment.apiUrl}location/top-5-neighborhoods-for-city-and-category?city=${city}&category=${category}`);
+  }
 }

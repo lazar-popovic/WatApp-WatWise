@@ -60,7 +60,7 @@ public class LocationController : ControllerBase
         return Ok(await _locationBL.GetAllLocationWithNeighborhood(city, neighborhood));
     }
 
-    [HttpPost("top-5-neighborhoods-for-city-and-category")]
+    [HttpGet("top-5-neighborhoods-for-city-and-category")]
     public async Task<IActionResult> Top5NeighborhoodsForCityAndCategory(string city, int category)
     {
         return Ok(await _locationBL.Top5NeighborhoodsForCityAndCategory(city, category));
