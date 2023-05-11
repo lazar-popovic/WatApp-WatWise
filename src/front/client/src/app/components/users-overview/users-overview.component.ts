@@ -91,9 +91,9 @@ export class UsersOverviewComponent {
     let element = document.querySelector("#lastname-filter") as HTMLDivElement;
 
     if(this.filter.order == "asc")
-      element.innerText = "Last name ↑";
+      element.innerText = "Lastname↑";
     if(this.filter.order == "desc")
-      element.innerText = "Last name ↓";
+      element.innerText = "Lastname↓";
 
       this.getProsumers();
   }

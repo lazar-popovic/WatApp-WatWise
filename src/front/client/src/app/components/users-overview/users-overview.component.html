@@ -24,7 +24,7 @@
                     <td [matTooltip]="'This number represents total number of currently active devices that consume electrical energy'">Active consumers</td>
                     <td [matTooltip]="'This number represents total number of currently active devices that produce electrical energy'">Active producers</td>
                 </tr>
-                <tr *ngFor="let user of users">
+                <tr *ngFor="let user of users" class="tr-prosumer" routerLink="/profile/{{user.id}}">
                     <td>{{user.firstname}}</td>
                     <td>{{user.lastname}}</td>
                     <td>{{user.email}}</td>
