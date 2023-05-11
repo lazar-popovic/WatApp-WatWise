@@ -87,4 +87,8 @@ export class UsersComponent {
       console.log(error);
     })
   }
+
+  refresh() : void {
+
+  }
 }

@@ -1,6 +1,5 @@
 * {
     font-family: 'Inter', sans-serif;
-    font-size: 20px;
     color: white;
 }
 
@@ -10,7 +9,7 @@
     min-height: 100vh;
 }
 
-.overview-container button, #lastname-filter {
+.overview-container button {
     padding: 5px 30px;
     border-radius: 20px;
     border: 0px;
@@ -22,10 +21,13 @@
     background-color: white;
     color: black;
     font-weight: 600;
+    border-radius: 20px;
+    border: 0px;
+    outline: 0;
 }
 
 .overview-tab {
-    width: 1350px;
+    width: 1500px;
     position: relative;
     margin: 100px auto;
 }
@@ -87,9 +89,11 @@
 }
 
 .overview-users-table table tr td {
-    text-align: center;
     color: #3E3E3E;
-    height: 60px;
+    height: 40px;
+    font-size: 16px!important;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .overview-users-table button{

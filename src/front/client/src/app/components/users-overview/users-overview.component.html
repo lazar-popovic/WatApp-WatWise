@@ -14,18 +14,26 @@
         <div class="overview-users-table">
             <table>
                 <tr>
-                    <td>First Name</td>
-                    <td><button id="lastname-filter" (click)="inverseOrder()">Lastname ↑</button></td>
+                    <td>Firstname</td>
+                    <td id="lastname-filter" (click)="inverseOrder()">Lastname↑</td>
                     <td>Mail</td>
                     <td>Address</td>
-                    <td></td>
+                    <td>City</td>
+                    <td [matTooltip]="'This number represents total current consumption for prosumer'">Current consumption[kWh]</td>
+                    <td [matTooltip]="'This number represents total current production for prosumer'">Current production[kWh]</td>
+                    <td [matTooltip]="'This number represents total number of currently active devices that consume electrical energy'">Active consumers</td>
+                    <td [matTooltip]="'This number represents total number of currently active devices that produce electrical energy'">Active producers</td>
                 </tr>
                 <tr *ngFor="let user of users">
-                    <td>{{user.firstName}}</td>
-                    <td>{{user.lastName}}</td>
-                    <td>{{user.mail}}</td>
-                    <td>{{user.address}} {{user.num}} - {{user.city}}</td>
-                    <td><button routerLink="/profile/{{user.id}}">View</button></td>
+                    <td>{{user.firstname}}</td>
+                    <td>{{user.lastname}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.location.address}} {{user.location.addressNumber}}</td>
+                    <td>{{user.location.city}}</td>
+                    <td><span style="color: rgba(191, 65, 65, 1);">{{user.currentConsumption.toFixed(2)}}</span></td>
+                    <td><span style="color: rgba(69, 94, 184, 1);">{{user.currentProduction.toFixed(2)}}</span></td>
+                    <td>{{user.consumingDevicesTurnedOn}}</td>
+                    <td>{{user.producingDevicesTurnedOn}}</td>
                 </tr>
             </table>
         </div>
@@ -52,7 +60,7 @@
     </div>
     <div class="users-overview-overlay" *ngIf="showAddUProsumer">
         <div class="users-overview-add-new">
-            <app-users></app-users>
+            <app-users (output)="showAddUProsumer=false"></app-users>
         </div>
     </div>
 </div>
