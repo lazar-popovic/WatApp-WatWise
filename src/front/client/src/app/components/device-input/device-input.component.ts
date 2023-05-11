@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DeviceService } from 'src/app/services/device.service';
@@ -11,7 +11,11 @@ import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
   styleUrls: ['./device-input.component.css']
 })
 export class DeviceInputComponent implements OnInit{
+
   showDevices : boolean = false;
+
+  @Input() showAddDevice = true;
+  @Output() output: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   newDevice = {
     userId: 0,
@@ -69,12 +73,12 @@ export class DeviceInputComponent implements OnInit{
   addDevice()
   {
     this.newDevice.userId = this.jwtService.userId;
-    console.log( this.newDevice);
     this.busyAddDevice = this.deviceService.insertDevice( this.newDevice).subscribe(
       result => {
         if( result.body.success)
         {
-          this.toastrService.showSuccess( result.body.data);
+          this.toastrService.showSuccess( result.body.data.message);
+          this.route.navigateByUrl("prosumer/device/"+result.body.data.deviceId);
         }
         else
         {
@@ -82,11 +86,9 @@ export class DeviceInputComponent implements OnInit{
         }
       }
     )
-    this.refresh();
   }
 
   refresh() {
-    this.route.navigateByUrl('/prosumer/devices');
+    this.output.emit(true);
   }
-
 }

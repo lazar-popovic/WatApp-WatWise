@@ -61,12 +61,16 @@ namespace API.DAL.Implementations
         {
             var recordsToDelete = _dbContext.DeviceEnergyUsage.Where(x => x.DeviceId == dev.Id);
             _dbContext.DeviceEnergyUsage.RemoveRange(recordsToDelete);
-
-            _dbContext.Devices.Remove(dev!);
+            
+            // Remove all device jobs associated with the device
+            var jobsToDelete = _dbContext.DeviceJobs.Where(x => x.DeviceId == dev.Id);
+            _dbContext.DeviceJobs.RemoveRange(jobsToDelete);
+            
+            _dbContext.Devices.Remove(dev);
 
             await _dbContext.SaveChangesAsync();
         }
-        public async Task AddDeviceViewModel(DeviceViewModel devicee)
+        public async Task<int> AddDeviceViewModel(DeviceViewModel devicee)
         {
             var device = new Device
             {
@@ -84,6 +88,8 @@ namespace API.DAL.Implementations
             await _dbContext.SaveChangesAsync();
 
             await _deviceSimulatorService.FillDataSinceJanuary1st(((int)devicee.DeviceTypeId!), device.Id);
+
+            return device.Id;
         }
 
         public async Task<List<DeviceType>> GetDeviceTypesByCategory(int id)
@@ -97,15 +103,28 @@ namespace API.DAL.Implementations
         {
             var timestamp = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
             var result = from device in _dbContext.Devices
-                join deviceType in _dbContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
-                join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty() on
-                    device.Id equals usage.DeviceId into usageGroup
-                where device.UserId == userId
-                group new { device.Id, device.Name, device.DeviceType, device.DeviceTypeId, device.ActivityStatus, Value = usageGroup.FirstOrDefault()!.Value, DataShare = device.DataShare } by deviceType.Category into grouped
-                select new {
-                    Category = grouped.Key,
-                    Devices = grouped.ToList()
-                };
+                         join deviceType in _dbContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
+                         join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty()
+                             on device.Id equals usage.DeviceId into usageGroup
+                         where device.UserId == userId
+                         group new
+                         {
+                             device.Id,
+                             device.Name,
+                             device.DeviceType,
+                             device.DeviceTypeId,
+                             device.ActivityStatus,
+                             Value = usageGroup.FirstOrDefault()!.Value,
+                             DataShare = device.DataShare
+                         } by deviceType.Category into grouped
+                         select new
+                         {
+                             Category = grouped.Key,
+                             Devices = grouped.OrderByDescending(d => d.ActivityStatus)
+                                             .ThenByDescending(d => d.Value)
+                                             .ToList()
+                         };
+
             return result;
         }
         
@@ -189,6 +208,36 @@ namespace API.DAL.Implementations
             }
 
             device!.ActivityStatus = false;
+
+            var rand = new Random();
+            var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+            var usage = await _dbContext.DeviceEnergyUsage.Where(du => du.DeviceId == device.Id && du.Timestamp == now).FirstOrDefaultAsync();
+            var deviceType = await _dbContext.DeviceTypes.Where(dt => dt.Id == device.DeviceTypeId).FirstOrDefaultAsync();
+            if (usage != null)
+            {
+                Console.WriteLine(usage.Timestamp);
+                if (deviceType?.Id == 3 && device?.ActivityStatus == true)
+                {
+                    usage.Value = Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+                }
+                else if (deviceType?.Id == 3 && device?.ActivityStatus == false)
+                {
+                    usage.Value = 0;
+                }
+                else if (deviceType?.Id == 11)
+                {
+                    usage.Value = Math.Min(Math.Max(Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3), 0), 1);
+                }
+                else if (device?.ActivityStatus == true)
+                {
+                    usage.Value = Math.Round((double)(deviceType?.WattageInkW * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+                }
+                else
+                {
+                    usage.Value = 0;
+                }
+            }
+
             await _dbContext.SaveChangesAsync();
 
             response.Success = response.Errors.Count == 0;
@@ -209,6 +258,36 @@ namespace API.DAL.Implementations
             }
 
             device!.ActivityStatus = true;
+
+            var rand = new Random();
+            var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+            var usage = await _dbContext.DeviceEnergyUsage.Where(du => du.DeviceId == device.Id && du.Timestamp == now).FirstOrDefaultAsync();
+            var deviceType = await _dbContext.DeviceTypes.Where(dt => dt.Id == device.DeviceTypeId).FirstOrDefaultAsync();
+            if (usage != null)
+            {
+                Console.WriteLine(usage.Timestamp);
+                if (deviceType?.Id == 3 && device?.ActivityStatus == true)
+                {
+                    usage.Value = Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+                }
+                else if (deviceType?.Id == 3 && device?.ActivityStatus == false)
+                {
+                    usage.Value = 0;
+                }
+                else if (deviceType?.Id == 11)
+                {
+                    usage.Value = Math.Min(Math.Max(Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3), 0), 1);
+                }
+                else if (device?.ActivityStatus == true)
+                {
+                    usage.Value = Math.Round((double)(deviceType?.WattageInkW * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+                }
+                else
+                {
+                    usage.Value = 0;
+                }
+            }
+
             await _dbContext.SaveChangesAsync();
 
             response.Success = response.Errors.Count == 0;
@@ -259,6 +338,19 @@ namespace API.DAL.Implementations
         {
             return await _dbContext.DeviceSubtypes.Where(dt => dt.DeviceTypeId == deviceTypeId)
                                                .AsNoTracking().ToListAsync();
+        }
+
+        public async Task<object> GetDevicesIdAndNameByUserId(int userId)
+        {
+            return await _dbContext.Devices.Where(d => d.UserId == userId)
+                .Where( device => device.DeviceType!.Category != 0)
+                .Select(d => new
+                {
+                    Id = d.Id,
+                    Name = d.Name
+                })
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }

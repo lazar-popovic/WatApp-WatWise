@@ -31,14 +31,24 @@
       <app-slider [status]="device.activityStatus"  (sliderEvent)="onSliderChange($event)"></app-slider>
     </div>
   </div>
-  <div class="device-detail" *ngIf="device.activityStatus && device.currentUsage != null && device.deviceType.category != 0">
+  <div class="device-detail" *ngIf="device.deviceType.category == 0">
+    <div class="title">
+      <p>Max capacity</p>
+    </div>
+    <div *ngIf="device.id > 0">
+      <p>{{device.capacity}} kWh</p>
+    </div>
+  </div>
+  <div class="device-detail" *ngIf="device.activityStatus && device.currentUsage != null">
     <div class="title">
       <p *ngIf="device.deviceType.category == -1">Currently consuming</p>
       <p *ngIf="device.deviceType.category == 1">Currently producing</p>
+      <p *ngIf="device.deviceType.category == 0">Current capacity</p>
     </div>
     <div>
-      <p *ngIf="device.deviceType.category == -1" style="color:rgba(191, 65, 65, 1)">-{{device.currentUsage}}kWh</p>
-      <p *ngIf="device.deviceType.category == 1" style="color:rgba(69, 94, 184, 1)">+{{device.currentUsage}}kWh</p>
+      <p *ngIf="device.deviceType.category == -1" style="color:rgba(191, 65, 65, 1)">{{device.currentUsage}}kWh</p>
+      <p *ngIf="device.deviceType.category == 1" style="color:rgba(69, 94, 184, 1)">{{device.currentUsage}}kWh</p>
+      <p *ngIf="device.deviceType.category == 0" style="color:rgba(27, 254, 127, 1)">{{(device.currentUsage*100).toFixed(0)}}%</p>
     </div>
   </div>
 </div>

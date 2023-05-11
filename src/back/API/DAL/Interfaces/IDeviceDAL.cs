@@ -13,7 +13,7 @@ namespace API.DAL.Interfaces
         Task AddDeviceAsync(Device device);
         Task UpdateDeviceAsync(Device device);
         Task DeleteDeviceAsync(Device device);
-        Task AddDeviceViewModel(DeviceViewModel device);
+        Task<int> AddDeviceViewModel(DeviceViewModel device);
         Task<List<DeviceType>> GetDeviceTypesByCategory(int id);
         object GetDevicesByUserId( int userId);
         Task TurnDevicesOff();
@@ -26,5 +26,6 @@ namespace API.DAL.Interfaces
         Task TurnDataSharingOn();
         Task<object> Top3DevicesByUserId( int userId);
         Task<List<DeviceSubtype>> GetDeviceSubtypesByType( int deviceTypeId);
+        Task<object> GetDevicesIdAndNameByUserId(int userId);
     }
 }

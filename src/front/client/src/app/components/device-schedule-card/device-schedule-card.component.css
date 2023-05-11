@@ -1,0 +1,45 @@
+.card-holder {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  box-sizing: border-box;
+  padding: 5px;
+  color: #3e3e3e;
+  font-size: 20px;
+  font-weight: bold;
+  width: 100%;
+}
+
+.no-job {
+  box-sizing: border-box;
+  width: 100%;
+  height: 80px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-job button{
+  border-radius: 10px;
+  height: 30px;
+  background-color: #3e3e3e;
+  color: white;
+  width: 150px;
+  border: 0;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.job {
+  box-sizing: border-box;
+  width: 100%;
+  height: 80px;
+  padding: 5px;
+}

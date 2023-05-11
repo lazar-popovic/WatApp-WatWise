@@ -1,0 +1,52 @@
+<div class="device-input-holder">
+  <div class="wrapper" [ngBusy]="busyAddDeviceJob">
+      <div style="display: flex; justify-content: space-between; align-items: center;" (click)="refresh()">
+        <h2>Schedule routine</h2>
+        <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;"></i>
+      </div>
+
+      <form action="#" (ngSubmit)="addDeviceJob()">
+        <div class="input-box">
+          <select type="text" name="deviceId" [(ngModel)]="newJob.deviceId" id="device">
+            <option  *ngFor=" let element of devices" value="{{element.id}}">{{element.name}}</option>
+          </select>
+        </div>
+        <h3>Repeat</h3>
+        <div id="repeat-buttons">
+          <div id="repeat-buttons-no" (click)="changeRepeat( false)">
+            <h4><i class="fa fa-calendar" aria-hidden="true"></i> once</h4>
+          </div>
+          <div id="repeat-buttons-yes" (click)="changeRepeat( true)">
+            <h4><i class="fa fa-refresh" aria-hidden="true"></i> daily</h4>
+          </div>
+        </div>
+        <div *ngIf="!newJob.repeat">
+          <h3>Select starting date</h3>
+          <div class="input-box">
+            <input type="datetime-local" id="start-date">
+          </div>
+          <h3>Select ending date</h3>
+          <div class="input-box">
+            <input type="datetime-local" id="end-date">
+          </div>
+        </div>
+        <div *ngIf="newJob.repeat">
+          <h3>Select starting time</h3>
+          <div class="input-box">
+            <input type="time" id="start-time">
+          </div>
+          <h3>Select ending time</h3>
+          <div class="input-box">
+            <input type="time" id="end-time">
+          </div>
+        </div>
+        <div class="input-box input-checkbox">
+          <h3>Turned On/Off</h3>
+          <app-slider [status]="newJob.turn" (sliderEvent)="newJob.turn = !newJob.turn"></app-slider>
+        </div>
+        <div class="input-box button">
+          <button type="submit">Schedule</button>
+        </div>
+      </form>
+  </div>
+  </div>

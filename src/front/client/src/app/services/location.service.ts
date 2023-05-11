@@ -19,4 +19,23 @@ export class LocationService {
   {
     return this.http.get(`${environment.apiUrl}user/users-with-locationId?id=${locationId}`);
   }
+
+  getCities() : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}location/distinct-city`);
+  }
+
+  getNeighborhoodsForCity( city: string) : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}location/distinct-neighborhood?city=${city}`);
+  }
+
+  getLocationsForNeighborhood( city: string, neighborhood: string) : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}location/distinct-location?city=${city}&neighborhood=${neighborhood}`);
+  }
+
+  getTop5Neighborhoods( city: string, category: number) : Observable<any> {
+    return this.http.get(`${environment.apiUrl}location/top-5-neighborhoods-for-city-and-category?city=${city}&category=${category}`);
+  }
 }

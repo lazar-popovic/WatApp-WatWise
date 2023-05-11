@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Device } from 'src/app/Models/device';
 import { DeviceService } from 'src/app/services/device.service';
 import { JWTService } from 'src/app/services/jwt.service';
 import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
+import { DeviceInputComponent } from '../device-input/device-input.component';
 
 @Component({
   selector: 'app-devices-info',
@@ -13,6 +14,8 @@ import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
 export class DevicesInfoComponent implements OnInit{
   @Input() id: number = 0;
 
+  idFunc : number = 0;
+
   consumeShow: boolean = true;
   prosumeShow: boolean = true;
   storageShow: boolean = true;
@@ -21,21 +24,24 @@ export class DevicesInfoComponent implements OnInit{
   prosumeDevices: Device[] = [];
   storageDevices: Device[] = [];
 
- constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService, private route: Router) {
- }
+  constructor( private deviceService: DeviceService, private jwtService: JWTService, private toastrService: ToastrNotifService, private route: Router) {
+  }
 
   ngOnInit(): void {
-    let idFunc =0;
     if(this.id != 0)
-      idFunc = this.id;
+      this.idFunc = this.id;
     else
-      idFunc = this.jwtService.userId;
-    this.deviceService.getDevicesByUserId(idFunc).subscribe(
+      this.idFunc = this.jwtService.userId;
+    this.getDevices();
+  }
+
+  getDevices() {
+    this.deviceService.getDevicesByUserId(this.idFunc).subscribe(
       result => {
         if( result.success) {
           for (let devicesType of result.data)
           for(let device of devicesType.devices) {
-            if( (idFunc== this.jwtService.userId) || ( device.dataShare == true)) {
+            if( (this.idFunc== this.jwtService.userId) || ( device.dataShare == true)) {
               let deviceIns = new Device();
               deviceIns.id = device.id;
               deviceIns.name = device.name;

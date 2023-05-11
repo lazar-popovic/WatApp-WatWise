@@ -9,6 +9,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  margin-top: 88px;
 }
 
 @media (max-width: 600px) {
@@ -213,8 +214,6 @@ table {
   background-color: #ffff;
   text-align: center;
   border-radius: 20px;
-
-
 }
 
 

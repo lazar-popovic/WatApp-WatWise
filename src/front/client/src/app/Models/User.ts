@@ -11,3 +11,4 @@ export class User {
     city = "Kragujevac";
     profileImage = "";
 }
+

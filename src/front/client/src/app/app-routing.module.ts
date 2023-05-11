@@ -29,6 +29,9 @@ import { EditDeviceComponent } from './components/edit-device/edit-device.compon
 import { SliderComponent } from './components/slider/slider.component';
 import { DeleteDeviceComponent } from './components/delete-device/delete-device.component';
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
+import { DeviceJobFormComponent } from './components/device-job-form/device-job-form.component';
+import { ConfirmWindowComponent } from './components/confirm-window/confirm-window.component';
+import { SchedulerComponent } from './components/scheduler/scheduler.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -42,17 +45,20 @@ const routes: Routes = [
   { path: 'prosumer/devices', component : DevicesComponent, canActivate: [UserGuard]},
   { path: 'prosumer/consumption', component : ConsumptionComponent, canActivate: [UserGuard]},
   { path: 'prosumer/production', component : ProductionComponent, canActivate: [UserGuard]},
+  { path: 'prosumer/scheduler', component: SchedulerComponent, canActivate: [UserGuard]},
   { path: 'profile/change-password', component : ChangePasswordComponent, canActivate: [UserGuard]},
-  { path: 'dso/users', component : UsersOverviewComponent, canActivate: [EmployeeGuard]},
+  { path: 'dso/prosumers', component : UsersOverviewComponent, canActivate: [EmployeeGuard]},
   { path: 'dso/map', component : MapComponent, canActivate: [EmployeeGuard]},
-  { path: 'dso/consumption', component : EnergyUsageComponent, canActivate: [EmployeeGuard]},
+  { path: 'dso/energy-usage', component : EnergyUsageComponent, canActivate: [EmployeeGuard]},
   { path: 'prosumer/reset-password', component: PasswordInputComponent},
   { path: 'prosumer/device/:id', component: DeviceDetailsComponent},
   { path: 'dso/employees', component: EmployeeOverviewComponent},
   { path: 'profile-settings', component: ProfileSettingsComponent},
   { path: 'test-component', component: DeleteDeviceComponent},
   { path: 'test-geo', component: UsersComponent},
-  { path: 'test-upload', component: UploadImageComponent}
+  { path: 'test-upload', component: UploadImageComponent},
+  { path: 'test-confirm', component: ConfirmWindowComponent},
+  { path: 'test-device-job', component: DeviceJobFormComponent}
 ];
 
 @NgModule({
