@@ -143,12 +143,16 @@ background-color: #115746;
       padding-right: 10px;
       box-sizing: border-box;
       width: 100vw;
+      height: 88px;
+      position: fixed;
+      z-index: 9991;
   }
 
   #logoMobile
   {
-      height: 50px;
-      margin-left: 40px;
+      height: 58px;
+      margin-left: 10px;
+      margin-top: 5px;
   }
 
   .sidebar-logo-mobile
@@ -163,8 +167,8 @@ background-color: #115746;
       justify-content: flex-end;
 
       float: right;
-      margin-top: 0px;
-      margin-right: 30px;
+      margin-top: 0;
+      margin-right: 10px;
     }
 
 
@@ -254,7 +258,7 @@ background-color: #115746;
 
   .menu-list.open {
       background-color: #fff;
-      max-height: 330px;
+      max-height: 350px;
       border-radius: 10px;
       border: 1px solid #3E3E3E;
       z-index: 2;
@@ -271,13 +275,13 @@ background-color: #115746;
 
 
 
-  #overview-mobile a,#devices-mobile a,#consumption-mobile a,#production-mobile a,#profile-mobile a,#profile-logout a
+  #overview-mobile a,#devices-mobile a,#consumption-mobile a,#production-mobile a,#profile-mobile a,#profile-logout a,#scheduler-mobile  a
   {
       margin-left: 35px;
       font-size: 25px;
   }
 
-  #overview-mobile,#devices-mobile, #consumption-mobile,#production-mobile,#profile-mobile,#profile-logout
+  #overview-mobile,#devices-mobile, #consumption-mobile,#production-mobile,#profile-mobile,#profile-logout,#scheduler-mobile
   {
       background-image: url(/assets/overview.png);
       background-size: 30px;
@@ -286,7 +290,7 @@ background-color: #115746;
   }
 
   #overview-mobile:hover,#devices-mobile:hover,#consumption-mobile:hover,#profile-logout:hover
-  #production-mobile:hover,#profile-mobile:hover
+  #production-mobile:hover,#profile-mobile:hover,#scheduler-mobile:hover
   {
       color: #fff;
       background-color: #dddddd;
@@ -295,6 +299,17 @@ background-color: #115746;
   #devices-mobile     {   background-image: url(/assets/devices.png);}
   #consumption-mobile {   background-image: url(/assets/consumption.png);}
   #production-mobile  {   background-image: url(/assets/production.png);}
+  #scheduler-mobile  {   background-image: url(/assets/scheduler.png);}
   #profile-mobile { background-image: url(/assets/user.png); }
   #profile-logout { background-image: url(/assets/logout-mobile.png); }
+
+  #title-mobile {
+    position: absolute;
+    top: 30px;
+    left:70px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 25px;
+    color: white;
+  }
 }
