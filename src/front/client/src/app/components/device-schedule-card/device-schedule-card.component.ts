@@ -27,18 +27,19 @@ export class DeviceScheduleCardComponent implements OnInit, OnChanges {
 
   @Input() deviceId: number = 0;
 
-  deviceJob = {
+  /*deviceJob = {
     id: 0,
     startDate: "",
     endDate: "",
     turn: false,
     repeat: false
-  };
+  };*/
+  deviceJobs: any[] = [];
 
   getActiveJobForDeviceId( id: number) {
     this.busy = this.deviceSchedulerService.getActiveJobForDeviceId( id).subscribe((result:any) => {
       console.log( result.data);
-      this.deviceJob = result.data;
+      this.deviceJobs = result.data;
     }, (error:any) => {
       console.log( error);
     });

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {LocationService} from "../../services/location.service";
 import { Router } from '@angular/router';
+import { Color } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-map-component',
@@ -17,6 +18,10 @@ export class MapComponentComponent implements OnInit {
   selectedLocation: any;
   selectedCity: string = "All";
   selectedNeighborhood: string = "All";
+  chartData = [];
+  colorScheme = {
+    domain: ['rgba(69, 94, 184, 1)', 'rgba(69, 94, 184, 0.4)']
+  } as Color;
   users: any[] = [];
   showOverlay = false;
   constructor( private locationService: LocationService, private router: Router) { }
@@ -113,6 +118,7 @@ export class MapComponentComponent implements OnInit {
           this.cities = result.data;
           this.selectedCity = this.cities[0];
           this.getNeighborhoods();
+          this.getTop5Neighborhoods();
           console.log( result.data);
         }
         else {
@@ -122,6 +128,36 @@ export class MapComponentComponent implements OnInit {
         console.log( error);
       }
     );
+  }
+
+  selectedCategory: number = -1;
+  title: string = "";
+  getTop5Neighborhoods() {
+    this.locationService.getTop5Neighborhoods( this.selectedCity, this.selectedCategory).subscribe((result:any) => {
+      if( result.success) {
+        if( this.selectedCategory == 1) {
+          this.title = "Production [kWh]"
+          this.colorScheme = {
+            domain: ['rgba(69, 94, 184, 1)', 'rgba(69, 94, 184, 0.4)']
+          } as Color;
+        } else {
+          this.title = "Consumption [kWh]"
+          this.colorScheme = {
+            domain: ['rgba(191, 65, 65, 1)', 'rgba(191, 65, 65, 0.4)']
+          } as Color;
+        }
+        this.chartData = result.data.map((item:any) => ({
+          name: item.neighborhood,
+          series: [
+            { name: this.title, value: item.powerUsage },
+            { name: "Predicted " + this.title, value: item.predictedPowerUsage }
+          ]
+        }));
+        console.log( this.chartData);
+      }
+    }, (errors:any) => {
+      console.log( errors);
+    })
   }
 
   getNeighborhoods() {
@@ -225,56 +261,4 @@ export class MapComponentComponent implements OnInit {
   goToUser( userId: number) {
     this.router.navigate(['/profile', userId]);
   }
-
-  chartData = [
-    {
-      "name": "Centar",
-      "series": [
-        {
-          "name": "Production",
-          "value": 134
-        },
-        {
-          "name": "Consumption",
-          "value": 223
-        }
-      ]
-    },{
-      "name": "Stanovo",
-      "series": [
-        {
-          "name": "Consumption",
-          "value": 223
-        },
-        {
-          "name": "Production",
-          "value": 134
-        }
-      ]
-    },{
-      "name": "Palilule",
-      "series": [
-        {
-          "name": "Consumption",
-          "value": 223
-        },
-        {
-          "name": "Production",
-          "value": 134
-        }
-      ]
-    },{
-      "name": "Male pčelice",
-      "series": [
-        {
-          "name": "Consumption",
-          "value": 223
-        },
-        {
-          "name": "Production",
-          "value": 134
-        }
-      ]
-    },
-  ];
 }

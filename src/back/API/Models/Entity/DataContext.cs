@@ -19,4 +19,31 @@ public class DataContext : DbContext
     public DbSet<DeviceType> DeviceTypes { get; set; }
     public DbSet<DeviceSubtype> DeviceSubtypes { get; set; }
     public DbSet<DeviceJob> DeviceJobs { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Devices)
+            .WithOne(d => d.User)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Device>()
+            .HasMany(d => d.DeviceEnergyUsages)
+            .WithOne(eu => eu.Device)
+            .HasForeignKey(eu => eu.DeviceId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Device>()
+            .HasMany(d => d.DeviceJobs)
+            .WithOne(j => j.Device)
+            .HasForeignKey(j => j.DeviceId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<RefreshToken>()
+            .HasOne(rt => rt.user)
+            .WithMany(u => u.RefreshTokens)
+            .HasForeignKey(rt => rt.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
 }

@@ -10,7 +10,7 @@
           <h4>Currently consuming</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-red">-{{cards.currentConsumption.toFixed(2)}}kWh</h4>
+          <h4 class="c-red">{{cards.currentConsumption.toFixed(2)}}kWh</h4>
         </div>
       </div>
       <div class="card standard-card-style card-small">
@@ -19,7 +19,7 @@
           <h4>Currently producing</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-blue">+{{cards.currentProduction.toFixed(2)}}kWh</h4>
+          <h4 class="c-blue">{{cards.currentProduction.toFixed(2)}}kWh</h4>
         </div>
       </div>
       <div class="card standard-card-style card-small">
@@ -28,7 +28,7 @@
           <h4>Predicted consumption for today</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-red">-{{cards.totalConsumption.toFixed(2)}}kW</h4>
+          <h4 class="c-red">{{cards.totalConsumption.toFixed(2)}}kW</h4>
         </div>
       </div>
       <div class="card standard-card-style card-small">
@@ -37,7 +37,7 @@
           <h4>Predicted production for today</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-blue">+{{cards.totalProduction.toFixed(2)}}kWh</h4>
+          <h4 class="c-blue">{{cards.totalProduction.toFixed(2)}}kWh</h4>
         </div>
       </div>
     </div>
@@ -109,11 +109,11 @@
       <div class="card card-big standard-card-style" style=" padding: 0px!important;">
         <app-weather-forecast></app-weather-forecast>
       </div>
-      <div class="card card-big standard-card-style">
+      <!--<div class="card card-big standard-card-style">
         <div>
           <h3>Card 8</h3>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 </div>

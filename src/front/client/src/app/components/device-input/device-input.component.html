@@ -1,7 +1,7 @@
 <div class="device-input-holder">
 <div class="wrapper" *ngIf="!showDevices"  [ngBusy]="busyAddDevice">
-    <div style="display: flex; justify-content: right;">
-      <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;" (click)="refresh()"></i>
+    <div style="display: flex; justify-content: right;" (click)="refresh()">
+      <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;"></i>
     </div>
 
     <h2>Connect device</h2>

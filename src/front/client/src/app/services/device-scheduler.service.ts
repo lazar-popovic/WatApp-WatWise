@@ -16,4 +16,11 @@ export class DeviceSchedulerService {
   {
     return this.http.get(`${environment.apiUrl}scheduler/get-active-job-for-device-id?deviceId=${deviceId}`);
   }
+  getJobsForUserId( userId: number, active: boolean) : Observable<any>
+  {
+    return this.http.get(`${environment.apiUrl}scheduler/get-all-jobs-for-user-id?userId=${userId}&active=${active}`);
+  }
+  removeJob( jobId: number) : Observable<any> {
+    return this.http.post(`${environment.apiUrl}scheduler/cancel-job?jobId=${jobId}`, {}, {observe: 'response'});
+  }
 }

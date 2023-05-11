@@ -86,10 +86,9 @@ export class DeviceInputComponent implements OnInit{
         }
       }
     )
-    this.refresh();
   }
 
   refresh() {
-    this.output.emit(false);
+    this.output.emit(true);
   }
 }

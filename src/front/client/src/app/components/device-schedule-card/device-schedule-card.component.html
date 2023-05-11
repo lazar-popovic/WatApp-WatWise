@@ -2,11 +2,11 @@
   <div class="title">
     <p>Device routines</p>
   </div>
-  <div class="no-job" *ngIf="deviceJob == null || deviceJob.id == 0">
+  <div class="no-job" *ngIf="deviceJobs.length == 0">
     <button (click)="outputEmit()">+ Create routine</button>
   </div>
-  <div class="job" *ngIf="deviceJob != null && deviceJob.id != 0">
-    <p>This device is set to be turned
+  <div class="job" *ngIf="deviceJobs.length > 0">
+    <p *ngFor="let deviceJob of deviceJobs">This device is set to be turned
       <span *ngIf="deviceJob.turn" style="color: #3acc5e; font-weight: bold;">On</span>
       <span *ngIf="!deviceJob.turn"  style="color: #c15757; font-weight: bold;">Off</span>
       <br>from {{deviceJob.startDate}}<br>to {{deviceJob.endDate}}

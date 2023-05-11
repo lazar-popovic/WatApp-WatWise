@@ -1,0 +1,135 @@
+<div id="container">
+  <div id="nav">
+    <app-sidebar>
+
+    </app-sidebar>
+  </div>
+  <div id="content">
+
+    <div id="header">
+      <h2>Scheduler</h2>
+    </div>
+
+    <div id="nav-bar">
+      <div id="filter">
+        <select [(ngModel)]="selectedDevice" (change)="filter()">
+          <option value="0" selected>All devices</option>
+          <option *ngFor="let device of devices" value="{{device.id}}">{{device.name}}</option>
+        </select>
+      </div>
+      <div id="add-new-routine">
+        <button (click)="showForm = true">+ Create routine</button>
+      </div>
+    </div>
+
+    <div id="radio-buttons">
+      <div class="radio-button">
+        <input type="radio" name="radio" value=true (change)="getRoutines( true)" checked/><label> Active routines</label>
+      </div>
+      <div class="radio-button">
+        <input type="radio" name="radio" value=false (change)="getRoutines( false)"/><label> Routine history</label>
+      </div>
+    </div>
+
+    <div id="list">
+      <div class="no-routines" *ngIf="routinesDisplay.length == 0">
+        <h3>No routines</h3>
+      </div>
+      <div *ngFor="let routine of routinesDisplay" (click) = "showRoutine( routine)">
+        <div class="routine">
+          <div class="routine-repeat-icon" [ngClass]="{'routine-repeat-icon': true, 'routine-red': !routineFinished( routine), 'routine-green': routineFinished( routine)}">
+            <!--<img *ngIf="routine.repeat == true" src="/assets/repeat-daily.png"/>
+            <img *ngIf="routine.repeat == false" src="/assets/scheduler.png"/>-->
+            <i *ngIf="routine.repeat == false" class="fa fa-calendar" aria-hidden="true"></i>
+            <i *ngIf="routine.repeat == true" class="fa fa-refresh" aria-hidden="true"></i>
+          </div>
+          <div class="routine-content">
+            <div class="routine-header">
+              <h3>{{routine.deviceName}}</h3>
+              <p>
+                <span *ngIf="routineFinished( routine)">will be </span>
+                <span *ngIf="!routineFinished( routine)">was </span>
+                <span *ngIf="routine.turn == true" style="color: green;">On</span>
+                <span *ngIf="routine.turn == false" style="color: red">Off</span>
+              </p>
+            </div>
+            <div style="display:flex; flex-direction: row; justify-content: space-between; width: 180px;">
+              <div>
+                <p><b>From</b></p>
+                <p><b>To</b></p>
+              </div>
+              <div class="routine-time">
+                <p *ngIf="routine.repeat == true">{{routine.startDate.split('T')[1].replace(':00','')}}</p>
+                <p *ngIf="routine.repeat == true">{{routine.endDate.split('T')[1].replace(':00','')}}</p>
+                <p *ngIf="routine.repeat == false">{{routine.startDate.split('T')[1].replace(':00','')}} {{formatDate(routine.startDate.split('T')[0])}}</p>
+                <p *ngIf="routine.repeat == false">{{routine.endDate.split('T')[1].replace(':00','')}} {{formatDate(routine.endDate.split('T')[0])}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="hover-form" *ngIf="selectedRoutine != null">
+      <div class="routine-holder">
+        <div class="routine-wrapper" [ngBusy]="busy">
+          <div style="display: flex; justify-content: space-between; align-items: center;" (click)="closeRoutine()">
+            <h2>Routine {{selectedRoutine.id}}</h2>
+            <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;"></i>
+          </div>
+          <div>
+            <h3 *ngIf="getRoutineStatus( selectedRoutine) == 'CANCELED'" style="color: red">CANCELED</h3>
+            <h3 *ngIf="getRoutineStatus( selectedRoutine) == 'FINISHED'" style="color: red">FINISHED</h3>
+            <h3 *ngIf="getRoutineStatus( selectedRoutine) == 'ACTIVE'" style="color: green">ACTIVE</h3>
+          </div>
+          <div style="margin-top: 20px;">
+            <p>Device <b>{{selectedRoutine.deviceName}}</b> is set to be
+              <span *ngIf="selectedRoutine.turn == true" style="color: green;">On</span>
+              <span *ngIf="selectedRoutine.turn == false" style="color: red">Off</span>
+            </p>
+          </div>
+          <div style="display:flex; flex-direction: row; justify-content: space-between; width: 180px; margin:auto; margin-top: 20px;">
+            <div>
+              <p><b>From</b></p>
+              <p><b>To</b></p></div>
+            <div>
+              <p *ngIf="selectedRoutine.repeat == true">{{selectedRoutine.startDate.split('T')[1].replace(':00','')}}</p>
+              <p *ngIf="selectedRoutine.repeat == false">{{selectedRoutine.startDate.split('T')[1].replace(':00','')}} {{formatDate(selectedRoutine.startDate.split('T')[0])}}</p>
+              <p *ngIf="selectedRoutine.repeat == true">{{selectedRoutine.endDate.split('T')[1].replace(':00','')}}</p>
+              <p *ngIf="selectedRoutine.repeat == false">{{selectedRoutine.endDate.split('T')[1].replace(':00','')}} {{formatDate(selectedRoutine.startDate.split('T')[0])}}</p>
+            </div>
+          </div>
+          <div style="margin-top: 20px;">
+            <p *ngIf="selectedRoutine.repeat == false"><i class="fa fa-calendar" aria-hidden="true"></i> This job repeats only once</p>
+            <p *ngIf="selectedRoutine.repeat == true"><i class="fa fa-refresh" aria-hidden="true"></i> This job repeats every day</p>
+          </div>
+          <div class="remove-icon" (click)="showDialog = true" *ngIf="getRoutineStatus( selectedRoutine) == 'ACTIVE'">
+            <img src="/assets/bin.png"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <div class="hover-form" *ngIf="showDialog">
+      <app-id-delete-dialog [text]="'Cancel routine ' + selectedRoutine.id + '?'" [id]="selectedRoutine.id" (output)="deleteRoutine($event)"></app-id-delete-dialog>
+    </div>
+
+
+
+
+    <div class="hover-form" *ngIf="showForm">
+      <app-device-job-form (output)="showForm = false"></app-device-job-form>
+    </div>
+  </div>
+</div>
+

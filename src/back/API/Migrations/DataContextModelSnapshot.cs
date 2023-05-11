@@ -85,8 +85,11 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Entity.DeviceJob", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Canceled")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("DeviceId")
@@ -98,7 +101,7 @@ namespace API.Migrations
                     b.Property<int?>("EndJobId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool?>("Repeat")
+                    b.Property<bool>("Repeat")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("StartDate")
@@ -301,7 +304,8 @@ namespace API.Migrations
 
                     b.HasOne("API.Models.Entity.User", "User")
                         .WithMany("Devices")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("DeviceSubtype");
 
@@ -314,7 +318,8 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Models.Entity.Device", "Device")
                         .WithMany("DeviceEnergyUsages")
-                        .HasForeignKey("DeviceId");
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Device");
                 });
@@ -322,8 +327,9 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.Entity.DeviceJob", b =>
                 {
                     b.HasOne("API.Models.Entity.Device", "Device")
-                        .WithMany()
-                        .HasForeignKey("DeviceId");
+                        .WithMany("DeviceJobs")
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Device");
                 });
@@ -340,8 +346,9 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.Entity.RefreshToken", b =>
                 {
                     b.HasOne("API.Models.Entity.User", "user")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("user");
                 });
@@ -373,6 +380,8 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.Entity.Device", b =>
                 {
                     b.Navigation("DeviceEnergyUsages");
+
+                    b.Navigation("DeviceJobs");
                 });
 
             modelBuilder.Entity("API.Models.Entity.DeviceSubtype", b =>
@@ -400,6 +409,8 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.Entity.User", b =>
                 {
                     b.Navigation("Devices");
+
+                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }

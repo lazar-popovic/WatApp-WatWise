@@ -9,22 +9,14 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  margin-top: 88px;
 }
 
 @media (max-width: 600px) {
   #container {
     flex-direction: row;
   }
-  #content {
-    margin-top: 88px;
-  }
-  #device-details {
-    display: flex;
-    flex-direction: column;
-  }
-  #device-schedule-holder {
-    margin-top: 20px;
-  }
+
   .device-details-overlay>.device-details-edit,
   .device-details-delete {
     left: 10%;
@@ -133,17 +125,9 @@
   padding: 0 20px;
 }
 
-#additional-filter input {
-  width: 120px;
-  height: 40px;
-  border-radius: 10px;
-  margin-right: 10px;
-  border: 0px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
+#additional-filter input,
 #additional-filter select {
-  width: 75px;
+  width: 120px;
   height: 40px;
   border-radius: 10px;
   margin-right: 10px;
@@ -230,8 +214,6 @@ table {
   background-color: #ffff;
   text-align: center;
   border-radius: 20px;
-
-
 }
 
 

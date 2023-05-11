@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -21,7 +22,7 @@ export class DeviceJobFormComponent implements OnInit {
     startDate: "",
     endDate: "",
     turn: true,
-    repeat: true,
+    repeat: false,
   }
 
   devices = [] as any[];
@@ -32,10 +33,28 @@ export class DeviceJobFormComponent implements OnInit {
                private jwtService: JWTService,
                private toastrService: ToastrNotifService,
                private route: Router,
-               private deviceScheduler: DeviceSchedulerService) { }
+               private deviceScheduler: DeviceSchedulerService,
+               private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.getDevices();
+  }
+
+  changeRepeat( repeat: boolean): void {
+    console.log( repeat);
+    if( repeat) {
+      (document.querySelector('#repeat-buttons-yes') as HTMLDivElement).style.backgroundColor = "#1676AC";
+      (document.querySelector('#repeat-buttons-yes') as HTMLDivElement).style.color = "white";
+      (document.querySelector('#repeat-buttons-no') as HTMLDivElement).style.backgroundColor = "white";
+      (document.querySelector('#repeat-buttons-no') as HTMLDivElement).style.color = "#3e3e3e";
+      this.newJob.repeat = repeat;
+    } else {
+      (document.querySelector('#repeat-buttons-no') as HTMLDivElement).style.backgroundColor = "#1676AC";
+      (document.querySelector('#repeat-buttons-no') as HTMLDivElement).style.color = "white";
+      (document.querySelector('#repeat-buttons-yes') as HTMLDivElement).style.backgroundColor = "white";
+      (document.querySelector('#repeat-buttons-yes') as HTMLDivElement).style.color = "#3e3e3e";
+      this.newJob.repeat = repeat;
+    }
   }
 
   getDevices() {
@@ -56,15 +75,28 @@ export class DeviceJobFormComponent implements OnInit {
   }
 
   addDeviceJob() {
-    this.newJob.startDate = (document.querySelector('#start-date') as HTMLInputElement).value + ":00.000Z";
-    this.newJob.endDate = (document.querySelector('#end-date') as HTMLInputElement).value + ":00.000Z";
+    if( this.newJob.repeat) {
+      const currentDate = new Date();
+      this.newJob.startDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd') + "T" + (document.querySelector('#start-time') as HTMLInputElement).value + ":00.000Z";
+      this.newJob.endDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd') + "T" + (document.querySelector('#end-time') as HTMLInputElement).value + ":00.000Z";
+    }
+    else {
+      this.newJob.startDate = (document.querySelector('#start-date') as HTMLInputElement).value + ":00.000Z";
+      this.newJob.endDate = (document.querySelector('#end-date') as HTMLInputElement).value + ":00.000Z";
+    }
+
     console.log( this.newJob);
 
     this.busyAddDeviceJob = this.deviceScheduler.insertDeviceJob( this.newJob).subscribe( (result:any) => {
-      this.toastrService.showSuccess( "Device job successfully scheduled!");
-      this.route.navigateByUrl("prosumer/device/"+this.newJob.deviceId);
+      this.toastrService.showSuccess( "Device routine successfully scheduled!");
+      if( this.deviceId != 0) {
+        this.route.navigateByUrl("prosumer/device/"+this.newJob.deviceId);
+      }
+      else {
+        window.location.reload();
+      }
     }, (error:any) => {
-      this.toastrService.showErrors(["Error while creating job. Check all fields!"]);
+      this.toastrService.showErrors(["Error while creating routine. Check if all fields are filled!"]);
       console.log( error);
     })
   }

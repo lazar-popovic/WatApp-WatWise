@@ -13,6 +13,7 @@ html, body { height: 100vh; }
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
+  font-weight: 300;
   background-color: #E1E1E1;
 }
 

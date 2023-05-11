@@ -1,0 +1,199 @@
+#container {
+  display: flex;
+  box-sizing: border-box;
+}
+
+#content {
+  height: fit-content;
+  width: 100vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 600px) {
+  #container {
+    flex-direction: row;
+  }
+  #content {
+    margin-top: 88px;
+  }
+}
+
+@media (max-width: 600px) {
+  #container {
+    flex-direction: column;
+  }
+}
+
+#header {
+  box-sizing: border-box;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+#header h2 {
+  color: #3e3e3e;
+}
+
+#nav-bar {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+#radio-buttons {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px 40px 0;
+}
+
+.radio-button {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.radio-button input {
+  height: 20px;
+  width: 20px;
+  margin-right: 5px;
+}
+
+#filter select {
+  width: 140px;
+  height: 40px;
+  border-radius: 10px;
+  margin-right: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#add-new-routine button {
+  border-radius: 10px;
+  color: #3e3e3e;
+  width: 140px;
+  border: 0;
+  height: 40px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#add-new-routine button:hover {
+  background-color: rgba(67, 108, 144, 0.2);
+}
+
+#list {
+  padding: 20px 20px 5px!important;
+  box-sizing: border-box;
+}
+
+.no-routines {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7a7a7a;
+}
+
+.routine {
+  box-sizing: border-box;
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: white;
+  color: #3e3e3e;
+}
+.routine-red {
+  background-color: rgb(252, 224, 224);
+}
+
+.routine-green {
+  background-color: rgb(218, 255, 229);
+}
+
+.routine-repeat-icon {
+  box-sizing: border-box;
+  height: 100%;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.routine-repeat-icon img{
+  width: 30px;
+}
+
+
+.routine-content {
+  box-sizing: border-box;
+  height: 100%;
+  width: calc(100% - 40px);
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+
+
+.routine-holder
+{
+  height: calc(100vh - 88px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.routine-wrapper * {
+  box-sizing: border-box;
+}
+.routine-wrapper{
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+  width: 300px;
+  height: 240px;
+  background: #fff;
+  padding: 34px;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  color: #3e3e3e;
+}
+
+.routine-header {
+  width: 100px;
+  overflow-x: hidden;
+}
+
+.remove-icon {
+  position: absolute;
+  bottom: 34px;
+  right: 34px;
+}
+.remove-icon img{
+  width: 25px;
+}
+.remove-icon i{
+  font-size: 25px;
+}
