@@ -134,7 +134,7 @@ namespace API.DAL.Implementations
                 if (!string.IsNullOrEmpty(mail.Trim()))
                 {
                     users = users.Where(o =>
-                        ($"{o.Location?.Address} {o.Location?.AddressNumber}, {o.Location?.City}".ToLower())
+                        ($"{o.Location!.Address} {o.Location!.AddressNumber}, {o.Location!.City}".ToLower())
                         .Contains(mail.ToLower())).ToList();
                 }
             }
@@ -251,19 +251,22 @@ namespace API.DAL.Implementations
                     LocationId = u.User.LocationId,
                     Location = u.User.Location,
                     CurrentConsumption = u.EnergyUsage
-                        .Where(eu => eu.Device.DeviceType.Category == -1)
+                        .Where(eu => eu.Device!.DeviceType!.Category == -1)
                         .Sum(eu => eu.Value),
                     PredictedCurrentConsumption = u.EnergyUsage
-                        .Where(eu => eu.Device.DeviceType.Category == -1)
+                        .Where(eu => eu.Device!.DeviceType!.Category == -1)
                         .Sum(eu => eu.PredictedValue),
                     CurrentProduction = u.EnergyUsage
-                        .Where(eu => eu.Device.DeviceType.Category == 1)
+                        .Where(eu => eu.Device!.DeviceType!.Category == 1)
                         .Sum(eu => eu.Value),
                     PredictedCurrentProduction = u.EnergyUsage
-                        .Where(eu => eu.Device.DeviceType.Category == 1)
+                        .Where(eu => eu.Device!.DeviceType!.Category == 1)
                         .Sum(eu => eu.PredictedValue),
-                    DevicesTurnedOn = u.Devices
-                        .Where(d => d.DeviceType.Category != 0 && d.ActivityStatus == true)
+                    ConsumingDevicesTurnedOn = u.Devices
+                        .Where(d => d.DeviceType!.Category == -1 && d.ActivityStatus == true)
+                        .Count(),
+                    ProducingDevicesTurnedOn = u.Devices
+                        .Where(d => d.DeviceType!.Category == -1 && d.ActivityStatus == true)
                         .Count()
                 })
                 .OrderByDescending(u => u.CurrentConsumption)
