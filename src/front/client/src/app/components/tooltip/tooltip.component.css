@@ -1,6 +1,9 @@
 .tooltip {
   height: 30px;
   width: 30px;
+  background-image: url(/assets/tooltip.png);
+  background-position: center;
+  background-size: cover;
 }
 .tooltip img {
   height: 100%;
