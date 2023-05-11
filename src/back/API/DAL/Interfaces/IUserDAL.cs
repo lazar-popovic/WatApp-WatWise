@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using API.Models.DTOs;
 using API.Models.Entity;
 using API.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -20,5 +21,6 @@ namespace API.DAL.Interfaces
         Task<User> SaveProfilePictureAsync(int userId, [FromBody] byte[] profilePicture);
         Task DeleteUser(User user);
         Task<User> DeleteProfilePictureAsync(int userId);
+        Task<List<AllProsumersWithConsumptionProductionDTO>> ProsumersWithConsumptionProductionAndNumberOfWorkingDevices();
     }
 }
