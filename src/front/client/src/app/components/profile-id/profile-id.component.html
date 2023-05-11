@@ -9,6 +9,7 @@
             <h1>{{user.firstName}} {{user.lastName}}</h1>
             <h2>{{user.mail}}</h2>  
             <a href="profile-settings"><img src="/assets/sett.png" alt="settings"></a>
+            <div id="delete-profile" (click)="showDelete=true"><img src="/assets/delete.png"></div>
           </div>  
           <h3>{{user.role}}</h3>
       </div>
@@ -19,5 +20,10 @@
       </div>
     </div>
     <app-devices-info [id]="id"></app-devices-info>
+  </div>
+</div>
+<div class="user-delete-overlay" *ngIf="showDelete">
+  <div class="user-delete-dialog">
+      <app-delete-profile (output)="showDelete=false" [id]="id"></app-delete-profile>
   </div>
 </div>
