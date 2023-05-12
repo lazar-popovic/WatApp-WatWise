@@ -352,5 +352,12 @@ namespace API.DAL.Implementations
                 .AsNoTracking()
                 .ToListAsync();
         }
+
+        public async Task TurnDsoControl(bool state, Device? dev)
+        {
+            //var device = await _dbContext.Devices.Where(d => d.Id == dev!.Id).FirstOrDefaultAsync();
+            dev!.DsoControl = state;
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

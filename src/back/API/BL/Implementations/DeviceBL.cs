@@ -344,5 +344,35 @@ namespace API.BL.Implementations
             response.Data = await _ideviceDal.GetDevicesIdAndNameByUserId(userId);
             return response;
         }
+
+        public async Task<Response> EnableDsoControlFeature(DsoControlViewModel request, int deviceId)
+        {
+            var response = new Response();
+
+            var device = await _ideviceDal.GetWholeDeviceByIdAsync(deviceId);
+
+            if (device == null)
+            {
+                response.Errors.Add("Device does not exist!");
+                response.Success = false;
+
+                return response;
+            }
+
+            if (request.DsoControlOn)
+            {
+                await _ideviceDal.TurnDsoControl(request.DsoControlOn, device);
+                response.Data = "DSO control feature turned on successfully!";
+                response.Success = response.Errors.Count == 0;
+
+                return response;
+            }
+            
+            await _ideviceDal.TurnDsoControl(request.DsoControlOn, device);
+            response.Data = "DSO control feature turned off successfully!";
+            response.Success = response.Errors.Count == 0;
+
+            return response;
+        }
     }
 }

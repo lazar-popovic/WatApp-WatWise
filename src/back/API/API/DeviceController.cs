@@ -97,11 +97,18 @@ namespace API.API
             return Ok(await _deviceBL.ShareDeviceDataWithDSO(request));
         }
 
+        [HttpPatch("enable-dso-control-feature")]
+        public async Task<IActionResult> EnableDsoControlFeature(DsoControlViewModel request, int deviceId)
+        {
+            return Ok(await _deviceBL.EnableDsoControlFeature(request, deviceId));
+        }
+        
         [HttpPatch("share-to-dso-id")]
         public async Task<IActionResult> ShareDeviceDataWithDSOById(DeviceControlViewModel request, int deviceId)
         {
             return Ok(await _deviceBL.ShareDeviceDataWithDSOById(request, deviceId));
         }
+
         [HttpGet("get-devices-id-and-name-by-user-id")]
         public async Task<IActionResult> GetDevicesIdAndNameByUserId( int userId)
         {
