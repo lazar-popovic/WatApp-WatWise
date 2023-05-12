@@ -355,5 +355,19 @@ namespace API.BL.Implementations
 
             return response;
         }
+
+        public async Task<Response> EnableDsoControlFeatureForAllDevices(DsoControlViewModel request, int userId)
+        {
+            Response response;
+
+            if (request.DsoControlOn == false)
+            {
+                response = await _ideviceDal.DsoControlForUserDevices(userId, request.DsoControlOn);
+                return response;
+            } 
+            
+            response =  await _ideviceDal.DsoControlForUserDevices(userId, request.DsoControlOn);
+            return response;
+        }
     }
 }

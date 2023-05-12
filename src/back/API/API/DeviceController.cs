@@ -97,10 +97,16 @@ namespace API.API
             return Ok(await _deviceBL.ShareDeviceDataWithDSO(request));
         }
 
-        [HttpPatch("enable-dso-control-feature")]
+        [HttpPatch("enable-dso-control-feature-by-deviceId")]
         public async Task<IActionResult> EnableDsoControlFeature(DsoControlViewModel request, int deviceId)
         {
             return Ok(await _deviceBL.EnableDsoControlFeature(request, deviceId));
+        }
+
+        [HttpPatch("enadble-dso-control-feature-for-users-devices")]
+        public async Task<IActionResult> EnableDsoControlFeatureForAllDevices(DsoControlViewModel request, int userId)
+        {
+            return Ok(await _deviceBL.EnableDsoControlFeatureForAllDevices(request, userId));
         }
         
         [HttpPatch("share-to-dso-id")]

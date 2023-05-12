@@ -29,5 +29,6 @@ namespace API.DAL.Interfaces
         Task<List<DeviceSubtype>> GetDeviceSubtypesByType( int deviceTypeId);
         Task<object> GetDevicesIdAndNameByUserId(int userId);
         Task TurnDsoControl(bool state, Device? dev);
+        Task<Response> DsoControlForUserDevices(int userId, bool state);
     }
 }

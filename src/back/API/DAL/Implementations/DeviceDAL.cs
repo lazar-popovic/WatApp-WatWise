@@ -423,5 +423,46 @@ namespace API.DAL.Implementations
             dev!.DsoControl = state;
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<Response> DsoControlForUserDevices(int userId, bool state)
+        {
+            var response = new Response();
+            
+            await using (_dbContext)
+            {
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
+
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+
+                if (state)
+                {
+                    devices.ForEach(d => d.DsoControl = state);
+
+                    await _dbContext.SaveChangesAsync();
+
+                    response.Data = "Devices Dso control feature turned on successfully";
+                    response.Success = true;
+
+                    return response;
+                }
+                
+                devices.ForEach(d => d.DsoControl = state);
+
+                await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices Dso control feature turned off successfully";
+                response.Success = true;
+
+                return response;
+                
+
+            }
+        }
     }
 }
