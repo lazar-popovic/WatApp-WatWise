@@ -1,0 +1,46 @@
+.delete-profile {
+    width: 300px;
+    height: 150px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.delete-profile form h3 {
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    padding-top: 20px;
+}
+
+#delete-profile-btn-holder {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#delete-profile-btn-holder button {
+    border-radius: 10px;
+    width: 100px;
+    height: 40px;
+    border: 0;
+    outline: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#red {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+#red:hover {
+    background-color: rgba(255, 0, 0, 0.75);
+}
+
+#green {
+    background-color: rgba(0, 255, 0, 0.5);
+}
+
+#green:hover {
+    background-color: rgba(0, 255, 0, 0.75);
+}

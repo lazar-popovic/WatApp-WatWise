@@ -14,6 +14,7 @@ export class ProfileIDComponent{
   user = new User();
   id : any = '' ;
   idNum: number = 0;
+  showDelete: boolean = false;
   
   constructor(private authService:AuthService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -40,4 +41,7 @@ export class ProfileIDComponent{
     });
   }
 
+  deleteShow() {
+    //document.querySelector()
+  }
 }

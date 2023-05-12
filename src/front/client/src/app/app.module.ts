@@ -61,6 +61,7 @@ import { ConfirmWindowComponent } from './components/confirm-window/confirm-wind
 import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { SchedulerJobsListComponent } from './components/scheduler-jobs-list/scheduler-jobs-list.component';
 import { IdDeleteDialogComponent } from './components/id-delete-dialog/id-delete-dialog.component';
+import { DeleteProfileComponent } from './components/delete-profile/delete-profile.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { IdDeleteDialogComponent } from './components/id-delete-dialog/id-delete
     SchedulerComponent,
     SchedulerJobsListComponent,
     ConfirmWindowComponent,
-    IdDeleteDialogComponent
+    IdDeleteDialogComponent,
+    DeleteProfileComponent
   ],
   imports: [
     BrowserModule,
