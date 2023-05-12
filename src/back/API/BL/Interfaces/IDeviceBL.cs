@@ -22,5 +22,6 @@ namespace API.BL.Interfaces
         Task<Response<object>> Top3DevicesByUserId(int userId);
         Task<Response> GetDeviceSubtypesByType(int deviceTypeId);
         Task<Response> GetDevicesIdAndNameByUserId(int userId);
+        Task<Response> EnableDsoControlFeature(DsoControlViewModel request, int deviceId);
     }
 }
