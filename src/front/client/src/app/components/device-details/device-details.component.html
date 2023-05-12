@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <div id="device-details" *ngIf="myDevice()">
+    <div id="device-details">
       <div id="device-card-holder">
         <app-device-info-card [device]="device" (output)="displayTurnDialog = true; changeTo = $event"></app-device-info-card>
       </div>

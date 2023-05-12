@@ -43,7 +43,8 @@ export class DeviceDetailsComponent implements OnInit
       deviceSubtype: { subtypeName: null },
       capacity: 1,
       dataShare: false,
-      currentUsage: null
+      currentUsage: null,
+      dsoControl: false
     }
     capacity: number = 1;
 
@@ -59,7 +60,7 @@ export class DeviceDetailsComponent implements OnInit
     year: number = 2023;
 
     myDevice() {
-      if( this.device.userId == this.jwtService.userId)
+      if( this.device.userId == this.jwtService.userId || this.roleId == 1 || this.roleId == 2)
         return true;
       else
         return false;
@@ -88,6 +89,7 @@ export class DeviceDetailsComponent implements OnInit
               this.device.deviceSubtype = result.data.deviceSubtype;
               this.device.dataShare = result.data.dataShare;
               this.device.capacity = result.data.capacity;
+              this.device.dsoControl = result.data.dsoControl;
               switch ( result.data.deviceType.category)
               {
                 case -1:

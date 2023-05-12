@@ -37,7 +37,8 @@ namespace API.DAL.Implementations
                 DeviceType = d.DeviceType,
                 DeviceSubtype = d.DeviceSubtype,
                 Capacity = d.Capacity,
-                UserId = d.UserId
+                UserId = d.UserId,
+                DsoControl = d.DsoControl
             }).AsNoTracking().FirstOrDefaultAsync();
         }
         

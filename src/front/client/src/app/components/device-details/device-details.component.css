@@ -9,12 +9,15 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  margin-top: 88px;
 }
 
 @media (max-width: 600px) {
   #container {
     flex-direction: row;
+  }
+
+  #content {
+    margin-top: 88px;
   }
 
   .device-details-overlay>.device-details-edit,
