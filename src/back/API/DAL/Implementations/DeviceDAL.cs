@@ -1,9 +1,11 @@
-﻿using API.DAL.Interfaces;
+﻿using API.Common;
+using API.DAL.Interfaces;
 using API.Models;
 using API.Models.Entity;
 using API.Models.ViewModels;
 using API.Services.DeviceSimulatorService.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API.DAL.Implementations
 {
@@ -128,51 +130,113 @@ namespace API.DAL.Implementations
             return result;
         }
         
-        public async Task TurnDevicesOff()
+        public async Task<Response> TurnDevicesOff(int userId)
         {
-            using (_dbContext)
+            var response = new Response();
+            
+            await using (_dbContext)
             {
-                var devices = await _dbContext.Devices.ToListAsync();
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
 
-                devices.ForEach(d => d.ActivityStatus = false);
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+                
+                foreach(var dev in devices)
+                    await TurnDeviceOffById(dev.Id);
 
                 await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices turned off successfully";
+                response.Success = true;
+
+                return response;
             }
         }
 
-        public async Task TurnDevicesOn()
+        public async Task<Response> TurnDevicesOn(int userId)
         {
-            using (_dbContext)
+            var response = new Response();
+            
+            await using (_dbContext)
             {
-                var devices = await _dbContext.Devices.ToListAsync();
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
 
-                devices.ForEach(d => d.ActivityStatus = true);
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+                
+                foreach(var dev in devices)
+                    await TurnDeviceOnById(dev.Id);
 
                 await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices turned off successfully";
+                response.Success = true;
+
+                return response;
             }
         }
 
-        public async Task TurnDataSharingOff()
+        public async Task<Response> TurnDataSharingOff(int userId)
         {
-            using (_dbContext)
+            var response = new Response();
+            
+            await using (_dbContext)
             {
-                var devices = await _dbContext.Devices.ToListAsync();
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
 
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+                
                 devices.ForEach(d => d.DataShare = false);
 
                 await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices Data sharing feature turned off successfully";
+                response.Success = true;
+
+                return response;
             }
         }
 
-        public async Task TurnDataSharingOn()
+        public async Task<Response> TurnDataSharingOn(int userId)
         {
-            using (_dbContext)
+            var response = new Response();
+            
+            await using (_dbContext)
             {
-                var devices = await _dbContext.Devices.ToListAsync();
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
 
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+                
                 devices.ForEach(d => d.DataShare = true);
 
                 await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices Data sharing feature turned on successfully";
+                response.Success = true;
+
+                return response;
             }
         }
 
@@ -358,6 +422,47 @@ namespace API.DAL.Implementations
             //var device = await _dbContext.Devices.Where(d => d.Id == dev!.Id).FirstOrDefaultAsync();
             dev!.DsoControl = state;
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Response> DsoControlForUserDevices(int userId, bool state)
+        {
+            var response = new Response();
+            
+            await using (_dbContext)
+            {
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
+
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+
+                if (state)
+                {
+                    devices.ForEach(d => d.DsoControl = state);
+
+                    await _dbContext.SaveChangesAsync();
+
+                    response.Data = "Devices Dso control feature turned on successfully";
+                    response.Success = true;
+
+                    return response;
+                }
+                
+                devices.ForEach(d => d.DsoControl = state);
+
+                await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices Dso control feature turned off successfully";
+                response.Success = true;
+
+                return response;
+                
+
+            }
         }
     }
 }
