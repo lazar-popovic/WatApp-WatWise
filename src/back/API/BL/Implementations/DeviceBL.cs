@@ -96,7 +96,7 @@ namespace API.BL.Implementations
 
             return response;
         }
-        public async Task<Response<String>> UpdateDevice(int id, DeviceNameAndDataShareUpdateViewModel request)
+        public async Task<Response<String>> UpdateDevice(int id, DeviceNameDsoControlAndDataShareUpdateViewModel request)
         {
             var response = new Response<String>();
 
@@ -114,7 +114,8 @@ namespace API.BL.Implementations
                 device.Name = request.Name;
 
             device.DataShare = request.DataShare!.Value;
-
+            device.DsoControl = request.DsoControl!.Value;
+            
             await _ideviceDal.UpdateDeviceAsync(device);
 
             response.Data = "Device name and data share status has been updated succesfully!";
