@@ -128,47 +128,49 @@ namespace API.DAL.Implementations
             return result;
         }
         
-        public async Task TurnDevicesOff()
+        public async Task TurnDevicesOff(int userId)
         {
-            using (_dbContext)
+            await using (_dbContext)
             {
-                var devices = await _dbContext.Devices.ToListAsync();
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
 
-                devices.ForEach(d => d.ActivityStatus = false);
+                foreach(var dev in devices)
+                    await TurnDeviceOffById(dev.Id);
 
                 await _dbContext.SaveChangesAsync();
             }
         }
 
-        public async Task TurnDevicesOn()
+        public async Task TurnDevicesOn(int userId)
         {
-            using (_dbContext)
+            await using (_dbContext)
             {
-                var devices = await _dbContext.Devices.ToListAsync();
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
 
-                devices.ForEach(d => d.ActivityStatus = true);
+                foreach(var dev in devices)
+                    await TurnDeviceOnById(dev.Id);
 
                 await _dbContext.SaveChangesAsync();
             }
         }
 
-        public async Task TurnDataSharingOff()
+        public async Task TurnDataSharingOff(int user)
         {
-            using (_dbContext)
+            await using (_dbContext)
             {
                 var devices = await _dbContext.Devices.ToListAsync();
 
-                devices.ForEach(d => d.DataShare = false);
+                devices.ForEach(dev => dev.DataShare = false);
 
                 await _dbContext.SaveChangesAsync();
             }
         }
 
-        public async Task TurnDataSharingOn()
+        public async Task TurnDataSharingOn(int userId)
         {
-            using (_dbContext)
+            await using (_dbContext)
             {
-                var devices = await _dbContext.Devices.ToListAsync();
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
 
                 devices.ForEach(d => d.DataShare = true);
 
