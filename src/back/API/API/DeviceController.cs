@@ -102,6 +102,7 @@ namespace API.API
         {
             return Ok(await _deviceBL.ShareDeviceDataWithDSOById(request, deviceId));
         }
+
         [HttpGet("get-devices-id-and-name-by-user-id")]
         public async Task<IActionResult> GetDevicesIdAndNameByUserId( int userId)
         {
