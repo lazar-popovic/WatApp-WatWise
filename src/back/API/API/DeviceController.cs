@@ -97,7 +97,7 @@ namespace API.API
             return Ok(await _deviceBL.ShareDeviceDataWithDSO(request));
         }
 
-        [HttpPatch("enable-dso-device-control")]
+        [HttpPatch("enable-dso-control-feature")]
         public async Task<IActionResult> EnableDsoControlFeature(DsoControlViewModel request, int deviceId)
         {
             return Ok(await _deviceBL.EnableDsoControlFeature(request, deviceId));
