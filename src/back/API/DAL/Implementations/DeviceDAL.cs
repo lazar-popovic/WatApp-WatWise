@@ -160,38 +160,83 @@ namespace API.DAL.Implementations
 
         public async Task<Response> TurnDevicesOn(int userId)
         {
+            var response = new Response();
+            
             await using (_dbContext)
             {
                 var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
 
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+                
                 foreach(var dev in devices)
                     await TurnDeviceOnById(dev.Id);
 
                 await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices turned off successfully";
+                response.Success = true;
+
+                return response;
             }
         }
 
-        public async Task TurnDataSharingOff(int user)
+        public async Task<Response> TurnDataSharingOff(int userId)
         {
-            await using (_dbContext)
-            {
-                var devices = await _dbContext.Devices.ToListAsync();
-
-                devices.ForEach(dev => dev.DataShare = false);
-
-                await _dbContext.SaveChangesAsync();
-            }
-        }
-
-        public async Task TurnDataSharingOn(int userId)
-        {
+            var response = new Response();
+            
             await using (_dbContext)
             {
                 var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
 
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+                
+                devices.ForEach(d => d.DataShare = false);
+
+                await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices Data sharing feature turned off successfully";
+                response.Success = true;
+
+                return response;
+            }
+        }
+
+        public async Task<Response> TurnDataSharingOn(int userId)
+        {
+            var response = new Response();
+            
+            await using (_dbContext)
+            {
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
+
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+                
                 devices.ForEach(d => d.DataShare = true);
 
                 await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices Data sharing feature turned on successfully";
+                response.Success = true;
+
+                return response;
             }
         }
 

@@ -23,8 +23,8 @@ namespace API.DAL.Interfaces
         Task<Response<RegisterResponseViewModel>> ShareDataOffById(int deviceId);
         Task<Response<RegisterResponseViewModel>> ShareDataOnById(int deviceId);
         Task<Response> TurnDevicesOn(int userId);
-        Task TurnDataSharingOff();
-        Task TurnDataSharingOn();
+        Task<Response> TurnDataSharingOff(int userId);
+        Task<Response> TurnDataSharingOn(int userId);
         Task<object> Top3DevicesByUserId( int userId);
         Task<List<DeviceSubtype>> GetDeviceSubtypesByType( int deviceTypeId);
         Task<object> GetDevicesIdAndNameByUserId(int userId);
