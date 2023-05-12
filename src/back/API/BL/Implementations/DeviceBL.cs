@@ -188,28 +188,24 @@ namespace API.BL.Implementations
             return response;
         }
 
-        public async Task<Response<RegisterResponseViewModel>> TurnDevicesOnOff(DeviceControlViewModel request)
+        public async Task<Response> TurnDevicesOnOff(DeviceControlViewModel request)
         {
-            var response = new Response<RegisterResponseViewModel>();
+            var response = new Response();
 
             if (request.DevicesOn == false)
             {
-                await _ideviceDal.TurnDevicesOff();
+                response.Data =  await _ideviceDal.TurnDevicesOff(request.userId);
 
-                response.Success = true;
-                response.Data = new RegisterResponseViewModel { Message = "Devices turned off succesfully!" };
-
-                return response;
-            }
-            else
-            {
-                await _ideviceDal.TurnDevicesOn();
-
-                response.Success = true;
-                response.Data = new RegisterResponseViewModel { Message = "Devices turned on succesfully!" };
+                response.Success = response.Success;
 
                 return response;
             }
+
+            response.Data = await _ideviceDal.TurnDevicesOn(request.userId);
+
+            response.Success = response.Success;
+
+            return response;
         }
 
         public async Task<Response<RegisterResponseViewModel>> ShareDeviceDataWithDSO(DeviceControlViewModel request)

@@ -1,9 +1,11 @@
-﻿using API.DAL.Interfaces;
+﻿using API.Common;
+using API.DAL.Interfaces;
 using API.Models;
 using API.Models.Entity;
 using API.Models.ViewModels;
 using API.Services.DeviceSimulatorService.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API.DAL.Implementations
 {
@@ -128,20 +130,35 @@ namespace API.DAL.Implementations
             return result;
         }
         
-        public async Task TurnDevicesOff(int userId)
+        public async Task<Response> TurnDevicesOff(int userId)
         {
+            var response = new Response();
+            
             await using (_dbContext)
             {
                 var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
 
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+                
                 foreach(var dev in devices)
                     await TurnDeviceOffById(dev.Id);
 
                 await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices turned off successfully";
+                response.Success = true;
+
+                return response;
             }
         }
 
-        public async Task TurnDevicesOn(int userId)
+        public async Task<Response> TurnDevicesOn(int userId)
         {
             await using (_dbContext)
             {
