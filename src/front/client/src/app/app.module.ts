@@ -62,6 +62,7 @@ import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { SchedulerJobsListComponent } from './components/scheduler-jobs-list/scheduler-jobs-list.component';
 import { IdDeleteDialogComponent } from './components/id-delete-dialog/id-delete-dialog.component';
 import { DeleteProfileComponent } from './components/delete-profile/delete-profile.component';
+import { PrimengTableComponent } from './components/primeng-table/primeng-table.component';
 
 @NgModule({
   declarations: [
@@ -108,7 +109,8 @@ import { DeleteProfileComponent } from './components/delete-profile/delete-profi
     SchedulerJobsListComponent,
     ConfirmWindowComponent,
     IdDeleteDialogComponent,
-    DeleteProfileComponent
+    DeleteProfileComponent,
+    PrimengTableComponent
   ],
   imports: [
     BrowserModule,
