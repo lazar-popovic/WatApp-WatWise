@@ -1,1 +1,12 @@
-<p>primeng-table works!</p>
+<p-table [value]="data">
+  <ng-container *ngFor="let col of columns" pTemplate="header">
+    <th>{{ col }}</th>
+  </ng-container>
+  <ng-template pTemplate="body" let-rowData>
+    <tr>
+      <ng-container *ngFor="let col of columns">
+        <td>{{ rowData[col] }}</td>
+      </ng-container>
+    </tr>
+  </ng-template>
+</p-table>
