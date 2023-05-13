@@ -18,7 +18,7 @@ export class DeviceInfoCardComponent implements OnInit {
     deviceSubtype: { subtypeName: null },
     capacity: 1,
     dataShare: false,
-    currentUsage: null,
+    currentUsage: 0,
     dsoControl: false
   }
 
@@ -26,6 +26,8 @@ export class DeviceInfoCardComponent implements OnInit {
   disabled: boolean = false;
 
   @Output() output: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() outputEdit: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() outputDelete: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor( private deviceService: DeviceService,
                private toastrNotifService: ToastrNotifService,

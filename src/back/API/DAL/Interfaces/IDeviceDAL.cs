@@ -18,8 +18,8 @@ namespace API.DAL.Interfaces
         Task<List<DeviceType>> GetDeviceTypesByCategory(int id);
         object GetDevicesByUserId( int userId);
         Task<Response> TurnDevicesOff(int userid);
-        Task<Response<RegisterResponseViewModel>> TurnDeviceOffById(int deviceId);
-        Task<Response<RegisterResponseViewModel>> TurnDeviceOnById(int deviceId);
+        Task<Response> TurnDeviceOffById(int deviceId);
+        Task<Response> TurnDeviceOnById(int deviceId);
         Task<Response<RegisterResponseViewModel>> ShareDataOffById(int deviceId);
         Task<Response<RegisterResponseViewModel>> ShareDataOnById(int deviceId);
         Task<Response> TurnDevicesOn(int userId);

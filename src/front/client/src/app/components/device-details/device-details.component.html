@@ -1,4 +1,4 @@
-<div id="container">
+<div id="container" [ngBusy]="busy">
   <div id="nav">
     <app-sidebar>
 
@@ -6,19 +6,15 @@
   </div>
   <div id="content">
     <div id="header">
-      <h2 *ngIf="myDevice()"><a href="/prosumer/devices">Devices</a> <span style="color: gray;"> /</span> {{device.name}}</h2>
-      <h2 *ngIf="!myDevice()"><a href="/profile/{{device.userId}}">Devices</a> <span style="color: gray;"> /</span> {{device.name}}</h2>
-      <div id="header-img" *ngIf="roleId == 3">
-        <img src="/assets/sett.png" alt="settings">
-        <div id="drop-down-sett">
-          <div class="drop-down-item" (click)="showEditForm()">Edit</div>
-          <div class="drop-down-item" (click)="showDeleteForm()">Delete</div>
-        </div>
-      </div>
+      <h2>
+        <a *ngIf="myDevice()" href="/prosumer/devices">Devices</a>
+        <a *ngIf="!myDevice()" href="/profile/{{device.userId}}">Devices</a>
+        <span style="color: gray;"> /</span> {{device.name}}
+      </h2>
     </div>
     <div id="device-details">
       <div id="device-card-holder">
-        <app-device-info-card [device]="device" (output)="displayTurnDialog = true; changeTo = $event"></app-device-info-card>
+        <app-device-info-card [device]="device" (output)="displayTurnDialog = true; changeTo = $event" (outputEdit)="showEditDeviceForm = true" (outputDelete)="showDeleteDeviceForm = true"></app-device-info-card>
       </div>
       <!--<div id="device-schedule-holder" class="standard-card-style" *ngIf="device.deviceType.category!=0">
         <app-device-schedule-card [deviceId]="device.id" (output)="formForNewJob = true"></app-device-schedule-card>
@@ -163,12 +159,12 @@
     <app-confirm-window [text]="'Are you sure that you want to change status of this device?'" (output)="turnDeviceForm($event)"></app-confirm-window>
   </div>
 
-  <div class="device-details-overlay">
-    <div class="device-details-edit">
-      <app-edit-device [id]="device.id" [privacyStatus]="device.activityStatus" (exitStatusEvent)="hideForm($event)"></app-edit-device>
-    </div>
-    <div class="device-details-delete">
-      <app-delete-device [id]="device.id" (exitStatusEvent)="hideForm($event)"></app-delete-device>
-    </div>
+  <div class="hover-form" *ngIf="showDeleteDeviceForm == true">
+    <app-delete-device [id]="device.id" (exitStatusEvent)="showDeleteDeviceForm = false"></app-delete-device>
   </div>
+
+  <div class="hover-form" *ngIf="showEditDeviceForm == true">
+    <app-edit-device [id]="device.id" [device]="{name: device.name, dataShare: device.dataShare, dsoControl: device.dsoControl}" (exitStatusEvent)="showEditDeviceForm = false"></app-edit-device>
+  </div>
+
 </div>

@@ -259,9 +259,9 @@ namespace API.DAL.Implementations
             return await result.ToListAsync();
         }
 
-        public async Task<Response<RegisterResponseViewModel>> TurnDeviceOffById(int deviceId)
+        public async Task<Response> TurnDeviceOffById(int deviceId)
         {
-            var response = new Response<RegisterResponseViewModel>();
+            var response = new Response();
             var device = await _dbContext.Devices.Where(d => d.Id == deviceId).FirstOrDefaultAsync();
 
             if (device == null)
@@ -305,13 +305,14 @@ namespace API.DAL.Implementations
 
             await _dbContext.SaveChangesAsync();
 
+            response.Data = new { Message = "Device turned off succesfully!", NewUsage = usage!.Value };
             response.Success = response.Errors.Count == 0;
             return response;
         }
 
-        public async Task<Response<RegisterResponseViewModel>> TurnDeviceOnById(int deviceId)
+        public async Task<Response> TurnDeviceOnById(int deviceId)
         {
-            var response = new Response<RegisterResponseViewModel>();
+            var response = new Response();
             var device = await _dbContext.Devices.Where(d => d.Id == deviceId).FirstOrDefaultAsync();
 
             if (device == null)
@@ -355,6 +356,7 @@ namespace API.DAL.Implementations
 
             await _dbContext.SaveChangesAsync();
 
+            response.Data = new { Message = "Device turned on succesfully!", NewUsage = usage!.Value };
             response.Success = response.Errors.Count == 0;
             return response;
         }
