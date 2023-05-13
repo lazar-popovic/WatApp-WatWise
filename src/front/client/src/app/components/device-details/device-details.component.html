@@ -153,6 +153,16 @@
       </table>
     </div>
 
+  </div>
+
+  <div class="hover-form" *ngIf="formForNewJob">
+    <app-device-job-form [deviceId]="device.id" (output)="formForNewJob = false"></app-device-job-form>
+  </div>
+
+  <div class="hover-form" *ngIf="displayTurnDialog">
+    <app-confirm-window [text]="'Are you sure that you want to change status of this device?'" (output)="turnDeviceForm($event)"></app-confirm-window>
+  </div>
+
   <div class="device-details-overlay">
     <div class="device-details-edit">
       <app-edit-device [id]="device.id" [privacyStatus]="device.activityStatus" (exitStatusEvent)="hideForm($event)"></app-edit-device>
@@ -161,14 +171,4 @@
       <app-delete-device [id]="device.id" (exitStatusEvent)="hideForm($event)"></app-delete-device>
     </div>
   </div>
-
-</div>
-
-<div class="hover-form" *ngIf="formForNewJob">
-  <app-device-job-form [deviceId]="device.id" (output)="formForNewJob = false"></app-device-job-form>
-</div>
-
-<div class="hover-form" *ngIf="displayTurnDialog">
-  <app-confirm-window [text]="'Are you sure that you want to change status of this device?'" (output)="turnDeviceForm($event)"></app-confirm-window>
-</div>
 </div>
