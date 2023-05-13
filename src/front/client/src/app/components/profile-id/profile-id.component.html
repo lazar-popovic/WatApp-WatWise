@@ -1,19 +1,22 @@
 <div class="profile-container">
   <app-sidebar></app-sidebar>
   <div class="profile-wraper">
-    <div class="profile-header">
-      <img [src]="user.profileImage" alt="Profile picture">
+    <div class="profile-header standard-card-style">
+      <img [src]="user.profileImage" alt="Profile picture" id="profile-picture">
       <div class="profile-main">
         <div class="profile-info-header">
           <div class="profile-main-info">
-            <h1>{{user.firstName}} {{user.lastName}}</h1>
-            <h2>{{user.mail}}</h2>  
-            <a href="profile-settings"><img src="/assets/sett.png" alt="settings"></a>
-            <div id="delete-profile" (click)="showDelete=true"><img src="/assets/delete.png"></div>
-          </div>  
+            <div>
+              <h1>{{user.firstName}} {{user.lastName}}</h1>
+              <h2>{{user.mail}}</h2>
+            </div>
+            <div id="delete-profile" (click)="showDelete=true" [matTooltip]="'Delete user'">
+              <img src="/assets/bin.png">
+            </div>
+          </div>
           <h3>{{user.role}}</h3>
       </div>
-        <div class="profile-location" *ngIf="user.roleId == 1">
+        <div class="profile-location" *ngIf="user.roleId == 3">
           <img src="/assets/pin_grey.png">
           <h2>{{user.city}}, {{user.address}} {{user.num}}</h2>
         </div>
@@ -21,9 +24,7 @@
     </div>
     <app-devices-info [id]="id"></app-devices-info>
   </div>
-</div>
-<div class="user-delete-overlay" *ngIf="showDelete">
-  <div class="user-delete-dialog">
-      <app-delete-profile (output)="showDelete=false" [id]="id"></app-delete-profile>
+  <div class="hover-form" *ngIf="showDelete">
+    <app-delete-profile (output)="showDelete=false" [id]="id" [user]="user"></app-delete-profile>
   </div>
 </div>

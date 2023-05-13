@@ -1,9 +1,7 @@
-<div class="delete-profile">
-    <form>
-        <h3>Do you really want to delete profile?</h3>
-        <div id="delete-profile-btn-holder">
-            <button id="green" (click)="hideForm()">No</button>
-            <button id="red" (click)="deleteProfile()">Yes</button>
-        </div>
-    </form>
+<div class="dialog standard-card-style" [ngBusy]="busy">
+  <p>Delete {{user?.firstName}} {{user?.lastName}}?</p>
+  <div class="buttons">
+    <button id="yesButton" (click)="deleteProfile()">Yes</button>
+    <button id="noButton" class="red" (click)="hideForm()">No</button>
+  </div>
 </div>

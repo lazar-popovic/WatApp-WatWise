@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/Models/User';
 import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -9,13 +11,14 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./delete-profile.component.css']
 })
 export class DeleteProfileComponent {
-  @Output() exitStatusEvent = new EventEmitter<boolean>();
+  @Output() output = new EventEmitter<boolean>();
   @Input() id: number = 0;
-
+  @Input() user: User | undefined;
+  busy: Subscription | undefined;
   constructor(private userService: UserService, private router: Router, private toastrNotifService: ToastrNotifService) { }
 
   deleteProfile() {
-    this.userService.deleteUser(this.id).subscribe((result: any) => {
+    this.busy = this.userService.deleteUser(this.id).subscribe((result: any) => {
       console.log( result);
       if( result.body.success) {
         this.router.navigate(['/dso/prosumers']);
@@ -28,6 +31,6 @@ export class DeleteProfileComponent {
   }
 
   hideForm() {
-    this.exitStatusEvent.emit(true);
+    this.output.emit(true);
   }
 }
