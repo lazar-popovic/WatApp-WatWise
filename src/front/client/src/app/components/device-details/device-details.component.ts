@@ -69,6 +69,13 @@ export class DeviceDetailsComponent implements OnInit
         return false;
     }
 
+    myDeviceBack() {
+      if( this.device.userId == this.jwtService.userId)
+        return true;
+      else
+        return false;
+    }
+
     formForNewJob: boolean = false;
     showDeleteDeviceForm: boolean = false;
     showEditDeviceForm: boolean = false;
