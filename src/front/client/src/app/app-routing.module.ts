@@ -33,20 +33,21 @@ import { DeviceJobFormComponent } from './components/device-job-form/device-job-
 import { ConfirmWindowComponent } from './components/confirm-window/confirm-window.component';
 import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { NotLoggedGuard } from './guards/not-logged.guard';
+import { OnlyUserGuardGuard } from './guards/only-user-guard.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent, canActivate: [LoggedGuard]},
+  { path: 'login', component: LoginComponent},
   { path: 'verification', component : VerifyComponent, canActivate: [NotLoggedGuard]},
-  { path: 'prosumer/overview',  component:  OverviewComponent, canActivate: [UserGuard]},
   { path: 'dso/overview',  component:  OverviewDsoComponent, canActivate: [EmployeeGuard]},
   { path: 'profile',  component:  ProfileComponent, canActivate: [UserGuard]},
   { path: 'profile/:id', component: ProfileIDComponent, canActivate: [EmployeeGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'prosumer/devices', component : DevicesComponent, canActivate: [UserGuard]},
-  { path: 'prosumer/consumption', component : ConsumptionComponent, canActivate: [UserGuard]},
-  { path: 'prosumer/production', component : ProductionComponent, canActivate: [UserGuard]},
-  { path: 'prosumer/scheduler', component: SchedulerComponent, canActivate: [UserGuard]},
+  { path: 'prosumer/overview',  component:  OverviewComponent, canActivate: [OnlyUserGuardGuard]},
+  { path: 'prosumer/consumption', component : ConsumptionComponent, canActivate: [OnlyUserGuardGuard]},
+  { path: 'prosumer/production', component : ProductionComponent, canActivate: [OnlyUserGuardGuard]},
+  { path: 'prosumer/scheduler', component: SchedulerComponent, canActivate: [OnlyUserGuardGuard]},
   { path: 'profile/change-password', component : ChangePasswordComponent, canActivate: [UserGuard]},
   { path: 'dso/prosumers', component : UsersOverviewComponent, canActivate: [EmployeeGuard]},
   { path: 'dso/map', component : MapComponent, canActivate: [EmployeeGuard]},
