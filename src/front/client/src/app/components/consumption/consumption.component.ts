@@ -19,7 +19,7 @@ export class ConsumptionComponent implements OnInit {
   predColor: any = 'rgba(191, 65, 65, 0.4)';
   id: any = '';
   result: any[] = [];
-  data: any[] = [];
+  data: any[] = [1];
 
   showEdit: boolean = false;
   showDelete: boolean = false;
@@ -84,6 +84,7 @@ export class ConsumptionComponent implements OnInit {
   }
 
   todayClick() {
+    this.data=[1];
     this.tableTitle = "Hour";
     this.todayFlag = true; this.monthFlag = false; this.yearFlag = false;
     var todayDiv = document.getElementById("today");
@@ -164,6 +165,7 @@ export class ConsumptionComponent implements OnInit {
   }
 
   monthClick() {
+    this.data=[1];
     this.tableTitle = "Day";
     this.todayFlag = false; this.monthFlag = true; this.yearFlag = false;
     const monthDiv = document.getElementById("month");
@@ -237,6 +239,7 @@ export class ConsumptionComponent implements OnInit {
   }
 
   yearClick() {
+    this.data=[1];
     this.tableTitle = "Month";
     this.todayFlag = false; this.monthFlag = false; this.yearFlag = true;
     var yearDiv = document.getElementById("year");
@@ -280,6 +283,7 @@ export class ConsumptionComponent implements OnInit {
   }
 
   tommorowClick() {
+    this.data=[1];
     this.tableTitle = "Hour";
     this.tommorowFlag = true;
     this.threeDaysFlag = false;
@@ -325,6 +329,7 @@ export class ConsumptionComponent implements OnInit {
   }
 
   threeDaysClick() {
+    this.data=[1];
     this.tableTitle = "Hour";
     this.tommorowFlag = false;
     this.threeDaysFlag = true;
@@ -370,6 +375,7 @@ export class ConsumptionComponent implements OnInit {
   }
 
   sevenDaysClick() {
+    this.data=[1];
     this.tableTitle = "Day";
     this.tommorowFlag = false;
     this.threeDaysFlag = false;

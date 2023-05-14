@@ -82,6 +82,7 @@ export class DeviceDetailsComponent implements OnInit
                  private jwtService: JWTService,
                  private toastrNotifService: ToastrNotifService) {
       this.roleId = this.jwtService.roleId;
+      this.data=[1];
       this.busy = this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
         result => {
           if( result.success) {
@@ -189,6 +190,7 @@ export class DeviceDetailsComponent implements OnInit
 
     todayClick()
     {
+      this.data=[1];
       this.tableTitle = "Hour";
       this.todayFlag  = true; this.monthFlag  = false; this.yearFlag = false;
       var todayDiv = document.getElementById("today");
@@ -279,6 +281,7 @@ export class DeviceDetailsComponent implements OnInit
 
     monthClick()
     {
+      this.data=[1];
       this.tableTitle = "Day";
       this.todayFlag = false; this.monthFlag  = true; this.yearFlag = false;
       const monthDiv = document.getElementById("month");
@@ -354,6 +357,7 @@ export class DeviceDetailsComponent implements OnInit
 
     yearClick()
     {
+      this.data=[1];
       this.tableTitle = "Month";
       this.todayFlag = false; this.monthFlag  = false; this.yearFlag = true;
       var yearDiv = document.getElementById("year");
@@ -399,6 +403,7 @@ export class DeviceDetailsComponent implements OnInit
 
     tommorowClick()
     {
+      this.data=[1];
       this.tommorowFlag = true;
       this.threeDaysFlag = false;
       this.sevenDaysFlag = false;
@@ -445,6 +450,7 @@ export class DeviceDetailsComponent implements OnInit
 
     threeDaysClick()
     {
+      this.data=[1];
       this.tommorowFlag = false;
       this.threeDaysFlag = true;
       this.sevenDaysFlag = false;
@@ -491,6 +497,7 @@ export class DeviceDetailsComponent implements OnInit
 
     sevenDaysClick()
     {
+      this.data=[1];
       this.tommorowFlag = false;
       this.threeDaysFlag = false;
       this.sevenDaysFlag = true;

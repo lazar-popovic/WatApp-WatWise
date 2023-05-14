@@ -111,12 +111,12 @@
 
     </div>
 
-    <div id="chart">
+    <div id="chart" *ngIf="data.length > 0">
       <div id="chart-holder" class="standard-card-style">
         <canvas id="chart-canvas" style="height: 100%!important; width: 100%!important;"></canvas>
       </div>
     </div>
-    <div id="table">
+    <div id="table" *ngIf="data.length > 0">
       <table *ngIf="historyflag">
         <thead>
         <tr id="thead-tr">
@@ -147,6 +147,9 @@
           </tr>
         </tbody>
       </table>
+    </div>
+    <div id="no-data" *ngIf="data.length == 0">
+      <h3>No data for given filters</h3>
     </div>
 
   </div>

@@ -128,9 +128,16 @@
   padding: 0 20px;
 }
 
-#additional-filter input,
-#additional-filter select {
+#additional-filter input {
   width: 120px;
+  height: 40px;
+  border-radius: 10px;
+  margin-right: 10px;
+  border: 0px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+#additional-filter select {
+  width: 75px;
   height: 40px;
   border-radius: 10px;
   margin-right: 10px;
