@@ -238,7 +238,7 @@ namespace API.DAL.Implementations
         {
             var user = await _dbContext.Users.FindAsync(userId);
 
-            user.ProfileImage = profilePicture;
+            user!.ProfileImage = profilePicture;
             await _dbContext.SaveChangesAsync();
 
             return user;
@@ -253,8 +253,8 @@ namespace API.DAL.Implementations
 
             if (userToDelete != null)
             {
-                context.DeviceEnergyUsage.RemoveRange(userToDelete.Devices.SelectMany(d => d.DeviceEnergyUsages));
-                context.Devices.RemoveRange(userToDelete.Devices);
+                context.DeviceEnergyUsage.RemoveRange(userToDelete.Devices!.SelectMany(d => d.DeviceEnergyUsages!));
+                context.Devices.RemoveRange(userToDelete.Devices!);
                 
                 var refreshTokensToDelete = context.RefreshTokens.Where(rt => rt.UserId == user.Id);
                 context.RefreshTokens.RemoveRange(refreshTokensToDelete);
@@ -268,7 +268,7 @@ namespace API.DAL.Implementations
         {
             return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email);
         }
-        public async Task<User?> DeleteProfilePictureAsync(int userId)
+        public async Task<User> DeleteProfilePictureAsync(int userId)
         {
             var user = await _dbContext.Users.FindAsync(userId);
 
@@ -285,7 +285,7 @@ namespace API.DAL.Implementations
                 await _dbContext.SaveChangesAsync();
             }
 
-            return user;
+            return user!;
         }
         public async Task<List<AllProsumersWithConsumptionProductionDTO>> ProsumersWithConsumptionProductionAndNumberOfWorkingDevices()
         {
@@ -296,9 +296,9 @@ namespace API.DAL.Implementations
                 .Select(u => new
                 {
                     User = u,
-                    Devices = u.Devices.Where(d => d.ActivityStatus == true),
-                    EnergyUsage = u.Devices
-                        .SelectMany(d => d.DeviceEnergyUsages)
+                    Devices = u.Devices!.Where(d => d.ActivityStatus == true),
+                    EnergyUsage = u.Devices!
+                        .SelectMany(d => d.DeviceEnergyUsages!)
                         .Where(eu => eu.Timestamp == now)
                 })
                 .Select(u => new AllProsumersWithConsumptionProductionDTO()

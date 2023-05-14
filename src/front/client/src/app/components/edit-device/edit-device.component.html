@@ -1,5 +1,5 @@
 <div class="device-input-holder">
-  <div class="wrapper">
+  <div class="wrapper" [ngBusy]="busy">
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <h2>Edit device</h2>
         <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;" (click)="exitStatusEvent.emit( false)"></i>

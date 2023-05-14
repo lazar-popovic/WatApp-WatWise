@@ -69,13 +69,13 @@ namespace API.API
         [HttpGet("get-prosumers-filtered")]
         public async Task<IActionResult> GetAllProsumersFiltered( string? fullName, string? streetAddress, int pageSize, int pageNumber, string? sortOrder)
         {
-            return Ok(await _userBL.FindUsers((int)RoleEnum.Role.User, fullName, streetAddress, pageSize, pageNumber, sortOrder));
+            return Ok(await _userBL.FindUsers((int)RoleEnum.Role.User, fullName!, streetAddress!, pageSize, pageNumber, sortOrder!));
         }
 
         [HttpGet("get-employees-filtered")]
         public async Task<IActionResult> GetAllEmployeesFiltered( string? fullName, int pageSize, int pageNumber, string? sortOrder)
         {
-            return Ok(await _userBL.FindUsers((int)RoleEnum.Role.Employee, fullName, null, pageSize, pageNumber, sortOrder));
+            return Ok(await _userBL.FindUsers((int)RoleEnum.Role.Employee, fullName!, null!, pageSize, pageNumber, sortOrder!));
         }
 
         [HttpPatch("update-user-password")]

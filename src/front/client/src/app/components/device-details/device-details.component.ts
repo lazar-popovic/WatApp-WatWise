@@ -34,7 +34,7 @@ export class DeviceDetailsComponent implements OnInit
     predColor: any = 'rgba(206, 27, 14, 0.7)';
     id : any = '' ;
     result: any[] = [];
-    data: any[] = [];
+    data: any[] = [1];
     device = {
       id: 0,
       userId: 0,
@@ -88,6 +88,16 @@ export class DeviceDetailsComponent implements OnInit
                  private deviceDataService: DeviceDataService,
                  private jwtService: JWTService,
                  private toastrNotifService: ToastrNotifService) {
+    }
+
+    ngOnInit(): void {
+      this.data=[1];
+      let now = new Date();
+      let month: any = (now.getMonth()+1);
+      let day: any =  now.getDate();
+      if (month<10) month = "0" + month;
+      if (day<10) day = "0" + day;
+      this.date  =  now.getFullYear() + "-" + month + "-" + day;
       this.roleId = this.jwtService.roleId;
       this.data=[1];
       this.busy = this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
@@ -103,6 +113,9 @@ export class DeviceDetailsComponent implements OnInit
               this.device.dataShare = result.data.dataShare;
               this.device.capacity = result.data.capacity;
               this.device.dsoControl = result.data.dsoControl;
+              if( this.device.deviceType.category == 0) {
+                this.capacity = this.device.capacity;
+              }
               switch ( result.data.deviceType.category)
               {
                 case -1:
@@ -121,11 +134,6 @@ export class DeviceDetailsComponent implements OnInit
                   this.predColor = 'rgba(69, 94, 184, 0.4)';
                   break;
               }
-              if( this.device.deviceType.category == 0) {
-                this.capacity = this.device.capacity;
-              }
-              let now = new Date();
-              this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
               this.historyClick();
               this.deviceDataService.getDeviceCurrentUsage( this.device.id).subscribe(
                 (result:any) => {
@@ -145,12 +153,6 @@ export class DeviceDetailsComponent implements OnInit
         }
       )
       Chart.register(...registerables);
-    }
-
-    ngOnInit(): void {
-      let now = new Date();
-      this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
-      this.historyClick();
     }
 
     historyflag : boolean = true;
