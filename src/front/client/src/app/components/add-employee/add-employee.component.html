@@ -1,12 +1,22 @@
-<div class="employee-form-container">
-    <form>
-      <div class="employee-top-holder">
-        <h2 (click)="hide()">x</h2>
+<div class="login-holder">
+  <div class="wrapper standard-card-style">
+    <div style="display: flex; justify-content: space-between; align-items: center; color: #3e3e3e" (click)="output.emit( true)">
+      <h2>Register employee</h2>
+      <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;"></i>
+    </div>
+    <form action="#" [ngBusy]="busy">
+      <div class="input-box">
+        <input type="text" name="email" placeholder="Firstname" [(ngModel)]="employee.firstname">
       </div>
-      <h2>Add new employee</h2>
-    <input type="name" class="employee-form-name" placeholder="firstname" name="firstname" required [(ngModel)]="employee.firstname">
-    <input type="name" class="employee-form-name" placeholder="lastname" name="lastname" required [(ngModel)]="employee.lastname">
-    <input type="email" id="employee-form-email" placeholder="email" name="email" required [(ngModel)]="employee.email">
-    <button type="submit" (click)="storeEmployee()">Register</button>
+      <div class="input-box">
+        <input type="text" name="password" placeholder="Lastname" [(ngModel)]="employee.lastname">
+      </div>
+      <div class="input-box">
+        <input type="email" name="email" placeholder="Email" [(ngModel)]="employee.email">
+      </div>
+      <div class="input-box button">
+        <button type="button" (click)="storeEmployee()">Register</button>
+      </div>
     </form>
+  </div>
 </div>
