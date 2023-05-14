@@ -47,9 +47,7 @@
             </form>
         </div>
     </div>
-</div>
-<div class="employee-overview-overlay">
-    <div class="employee-overview-add-new">
-        <app-add-employee></app-add-employee>
+    <div class="hover-form" *ngIf="showAddNewEmployeeForm == true">
+      <app-add-employee (output)="showAddNewEmployeeForm = false"></app-add-employee>
     </div>
 </div>

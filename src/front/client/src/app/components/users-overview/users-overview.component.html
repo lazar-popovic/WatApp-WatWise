@@ -58,9 +58,7 @@
             </form>
         </div>
     </div>
-    <div class="users-overview-overlay" *ngIf="showAddUProsumer">
-        <div class="users-overview-add-new">
-            <app-users (output)="showAddUProsumer=false"></app-users>
-        </div>
+    <div class="hover-form" *ngIf="showAddUProsumer" style="z-index: 2;">
+      <app-users (output)="showAddUProsumer=false"></app-users>
     </div>
 </div>

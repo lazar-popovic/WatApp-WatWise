@@ -52,5 +52,6 @@ export class AuthService {
   logOut() {
     localStorage.removeItem('token');
     localStorage.clear()
+    this.jwtService.token = null;
   }
 }
