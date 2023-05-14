@@ -15,7 +15,11 @@ export class EnergyUsageComponent implements OnInit {
 
   ngOnInit(): void {
     let now = new Date();
-    this.date  =  now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
+    let month: any = (now.getMonth()+1);
+    let day: any =  now.getDate();
+    if (month<10) month = "0" + month;
+    if (day<10) day = "0" + day;
+    this.date  =  now.getFullYear() + "-" + month + "-" + day;
     this.historyClick();
   }
   tableTitle: string = "Timestamp";
