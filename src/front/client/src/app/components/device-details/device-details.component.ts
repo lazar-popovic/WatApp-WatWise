@@ -14,6 +14,7 @@ import { ViewEncapsulation } from '@angular/core';
 //import { JWTService } from 'src/app/services/jwt.service';
 import { JWTService } from '../../services/jwt.service';
 import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
+import { Subscription } from 'rxjs';
 
 
 interface DatepickerOptions {
@@ -43,9 +44,12 @@ export class DeviceDetailsComponent implements OnInit
       deviceSubtype: { subtypeName: null },
       capacity: 1,
       dataShare: false,
-      currentUsage: null
+      currentUsage: 0,
+      dsoControl: false
     }
     capacity: number = 1;
+
+    busy: Subscription | undefined;
 
     tableTitle: string = "Timestamp";
     roleId: number = 3;
@@ -59,13 +63,15 @@ export class DeviceDetailsComponent implements OnInit
     year: number = 2023;
 
     myDevice() {
-      if( this.device.userId == this.jwtService.userId)
+      if( this.device.userId == this.jwtService.userId || this.roleId == 1 || this.roleId == 2)
         return true;
       else
         return false;
     }
 
     formForNewJob: boolean = false;
+    showDeleteDeviceForm: boolean = false;
+    showEditDeviceForm: boolean = false;
 
     constructor( private datePipe: DatePipe,
                  private authService:AuthService,
@@ -76,7 +82,7 @@ export class DeviceDetailsComponent implements OnInit
                  private jwtService: JWTService,
                  private toastrNotifService: ToastrNotifService) {
       this.roleId = this.jwtService.roleId;
-      this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
+      this.busy = this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
         result => {
           if( result.success) {
             if( (result.data.userId == this.jwtService.userId) || (( this.jwtService.roleId == 1 || this.jwtService.roleId == 2 ) && result.data.dataShare == true)) {
@@ -88,6 +94,7 @@ export class DeviceDetailsComponent implements OnInit
               this.device.deviceSubtype = result.data.deviceSubtype;
               this.device.dataShare = result.data.dataShare;
               this.device.capacity = result.data.capacity;
+              this.device.dsoControl = result.data.dsoControl;
               switch ( result.data.deviceType.category)
               {
                 case -1:
@@ -612,6 +619,7 @@ export class DeviceDetailsComponent implements OnInit
             if( result.body.success) {
               this.toastrNotifService.showSuccess( result.body.data.message);
               this.device.activityStatus = this.changeTo;
+              this.device.currentUsage = result.body.data.newUsage;
             }
           }
         );

@@ -45,11 +45,19 @@ export class OverviewDsoComponent implements OnInit {
           this.liveChartData.predictedConsumption = result.data.consumptionEnergyUsage.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue}));
           this.liveChartData.predictedProduction = result.data.productionEnergyUsage.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue}));
 
-          this.cards.currentConsumption = this.liveChartData.consumption[ this.liveChartData.consumption.length - 1]?.y;
-          this.cards.currentProduction = this.liveChartData.production[ this.liveChartData.production.length - 1]?.y;
+          if( this.liveChartData.consumption.length > 0) {
+            this.cards.currentConsumption = this.liveChartData.consumption[ this.liveChartData.consumption.length - 1]?.y;
+          }
+          if( this.liveChartData.production.length > 0) {
+            this.cards.currentProduction = this.liveChartData.production[ this.liveChartData.production.length - 1]?.y;
+          }
+          if( this.liveChartData.predictedConsumption.length > 0) {
+            this.cards.nextHourConsumption = this.liveChartData.predictedConsumption[ this.liveChartData.consumption.length]?.y;
+          }
+          if( this.liveChartData.predictedProduction.length > 0) {
+            this.cards.nextHourProduction = this.liveChartData.predictedProduction[ this.liveChartData.production.length]?.y;
+          }
 
-          this.cards.nextHourConsumption = this.liveChartData.predictedConsumption[ this.liveChartData.consumption.length]?.y;
-          this.cards.nextHourProduction = this.liveChartData.predictedProduction[ this.liveChartData.production.length]?.y;
 
           console.log( this.liveChartData);
           this.drawLiveChart();

@@ -9,8 +9,20 @@
 .device-detail {
   display: flex;
   width: calc(50% - 10px);
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   box-sizing: border-box;
+}
+
+.device-icons {
+  justify-content: end!important;
+  margin-bottom: 10px!important;
+  padding: 0px!important;
+}
+
+.device-icons img {
+  height: 30px;
+  margin-left: 5px;
+  margin-right: 10px;
 }
 
 @media (max-width: 599px) {

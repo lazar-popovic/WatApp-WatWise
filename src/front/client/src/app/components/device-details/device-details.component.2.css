@@ -216,13 +216,17 @@ table tbody tr:hover {
   justify-content: space-between;
 }
 #device-details-holder {
-  max-width: 1000px;
+  width: 100%;
   background-color: white;
 }
 #device-schedule-holder {
   width: 100%;
   background-color: white;
   box-sizing: border-box;
+}
+
+#device-card-holder {
+  width: 100%;
 }
 
 @media (min-width: 600px) {

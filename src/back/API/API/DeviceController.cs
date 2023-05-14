@@ -86,7 +86,7 @@ namespace API.API
         }
 
         [HttpPatch("device-control-id")]
-        public async Task<IActionResult> TurnDevicesOnOffById(DeviceControlViewModel request, int deviceId)
+        public async Task<IActionResult> TurnDevicesOnOffById(DeviceControlByIdViewModel request, int deviceId)
         {
             return Ok(await _deviceBL.TurnDevicesOnOffById(request, deviceId));
         }

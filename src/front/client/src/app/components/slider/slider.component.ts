@@ -14,8 +14,10 @@ export class SliderComponent implements OnInit, OnChanges{
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const currentValue = changes['status'].currentValue;
-    (document.querySelector('#slider-inp') as HTMLInputElement).checked = currentValue;
+    if (changes['status']) {
+      const currentValue = changes['status'].currentValue;
+      (document.querySelector('#slider-inp') as HTMLInputElement).checked = currentValue;
+    }
   }
 
   emitData(status: boolean) {
@@ -25,4 +27,6 @@ export class SliderComponent implements OnInit, OnChanges{
   click(event: MouseEvent) {
     this.emitData((event.target as HTMLInputElement).checked);
   }
+
+  constructor() {}
 }
