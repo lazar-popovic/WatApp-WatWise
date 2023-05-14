@@ -1,137 +1,137 @@
-#add-new-container {
-  display: flex;
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-}
-
-@media ( max-width: 600px) {
-  #add-new-container {
-    flex-direction: row;
-  }
-}
-@media ( max-width: 600px) {
-  #add-new-container {
+.login-holder
+{
+    height: 100vh;
+    display: flex;
     flex-direction: column;
-  }
+    justify-content: center;
+    align-items: center;
 }
 
-.close-button {
-  display: flex;
+/*Forma za login*/
+.login-container
+{
+  height: 50vh; /* sets container height to full viewport height */
+}
+a {
+font-family: 'Poppins', sans-serif;
+  color: #3E3E3E;
+}
+.wrapper * {
+  box-sizing: border-box;
+}
+.wrapper{
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  width: 650px;
+  background: #fff;
+  padding: 34px;
+}
+.wrapper h2{
+  position: relative;
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+}
+.wrapper form{
+  margin-top: 30px;
+}
+.wrapper form .input-box{
+  height: 52px;
+  margin: 18px 0;
+}
+form .input-box input{
+  height: 100%;
   width: 100%;
-  justify-content: flex-end;
+  outline: none;
+  padding: 0 15px;
+  font-size: 17px;
+  font-weight: 400;
+  color: #333;
+  border: 1.5px solid #C7BEBE;
+  border-bottom-width: 2.5px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
 }
-
-.add-new-form form {
+.input-box input:focus,
+.input-box input:valid{
+  border-color: #1676AC;
+}
+form .policy{
   display: flex;
   align-items: center;
-  justify-content: center;
-  max-width: 600px;
 }
-
-.add-new-form h2
-{
-  font-weight: bold;
-  font-size: 28px;
-  color: #3E3E3E;
-  margin-bottom: 20px;
-}
-
-.add-new-form form
-{
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.75);
-}
-
-.add-new-form input
-{
-  box-sizing: border-box;
-  text-align: center;
-  width: 80%;
+form h3{
+  color: #707070;
+  font-size: 14px;
   font-weight: 500;
-  padding: 10px 40px;
-  font-size: 24px;
-  border: 1px solid #ccc;
-  border-bottom: 2px solid #ccc;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  color: #3E3E3E;
+  margin-left: 10px;
 }
-
-.add-new-form button
-{
-  background-color: #3E3E3E;
-  color: white;
-  padding: 10px 20px;
+.input-box.button button{
+  color: #fff;
+  letter-spacing: 1px;
   border: none;
-  border-radius: 10px;
+  background: #239F81;
   cursor: pointer;
-  font-size: 20px;
-  margin-top: 10px;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
 }
-
-.add-new-form button:hover
-{
-  background-color: #4f504f;
-  font-size: 20px;
+.input-box.button button:hover{
+  background: #115746;
 }
-
-.users-form-name, #users-form-email, .users-form-location, #users-form-street-num
-{
-  background-size: 20px;
-  background-repeat: no-repeat;
-  background-position: 15px 15px;
+form .text h3{
+  color: #333;
+  width: 80%;
+  text-align: center;
 }
-
-.users-form-name
-{
-  background-image: url(/assets/user.png);
+form .text h3 a{
+  color: #4070f4;
+  text-decoration: none;
 }
-
-#users-form-password
-{
-  background-image: url(/assets/lock.png);
-}
-
-#users-form-email
-{
-  background-image: url(/assets/email.png);
-}
-
-.users-form-location
-{
-  background-image: url(/assets/street.png);
-}
-
-#users-form-street-num
-{
-  background-image: url(/assets/street_num.png);
+form .text h3 a:hover{
+  text-decoration: underline;
 }
 
 #address-show {
-  display: none;
-  background-color: rgba(136, 136, 136, 0.1);
-  margin: 0px 30px 20px;
-  padding: 10px 20px 0px;
-  border-radius: 10px;
+  width: 100%;
+  height: 150px;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #c7c7c7;
+}
+
+.autocomplete-seacrh-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.autocomplete-seacrh-div input {
+  margin-left: 10px;
+}
+
+.autocomplete-seacrh-div button {
+  color: #fff;
+  letter-spacing: 1px;
+  border: none;
+  background: #239F81;
+  cursor: pointer;
+  width: 20%;
+  border-radius: 5px;
+  margin-left: 10px;
+  box-sizing: border-box;
+  height: 50px;
+}
+
+.autocomplete-seacrh-div button:hover {
+  background: #115746;
 }
 
 .display-item {
-  width: 100%;
-  box-sizing: border-box;
-  line-height: 0px;
-  background-color: rgb(232, 230, 230);
-  padding: 20px;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-.display-item:hover {
-  background-color: #a1a0a0;
-  cursor: pointer;
+  background-color: white;
+  margin-bottom: 5px;
 }

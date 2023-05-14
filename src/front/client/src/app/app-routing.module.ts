@@ -58,7 +58,7 @@ const routes: Routes = [
   { path: 'test-geo', component: UsersComponent},
   { path: 'test-upload', component: UploadImageComponent},
   { path: 'test-confirm', component: ConfirmWindowComponent},
-  { path: 'test-device-job', component: DeviceJobFormComponent}
+  { path: 'test-users', component: UsersComponent}
 ];
 
 @NgModule({
