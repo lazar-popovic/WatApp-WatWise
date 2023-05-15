@@ -1,42 +1,53 @@
 #upload-image {
     background-color: white;
-    min-height: 600px;
     max-width: 800px;
+    padding: 20px;
+    border-radius: 10px;
 }
 
 #images-holder {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
 }
 
 image-cropper {
-    max-height: 50vh;
-    max-width: 700px;
+    max-height: 200px;
+    max-width: 200px;
 }
 
 #image-cropper-holder {
     display: flex;
     align-items: center;
     box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #3e3e3e;
+    border-radius: 10px;
+    margin-top: 20px;
 }
 
 #image-cropper-holder img {
-    width: 600px;
+  width: 600px;
 }
 
 #preview {
+  margin-top: 20px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    height: 400px;
+}
+
+.preview-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #preview input {
     background-color: #167ac1;
     color: white;
-    padding: 20px;   
 }
 
 #preview img {
@@ -68,16 +79,20 @@ input[type="file"] {
 
 .close-button {
     display: flex;
-    font-size: 30px; 
+    font-size: 30px;
     margin: 0;
     color: black;
     justify-content: flex-end;
-    padding: 20px;
+    align-items: right;
 }
 
 @media (max-width: 599px) {
     #preview img {
-        height: 150px;
-        width: 150px;
+        height: 100px;
+        width: 100px;
+    }
+    #image-cropper-holder {
+      width: 250px;
+      height: 250px;
     }
 }
