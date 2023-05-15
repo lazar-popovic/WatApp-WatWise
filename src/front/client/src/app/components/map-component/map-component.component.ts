@@ -88,15 +88,15 @@ export class MapComponentComponent implements OnInit {
     for (const location of this.locations) {
       let icon = 0;
       console.log( location.totalPowerUsage );
-      if( location.totalPowerUsage < -1 )
+      if( location.totalPowerUsage < -5 )
         icon = 0;
       else if( location.totalPowerUsage < 0 )
         icon = 1;
       else if( location.totalPowerUsage == 0 )
         icon = 2;
-      else if( location.totalPowerUsage <= 1)
+      else if( location.totalPowerUsage <= 5)
         icon = 3;
-      else if( location.totalPowerUsage > 1 )
+      else if( location.totalPowerUsage > 5 )
         icon = 4;
       console.log( icon);
       const marker = L.marker([location.latitude, location.longitude], { icon: customIcons[ icon] })
@@ -190,7 +190,7 @@ export class MapComponentComponent implements OnInit {
           this.locations = result.data;
           console.log( this.locations);
           this.placeMarkers();
-          this.placeRadius();
+          //this.placeRadius();
         }
         else
         {
@@ -202,7 +202,7 @@ export class MapComponentComponent implements OnInit {
     );
   }
 
-  circles: L.Circle[] = [];
+  /*circles: L.Circle[] = [];
 
   placeRadius() {
     const maxConsumption = this.locations.reduce((max, obj) => {
@@ -222,7 +222,7 @@ export class MapComponentComponent implements OnInit {
       }).addTo(this.map);
       this.circles.push(circleRed);
     }
-  }
+  }*/
 
 
   getUsersForLocation(locationId: number) {

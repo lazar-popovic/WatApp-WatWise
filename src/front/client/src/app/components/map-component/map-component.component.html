@@ -55,16 +55,31 @@
     </div>
   </div>
 </div>
-<!--
-<div id="user-overlay"  [ngClass]="{'show': showOverlay}" *ngIf="selectedLocation != null">
 
-  <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" (click)="closeOverlay()" style="font-size: 30px; margin: 10px; float: right;"></i>
-
-  <h3>{{selectedLocation.address}} {{selectedLocation.addressNumber}}, {{selectedLocation.city}}</h3>
-  <div id="user-div" *ngFor="let user of users">
-    <h4 style="margin-bottom: 5px">{{user.firstname}} {{user.lastname}}</h4>
-    <p style="margin-bottom: 5px;">{{user.email}}</p>
-    <button class="btn-grad" (click)="goToUser(user.id)">Details</button>
+<div class="standard-card-style" id="legend">
+  <table>
+    <tr>
+      <td><img class="pin" src="/assets/pins/pin-2.png"/></td>
+      <td><p class="pin-about">Less than -5 kWh</p></td>
+    </tr>
+    <tr>
+      <td><img class="pin" src="/assets/pins/pin-1.png"/></td>
+      <td><p class="pin-about">Between -5 and 0 kWh</p></td>
+    </tr>
+    <tr>
+      <td><img class="pin" src="/assets/pins/pin0.png"/></td>
+      <td><p class="pin-about">Exactly 0 kWh</p></td>
+    </tr>
+    <tr>
+      <td><img class="pin" src="/assets/pins/pin1.png"/></td>
+      <td><p class="pin-about">Between 0 and 5 kWh</p></td>
+    </tr>
+    <tr>
+      <td><img class="pin" src="/assets/pins/pin2.png"/></td>
+      <td><p class="pin-about">More than 5 kWh</p></td>
+    </tr>
+  </table>
+  <div style="position: absolute; right: 10px; top:10px">
+    <p><i class="fa fa-info-circle" aria-hidden="true" [matTooltip]="'This number represents power usage for this location. Represents sum of all production and consumption for this hour. If number is below zero, that means there is more consumption of electrical energy at this location. If power usage is bigger than zero, then there is more production of electrical energy.'"></i></p>
   </div>
 </div>
--->
