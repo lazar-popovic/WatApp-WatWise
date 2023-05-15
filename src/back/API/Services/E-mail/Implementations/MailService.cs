@@ -70,7 +70,7 @@ namespace API.Services.E_mail.Implementations
             var mail = new EmailModel("Reset token", token, user.Email!);
       
             mail.Body =
-                "\r\nHi,\r\nthere was a request to change your password!\r\nIf you did not make this request then please ignore this email.\r\n\r\nOtherwise, please click this link to change your password:";
+                "\r\nHi,\r\nthere was a request to change your password!\r\nIf you did not make this request then please ignore this email.\r\n\r\nOtherwise, please click this link to change your password:\n\n";
             mail.Body += $"http://softeng.pmf.kg.ac.rs:10082/prosumer/reset-password?token={token}";
 
             this.sendEmail(mail);
