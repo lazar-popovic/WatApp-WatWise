@@ -32,6 +32,7 @@ export class MapComponentComponent implements OnInit {
 
     const latLng = L.latLng(44.0128, 20.9114);
     const point = this.map.latLngToContainerPoint(latLng);
+    console.log( point);
     const z = this.map.getZoom();
     const x = Math.floor(point.x / 256);
     const y = Math.floor(point.y / 256);
@@ -87,15 +88,15 @@ export class MapComponentComponent implements OnInit {
     for (const location of this.locations) {
       let icon = 0;
       console.log( location.totalPowerUsage );
-      if( location.totalPowerUsage < -1 )
+      if( location.totalPowerUsage < -5 )
         icon = 0;
       else if( location.totalPowerUsage < 0 )
         icon = 1;
       else if( location.totalPowerUsage == 0 )
         icon = 2;
-      else if( location.totalPowerUsage <= 1)
+      else if( location.totalPowerUsage <= 5)
         icon = 3;
-      else if( location.totalPowerUsage > 1 )
+      else if( location.totalPowerUsage > 5 )
         icon = 4;
       console.log( icon);
       const marker = L.marker([location.latitude, location.longitude], { icon: customIcons[ icon] })
@@ -109,6 +110,7 @@ export class MapComponentComponent implements OnInit {
 
       this.markers.push(marker); // Add the marker to the markers array
     }
+    //this.relocateMapCenter( this.locations);
   }
 
   getCities() {
@@ -131,7 +133,9 @@ export class MapComponentComponent implements OnInit {
   }
 
   selectedCategory: number = -1;
+
   title: string = "";
+
   getTop5Neighborhoods() {
     this.locationService.getTop5Neighborhoods( this.selectedCity, this.selectedCategory).subscribe((result:any) => {
       if( result.success) {
@@ -186,7 +190,7 @@ export class MapComponentComponent implements OnInit {
           this.locations = result.data;
           console.log( this.locations);
           this.placeMarkers();
-          this.placeRadius();
+          //this.placeRadius();
         }
         else
         {
@@ -198,13 +202,9 @@ export class MapComponentComponent implements OnInit {
     );
   }
 
-  circles: L.Circle[] = [];
+  /*circles: L.Circle[] = [];
 
   placeRadius() {
-    /*const maxProduction = this.locations.reduce((max, obj) => {
-      return obj.poweruage > max.poweruage ? obj : max;
-    });*/
-
     const maxConsumption = this.locations.reduce((max, obj) => {
       return obj.poweruage < max.poweruage ? obj : max;
     });
@@ -222,18 +222,7 @@ export class MapComponentComponent implements OnInit {
       }).addTo(this.map);
       this.circles.push(circleRed);
     }
-
-    /*if (maxProduction) {
-      console.log(maxProduction);
-      const circleBlue = L.circle([maxProduction.latitude, maxProduction.longitude], {
-        color: '#455eb8',
-        fillColor: '#455eb8',
-        fillOpacity: 0.4,
-        radius: 500
-      }).addTo(this.map);
-      this.circles.push(circleBlue);
-    }*/
-  }
+  }*/
 
 
   getUsersForLocation(locationId: number) {
@@ -261,4 +250,21 @@ export class MapComponentComponent implements OnInit {
   goToUser( userId: number) {
     this.router.navigate(['/profile', userId]);
   }
+
+  relocateMapCenter( locations:any) {
+    const tileSize = 256; // Tile size in pixels
+
+    // Calculate the average x and y coordinates
+    const avgX = locations.reduce((sum:any, location:any) => sum + location.latitude, 0) / locations.length;
+    const avgY = locations.reduce((sum:any, location:any) => sum + location.longitude, 0) / locations.length;
+    console.log( avgX, avgY);
+
+    const offsetX = avgX * tileSize;
+    const offsetY = avgY * tileSize;
+
+    console.log( offsetX, offsetY);
+    const newLatLng = this.map.containerPointToLatLng([offsetX, offsetY]);
+    this.map.setView(newLatLng, 14);
+  }
+
 }

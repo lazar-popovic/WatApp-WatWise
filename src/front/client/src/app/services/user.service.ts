@@ -46,4 +46,8 @@ export class UserService {
   public uploadImage(data: any) : Observable<any>{ 
     return this.http.post<any>(`${environment.apiUrl}user/update-user-image`, data, { observe: 'response'})
   }
+
+  public deleteUser(id: number) : Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}user/delete/${id}`, { observe: 'response'})
+  }
 }

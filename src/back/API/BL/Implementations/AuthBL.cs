@@ -126,7 +126,7 @@ namespace API.BL.Implementations
 
             _mailService.sendToken(newUser);
 
-            response.Data = new RegisterResponseViewModel { Message = "User registration successful!Check your email to complete registration." };
+            response.Data = new RegisterResponseViewModel { Message = "You have successfully registered a prosumer!" };
             Console.WriteLine(userRegisterRequest.Location.Neighborhood);
             return response;
 
@@ -165,7 +165,7 @@ namespace API.BL.Implementations
 
             _mailService.sendToken(newEmployee);
 
-            response.Data = new RegisterResponseViewModel { Message = "Employee registration successful!Check your email to complete registration." };
+            response.Data = new RegisterResponseViewModel { Message = "You have successfully registered a employee!" };
 
             return response;
         }
@@ -431,7 +431,7 @@ namespace API.BL.Implementations
 
                 _mailService.resendToken(user!);
 
-                response.Data = new RegisterResponseViewModel { Message = "New verfication mail has been sent!Check your email to complete registration." };
+                response.Data = new RegisterResponseViewModel { Message = "New verfication mail has been sent!" };
 
                 return response;
             }

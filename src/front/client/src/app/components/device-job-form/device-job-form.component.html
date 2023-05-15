@@ -1,8 +1,8 @@
 <div class="device-input-holder">
   <div class="wrapper" [ngBusy]="busyAddDeviceJob">
-      <div style="display: flex; justify-content: space-between; align-items: center;" (click)="refresh()">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
         <h2>Schedule routine</h2>
-        <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;"></i>
+        <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;" (click)="refresh()"></i>
       </div>
 
       <form action="#" (ngSubmit)="addDeviceJob()">

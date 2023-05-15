@@ -1,10 +1,10 @@
 <div class="device-input-holder">
 <div class="wrapper" *ngIf="!showDevices"  [ngBusy]="busyAddDevice">
-    <div style="display: flex; justify-content: right;" (click)="refresh()">
-      <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;"></i>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2>Connect device</h2>
+      <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;" (click)="refresh()"></i>
     </div>
 
-    <h2>Connect device</h2>
     <form action="#" (ngSubmit)="addDevice()">
       <div class="input-box">
         <input type="text" name="name" [(ngModel)]="newDevice.name" placeholder="Device name">

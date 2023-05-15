@@ -21,6 +21,7 @@ namespace API.Models.Entity
         public DeviceType? DeviceType { get; set; }
 
         public bool DataShare { get; set; } = false;
+        public bool DsoControl { get; set; } = false;
         public double? Capacity { get; set; }
         public int? DeviceSubtypeId { get; set; }
         [ForeignKey("DeviceSubtypeId")]

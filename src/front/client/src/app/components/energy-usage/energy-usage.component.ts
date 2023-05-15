@@ -15,7 +15,11 @@ export class EnergyUsageComponent implements OnInit {
 
   ngOnInit(): void {
     let now = new Date();
-    this.date  =  now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
+    let month: any = (now.getMonth()+1);
+    let day: any =  now.getDate();
+    if (month<10) month = "0" + month;
+    if (day<10) day = "0" + day;
+    this.date  =  now.getFullYear() + "-" + month + "-" + day;
     this.historyClick();
   }
   tableTitle: string = "Timestamp";
@@ -93,7 +97,7 @@ export class EnergyUsageComponent implements OnInit {
     this.deviceDataService.getDSOSharedDataForDate( date.getDate(), date.getMonth()+1, date.getFullYear()).subscribe(
       (result:any) => {
         if( result.success) {
-          this.data = result.data;
+          this.result = this.transformEnergyUsage( result.data.consumingEnergyUsageByTimestamp, result.data.producingEnergyUsageByTimestamp);
           this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
           this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
           let now = new Date();
@@ -198,7 +202,7 @@ export class EnergyUsageComponent implements OnInit {
     this.deviceDataService.getDSOSharedDataForMonth( this.month, this.yearForMonth).subscribe(
       (result:any) => {
         if( result.success) {
-          this.data = result.data;
+          this.result = this.transformEnergyUsage( result.data.consumingEnergyUsageByTimestamp, result.data.producingEnergyUsageByTimestamp);
           this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
           this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
           let now = new Date();
@@ -301,7 +305,7 @@ export class EnergyUsageComponent implements OnInit {
     this.deviceDataService.getDSOSharedDataForYear( this.year).subscribe(
       (result:any) => {
         if( result.success) {
-          this.data = result.data;
+          this.result = this.transformEnergyUsage( result.data.consumingEnergyUsageByTimestamp, result.data.producingEnergyUsageByTimestamp);
           this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
           this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
           this.datasets = [{
@@ -501,5 +505,41 @@ export class EnergyUsageComponent implements OnInit {
         }
       }
     });
+  }
+
+  transformEnergyUsage( consumingEnergyUsage: any[], producingEnergyUsage: any[]): any[] {
+    console.log( consumingEnergyUsage);
+    console.log( producingEnergyUsage);
+    const transformedData: any[] = [];
+    const consumingMap: Map<string, any> = new Map();
+    for (let i = 0; i < consumingEnergyUsage.length; i++) {
+      consumingMap.set(consumingEnergyUsage[i].timestamp, consumingEnergyUsage[i]);
+    }
+    const producingMap: Map<string, any> = new Map();
+    for (let i = 0; i < producingEnergyUsage.length; i++) {
+      producingMap.set(producingEnergyUsage[i].timestamp, producingEnergyUsage[i]);
+    }
+    const uniqueTimestamps: Set<string> = new Set([...consumingMap.keys(), ...producingMap.keys()]);
+    for (const timestamp of uniqueTimestamps) {
+      const transformedEntry: any = {
+        timestamp,
+        consumption: 0,
+        predictedConsumption: 0,
+        production: 0,
+        predictedProduction: 0,
+      };
+      if (consumingMap.has(timestamp)) {
+        const consumingData: any = consumingMap.get(timestamp);
+        transformedEntry.consumption = consumingData.value;
+        transformedEntry.predictedConsumption = consumingData.predictedValue;
+      }
+      if (producingMap.has(timestamp)) {
+        const producingData: any = producingMap.get(timestamp);
+        transformedEntry.production = producingData.value;
+        transformedEntry.predictedProduction = producingData.predictedValue;
+      }
+      transformedData.push(transformedEntry);
+    }
+    return transformedData;
   }
 }

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-settings',
@@ -10,14 +12,16 @@ import { Router } from '@angular/router';
 })
 export class ProfileSettingsComponent {
 
+  busy: Subscription | undefined;
+
   wanted: number = 1;
 
-  constructor(private userService: UserService, private authService: AuthService, private router: Router) { }
+  constructor(private userService: UserService, private authService: AuthService, private router: Router, private toastrNotifService: ToastrNotifService) { }
 
   click(element: EventTarget | null) {
     if(element == null)
       return;
-    
+
     let active = document.querySelector(".profile-settings-menu-active-item") as HTMLDivElement;
 
     if(active != null)
@@ -32,9 +36,13 @@ export class ProfileSettingsComponent {
   }
 
   updatePassword(data: any) {
-    this.userService.updatePassword(data, this.authService.userId).subscribe((result: any) => {
+    this.busy = this.userService.updatePassword(data, this.authService.userId).subscribe((result: any) => {
       if(result.body.success) {
-        this.router.navigateByUrl('profile');
+        this.toastrNotifService.showSuccess( result.body.data.message);
+        this.router.navigateByUrl('profile')
+      }
+      else {
+        this.toastrNotifService.showErrors( result.body.errors);
       }
     })
   }
@@ -42,7 +50,11 @@ export class ProfileSettingsComponent {
   updateUser(data:any) {
     this.userService.updateUser(data, this.authService.userId).subscribe((result: any) => {
       if(result.body.success) {
+        this.toastrNotifService.showSuccess( result.body.data.message);
         this.router.navigateByUrl('profile')
+      }
+      else {
+        this.toastrNotifService.showErrors( result.body.errors);
       }
     })
   }
