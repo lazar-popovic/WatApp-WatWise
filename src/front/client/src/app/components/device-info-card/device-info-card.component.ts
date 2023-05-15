@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DeviceService } from 'src/app/services/device.service';
+import { JWTService } from 'src/app/services/jwt.service';
 import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
 
 @Component({
@@ -15,27 +16,28 @@ export class DeviceInfoCardComponent implements OnInit {
     activityStatus: false,
     deviceType: { type: null, category: null },
     deviceSubtype: { subtypeName: null },
-    capacity: null,
+    capacity: 1,
     dataShare: false,
-    currentUsage: null
+    currentUsage: 0,
+    dsoControl: false
   }
 
-  constructor( private deviceService: DeviceService, private toastrNotifService: ToastrNotifService) { }
+  role: number = 3;
+  disabled: boolean = false;
+
+  @Output() output: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() outputEdit: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() outputDelete: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  constructor( private deviceService: DeviceService,
+               private toastrNotifService: ToastrNotifService,
+               private jwtService: JWTService) { }
 
   ngOnInit() {
+    this.role = this.jwtService.roleId;
   }
 
   onSliderChange( value: boolean) {
-    this.device.activityStatus = value
-    console.log( value);
-
-    this.deviceService.patchDeviceActivityStatus( this.device.id, value).subscribe(
-      (result: any) => {
-        if( result.body.success) {
-          this.toastrNotifService.showSuccess( result.body.data.message);
-          this.device.activityStatus = value;
-        }
-      }
-    );
+    this.output.emit( value);
   }
 }

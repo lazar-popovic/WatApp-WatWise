@@ -29,30 +29,38 @@ import { EditDeviceComponent } from './components/edit-device/edit-device.compon
 import { SliderComponent } from './components/slider/slider.component';
 import { DeleteDeviceComponent } from './components/delete-device/delete-device.component';
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
+import { DeviceJobFormComponent } from './components/device-job-form/device-job-form.component';
+import { ConfirmWindowComponent } from './components/confirm-window/confirm-window.component';
+import { SchedulerComponent } from './components/scheduler/scheduler.component';
+import { NotLoggedGuard } from './guards/not-logged.guard';
+import { OnlyUserGuardGuard } from './guards/only-user-guard.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent},
-  { path: 'verification', component : VerifyComponent},
-  { path: 'prosumer/overview',  component:  OverviewComponent, canActivate: [UserGuard]},
+  { path: 'verification', component : VerifyComponent, canActivate: [NotLoggedGuard]},
   { path: 'dso/overview',  component:  OverviewDsoComponent, canActivate: [EmployeeGuard]},
   { path: 'profile',  component:  ProfileComponent, canActivate: [UserGuard]},
   { path: 'profile/:id', component: ProfileIDComponent, canActivate: [EmployeeGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'prosumer/devices', component : DevicesComponent, canActivate: [UserGuard]},
-  { path: 'prosumer/consumption', component : ConsumptionComponent, canActivate: [UserGuard]},
-  { path: 'prosumer/production', component : ProductionComponent, canActivate: [UserGuard]},
+  { path: 'prosumer/overview',  component:  OverviewComponent, canActivate: [OnlyUserGuardGuard]},
+  { path: 'prosumer/consumption', component : ConsumptionComponent, canActivate: [OnlyUserGuardGuard]},
+  { path: 'prosumer/production', component : ProductionComponent, canActivate: [OnlyUserGuardGuard]},
+  { path: 'prosumer/scheduler', component: SchedulerComponent, canActivate: [OnlyUserGuardGuard]},
   { path: 'profile/change-password', component : ChangePasswordComponent, canActivate: [UserGuard]},
-  { path: 'dso/users', component : UsersOverviewComponent, canActivate: [EmployeeGuard]},
+  { path: 'dso/prosumers', component : UsersOverviewComponent, canActivate: [EmployeeGuard]},
   { path: 'dso/map', component : MapComponent, canActivate: [EmployeeGuard]},
-  { path: 'dso/consumption', component : EnergyUsageComponent, canActivate: [EmployeeGuard]},
-  { path: 'prosumer/reset-password', component: PasswordInputComponent},
-  { path: 'prosumer/device/:id', component: DeviceDetailsComponent},
-  { path: 'dso/employees', component: EmployeeOverviewComponent},
-  { path: 'profile-settings', component: ProfileSettingsComponent},
+  { path: 'dso/energy-usage', component : EnergyUsageComponent, canActivate: [EmployeeGuard]},
+  { path: 'prosumer/reset-password', component: PasswordInputComponent, canActivate: [NotLoggedGuard]},
+  { path: 'prosumer/device/:id', component: DeviceDetailsComponent, canActivate: [UserGuard]},
+  { path: 'dso/employees', component: EmployeeOverviewComponent, canActivate: [UserGuard]},
+  { path: 'profile-settings', component: ProfileSettingsComponent, canActivate: [UserGuard]},
   { path: 'test-component', component: DeleteDeviceComponent},
   { path: 'test-geo', component: UsersComponent},
-  { path: 'test-upload', component: UploadImageComponent}
+  { path: 'test-upload', component: UploadImageComponent},
+  { path: 'test-confirm', component: ConfirmWindowComponent},
+  { path: 'test-users', component: UsersComponent}
 ];
 
 @NgModule({

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import {ToastrNotifService} from "../../services/toastr-notif.service";
@@ -25,6 +25,7 @@ export class UsersComponent {
   searchAddress = "";
   busy: Subscription | undefined;
   items : any;
+  @Output() output: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private userService: UserService,private router: Router, private geoService: GeocodingService ,private toastrNotifService: ToastrNotifService) { }
 
@@ -56,35 +57,44 @@ export class UsersComponent {
   }
 
   getAddress() {
-    this.geoService.getAddress(this.searchAddress).subscribe((result: any) => {
-      (document.querySelector('#address-show') as HTMLDivElement).style.display = 'block';
-      let city="";
-      let neighbourhood="";
-      let road="";
-      this.items = result.body.map((item:any) => {
+    if( this.searchAddress == "") {
+      this.toastrNotifService.showErrors(["Enter address for search!"]);
+    }
+    else {
+      this.geoService.getAddress(this.searchAddress).subscribe((result: any) => {
+        (document.querySelector('#address-show') as HTMLDivElement).style.display = 'block';
+        let city="";
+        let neighbourhood="";
+        let road="";
+        this.items = result.body.map((item:any) => {
 
-        if (item.address.city)
-          city = item.address.city;
-        else if (item.address.town)
-          city = item.address.town;
-        item.city = city;
+          if (item.address.city)
+            city = item.address.city;
+          else if (item.address.town)
+            city = item.address.town;
+          item.city = city;
 
-        if (item.address.neighbourhood)
-          neighbourhood = item.address.neighbourhood;
-        else if (item.address.suburb)
-          neighbourhood = item.address.suburb;
-        else
-          neighbourhood = item.address.city_district;
+          if (item.address.neighbourhood)
+            neighbourhood = item.address.neighbourhood;
+          else if (item.address.suburb)
+            neighbourhood = item.address.suburb;
+          else
+            neighbourhood = item.address.city_district;
 
-        item.city = city;
-        item.neighborhood = neighbourhood;
-        console.log( item);
-        return item;
+          item.city = city;
+          item.neighborhood = neighbourhood;
+          console.log( item);
+          return item;
+        });
+
+        (document.querySelector('.users-form-location') as HTMLDivElement).style.marginBottom = "0px";
+      }, (error: any) => {
+        console.log(error);
       });
+    }
+  }
 
-      (document.querySelector('.users-form-location') as HTMLDivElement).style.marginBottom = "0px";
-    }, (error: any) => {
-      console.log(error);
-    })
+  refresh() : void {
+
   }
 }

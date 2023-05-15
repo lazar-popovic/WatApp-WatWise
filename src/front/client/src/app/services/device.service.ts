@@ -32,6 +32,10 @@ export class DeviceService {
     return this.http.get(`${environment.apiUrl}device/${id}`);
   }
 
+  getDevicesIdAndNameByUserId( userId: any) : Observable<any> {
+    return this.http.get(`${environment.apiUrl}device/get-devices-id-and-name-by-user-id?userId=${userId}`);
+  }
+
   updateDevice(id: number, data: any) : Observable<any> {
     return this.http.patch(`${environment.apiUrl}device/${id}`, data, {observe: 'response'});
   }

@@ -13,17 +13,27 @@ export class EmployeeOverviewComponent {
   pagesNum: number = 1;
   pageSize: any = 10;
   showPrompt: boolean = false;
+  showAddNewEmployeeForm: boolean = false;
+  filter : any = {
+    name: '',
+    sortOrder: '',
+    mail: ''
+  }
+  showDelete: boolean = false;
+  showResend: boolean = false;
+  selectedUser: any = null;
 
   constructor(private userService: UserService) {
     this.getEmployees();
   }
 
   getEmployees() {
-    this.userService.getEmployees(this.pageSize, this.pagesNum).subscribe((result: any) => {
+    this.userService.getEmployees(this.filter.name, this.filter.sortOrder, this.pageSize, this.pagesNum).subscribe((result: any) => {
+      this.users = [];
       for(let item of result.data) {
         let user = new User();
-        user.firstName = item.firstname; 
-        user.lastName = item.lastname; 
+        user.firstName = item.firstname;
+        user.lastName = item.lastname;
         user.id = item.id;
         user.mail = item.email;
         this.users.push(user);
@@ -34,9 +44,7 @@ export class EmployeeOverviewComponent {
   }
 
   addEmployee() {
-    //(document.querySelector('.overview-container') as HTMLDivElement).style.backgroundColor = "light grey";
-    let employeeAddPrompt = document.querySelector('.employee-add') as HTMLDivElement;
-    employeeAddPrompt.style.display = "block";
+    this.showAddNewEmployeeForm = true
   }
 
   getNumberOfPages() {
@@ -45,7 +53,7 @@ export class EmployeeOverviewComponent {
 
   handler(type: number) {
     let active = document.querySelector(".overview-pagination-page-active") as HTMLDivElement;
-    
+
     if(type == 2) {
       if(this.currentIndex < this.pagesNum)
         this.currentIndex++;
@@ -57,7 +65,7 @@ export class EmployeeOverviewComponent {
 
     active.innerHTML = this.currentIndex as unknown as string;
   }
-  
+
   pageSizeHandler() {
     console.log(this.pageSize);
   }

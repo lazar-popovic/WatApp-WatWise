@@ -1,9 +1,7 @@
-<div class="delete-device" [ngBusy]="busy">
-    <form>
-        <h3>Do you really want to delete device?</h3>
-        <div id="delete-device-btn-holder">
-            <button id="green" (click)="hideForm()">No</button>
-            <button id="red" (click)="deleteDevice()">Yes</button>
-        </div>
-    </form>
+<div class="dialog standard-card-style" [ngBusy]="busy">
+  <p>Are you sure you want to delete this device? All data will be deleted and you will not be able to recover it.</p>
+  <div class="buttons">
+    <button id="yesButton" (click)="deleteDevice()">Yes</button>
+    <button id="noButton" class="red" (click)="hideForm()">No</button>
+  </div>
 </div>

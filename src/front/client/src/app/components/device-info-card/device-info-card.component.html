@@ -23,22 +23,40 @@
       <p>{{device.deviceSubtype!.subtypeName}}</p>
     </div>
   </div>
-  <div class="device-detail" *ngIf="device.deviceType.category != 0">
+  <div class="device-detail" *ngIf="(device.deviceType.category != 0) && (role == 3 || device.dsoControl == true)">
     <div class="title">
       <p>Activity status</p>
     </div>
-    <div *ngIf="device.id > 0">
+    <div>
       <app-slider [status]="device.activityStatus"  (sliderEvent)="onSliderChange($event)"></app-slider>
     </div>
   </div>
-  <div class="device-detail" *ngIf="device.activityStatus && device.currentUsage != null && device.deviceType.category != 0">
+  <div class="device-detail" *ngIf="device.deviceType.category == 0">
+    <div class="title">
+      <p>Max capacity</p>
+    </div>
+    <div *ngIf="device.id > 0">
+      <p>{{device.capacity}} kWh</p>
+    </div>
+  </div>
+  <div class="device-detail">
     <div class="title">
       <p *ngIf="device.deviceType.category == -1">Currently consuming</p>
       <p *ngIf="device.deviceType.category == 1">Currently producing</p>
+      <p *ngIf="device.deviceType.category == 0">Current capacity</p>
     </div>
     <div>
-      <p *ngIf="device.deviceType.category == -1" style="color:rgba(191, 65, 65, 1)">-{{device.currentUsage}}kWh</p>
-      <p *ngIf="device.deviceType.category == 1" style="color:rgba(69, 94, 184, 1)">+{{device.currentUsage}}kWh</p>
+      <p *ngIf="device.deviceType.category == -1" style="color:rgba(191, 65, 65, 1)">{{device.currentUsage}}kWh</p>
+      <p *ngIf="device.deviceType.category == 1" style="color:rgba(69, 94, 184, 1)">{{device.currentUsage}}kWh</p>
+      <p *ngIf="device.deviceType.category == 0" style="color:rgba(27, 254, 127, 1)">{{(device.currentUsage*100).toFixed(0)}}%</p>
+    </div>
+  </div>
+  <div class="device-detail device-icons" *ngIf="role == 3">
+    <div>
+      <img (click)="outputEdit.emit(true)" src="/assets/sett.png">
+    </div>
+    <div>
+      <img (click)="outputDelete.emit(true)" src="/assets/bin.png">
     </div>
   </div>
 </div>

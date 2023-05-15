@@ -63,19 +63,19 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let row of data.consumingEnergyUsageByTimestamp; let i = index">
+        <tr *ngFor="let row of result">
           <td>{{ row.timestamp }}</td>
-          <td style="color: rgba(191, 65, 65, 0.8)">{{ row.predictedValue.toFixed(3) }}</td>
-          <td style="color: rgba(191, 65, 65, 1)">{{ row.value.toFixed(3) }}</td>
-          <td style="color: rgba(69, 94, 184, 0.8)">{{ data.producingEnergyUsageByTimestamp[i]?.predictedValue.toFixed(3) }}</td>
-          <td style="color: rgba(69, 94, 184, 1)">{{ data.producingEnergyUsageByTimestamp[i]?.value.toFixed(3) }}</td>
+          <td style="color: rgba(191, 65, 65, 0.8)">{{row.predictedConsumption?.toFixed(3) }}</td>
+          <td style="color: rgba(191, 65, 65, 1)">{{ row.consumption?.toFixed(3) }}</td>
+          <td style="color: rgba(69, 94, 184, 0.8)">{{ row.predictedProduction?.toFixed(3) }}</td>
+          <td style="color: rgba(69, 94, 184, 1)">{{ row.production?.toFixed(3) }}</td>
         </tr>
         </tbody>
       </table>
       <table *ngIf="predictionFlag">
         <thead>
         <tr id="thead-tr">
-          <th>Timestamp</th>
+          <th>{{tableTitle}}</th>
           <th>Predicted Consumption<br>[kWh]</th>
           <th>Predicted Production<br>[kWh]</th>
         </tr>

@@ -36,7 +36,7 @@ namespace API.API
         }
         
         [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdateDevice(int id, DeviceNameAndDataShareUpdateViewModel request)
+        public async Task<IActionResult> UpdateDevice(int id, DeviceNameDsoControlAndDataShareUpdateViewModel request)
         {
             return Ok(await _deviceBL.UpdateDevice(id, request));
         }
@@ -86,7 +86,7 @@ namespace API.API
         }
 
         [HttpPatch("device-control-id")]
-        public async Task<IActionResult> TurnDevicesOnOffById(DeviceControlViewModel request, int deviceId)
+        public async Task<IActionResult> TurnDevicesOnOffById(DeviceControlByIdViewModel request, int deviceId)
         {
             return Ok(await _deviceBL.TurnDevicesOnOffById(request, deviceId));
         }
@@ -97,10 +97,28 @@ namespace API.API
             return Ok(await _deviceBL.ShareDeviceDataWithDSO(request));
         }
 
+        [HttpPatch("enable-dso-control-feature-by-deviceId")]
+        public async Task<IActionResult> EnableDsoControlFeature(DsoControlViewModel request, int deviceId)
+        {
+            return Ok(await _deviceBL.EnableDsoControlFeature(request, deviceId));
+        }
+
+        [HttpPatch("enadble-dso-control-feature-for-users-devices")]
+        public async Task<IActionResult> EnableDsoControlFeatureForAllDevices(DsoControlViewModel request, int userId)
+        {
+            return Ok(await _deviceBL.EnableDsoControlFeatureForAllDevices(request, userId));
+        }
+        
         [HttpPatch("share-to-dso-id")]
         public async Task<IActionResult> ShareDeviceDataWithDSOById(DeviceControlViewModel request, int deviceId)
         {
             return Ok(await _deviceBL.ShareDeviceDataWithDSOById(request, deviceId));
+        }
+
+        [HttpGet("get-devices-id-and-name-by-user-id")]
+        public async Task<IActionResult> GetDevicesIdAndNameByUserId( int userId)
+        {
+            return Ok(await _deviceBL.GetDevicesIdAndNameByUserId( userId));
         }
     }
 }

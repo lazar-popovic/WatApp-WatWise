@@ -6,6 +6,7 @@ using API.Models.Entity;
 using API.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using API.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.BL.Implementations
 {
@@ -114,9 +115,9 @@ namespace API.BL.Implementations
             return response;
 
         }
-        public async Task<Response<List<User?>>> FindUsers(int id, string search, string mail, int pageSize, int pageNum, string order)
+        public async Task<Response> FindUsers(int id, string search, string mail, int pageSize, int pageNum, string order)
         {
-            var response = new Response<List<User?>>();
+            var response = new Response();
 
             var users = await _userDal.FindUser(id, search, mail, pageSize, pageNum, order);
 
@@ -208,7 +209,7 @@ namespace API.BL.Implementations
             {
                 var user2 = await _userDal.GetByEmailAsync(request.Email);
 
-                if (user2 != null)
+                if (user2 != null && user2.Id != id)
                 {
                     response.Errors.Add("Cannot update your email with email of existing user!");
                     response.Success = false;
@@ -286,6 +287,27 @@ namespace API.BL.Implementations
             response.Success = response.Errors.Count == 0;
 
             return response;
+        }
+
+        public async Task<Response<string>> DeleteProfilePictureAsync(int userId)
+        {
+            var response = new Response<string>();
+            var user = _userDal.DeleteProfilePictureAsync(userId);
+
+            if (user == null)
+            {
+                response.Errors.Add("User is null");
+                response.Success = false;
+            }
+           
+            response.Data = "Pass";
+
+            response.Success = response.Errors.Count() == 0;
+
+            return response;
+
+
+
         }
     }
 }

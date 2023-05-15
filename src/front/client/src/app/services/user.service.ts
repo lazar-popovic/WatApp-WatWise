@@ -31,8 +31,8 @@ export class UserService {
     return this.http.get<any>(`${environment.apiUrl}user/prosumers-number`, {observe: 'response'});
   }
   
-  public getEmployees(pageSize: number, pageNumber: number) : Observable<User[]> {
-    return this.http.get<User[]>(`${environment.apiUrl}user/employees?pageSize=${pageSize}&pageNumber=${pageNumber}`);
+  public getEmployees(name:string, sortOrder:string, pageSize: number, pageNumber: number) : Observable<User[]> {
+    return this.http.get<User[]>(`${environment.apiUrl}user/get-employees-filtered?fullName=${name}&pageSize=${pageSize}&pageNumber=${pageNumber}&sortOrder=${sortOrder}`);
   }
 
   public updatePassword(data: any, id: number) : Observable<any> {
@@ -45,5 +45,9 @@ export class UserService {
 
   public uploadImage(data: any) : Observable<any>{ 
     return this.http.post<any>(`${environment.apiUrl}user/update-user-image`, data, { observe: 'response'})
+  }
+
+  public deleteUser(id: number) : Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}user/delete/${id}`, { observe: 'response'})
   }
 }

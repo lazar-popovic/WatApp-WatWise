@@ -2,15 +2,15 @@
   <app-sidebar></app-sidebar>
   <h2 style="display: inline-block;">Devices</h2>
   <div class="devices-container">
-    
+
     <form>
-      <button (click)="showAddDevice = true">+Add device</button>
+      <button (click)="showInsertDevice = true">+Add device</button>
     </form>
     <app-devices-info></app-devices-info>
   </div>
-  <div *ngIf="showAddDevice" class="devices-add-device">
+  <div class="devices-add-device" *ngIf="showInsertDevice">
     <div class="add-device-position">
-      <app-device-input></app-device-input>
+      <app-device-input (output)="showInsertDevice = false"></app-device-input>
     </div>
   </div>
 </div>

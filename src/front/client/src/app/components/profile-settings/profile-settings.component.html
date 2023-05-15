@@ -1,4 +1,4 @@
-<div class="profile-settings-container">
+<div class="profile-settings-container" [ngBusy]="busy">
     <app-sidebar></app-sidebar>
     <div class="profile-settings-holder">
         <h1>Settings</h1>
@@ -8,9 +8,6 @@
             </div>
             <div class="profile-settings-menu-item" (click)="handler($event); wanted=2">
                 <img src="/assets/lock.png" alt="password">Password
-            </div>
-            <div class="profile-settings-menu-item" (click)="handler($event); wanted=3">
-                <img src="/assets/eye.png" alt="display">Display
             </div>
         </div>
         <div *ngIf="wanted==1">

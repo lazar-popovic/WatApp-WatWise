@@ -10,9 +10,9 @@ import { environment } from 'src/app/environments/environment';
   styleUrls: ['./profile-view-settings.component.css']
 })
 export class ProfileViewSettingsComponent {
-  
+
   @Output() profileDataEvent = new EventEmitter<any>();
-  
+
   data: any = {
     email: '',
     firstname: '',
@@ -20,7 +20,7 @@ export class ProfileViewSettingsComponent {
   }
   user = new User();
 
-  constructor(private userService: UserService, private authService: AuthService, private router: Router) { 
+  constructor(private userService: UserService, private authService: AuthService, private router: Router) {
     this.getUser();
   }
 
@@ -49,6 +49,10 @@ export class ProfileViewSettingsComponent {
           this.user.num = result.data.location.addressNumber;
           this.user.city = result.data.location.city;
         }
+
+        this.data.email = this.user.mail;
+        this.data.firstname = this.user.firstName;
+        this.data.lastname = this.user.lastName;
       }
     });
   }

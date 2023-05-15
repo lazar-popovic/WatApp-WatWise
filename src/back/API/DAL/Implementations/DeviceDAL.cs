@@ -1,9 +1,11 @@
-﻿using API.DAL.Interfaces;
+﻿using API.Common;
+using API.DAL.Interfaces;
 using API.Models;
 using API.Models.Entity;
 using API.Models.ViewModels;
 using API.Services.DeviceSimulatorService.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API.DAL.Implementations
 {
@@ -35,7 +37,8 @@ namespace API.DAL.Implementations
                 DeviceType = d.DeviceType,
                 DeviceSubtype = d.DeviceSubtype,
                 Capacity = d.Capacity,
-                UserId = d.UserId
+                UserId = d.UserId,
+                DsoControl = d.DsoControl
             }).AsNoTracking().FirstOrDefaultAsync();
         }
         
@@ -61,12 +64,16 @@ namespace API.DAL.Implementations
         {
             var recordsToDelete = _dbContext.DeviceEnergyUsage.Where(x => x.DeviceId == dev.Id);
             _dbContext.DeviceEnergyUsage.RemoveRange(recordsToDelete);
-
-            _dbContext.Devices.Remove(dev!);
+            
+            // Remove all device jobs associated with the device
+            var jobsToDelete = _dbContext.DeviceJobs.Where(x => x.DeviceId == dev.Id);
+            _dbContext.DeviceJobs.RemoveRange(jobsToDelete);
+            
+            _dbContext.Devices.Remove(dev);
 
             await _dbContext.SaveChangesAsync();
         }
-        public async Task AddDeviceViewModel(DeviceViewModel devicee)
+        public async Task<int> AddDeviceViewModel(DeviceViewModel devicee)
         {
             var device = new Device
             {
@@ -84,6 +91,8 @@ namespace API.DAL.Implementations
             await _dbContext.SaveChangesAsync();
 
             await _deviceSimulatorService.FillDataSinceJanuary1st(((int)devicee.DeviceTypeId!), device.Id);
+
+            return device.Id;
         }
 
         public async Task<List<DeviceType>> GetDeviceTypesByCategory(int id)
@@ -97,63 +106,138 @@ namespace API.DAL.Implementations
         {
             var timestamp = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
             var result = from device in _dbContext.Devices
-                join deviceType in _dbContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
-                join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty() on
-                    device.Id equals usage.DeviceId into usageGroup
-                where device.UserId == userId
-                group new { device.Id, device.Name, device.DeviceType, device.DeviceTypeId, device.ActivityStatus, Value = usageGroup.FirstOrDefault()!.Value, DataShare = device.DataShare } by deviceType.Category into grouped
-                select new {
-                    Category = grouped.Key,
-                    Devices = grouped.ToList()
-                };
+                         join deviceType in _dbContext.DeviceTypes on device.DeviceTypeId equals deviceType.Id
+                         join usage in _dbContext.DeviceEnergyUsage.Where(u => u.Timestamp == timestamp).DefaultIfEmpty()
+                             on device.Id equals usage.DeviceId into usageGroup
+                         where device.UserId == userId
+                         group new
+                         {
+                             device.Id,
+                             device.Name,
+                             device.DeviceType,
+                             device.DeviceTypeId,
+                             device.ActivityStatus,
+                             Value = usageGroup.FirstOrDefault()!.Value,
+                             DataShare = device.DataShare
+                         } by deviceType.Category into grouped
+                         select new
+                         {
+                             Category = grouped.Key,
+                             Devices = grouped.OrderByDescending(d => d.ActivityStatus)
+                                             .ThenByDescending(d => d.Value)
+                                             .ToList()
+                         };
+
             return result;
         }
         
-        public async Task TurnDevicesOff()
+        public async Task<Response> TurnDevicesOff(int userId)
         {
-            using (_dbContext)
+            var response = new Response();
+            
+            await using (_dbContext)
             {
-                var devices = await _dbContext.Devices.ToListAsync();
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
 
-                devices.ForEach(d => d.ActivityStatus = false);
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+                
+                foreach(var dev in devices)
+                    await TurnDeviceOffById(dev.Id);
 
                 await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices turned off successfully";
+                response.Success = true;
+
+                return response;
             }
         }
 
-        public async Task TurnDevicesOn()
+        public async Task<Response> TurnDevicesOn(int userId)
         {
-            using (_dbContext)
+            var response = new Response();
+            
+            await using (_dbContext)
             {
-                var devices = await _dbContext.Devices.ToListAsync();
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
 
-                devices.ForEach(d => d.ActivityStatus = true);
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+                
+                foreach(var dev in devices)
+                    await TurnDeviceOnById(dev.Id);
 
                 await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices turned off successfully";
+                response.Success = true;
+
+                return response;
             }
         }
 
-        public async Task TurnDataSharingOff()
+        public async Task<Response> TurnDataSharingOff(int userId)
         {
-            using (_dbContext)
+            var response = new Response();
+            
+            await using (_dbContext)
             {
-                var devices = await _dbContext.Devices.ToListAsync();
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
 
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+                
                 devices.ForEach(d => d.DataShare = false);
 
                 await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices Data sharing feature turned off successfully";
+                response.Success = true;
+
+                return response;
             }
         }
 
-        public async Task TurnDataSharingOn()
+        public async Task<Response> TurnDataSharingOn(int userId)
         {
-            using (_dbContext)
+            var response = new Response();
+            
+            await using (_dbContext)
             {
-                var devices = await _dbContext.Devices.ToListAsync();
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
 
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+                
                 devices.ForEach(d => d.DataShare = true);
 
                 await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices Data sharing feature turned on successfully";
+                response.Success = true;
+
+                return response;
             }
         }
 
@@ -175,9 +259,9 @@ namespace API.DAL.Implementations
             return await result.ToListAsync();
         }
 
-        public async Task<Response<RegisterResponseViewModel>> TurnDeviceOffById(int deviceId)
+        public async Task<Response> TurnDeviceOffById(int deviceId)
         {
-            var response = new Response<RegisterResponseViewModel>();
+            var response = new Response();
             var device = await _dbContext.Devices.Where(d => d.Id == deviceId).FirstOrDefaultAsync();
 
             if (device == null)
@@ -189,15 +273,46 @@ namespace API.DAL.Implementations
             }
 
             device!.ActivityStatus = false;
+
+            var rand = new Random();
+            var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+            var usage = await _dbContext.DeviceEnergyUsage.Where(du => du.DeviceId == device.Id && du.Timestamp == now).FirstOrDefaultAsync();
+            var deviceType = await _dbContext.DeviceTypes.Where(dt => dt.Id == device.DeviceTypeId).FirstOrDefaultAsync();
+            if (usage != null)
+            {
+                Console.WriteLine(usage.Timestamp);
+                if (deviceType?.Id == 3 && device?.ActivityStatus == true)
+                {
+                    usage.Value = Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+                }
+                else if (deviceType?.Id == 3 && device?.ActivityStatus == false)
+                {
+                    usage.Value = 0;
+                }
+                else if (deviceType?.Id == 11)
+                {
+                    usage.Value = Math.Min(Math.Max(Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3), 0), 1);
+                }
+                else if (device?.ActivityStatus == true)
+                {
+                    usage.Value = Math.Round((double)(deviceType?.WattageInkW * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+                }
+                else
+                {
+                    usage.Value = 0;
+                }
+            }
+
             await _dbContext.SaveChangesAsync();
 
+            response.Data = new { Message = "Device turned off succesfully!", NewUsage = usage!.Value };
             response.Success = response.Errors.Count == 0;
             return response;
         }
 
-        public async Task<Response<RegisterResponseViewModel>> TurnDeviceOnById(int deviceId)
+        public async Task<Response> TurnDeviceOnById(int deviceId)
         {
-            var response = new Response<RegisterResponseViewModel>();
+            var response = new Response();
             var device = await _dbContext.Devices.Where(d => d.Id == deviceId).FirstOrDefaultAsync();
 
             if (device == null)
@@ -209,8 +324,39 @@ namespace API.DAL.Implementations
             }
 
             device!.ActivityStatus = true;
+
+            var rand = new Random();
+            var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+            var usage = await _dbContext.DeviceEnergyUsage.Where(du => du.DeviceId == device.Id && du.Timestamp == now).FirstOrDefaultAsync();
+            var deviceType = await _dbContext.DeviceTypes.Where(dt => dt.Id == device.DeviceTypeId).FirstOrDefaultAsync();
+            if (usage != null)
+            {
+                Console.WriteLine(usage.Timestamp);
+                if (deviceType?.Id == 3 && device?.ActivityStatus == true)
+                {
+                    usage.Value = Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+                }
+                else if (deviceType?.Id == 3 && device?.ActivityStatus == false)
+                {
+                    usage.Value = 0;
+                }
+                else if (deviceType?.Id == 11)
+                {
+                    usage.Value = Math.Min(Math.Max(Math.Round((double)(usage?.PredictedValue * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3), 0), 1);
+                }
+                else if (device?.ActivityStatus == true)
+                {
+                    usage.Value = Math.Round((double)(deviceType?.WattageInkW * (1 + rand.NextDouble() * 0.4 - 0.2))!, 3);
+                }
+                else
+                {
+                    usage.Value = 0;
+                }
+            }
+
             await _dbContext.SaveChangesAsync();
 
+            response.Data = new { Message = "Device turned on succesfully!", NewUsage = usage!.Value };
             response.Success = response.Errors.Count == 0;
             return response;
         }
@@ -259,6 +405,67 @@ namespace API.DAL.Implementations
         {
             return await _dbContext.DeviceSubtypes.Where(dt => dt.DeviceTypeId == deviceTypeId)
                                                .AsNoTracking().ToListAsync();
+        }
+
+        public async Task<object> GetDevicesIdAndNameByUserId(int userId)
+        {
+            return await _dbContext.Devices.Where(d => d.UserId == userId)
+                .Where( device => device.DeviceType!.Category != 0)
+                .Select(d => new
+                {
+                    Id = d.Id,
+                    Name = d.Name
+                })
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task TurnDsoControl(bool state, Device? dev)
+        {
+            //var device = await _dbContext.Devices.Where(d => d.Id == dev!.Id).FirstOrDefaultAsync();
+            dev!.DsoControl = state;
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Response> DsoControlForUserDevices(int userId, bool state)
+        {
+            var response = new Response();
+            
+            await using (_dbContext)
+            {
+                var devices = await _dbContext.Devices.Where(dev => dev.UserId == userId).ToListAsync();
+
+                if (devices.IsNullOrEmpty())
+                {
+                    response.Errors.Add("This user has no devices!");
+                    response.Success = false;
+
+                    return response;
+                }
+
+                if (state)
+                {
+                    devices.ForEach(d => d.DsoControl = state);
+
+                    await _dbContext.SaveChangesAsync();
+
+                    response.Data = "Devices Dso control feature turned on successfully";
+                    response.Success = true;
+
+                    return response;
+                }
+                
+                devices.ForEach(d => d.DsoControl = state);
+
+                await _dbContext.SaveChangesAsync();
+
+                response.Data = "Devices Dso control feature turned off successfully";
+                response.Success = true;
+
+                return response;
+                
+
+            }
         }
     }
 }

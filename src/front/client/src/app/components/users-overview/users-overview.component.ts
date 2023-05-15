@@ -1,6 +1,11 @@
+// import { Component } from '@angular/core';
+// import { User } from 'src/app/Models/User';
+// import { UserService } from 'src/app/services/user.service';
+
 import { Component } from '@angular/core';
-import { User } from 'src/app/Models/User';
-import { UserService } from 'src/app/services/user.service';
+
+import { User } from '../../Models/User';
+import {UserService} from '../../services/user.service'
 
 @Component({
   selector: 'app-users-overview',
@@ -9,7 +14,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UsersOverviewComponent {
 
-  users: User[] = [];
+  //users: User[] = [];
+  users: any[] = [];
   currentIndex = 1;
   pagesNum: number = 1;
   pageSize: any = 10;
@@ -28,7 +34,7 @@ export class UsersOverviewComponent {
 
   getProsumers() {
     this.userService.getProsumers(this.pageSize, this.currentIndex, this.filter.name, this.filter.address, this.filter.order).subscribe((result: any) => {
-      this.users = [];
+      /*this.users = [];
       for(let item of result.data) {
         let user = new User();
         user.firstName = item.firstname;
@@ -41,7 +47,8 @@ export class UsersOverviewComponent {
           user.city = item.location.city;
         }
         this.users.push(user);
-      }
+      }*/
+      this.users = result.data;
     },(error: any) => {
       console.log(error);
     });
@@ -80,13 +87,13 @@ export class UsersOverviewComponent {
       this.filter.order = "desc";
     else if(this.filter.order == "desc")
       this.filter.order = "asc";
-    
+
     let element = document.querySelector("#lastname-filter") as HTMLDivElement;
 
     if(this.filter.order == "asc")
-      element.innerText = "Last name ↑";
+      element.innerText = "Lastname↑";
     if(this.filter.order == "desc")
-      element.innerText = "Last name ↓";
+      element.innerText = "Lastname↓";
 
       this.getProsumers();
   }

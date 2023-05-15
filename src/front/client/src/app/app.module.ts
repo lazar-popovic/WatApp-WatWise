@@ -50,11 +50,19 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgBusyModule } from 'ng-busy';
 import { WeatherForecastComponent } from './components/weather-forecast/weather-forecast.component';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { LogoHolderComponent } from './components/logo-holder/logo-holder.component';
 import { DeviceInfoCardComponent } from './components/device-info-card/device-info-card.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
+import { DeviceJobFormComponent } from './components/device-job-form/device-job-form.component';
+import { DeviceScheduleCardComponent } from './components/device-schedule-card/device-schedule-card.component';
+import { ConfirmWindowComponent } from './components/confirm-window/confirm-window.component';
+import { SchedulerComponent } from './components/scheduler/scheduler.component';
+import { SchedulerJobsListComponent } from './components/scheduler-jobs-list/scheduler-jobs-list.component';
+import { IdDeleteDialogComponent } from './components/id-delete-dialog/id-delete-dialog.component';
+import { DeleteProfileComponent } from './components/delete-profile/delete-profile.component';
+import { ResendVerificationMailDialogComponent } from './components/resend-verification-mail-dialog/resend-verification-mail-dialog.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +102,15 @@ import { UploadImageComponent } from './components/upload-image/upload-image.com
     DeleteDeviceComponent,
     WeatherForecastComponent,
     TooltipComponent,
-    UploadImageComponent
+    UploadImageComponent,
+    DeviceJobFormComponent,
+    DeviceScheduleCardComponent,
+    SchedulerComponent,
+    SchedulerJobsListComponent,
+    ConfirmWindowComponent,
+    IdDeleteDialogComponent,
+    DeleteProfileComponent,
+    ResendVerificationMailDialogComponent
   ],
   imports: [
     BrowserModule,

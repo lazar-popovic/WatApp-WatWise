@@ -4,14 +4,9 @@
         <div class="overview-filter-holder">
             <form>
                 <div class="search-input">
-                    <input>
-                    <button>Search by name</button>
+                    <input name="fullName" [(ngModel)]="filter.name" (keyup)="getEmployees()" placeholder = "Search by name" autocomplete="off">
                 </div>
-                <div class="search-input">
-                    <input>
-                    <button>Search by Mail</button>
-                </div>
-                <button id="add-user-btn" (click)="addEmployee()">+Add Employee</button>
+                <button (click)="addEmployee()" class="button green" style="margin: 0!important">+Add Employee</button>
             </form>
         </div>
 
@@ -27,7 +22,8 @@
                     <td>{{user.firstName}}</td>
                     <td>{{user.lastName}}</td>
                     <td>{{user.mail}}</td>
-                    <td><button routerLink="/profile">View</button></td>
+                    <td style="width: 60px"><button (click)="selectedUser = user; showResend = true" class="button blue" [matTooltip]="'Resend verification mail'">Resend</button></td>
+                    <td style="width: 60px"><button (click)="selectedUser = user; showDelete = true" class="button red" [matTooltip]="'Delete employee'">Delete</button></td>
                 </tr>
             </table>
         </div>
@@ -52,7 +48,13 @@
             </form>
         </div>
     </div>
-</div>
-<div class="employee-add">
-    <app-add-employee></app-add-employee>
+    <div class="hover-form" *ngIf="showAddNewEmployeeForm == true">
+      <app-add-employee (output)="showAddNewEmployeeForm = false"></app-add-employee>
+    </div>
+    <div class="hover-form" *ngIf="showDelete">
+      <app-delete-profile (output)="showDelete=false" [id]="selectedUser.id" [user]="selectedUser"></app-delete-profile>
+    </div>
+    <div class="hover-form" *ngIf="showResend">
+      <app-resend-verification-mail-dialog (exitStatusEvent)="showResend=false" [email]="selectedUser.mail"></app-resend-verification-mail-dialog>
+    </div>
 </div>

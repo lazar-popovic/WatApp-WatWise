@@ -12,6 +12,9 @@
   #container {
     flex-direction: column;
   }
+  .dashboard {
+    margin-top: 88px!important;
+  }
 }
 
 .dashboard {
@@ -40,7 +43,7 @@
   border: 1px solid #ddd;
   padding: 10px;
   width: calc(25% - 20px);
-  height: 80px;
+  height: 60px;
   box-sizing: border-box;
 }
 
@@ -56,7 +59,11 @@
   height: 100%;
   align-items: center;
   justify-items: left;
-  width: 50%;
+  width: 70%;
+}
+
+.card-left h4 {
+  margin-left: 5px;
 }
 .card-right {
   display: flex;
@@ -101,3 +108,4 @@
 .card h4, .card-big h4 {
   color: #3e3e3e;
 }
+

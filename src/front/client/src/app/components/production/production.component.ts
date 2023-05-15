@@ -26,7 +26,8 @@ export class ProductionComponent
   predColor: any = 'rgba(69, 94, 184, 0.4)';
   id : any = '' ;
   result: any[] = [];
-  data: any[] = [];
+  data: any[] = [1];
+  tableTitle: string = "Timestamp";
 
   showEdit: boolean = false;
   showDelete: boolean = false;
@@ -44,7 +45,11 @@ export class ProductionComponent
 
   ngOnInit(): void {
     let now = new Date();
-    this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
+    let month: any = (now.getMonth()+1);
+    let day: any =  now.getDate();
+    if (month<10) month = "0" + month;
+    if (day<10) day = "0" + day;
+    this.date  =  now.getFullYear() + "-" + month + "-" + day;
     this.historyClick();
   }
 
@@ -90,6 +95,8 @@ export class ProductionComponent
 
   todayClick()
   {
+    this.data=[1];
+    this.tableTitle = "Hour";
     this.todayFlag  = true; this.monthFlag  = false; this.yearFlag = false;
     var todayDiv = document.getElementById("today");
     if(todayDiv)
@@ -112,14 +119,22 @@ export class ProductionComponent
     this.deviceDataService.getUsersHistoryUsageByCategoryForDate( date.getDate(), date.getMonth()+1, date.getFullYear(), 1, this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
-          this.data = result.data;
+          this.data = result.data.map((ceu: any) => {
+            const ceuDate = new Date(ceu.timestamp);
+            const currentDate = new Date();
+            const timestamp = this.datePipe.transform(ceu.timestamp, "shortTime");
+            const predictedValue = ceu.predictedValue.toFixed(3);
+            const value = currentDate < ceuDate ? "/" : ceu.value.toFixed(3);
+            return { timestamp, predictedValue, value };
+          });
+          this.additionalStats();
           let now = new Date();
           if( date.toDateString() == now.toDateString()) {
             this.datasets = [{
               data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             },{
               data: result.data.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
@@ -136,7 +151,7 @@ export class ProductionComponent
               data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             }];
           } else {
@@ -145,7 +160,7 @@ export class ProductionComponent
               data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             },{
               data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
@@ -165,6 +180,8 @@ export class ProductionComponent
 
   monthClick()
   {
+    this.data=[1];
+    this.tableTitle = "Day";
     this.todayFlag = false; this.monthFlag  = true; this.yearFlag = false;
     const monthDiv = document.getElementById("month");
     if(monthDiv)
@@ -185,7 +202,8 @@ export class ProductionComponent
       (result:any) => {
         console.log( result)
         if( result.success) {
-          this.data = result.data;
+          this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
+          this.additionalStats();
           let now = new Date();
           if( this.month == now.getMonth()+1) {
             console.log( result.data);
@@ -193,7 +211,7 @@ export class ProductionComponent
               data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             },{
               data: result.data.filter((ceu:any) => new Date(ceu.timestamp).getDate() <= new Date().getDate())
@@ -208,10 +226,10 @@ export class ProductionComponent
           } else if ( this.month > now.getMonth()+1) {
             console.log("pred");
             this.datasets = [{
-              data: result.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
+              data: result.data.map((ceu: any) => ({ x: ceu.timestamp, y: ceu.predictedValue })),
               label: 'Predicted ' + this.categoryLabel,
-              backgroundColor: this.color,
-              borderColor: this.color,
+              backgroundColor: this.predColor,
+              borderColor: this.predColor,
               borderWidth: 2
             }];
           } else {
@@ -220,7 +238,7 @@ export class ProductionComponent
               data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
               label: 'Predicted ' + this.categoryLabel,
               backgroundColor: this.predColor,
-              borderColor: this.color,
+              borderColor: this.predColor,
               borderWidth: 2
             },{
               data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
@@ -240,6 +258,8 @@ export class ProductionComponent
 
   yearClick()
   {
+    this.data=[1];
+    this.tableTitle = "Month";
     this.todayFlag = false; this.monthFlag  = false; this.yearFlag = true;
     var yearDiv = document.getElementById("year");
     if(yearDiv)
@@ -259,12 +279,13 @@ export class ProductionComponent
     this.deviceDataService.getUsersHistoryUsageByCategoryForYear( this.year, 1, this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
-          this.data = result.data;
+          this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
+          this.additionalStats();
           this.datasets = [{
             data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.predictedValue})),
-            label: this.categoryLabel,
+            label: 'Predicted ' + this.categoryLabel,
             backgroundColor: this.predColor,
-            borderColor: this.color,
+            borderColor: this.predColor,
             borderWidth: 2
           },{
             data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
@@ -283,6 +304,8 @@ export class ProductionComponent
 
   tommorowClick()
   {
+    this.data=[1];
+    this.tableTitle = "Hour";
     this.tommorowFlag = true;
     this.threeDaysFlag = false;
     this.sevenDaysFlag = false;
@@ -304,12 +327,19 @@ export class ProductionComponent
     this.deviceDataService.getUsersPredictionUsageByCategoryForNDays( 1, 1, this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
-          this.data = result.data;
+          this.data = result.data.map((ceu: any) => {
+            const ceuDate = new Date(ceu.timestamp);
+            const currentDate = new Date();
+            const timestamp = this.datePipe.transform(ceu.timestamp, "shortTime");
+            const predictedValue = ceu.predictedValue.toFixed(3);
+            const value = currentDate < ceuDate ? "/" : ceu.value.toFixed(3);
+            return { timestamp, predictedValue, value }
+          });
           this.datasets = [{
             data: result.data.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value})),
             label: 'Predicted ' + this.categoryLabel,
             backgroundColor: this.predColor,
-            borderColor: this.color,
+            borderColor: this.predColor,
             borderWidth: 2
           }];
           this.createBarChart();
@@ -322,6 +352,8 @@ export class ProductionComponent
 
   threeDaysClick()
   {
+    this.data=[1];
+    this.tableTitle = "Hour";
     this.tommorowFlag = false;
     this.threeDaysFlag = true;
     this.sevenDaysFlag = false;
@@ -343,12 +375,19 @@ export class ProductionComponent
     this.deviceDataService.getUsersPredictionUsageByCategoryForNDays( 3, 1, this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
-          this.data = result.data;
+          this.data = result.data.map((ceu: any) => {
+            const ceuDate = new Date(ceu.timestamp);
+            const currentDate = new Date();
+            const timestamp = this.datePipe.transform(ceu.timestamp, "shortTime");
+            const predictedValue = ceu.predictedValue.toFixed(3);
+            const value = currentDate < ceuDate ? "/" : ceu.value.toFixed(3);
+            return { timestamp, predictedValue, value };
+          });
           this.datasets = [{
             data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
             label: 'Predicted ' + this.categoryLabel,
             backgroundColor: this.predColor,
-            borderColor: this.color,
+            borderColor: this.predColor,
             borderWidth: 2
           }];
           this.createBarChart();
@@ -361,6 +400,8 @@ export class ProductionComponent
 
   sevenDaysClick()
   {
+    this.data=[1];
+    this.tableTitle = "Day";
     this.tommorowFlag = false;
     this.threeDaysFlag = false;
     this.sevenDaysFlag = true;
@@ -382,12 +423,12 @@ export class ProductionComponent
     this.deviceDataService.getUsersPredictionUsageByCategoryForNDays( 7, 1, this.jwtService.userId).subscribe(
       (result:any) => {
         if( result.success) {
-          this.data = result.data;
+          this.data = result.data.map((ceu: any) => ({ timestamp:ceu.timestamp, value:ceu.value.toFixed(3), predictedValue:ceu.predictedValue.toFixed(3) }));
           this.datasets = [{
             data: result.data.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
             label: 'Predicted ' + this.categoryLabel,
             backgroundColor: this.predColor,
-            borderColor: this.color,
+            borderColor: this.predColor,
             borderWidth: 2
           }];
           this.createBarChart();
@@ -425,4 +466,40 @@ export class ProductionComponent
       }
     });
   }
+
+  additionalStatsData = {
+    max: {
+      timestamp: "",
+      value: 0
+    },
+    min: {
+      timestamp: "",
+      value: 0
+    },
+    mean: 0,
+    mae: 0,
+    rmse: 0
+  }
+
+  additionalStats() {
+    if( this.historyflag) {
+      let values = this.data.filter( (ceu:any) => ceu.value != "/");
+      if( values.length > 0) {
+        this.additionalStatsData.max = values.reduce((prev, current) => (parseFloat(current.value) > parseFloat(prev.value) ? current : prev));
+        this.additionalStatsData.min = values.reduce((prev, current) => (parseFloat(current.value) < parseFloat(prev.value) ? current : prev));
+        this.additionalStatsData.mean = values.reduce((total, obj) => {
+          return parseFloat(total) + parseFloat(obj.value);
+        }, 0) / values.length;
+
+        this.additionalStatsData.mae = values.reduce((total, obj) => {
+          return total + Math.abs(parseFloat(obj.value) - parseFloat(obj.predictedValue));
+        }, 0) / values.length;
+
+        this.additionalStatsData.rmse = Math.sqrt(values.reduce((total, obj) => {
+          return total + Math.pow(parseFloat(obj.value) - parseFloat(obj.predictedValue), 2);
+        }, 0) / values.length);
+      }
+    }
+  }
+
 }

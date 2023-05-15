@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/Models/User';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { UserService } from 'src/app/services/user.service';
+import { environment } from 'src/app/environments/environment';
 
 @Component({
   selector: 'app-profile-id',
@@ -13,7 +14,9 @@ export class ProfileIDComponent{
   user = new User();
   id : any = '' ;
   idNum: number = 0;
-  
+  showDelete: boolean = false;
+  showResend: boolean = false;
+
   constructor(private authService:AuthService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.getUser(this.id);
@@ -29,6 +32,7 @@ export class ProfileIDComponent{
         this.user.mail = result.data.email;
         this.user.roleId = result.data.roleId;
         this.user.role = result.data.role.roleName;
+        this.user.profileImage = environment.pictureAppendix + result.data.profileImage;
         if(result.data.location != null) {
           this.user.address = result.data.location.address;
           this.user.num = result.data.location.addressNumber;
@@ -38,4 +42,7 @@ export class ProfileIDComponent{
     });
   }
 
+  deleteShow() {
+    //document.querySelector()
+  }
 }

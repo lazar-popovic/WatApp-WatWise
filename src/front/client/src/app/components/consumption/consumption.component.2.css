@@ -181,6 +181,7 @@ table tr td {
   text-align: center;
   color: #3E3E3E;
   height: 30px;
+  width: 33%;
 }
 
 table tr th {
@@ -235,13 +236,13 @@ table tbody tr:hover {
   font-size: 16px;
   color: #333;
 
-  height: 50px;
+  height: 40px;
   border-radius: 10px;
   padding-left: 30px;
   padding-right: 5px;
   background-color: #fff;
   border: 0px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 #stats-button:hover {
@@ -286,4 +287,20 @@ table tbody tr:hover {
 
 #stats-dropdown.visible {
   display: block;
+}
+
+
+#no-data {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  padding: 20px;
+}
+
+#no-data h3 {
+  color: #3e3e3eb7;
 }

@@ -96,7 +96,7 @@ namespace API.BL.Implementations
 
             return response;
         }
-        public async Task<Response<String>> UpdateDevice(int id, DeviceNameAndDataShareUpdateViewModel request)
+        public async Task<Response<String>> UpdateDevice(int id, DeviceNameDsoControlAndDataShareUpdateViewModel request)
         {
             var response = new Response<String>();
 
@@ -114,7 +114,8 @@ namespace API.BL.Implementations
                 device.Name = request.Name;
 
             device.DataShare = request.DataShare!.Value;
-
+            device.DsoControl = request.DsoControl!.Value;
+            
             await _ideviceDal.UpdateDeviceAsync(device);
 
             response.Data = "Device name and data share status has been updated succesfully!";
@@ -125,9 +126,9 @@ namespace API.BL.Implementations
 
         }
 
-        public async Task<Response<String>> AddDeviceViewModel(DeviceViewModel device)
+        public async Task<Response<object>> AddDeviceViewModel(DeviceViewModel device)
         {
-            var response = new Response<String>();
+            var response = new Response<object>();
             var dev = device;
 
             if (string.IsNullOrEmpty(dev.Name?.Trim()))
@@ -148,9 +149,9 @@ namespace API.BL.Implementations
             if (response.Success == false)
                 return response;
 
-            await _ideviceDal.AddDeviceViewModel(device);
+            var id = await _ideviceDal.AddDeviceViewModel(device);
 
-            response.Data = $"Device {dev.Name} connected successfully! {dev.DeviceSubtypeId}";
+            response.Data = new { Message = $"Device {dev.Name} connected successfully!", DeviceId = id };
 
 
             return response;
@@ -187,52 +188,32 @@ namespace API.BL.Implementations
             return response;
         }
 
-        public async Task<Response<RegisterResponseViewModel>> TurnDevicesOnOff(DeviceControlViewModel request)
+        public async Task<Response> TurnDevicesOnOff(DeviceControlViewModel request)
         {
-            var response = new Response<RegisterResponseViewModel>();
+            Response response;
 
             if (request.DevicesOn == false)
             {
-                await _ideviceDal.TurnDevicesOff();
-
-                response.Success = true;
-                response.Data = new RegisterResponseViewModel { Message = "Devices turned off succesfully!" };
-
+                response = await _ideviceDal.TurnDevicesOff(request.UserId);
                 return response;
-            }
-            else
-            {
-                await _ideviceDal.TurnDevicesOn();
-
-                response.Success = true;
-                response.Data = new RegisterResponseViewModel { Message = "Devices turned on succesfully!" };
-
-                return response;
-            }
+            } 
+            
+            response =  await _ideviceDal.TurnDevicesOn(request.UserId);
+            return response;
         }
 
-        public async Task<Response<RegisterResponseViewModel>> ShareDeviceDataWithDSO(DeviceControlViewModel request)
+        public async Task<Response> ShareDeviceDataWithDSO(DeviceControlViewModel request)
         {
-            var response = new Response<RegisterResponseViewModel>();
+            Response response;
 
             if (request.DevicesOn == false)
             {
-                await _ideviceDal.TurnDataSharingOff();
-
-                response.Success = true;
-                response.Data = new RegisterResponseViewModel { Message = "Devices data sharing with DSO turned off succesfully!" };
-
+                response = await _ideviceDal.TurnDataSharingOff(request.UserId);
                 return response;
             }
-            else
-            {
-                await _ideviceDal.TurnDataSharingOn();
-
-                response.Success = true;
-                response.Data = new RegisterResponseViewModel { Message = "Devices data sharing with DSO turned on succesfully!" };
-
-                return response;
-            }
+            
+            response = await _ideviceDal.TurnDataSharingOn(request.UserId);
+            return response;
         }
 
         public async Task<Response<object>> Top3DevicesByUserId(int userId)
@@ -243,10 +224,8 @@ namespace API.BL.Implementations
             return response;
         }
 
-        public async Task<Response<RegisterResponseViewModel>> TurnDevicesOnOffById(DeviceControlViewModel request, int deviceId)
+        public async Task<Response> TurnDevicesOnOffById(DeviceControlByIdViewModel request, int deviceId)
         {
-            var response = new Response<RegisterResponseViewModel>();
-
             if (request.DevicesOn == false)
             {
                 var resp = await _ideviceDal.TurnDeviceOffById(deviceId);
@@ -257,10 +236,7 @@ namespace API.BL.Implementations
                     return resp;
                 }
 
-                response.Success = true;
-                response.Data = new RegisterResponseViewModel { Message = "Device turned off succesfully!" };
-
-                return response;
+                return resp;
             }
             else
             {
@@ -272,10 +248,7 @@ namespace API.BL.Implementations
                     return resp;
                 }
 
-                response.Success = true;
-                response.Data = new RegisterResponseViewModel { Message = "Device turned on succesfully!" };
-
-                return response;
+                return resp;
             }
         }
 
@@ -335,6 +308,58 @@ namespace API.BL.Implementations
 
                 return response;
             }
+        }
+
+        public async Task<Response> GetDevicesIdAndNameByUserId(int userId)
+        {
+            var response = new Response();
+            response.Success = true;
+            response.Data = await _ideviceDal.GetDevicesIdAndNameByUserId(userId);
+            return response;
+        }
+
+        public async Task<Response> EnableDsoControlFeature(DsoControlViewModel request, int deviceId)
+        {
+            var response = new Response();
+
+            var device = await _ideviceDal.GetWholeDeviceByIdAsync(deviceId);
+
+            if (device == null)
+            {
+                response.Errors.Add("Device does not exist!");
+                response.Success = false;
+
+                return response;
+            }
+
+            if (request.DsoControlOn)
+            {
+                await _ideviceDal.TurnDsoControl(request.DsoControlOn, device);
+                response.Data = "DSO control feature turned on successfully!";
+                response.Success = response.Errors.Count == 0;
+
+                return response;
+            }
+            
+            await _ideviceDal.TurnDsoControl(request.DsoControlOn, device);
+            response.Data = "DSO control feature turned off successfully!";
+            response.Success = response.Errors.Count == 0;
+
+            return response;
+        }
+
+        public async Task<Response> EnableDsoControlFeatureForAllDevices(DsoControlViewModel request, int userId)
+        {
+            Response response;
+
+            if (request.DsoControlOn == false)
+            {
+                response = await _ideviceDal.DsoControlForUserDevices(userId, request.DsoControlOn);
+                return response;
+            } 
+            
+            response =  await _ideviceDal.DsoControlForUserDevices(userId, request.DsoControlOn);
+            return response;
         }
     }
 }

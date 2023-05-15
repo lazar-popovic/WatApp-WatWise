@@ -33,9 +33,9 @@ public class WeatherForecastService : IWeatherForecastService
     private async Task GetUserId(IHttpContextAccessor context)
     {
         int userId = 0;
-        string authorizationHeader = context.HttpContext.Request.Headers["Authorization"];
+        string authorizationHeader = context.HttpContext!.Request.Headers["Authorization"]!;
 
-        var jwt = authorizationHeader.Substring("bearer ".Length).Trim();
+        var jwt = authorizationHeader!.Substring("bearer ".Length).Trim();
         try
         {
             userId = _jwtCreator.GetUserIdFromToken(jwt);

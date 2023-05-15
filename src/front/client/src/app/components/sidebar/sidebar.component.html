@@ -1,7 +1,7 @@
 <div class="sidebar-container" [ngClass]="{'sidebar-container-blue': role == 3, 'sidebar-container-green': role == 1 || role == 2}">
     <div class="sidebar-header">
         <div class="sidebar-logo"><img src="\assets\logo.png"></div>
-        {{ this.currentTime }}
+         WattWise
     </div>
     <div class="sidebar-nav">
 
@@ -18,20 +18,20 @@
 
         <div *ngIf="role <= 2">
             <div *ngFor="let item of menuEmployee">
-                <div *ngIf="item.toLowerCase()== url">
+                <div *ngIf="item.toLowerCase().replace(' ', '-')== url">
                     <div class="sidebar-item-active" (click)="clickHandler($event, 2)">{{item}}</div>
                 </div>
-                <div *ngIf="item.toLowerCase() !=url">
+                <div *ngIf="item.toLowerCase().replace(' ', '-') !=url">
                     <div class="sidebar-item" (click)="clickHandler($event, 2)">{{item}}</div>
                 </div>
             </div>
 
             <div *ngIf="role == 1">
                 <div *ngFor="let item of menuAdmin">
-                    <div *ngIf="item.toLowerCase()== url">
+                    <div *ngIf="item.toLowerCase().replace(' ', '-') == url">
                         <div class="sidebar-item-active" (click)="clickHandler($event, 2)">{{item}}</div>
                     </div>
-                    <div *ngIf="item.toLowerCase() !=url">
+                    <div *ngIf="item.toLowerCase().replace(' ', '-') !=url">
                         <div class="sidebar-item" (click)="clickHandler($event, 2)">{{item}}</div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
 <div class="sidebar-container-mobile" [ngClass]="{'sidebar-container-blue': role == 3, 'sidebar-container-green': role == 1 || role == 2}">
 
     <div class="sidebar-header-mobile">
-      <div class="sidebar-logo-mobile"><img id="logoMobile" src="\assets\logo.png"></div>
+      <div class="sidebar-logo-mobile"><img id="logoMobile" src="\assets\logo.png" style="display: inline;"></div>
       <div class="sidebar-nav-mobile">
         <button class="burger-menu" (click)="toggleMenu()"></button>
           <ul class="menu-list" [class.open]="menuOpen">
@@ -61,12 +61,11 @@
             <li id="devices-mobile"     routerLink="/prosumer/devices"    ><a>Devices    </a></li>
             <li id="consumption-mobile" routerLink="/prosumer/consumption"><a>Consumption</a></li>
             <li id="production-mobile"  routerLink="/prosumer/production" ><a>Production </a></li>
+            <li id="scheduler-mobile"  routerLink="/prosumer/scheduler" ><a>Scheduler </a></li>
             <li id="profile-mobile"  routerLink="/profile"><a>Profile</a></li>
             <li id="profile-logout"  (click)="logOut()"><a>Log out</a></li>
           </ul>
       </div>
-      <br>
-      {{ this.currentTime }}
     </div>
 
 </div>
