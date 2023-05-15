@@ -10,7 +10,9 @@
                 <button id="add-user-btn" (click)="showAddUProsumer = true">+Add Prosumer</button>
             </form>
         </div>
+        <app-primeng-table [tableData]="usersData" [columns]="columns"></app-primeng-table>
 
+        <!--
         <div class="overview-users-table">
             <table>
                 <tr>
@@ -58,6 +60,7 @@
             </form>
         </div>
     </div>
+  -->
     <div class="users-overview-overlay" *ngIf="showAddUProsumer">
         <div class="users-overview-add-new">
             <app-users (output)="showAddUProsumer=false"></app-users>

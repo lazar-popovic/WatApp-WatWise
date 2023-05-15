@@ -6,12 +6,12 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./primeng-table.component.css']
 })
 export class PrimengTableComponent {
-  @Input() data: any[] | undefined;
-  @Input() columns: string[] | undefined;
+  @Input() tableData: any[] = [];
+  @Input() columns: string[] = [];
 
   ngOnInit(): void {
-    if (this.data && this.data.length > 0) {
-      this.columns = Object.keys(this.data[0]);
+    if (this.tableData && this.tableData.length > 0) {
+      this.columns = Object.keys(this.tableData[0]);
     }
   }
 }
