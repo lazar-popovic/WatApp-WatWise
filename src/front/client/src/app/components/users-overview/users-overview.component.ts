@@ -21,6 +21,10 @@ export class UsersOverviewComponent {
   pageSize: any = 10;
   showAddUProsumer: boolean = false;
 
+  usersData: any[] = []; // Variable to hold the user data
+  columns: string[] = []; // Variable to hold the column names
+
+
   filter : any = {
     name : '',
     address: '',
@@ -28,8 +32,8 @@ export class UsersOverviewComponent {
   };
 
   constructor(private userService: UserService) {
-    this.getNumberOfPages();
-    this.getProsumers();
+    //this.getNumberOfPages();
+    this.getProsumers ();
   }
 
   getProsumers() {
@@ -48,11 +52,13 @@ export class UsersOverviewComponent {
         }
         this.users.push(user);
       }*/
-      this.users = result.data;
+      this.usersData = result.data;
+      this.columns = Object.keys(this.usersData[0]);
     },(error: any) => {
       console.log(error);
     });
   }
+
 
   handler(type: number) {
     let active = document.querySelector(".overview-pagination-page-active") as HTMLDivElement;
