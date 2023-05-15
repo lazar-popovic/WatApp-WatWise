@@ -37,7 +37,7 @@ public class GeocodingService : IGeocodingService
                 var datas = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(content);
 
                 var result = new List<object>();
-                foreach (var data in datas)
+                foreach (var data in datas!)
                 {
                     var address = data["address"];
                     var addressDetails = data["display_name"];

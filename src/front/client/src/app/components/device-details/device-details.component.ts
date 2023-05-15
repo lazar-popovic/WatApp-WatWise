@@ -14,6 +14,7 @@ import { ViewEncapsulation } from '@angular/core';
 //import { JWTService } from 'src/app/services/jwt.service';
 import { JWTService } from '../../services/jwt.service';
 import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
+import { Subscription } from 'rxjs';
 
 
 interface DatepickerOptions {
@@ -33,7 +34,7 @@ export class DeviceDetailsComponent implements OnInit
     predColor: any = 'rgba(206, 27, 14, 0.7)';
     id : any = '' ;
     result: any[] = [];
-    data: any[] = [];
+    data: any[] = [1];
     device = {
       id: 0,
       userId: 0,
@@ -43,9 +44,12 @@ export class DeviceDetailsComponent implements OnInit
       deviceSubtype: { subtypeName: null },
       capacity: 1,
       dataShare: false,
-      currentUsage: null
+      currentUsage: 0,
+      dsoControl: false
     }
     capacity: number = 1;
+
+    busy: Subscription | undefined;
 
     tableTitle: string = "Timestamp";
     roleId: number = 3;
@@ -59,6 +63,13 @@ export class DeviceDetailsComponent implements OnInit
     year: number = 2023;
 
     myDevice() {
+      if( this.device.userId == this.jwtService.userId || this.roleId == 1 || this.roleId == 2)
+        return true;
+      else
+        return false;
+    }
+
+    myDeviceBack() {
       if( this.device.userId == this.jwtService.userId)
         return true;
       else
@@ -66,6 +77,8 @@ export class DeviceDetailsComponent implements OnInit
     }
 
     formForNewJob: boolean = false;
+    showDeleteDeviceForm: boolean = false;
+    showEditDeviceForm: boolean = false;
 
     constructor( private datePipe: DatePipe,
                  private authService:AuthService,
@@ -75,8 +88,19 @@ export class DeviceDetailsComponent implements OnInit
                  private deviceDataService: DeviceDataService,
                  private jwtService: JWTService,
                  private toastrNotifService: ToastrNotifService) {
+    }
+
+    ngOnInit(): void {
+      this.data=[1];
+      let now = new Date();
+      let month: any = (now.getMonth()+1);
+      let day: any =  now.getDate();
+      if (month<10) month = "0" + month;
+      if (day<10) day = "0" + day;
+      this.date  =  now.getFullYear() + "-" + month + "-" + day;
       this.roleId = this.jwtService.roleId;
-      this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
+      this.data=[1];
+      this.busy = this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
         result => {
           if( result.success) {
             if( (result.data.userId == this.jwtService.userId) || (( this.jwtService.roleId == 1 || this.jwtService.roleId == 2 ) && result.data.dataShare == true)) {
@@ -88,6 +112,10 @@ export class DeviceDetailsComponent implements OnInit
               this.device.deviceSubtype = result.data.deviceSubtype;
               this.device.dataShare = result.data.dataShare;
               this.device.capacity = result.data.capacity;
+              this.device.dsoControl = result.data.dsoControl;
+              if( this.device.deviceType.category == 0) {
+                this.capacity = this.device.capacity;
+              }
               switch ( result.data.deviceType.category)
               {
                 case -1:
@@ -106,11 +134,6 @@ export class DeviceDetailsComponent implements OnInit
                   this.predColor = 'rgba(69, 94, 184, 0.4)';
                   break;
               }
-              if( this.device.deviceType.category == 0) {
-                this.capacity = this.device.capacity;
-              }
-              let now = new Date();
-              this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
               this.historyClick();
               this.deviceDataService.getDeviceCurrentUsage( this.device.id).subscribe(
                 (result:any) => {
@@ -130,12 +153,6 @@ export class DeviceDetailsComponent implements OnInit
         }
       )
       Chart.register(...registerables);
-    }
-
-    ngOnInit(): void {
-      let now = new Date();
-      this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
-      this.historyClick();
     }
 
     historyflag : boolean = true;
@@ -182,6 +199,7 @@ export class DeviceDetailsComponent implements OnInit
 
     todayClick()
     {
+      this.data=[1];
       this.tableTitle = "Hour";
       this.todayFlag  = true; this.monthFlag  = false; this.yearFlag = false;
       var todayDiv = document.getElementById("today");
@@ -272,6 +290,7 @@ export class DeviceDetailsComponent implements OnInit
 
     monthClick()
     {
+      this.data=[1];
       this.tableTitle = "Day";
       this.todayFlag = false; this.monthFlag  = true; this.yearFlag = false;
       const monthDiv = document.getElementById("month");
@@ -347,6 +366,7 @@ export class DeviceDetailsComponent implements OnInit
 
     yearClick()
     {
+      this.data=[1];
       this.tableTitle = "Month";
       this.todayFlag = false; this.monthFlag  = false; this.yearFlag = true;
       var yearDiv = document.getElementById("year");
@@ -392,6 +412,7 @@ export class DeviceDetailsComponent implements OnInit
 
     tommorowClick()
     {
+      this.data=[1];
       this.tommorowFlag = true;
       this.threeDaysFlag = false;
       this.sevenDaysFlag = false;
@@ -438,6 +459,7 @@ export class DeviceDetailsComponent implements OnInit
 
     threeDaysClick()
     {
+      this.data=[1];
       this.tommorowFlag = false;
       this.threeDaysFlag = true;
       this.sevenDaysFlag = false;
@@ -484,6 +506,7 @@ export class DeviceDetailsComponent implements OnInit
 
     sevenDaysClick()
     {
+      this.data=[1];
       this.tommorowFlag = false;
       this.threeDaysFlag = false;
       this.sevenDaysFlag = true;
@@ -612,6 +635,7 @@ export class DeviceDetailsComponent implements OnInit
             if( result.body.success) {
               this.toastrNotifService.showSuccess( result.body.data.message);
               this.device.activityStatus = this.changeTo;
+              this.device.currentUsage = result.body.data.newUsage;
             }
           }
         );

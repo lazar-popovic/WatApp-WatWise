@@ -1,9 +1,11 @@
 ﻿using API.Common;
 using API.DAL.Interfaces;
+using API.Models;
 using API.Models.DTOs;
 using API.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace API.DAL.Implementations
 {
@@ -104,7 +106,7 @@ namespace API.DAL.Implementations
         }
         public async Task<List<User>?> GetUsersWithLocationId(int id)
         {
-            var users = await _dbContext.Users.Where(u => u.LocationId == id && u.Verified == true)
+            var users = await _dbContext.Users.Where(u => u.LocationId == id)
                                    .Select(u => new User
                                    {
                                        Id = u.Id,
@@ -125,48 +127,106 @@ namespace API.DAL.Implementations
 
         public async Task<object> FindUser(int id, string search, string mail, int pageSize, int pageNum, string order)
         {
-          
-            var fullName = search?.Trim().ToLower().Split(" ");
-            var users = await ProsumersWithConsumptionProductionAndNumberOfWorkingDevices();
-
-            if (mail != null && id==3)
+            if (id == 3)
             {
-                if (!string.IsNullOrEmpty(mail.Trim()))
-                {
-                    users = users.Where(o =>
-                        ($"{o.Location!.Address} {o.Location!.AddressNumber}, {o.Location!.City}".ToLower())
-                        .Contains(mail.ToLower())).ToList();
-                }
-            }
+                var fullName = search?.Trim().ToLower().Split(" ");
 
-            if (search != null)
+                var users = await ProsumersWithConsumptionProductionAndNumberOfWorkingDevices();
+
+                if (mail != null && id == 3)
+                {
+                    if (!string.IsNullOrEmpty(mail.Trim()))
+                    {
+                        users = users.Where(o =>
+                            ($"{o.Location!.Address} {o.Location!.AddressNumber}, {o.Location!.City}".ToLower())
+                            .Contains(mail.ToLower())).ToList();
+                    }
+                }
+
+                if (search != null)
+                {
+                    if (fullName!.Length == 2)
+                    {
+                        users = users.Where(o => o.Firstname!.ToLower().Contains(fullName[0]) && o.Lastname!.ToLower().Contains(fullName[1]))
+                            .ToList();
+                    }
+                    else if (fullName.Length == 1)
+                    {
+                        users = users.Where(o => o.Firstname!.ToLower().Contains(fullName[0]) || o.Lastname!.ToLower().Contains(fullName[0]))
+                            .ToList();
+                    }
+                }
+
+                switch (order)
+                {
+                    case "asc":
+                        users = users.OrderBy(o => o.Lastname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                        break;
+                    case "desc":
+                        users = users.OrderByDescending(o => o.Lastname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                        break;
+                    default:
+                        users = users.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                        break;
+                }
+
+                return users;
+            }
+            else
             {
-                if (fullName!.Length == 2)
-                {
-                    users = users.Where(o => o.Firstname!.ToLower().Contains(fullName[0]) && o.Lastname!.ToLower().Contains(fullName[1]))
-                        .ToList();
-                }
-                else if (fullName.Length == 1)
-                {
-                    users = users.Where(o => o.Firstname!.ToLower().Contains(fullName[0]) || o.Lastname!.ToLower().Contains(fullName[0]))
-                        .ToList();
-                }
-            }
+                var fullName = search?.Trim().ToLower().Split(" ");
 
-            switch (order)
-            {
-                case "asc":
-                    users = users.OrderBy(o => o.Lastname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
-                    break;
-                case "desc":
-                    users = users.OrderByDescending(o => o.Lastname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
-                    break;
-                default:
-                    users = users.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
-                    break;
-            }
+                var users = await _dbContext.Users.Where(u => u.RoleId == 2)
+                                                  .Select(u => new UserWithCurrentProdAndCons {
+                                                      UserId = u.Id,
+                                                      Firstname = u.Firstname,
+                                                      Lastname = u.Lastname,
+                                                      Location = u.Location,
+                                                      Email = u.Email,
+                                                      Verified = u.Verified
+                                                  })
+                                                  .AsNoTracking()
+                                                  .ToListAsync();
 
-            return users;
+                if (mail != null && id == 3)
+                {
+                    if (!string.IsNullOrEmpty(mail.Trim()))
+                    {
+                        users = users.Where(o =>
+                            ($"{o.Location!.Address} {o.Location!.AddressNumber}, {o.Location!.City}".ToLower())
+                            .Contains(mail.ToLower())).ToList();
+                    }
+                }
+
+                if (search != null)
+                {
+                    if (fullName!.Length == 2)
+                    {
+                        users = users.Where(o => o.Firstname!.ToLower().Contains(fullName[0]) && o.Lastname!.ToLower().Contains(fullName[1]))
+                            .ToList();
+                    }
+                    else if (fullName.Length == 1)
+                    {
+                        users = users.Where(o => o.Firstname!.ToLower().Contains(fullName[0]) || o.Lastname!.ToLower().Contains(fullName[0]))
+                            .ToList();
+                    }
+                }
+
+                switch (order)
+                {
+                    case "asc":
+                        users = users.OrderBy(o => o.Lastname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                        break;
+                    case "desc":
+                        users = users.OrderByDescending(o => o.Lastname).Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                        break;
+                    default:
+                        users = users.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                        break;
+                }
+
+                return users;
+            }
         }
 
         public void UpdateUser(User user)
@@ -178,7 +238,7 @@ namespace API.DAL.Implementations
         {
             var user = await _dbContext.Users.FindAsync(userId);
 
-            user.ProfileImage = profilePicture;
+            user!.ProfileImage = profilePicture;
             await _dbContext.SaveChangesAsync();
 
             return user;
@@ -193,8 +253,8 @@ namespace API.DAL.Implementations
 
             if (userToDelete != null)
             {
-                context.DeviceEnergyUsage.RemoveRange(userToDelete.Devices.SelectMany(d => d.DeviceEnergyUsages));
-                context.Devices.RemoveRange(userToDelete.Devices);
+                context.DeviceEnergyUsage.RemoveRange(userToDelete.Devices!.SelectMany(d => d.DeviceEnergyUsages!));
+                context.Devices.RemoveRange(userToDelete.Devices!);
                 
                 var refreshTokensToDelete = context.RefreshTokens.Where(rt => rt.UserId == user.Id);
                 context.RefreshTokens.RemoveRange(refreshTokensToDelete);
@@ -208,7 +268,7 @@ namespace API.DAL.Implementations
         {
             return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email);
         }
-        public async Task<User?> DeleteProfilePictureAsync(int userId)
+        public async Task<User> DeleteProfilePictureAsync(int userId)
         {
             var user = await _dbContext.Users.FindAsync(userId);
 
@@ -225,7 +285,7 @@ namespace API.DAL.Implementations
                 await _dbContext.SaveChangesAsync();
             }
 
-            return user;
+            return user!;
         }
         public async Task<List<AllProsumersWithConsumptionProductionDTO>> ProsumersWithConsumptionProductionAndNumberOfWorkingDevices()
         {
@@ -236,9 +296,9 @@ namespace API.DAL.Implementations
                 .Select(u => new
                 {
                     User = u,
-                    Devices = u.Devices.Where(d => d.ActivityStatus == true),
-                    EnergyUsage = u.Devices
-                        .SelectMany(d => d.DeviceEnergyUsages)
+                    Devices = u.Devices!.Where(d => d.ActivityStatus == true),
+                    EnergyUsage = u.Devices!
+                        .SelectMany(d => d.DeviceEnergyUsages!)
                         .Where(eu => eu.Timestamp == now)
                 })
                 .Select(u => new AllProsumersWithConsumptionProductionDTO()

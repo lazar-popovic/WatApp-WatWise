@@ -26,7 +26,7 @@ export class ProductionComponent
   predColor: any = 'rgba(69, 94, 184, 0.4)';
   id : any = '' ;
   result: any[] = [];
-  data: any[] = [];
+  data: any[] = [1];
   tableTitle: string = "Timestamp";
 
   showEdit: boolean = false;
@@ -45,7 +45,11 @@ export class ProductionComponent
 
   ngOnInit(): void {
     let now = new Date();
-    this.date = now.getFullYear() + "-" + (now.getMonth()+1) +"-" + now.getDate();
+    let month: any = (now.getMonth()+1);
+    let day: any =  now.getDate();
+    if (month<10) month = "0" + month;
+    if (day<10) day = "0" + day;
+    this.date  =  now.getFullYear() + "-" + month + "-" + day;
     this.historyClick();
   }
 
@@ -91,6 +95,7 @@ export class ProductionComponent
 
   todayClick()
   {
+    this.data=[1];
     this.tableTitle = "Hour";
     this.todayFlag  = true; this.monthFlag  = false; this.yearFlag = false;
     var todayDiv = document.getElementById("today");
@@ -175,6 +180,7 @@ export class ProductionComponent
 
   monthClick()
   {
+    this.data=[1];
     this.tableTitle = "Day";
     this.todayFlag = false; this.monthFlag  = true; this.yearFlag = false;
     const monthDiv = document.getElementById("month");
@@ -252,6 +258,7 @@ export class ProductionComponent
 
   yearClick()
   {
+    this.data=[1];
     this.tableTitle = "Month";
     this.todayFlag = false; this.monthFlag  = false; this.yearFlag = true;
     var yearDiv = document.getElementById("year");
@@ -297,6 +304,7 @@ export class ProductionComponent
 
   tommorowClick()
   {
+    this.data=[1];
     this.tableTitle = "Hour";
     this.tommorowFlag = true;
     this.threeDaysFlag = false;
@@ -344,6 +352,7 @@ export class ProductionComponent
 
   threeDaysClick()
   {
+    this.data=[1];
     this.tableTitle = "Hour";
     this.tommorowFlag = false;
     this.threeDaysFlag = true;
@@ -391,6 +400,7 @@ export class ProductionComponent
 
   sevenDaysClick()
   {
+    this.data=[1];
     this.tableTitle = "Day";
     this.tommorowFlag = false;
     this.threeDaysFlag = false;

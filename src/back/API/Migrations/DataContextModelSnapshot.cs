@@ -38,6 +38,9 @@ namespace API.Migrations
                     b.Property<int?>("DeviceTypeId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("DsoControl")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 

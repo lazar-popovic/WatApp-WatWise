@@ -9,20 +9,13 @@
     background-color: #E1E1E1;
     min-height: 100vh;
 }
-
-.overview-container button, #overview-filter {
-    padding: 5px 30px;
-    border-radius: 20px;
-    border: 0px;
-    outline: 0;
-}
-
 #overview-filter {
     background-color: rgba(22, 118, 172, 0.75);
 }
 
 .overview-tab {
-    width: 1350px;
+    width:100%;
+    max-width: 1500px;
     position: relative;
     margin: 100px auto;
 }
@@ -38,6 +31,10 @@
     color: #3E3E3E;
     font-weight: 600;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    padding: 5px 30px;
+    border-radius: 20px;
+    border: 0px;
+    outline: 0;
 }
 
 .search-input input {
@@ -73,6 +70,7 @@
     border-radius: 10px;
     border-collapse: collapse;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    overflow-x: scroll;
 }
 
 .overview-users-table table tr:first-child{
@@ -90,18 +88,12 @@
 }
 
 .overview-users-table table tr td {
-    text-align: center;
+    text-align: left;
     color: #3E3E3E;
-    height: 60px;
-}
-
-.overview-users-table button{
-    padding: 5px 30px;
-    background-color: #1676AC;
-}
-
-.overview-users-table button:hover{
-    outline: 2px solid black;
+    height: 40px;
+    font-size: 16px!important;
+    padding: 5px;
+    box-sizing: border-box;
 }
 
 #overiew-filter {
@@ -160,4 +152,37 @@
     position: fixed;
     left: 40%;
     top: 20%;
+}
+
+.button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.blue {
+  background-color: #1676AC;
+}
+.blue:hover {
+  background-color: #0e4bf1;
+}
+
+.red {
+  background-color: #ce2d2d;
+}
+.red:hover {
+  background-color: #b11f1f;
+}
+
+.green {
+  background-color: #239F81;
+}
+.green:hover {
+  background-color: #115746;
 }

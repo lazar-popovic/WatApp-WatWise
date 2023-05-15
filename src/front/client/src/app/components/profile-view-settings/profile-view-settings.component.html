@@ -4,7 +4,7 @@
         <div class="profile-view-image-buttons">
             <form>
                 <button class="profile-button-blue" (click)="showUpload()">Upload new</button>
-                <button id="profile-button-delete">Delete</button>
+                <!--<button id="profile-button-delete">Delete</button>-->
             </form>
         </div>
     </div>
@@ -13,19 +13,19 @@
             <div class="profile-view-upper-form">
                 <div class="profile-view-input-wraper">
                     <label for="firstname">First name</label>
-                    <input name="firstname"[(ngModel)]="data.firstname">    
+                    <input name="firstname"[(ngModel)]="data.firstname">
                 </div>
                 <div class="profile-view-input-wraper">
                     <label for="lastname">Last name</label>
                     <input name="lastname" [(ngModel)]="data.lastname">
                 </div>
             </div>
-            
+
             <div class="profile-view-input-wraper middle-form">
                 <label for="email">E-mail</label>
                 <input name="email" id="email" [(ngModel)]="data.email">
             </div>
-            
+
             <div class="profile-view-bottom-form">
                 <div class="profile-info-address">
                     <div id="profile-info-address-header">

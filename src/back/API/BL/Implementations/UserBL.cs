@@ -209,7 +209,7 @@ namespace API.BL.Implementations
             {
                 var user2 = await _userDal.GetByEmailAsync(request.Email);
 
-                if (user2 != null)
+                if (user2 != null && user2.Id != id)
                 {
                     response.Errors.Add("Cannot update your email with email of existing user!");
                     response.Success = false;

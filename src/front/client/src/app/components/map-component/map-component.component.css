@@ -160,3 +160,20 @@
   align-items: center;
   justify-content: space-between;
 }
+
+#legend {
+  background-color: white;
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  z-index: 1000;
+  padding: 10px;
+}
+
+.pin {
+  width: 20px;
+}
+
+.pin-about {
+  margin-left: 5px;
+}

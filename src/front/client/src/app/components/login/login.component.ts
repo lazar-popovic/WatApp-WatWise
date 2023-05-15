@@ -19,7 +19,16 @@ export class LoginComponent {
 
   busyLogin: Subscription | undefined;
 
-  constructor(private authService: AuthService, private route: Router, private toastrNotifService: ToastrNotifService, private jwtService: JWTService) { }
+  constructor(private authService: AuthService, private route: Router, private toastrNotifService: ToastrNotifService, private jwtService: JWTService) {
+    if( this.authService.isLogged) {
+      if( this.jwtService.roleId == 3) {
+        this.route.navigate(['/prosumer/overview']);
+      }
+      else {
+        this.route.navigate(['/dso/overview']);
+      }
+    }
+  }
 
   logIn() {
     this.busyLogin = this.authService.login(this.login).subscribe((result: any) => {

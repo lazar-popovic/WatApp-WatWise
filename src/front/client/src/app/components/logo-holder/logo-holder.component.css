@@ -5,8 +5,9 @@
     font-family: 'Inter', sans-serif;
 }
 
-.logo-holder h1 {
+.logo-holder h1, .logo-holder h3{
     color: white;
+    margin-left: 5px;
 }
 
 .company-message {
@@ -16,5 +17,9 @@
 }
 
 .logo-holder{
-    margin-bottom: 50px;
+    margin-bottom: 10px;
+}
+
+img {
+  height: 80px;
 }
