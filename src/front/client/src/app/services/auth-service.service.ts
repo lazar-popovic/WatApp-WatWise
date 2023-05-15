@@ -32,6 +32,10 @@ export class AuthService {
     return this.http.post(`${environment.apiUrl}auth/reset-password`, data, {observe : 'response'});
   }
 
+  resendVerificationMail( data: any) : Observable<any> {
+    return this.http.post(`${environment.apiUrl}auth/resend-verify-email`, data, {observe : 'response'});
+  }
+
   get isLogged() {
     if(this.jwtService.checkToken == false){
       return false;

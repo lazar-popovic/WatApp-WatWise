@@ -13,6 +13,9 @@
             <div id="delete-profile" (click)="showDelete=true" [matTooltip]="'Delete user'">
               <img src="/assets/bin.png">
             </div>
+            <div id="resend-verif-mail" (click)="showResend=true" [matTooltip]="'Resend verification mail'">
+              <img src="/assets/mail.png">
+            </div>
           </div>
           <h3>{{user.role}}</h3>
       </div>
@@ -26,5 +29,8 @@
   </div>
   <div class="hover-form" *ngIf="showDelete">
     <app-delete-profile (output)="showDelete=false" [id]="id" [user]="user"></app-delete-profile>
+  </div>
+  <div class="hover-form" *ngIf="showResend">
+    <app-resend-verification-mail-dialog (exitStatusEvent)="showResend=false" [email]="user.mail"></app-resend-verification-mail-dialog>
   </div>
 </div>

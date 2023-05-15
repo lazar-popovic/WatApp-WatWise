@@ -19,6 +19,9 @@ export class EmployeeOverviewComponent {
     sortOrder: '',
     mail: ''
   }
+  showDelete: boolean = false;
+  showResend: boolean = false;
+  selectedUser: any = null;
 
   constructor(private userService: UserService) {
     this.getEmployees();

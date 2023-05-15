@@ -431,7 +431,7 @@ namespace API.BL.Implementations
 
                 _mailService.resendToken(user!);
 
-                response.Data = new RegisterResponseViewModel { Message = "New verfication mail has been sent!Check your email to complete registration." };
+                response.Data = new RegisterResponseViewModel { Message = "New verfication mail has been sent!" };
 
                 return response;
             }
