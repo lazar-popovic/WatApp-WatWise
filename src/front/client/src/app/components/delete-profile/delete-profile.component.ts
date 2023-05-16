@@ -21,7 +21,10 @@ export class DeleteProfileComponent {
     this.busy = this.userService.deleteUser(this.id).subscribe((result: any) => {
       console.log( result);
       if( result.body.success) {
-        this.router.navigate(['/dso/prosumers']);
+        if(result.body.data == "User has been successfully deleted!")
+          this.router.navigate(['/dso/prosumers']);
+        else
+          this.router.navigate(['/dso/employees']);
       } else {
         this.toastrNotifService.showSuccess( result.body.errors);
       }

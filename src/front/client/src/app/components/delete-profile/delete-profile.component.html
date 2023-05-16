@@ -1,5 +1,5 @@
 <div class="dialog standard-card-style" [ngBusy]="busy">
-  <p>Delete {{user?.firstName}} {{user?.lastName}}? Please be aware that all user data will be permanently deleted, and it will be impossible to recover it thereafter.</p>
+  <p><b>Delete {{user?.firstName}} {{user?.lastName}}{{user?.id}}?  Please be aware that all user data will be permanently deleted, and it will be impossible to recover it thereafter.</b></p>
   <div class="buttons">
     <button id="yesButton" (click)="deleteProfile()">Yes</button>
     <button id="noButton" class="red" (click)="hideForm()">No</button>
