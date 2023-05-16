@@ -35,7 +35,7 @@ export class UsersComponent {
     this.busy = this.userService.createUser(this.user).subscribe((result: any) => {
       if( result.body.success) {
         this.toastrNotifService.showSuccess( result.body.data.message);
-        this.router.navigateByUrl('/dso/users');
+        //this.router.navigateByUrl('/dso/users');
         this.output.emit( true);
       }
       else {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { event } from 'jquery';
 import { User } from 'src/app/Models/User';
 import { UserService } from 'src/app/services/user.service';
 
@@ -68,5 +69,12 @@ export class EmployeeOverviewComponent {
 
   pageSizeHandler() {
     console.log(this.pageSize);
+  }
+
+  formEmitter( event: boolean) : void {
+    if( event == true) {
+      this.getEmployees();
+    }
+    this.showAddNewEmployeeForm = false
   }
 }

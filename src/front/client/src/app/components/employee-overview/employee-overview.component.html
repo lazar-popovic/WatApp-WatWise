@@ -49,7 +49,7 @@
         </div>
     </div>
     <div class="hover-form" *ngIf="showAddNewEmployeeForm == true">
-      <app-add-employee (output)="showAddNewEmployeeForm = false"></app-add-employee>
+      <app-add-employee (output)="formEmitter( $event)"></app-add-employee>
     </div>
     <div class="hover-form" *ngIf="showDelete">
       <app-delete-profile (output)="showDelete=false" [id]="selectedUser.id" [user]="selectedUser"></app-delete-profile>

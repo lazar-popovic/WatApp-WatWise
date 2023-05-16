@@ -1,8 +1,8 @@
 <div class="login-holder">
   <div class="wrapper standard-card-style">
-    <div style="display: flex; justify-content: space-between; align-items: center; color: #3e3e3e" (click)="output.emit( true)">
+    <div style="display: flex; justify-content: space-between; align-items: center; color: #3e3e3e">
       <h2>Register employee</h2>
-      <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;"></i>
+      <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;" (click)="output.emit( false)"></i>
     </div>
     <form action="#" [ngBusy]="busy">
       <div class="input-box">
