@@ -6,6 +6,7 @@ using API.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
+using MongoDB.Driver.Linq;
 
 namespace API.DAL.Implementations
 {
@@ -263,7 +264,16 @@ namespace API.DAL.Implementations
                 await context.SaveChangesAsync();
             }
         }
-
+        
+        public async Task DeleteEmployee(User user)
+        {
+            var refreshTokensToDelete = _dbContext.RefreshTokens.Where(rt => rt.UserId == user.Id);
+            _dbContext.RefreshTokens.RemoveRange(refreshTokensToDelete);
+                
+            _dbContext.Users.Remove(user);
+            await _dbContext.SaveChangesAsync();
+        }
+        
         public async Task<User?> GetByEmailAsync(string email)
         {
             return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email);
