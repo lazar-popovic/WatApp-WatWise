@@ -59,6 +59,6 @@
         </div>
     </div>
     <div class="hover-form" *ngIf="showAddUProsumer" style="z-index: 2;">
-      <app-users (output)="showAddUProsumer=false"></app-users>
+      <app-users (output)="formEmiter($event)"></app-users>
     </div>
 </div>

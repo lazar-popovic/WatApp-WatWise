@@ -36,6 +36,7 @@ export class UsersComponent {
       if( result.body.success) {
         this.toastrNotifService.showSuccess( result.body.data.message);
         this.router.navigateByUrl('/dso/users');
+        this.output.emit( true);
       }
       else {
         this.toastrNotifService.showErrors( result.body.errors);

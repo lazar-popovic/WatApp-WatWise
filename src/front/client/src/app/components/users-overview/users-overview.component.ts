@@ -97,4 +97,11 @@ export class UsersOverviewComponent {
 
       this.getProsumers();
   }
+
+  formEmiter( event: boolean) : void {
+    if( event == true) {
+      this.getProsumers();
+    }
+    this.showAddUProsumer=false
+  }
 }
