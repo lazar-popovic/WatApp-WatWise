@@ -148,6 +148,15 @@ export class DeviceDetailsComponent implements OnInit
               this.router.navigate(['/profile',result.data.userId]);
             }
           }
+          else {
+            this.toastrNotifService.showErrors( result.errors);
+            if( this.jwtService.roleId == 3) {
+              this.router.navigate(['/prosumer/overview']);
+            }
+            else {
+              this.router.navigate(['/dso/overview']);
+            }
+          }
         }, error => {
           console.log( error);
         }
