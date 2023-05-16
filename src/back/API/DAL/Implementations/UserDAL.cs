@@ -244,7 +244,7 @@ namespace API.DAL.Implementations
             return user;
         }
 
-        public async Task DeleteUser(User user)
+        public async Task DeleteProsumer(User user)
         {
             await using var context = _dbContext;
             var userToDelete = await context.Users.Include(u => u.Devices)!

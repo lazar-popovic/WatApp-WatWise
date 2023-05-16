@@ -97,9 +97,9 @@ namespace API.API
         }
 
         [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteProsumer(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            return Ok(await _userBL.DeleteProsumer(id));
+            return Ok(await _userBL.DeleteUser(id));
         }
         [HttpDelete("deleteimage/{id}")]
         public async Task<IActionResult> DeleteImage(int id)

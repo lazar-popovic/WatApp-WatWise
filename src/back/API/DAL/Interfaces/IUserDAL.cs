@@ -19,7 +19,7 @@ namespace API.DAL.Interfaces
             string order);
         void UpdateUser(User user);
         Task<User> SaveProfilePictureAsync(int userId, [FromBody] byte[] profilePicture);
-        Task DeleteUser(User user);
+        Task DeleteProsumer(User user);
         Task<User> DeleteProfilePictureAsync(int userId);
         Task<List<AllProsumersWithConsumptionProductionDTO>> ProsumersWithConsumptionProductionAndNumberOfWorkingDevices();
     }
