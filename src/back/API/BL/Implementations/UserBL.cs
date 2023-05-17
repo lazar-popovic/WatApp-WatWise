@@ -273,13 +273,13 @@ namespace API.BL.Implementations
                 return response;
             }
 
-            if (user.RoleId != 3)
+            /*if (user.RoleId != 3)
             {
                 response.Errors.Add("Only prosumer can be deleted!");
                 response.Success = response.Errors.Count == 0;
 
                 return response;
-            }
+            }*/
 
             await _userDal.DeleteUser(user);
 

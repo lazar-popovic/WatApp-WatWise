@@ -22,8 +22,8 @@
                     <td>{{user.firstName}}</td>
                     <td>{{user.lastName}}</td>
                     <td>{{user.mail}}</td>
-                    <td style="width: 60px"><button (click)="selectedUser = user; showResend = true" class="button blue" [matTooltip]="'Resend verification mail'">Resend</button></td>
-                    <td style="width: 60px"><button (click)="selectedUser = user; showDelete = true" class="button red" [matTooltip]="'Delete employee'">Delete</button></td>
+                    <td style="width: 60px"><button (click)="showResendForm(user)" class="button blue" [matTooltip]="'Resend verification mail'">Resend</button></td>
+                    <td style="width: 60px"><button (click)="showDeleteForm(user)" class="button red" [matTooltip]="'Delete employee'">Delete</button></td>
                 </tr>
             </table>
         </div>

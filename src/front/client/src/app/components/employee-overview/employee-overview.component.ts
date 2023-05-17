@@ -35,8 +35,9 @@ export class EmployeeOverviewComponent {
         let user = new User();
         user.firstName = item.firstname;
         user.lastName = item.lastname;
-        user.id = item.id;
+        user.id = item.userId;
         user.mail = item.email;
+        user.roleId = item.roleId;
         this.users.push(user);
       }
     },(error: any) => {
@@ -76,5 +77,17 @@ export class EmployeeOverviewComponent {
       this.getEmployees();
     }
     this.showAddNewEmployeeForm = false
+  }
+
+  showResendForm( user: any) {
+    this.selectedUser = user;
+    console.log( this.selectedUser);
+    this.showResend = true
+  }
+
+  showDeleteForm( user: any) {
+    this.selectedUser = user;
+    console.log( this.selectedUser);
+    this.showDelete = true
   }
 }
