@@ -313,3 +313,7 @@ background-color: #115746;
     color: white;
   }
 }
+
+.selected-link-mobile {
+  background-color: #cbcbcb;
+}
