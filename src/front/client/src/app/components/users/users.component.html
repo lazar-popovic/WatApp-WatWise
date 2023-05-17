@@ -20,8 +20,9 @@
         <button type="button" (click)="getAddress()">Search</button>
       </div>
       <div id="address-show">
+        <h2 id="no-valid-streets" *ngIf="items.length == 0 && displayNo == true">No valid streets</h2>
         <div *ngFor="let item of items" class="display-item standard-card-style" (click)="pickAddressHandler($event)">
-          <p>{{item.addressDetails.split(", ")[0]}}, {{item.neighborhood}}, {{item.city}}</p>
+          <p>{{item.road}}, {{item.neighborhood}}, {{item.city}}</p>
         </div>
       </div>
       <div class="input-box">

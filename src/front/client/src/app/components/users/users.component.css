@@ -102,6 +102,14 @@ form .text h3 a:hover{
   padding: 5px;
   border-radius: 5px;
   background-color: #c7c7c7;
+  position: relative;
+}
+
+#no-valid-streets {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%);
 }
 
 .autocomplete-seacrh-div {
