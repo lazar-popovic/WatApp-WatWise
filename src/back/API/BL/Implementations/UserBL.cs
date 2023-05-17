@@ -259,7 +259,7 @@ namespace API.BL.Implementations
             return response;
         }
 
-        public async Task<Response<string>> DeleteUser(int id)
+        public async Task<Response<string>> DeleteProsumer(int id)
         {
             Response<string> response = new Response<string>();
 
@@ -273,17 +273,15 @@ namespace API.BL.Implementations
                 return response;
             }
 
-            if (user.RoleId == (int)RoleEnum.Role.Employee)
+            if (user.RoleId != 3)
             {
-                await _userDal.DeleteEmployee(user);
-
-                response.Data = "Employee has been successfully deleted!";
+                response.Errors.Add("Only prosumer can be deleted!");
                 response.Success = response.Errors.Count == 0;
 
                 return response;
             }
 
-            await _userDal.DeleteProsumer(user);
+            await _userDal.DeleteUser(user);
 
             response.Data = "User has been successfully deleted!";
             response.Success = response.Errors.Count == 0;
