@@ -83,25 +83,27 @@
         </div>
       </div>
       <div class="card card-big standard-card-style" *ngIf="chart3.data.length > 0">
-        <h4>Top consuming devices</h4>
+        <h4>Top currently active consuming devices of <span style="color: rgba(191, 65, 65, 1);">{{cards.currentConsumption.toFixed(2)}} [kWh]</span></h4>
         <div class="chart-holder chart-holder-pie-grid">
           <ngx-charts-pie-grid
             [results]="chart3.data"
             [scheme]="chart3.colors"
             [minWidth]="120"
             [designatedTotal] = "cards.currentConsumption"
+            [label]="'Total [kWh]'"
           >
           </ngx-charts-pie-grid>
         </div>
       </div>
       <div class="card card-big standard-card-style" *ngIf="chart4.data.length > 0">
-        <h4>Top producing devices</h4>
+        <h4>Top currently active producing devices of <span style="color: rgba(69, 94, 184, 1);">{{cards.currentProduction.toFixed(2)}} [kWh]</span></h4>
         <div class="chart-holder chart-holder-pie-grid">
           <ngx-charts-pie-grid class="chart"
             [results]="chart4.data"
             [scheme]="chart4.colors"
             [minWidth]="120"
             [designatedTotal] = "cards.currentProduction"
+            [label]="'Total [kWh]'"
           >
           </ngx-charts-pie-grid>
         </div>

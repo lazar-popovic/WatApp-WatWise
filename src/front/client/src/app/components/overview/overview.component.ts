@@ -134,16 +134,17 @@ export class OverviewComponent implements OnInit
             return total + current.predictedValue;
           }, 0);
 
-          this.cards.currentConsumption = this.chart1.data.find(d => d.name === "Consumption[kWh]")?.series.slice(-1)[0]?.value;
+          this.cards.currentConsumption = this.chart1.data.find(d => d.name === "Consumption [kWh]")?.series.slice(-1)[0]?.value;
           if( this.cards.currentConsumption == undefined) {
             this.cards.currentConsumption = 0;
           }
-          this.cards.currentProduction = this.chart1.data.find(d => d.name === "Production[kWh]")?.series.slice(-1)[0]?.value;
+          this.cards.currentProduction = this.chart1.data.find(d => d.name === "Production [kWh]")?.series.slice(-1)[0]?.value;
           if( this.cards.currentProduction == undefined) {
             this.cards.currentProduction = 0;
           }
 
-          console.log( this.cards);
+          console.log("cards");
+          console.log(this.cards);
         }
       }, error => {
         console.log( error);
