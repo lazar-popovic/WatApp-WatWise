@@ -118,7 +118,7 @@
 
 
   <div class="hover-form" *ngIf="showForm">
-    <app-device-job-form (output)="showForm = false"></app-device-job-form>
+    <app-device-job-form [deviceId]="selectedDevice" (output)="showForm = false"></app-device-job-form>
   </div>
 
 </div>
