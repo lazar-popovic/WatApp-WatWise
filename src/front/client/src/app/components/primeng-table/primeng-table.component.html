@@ -1,10 +1,16 @@
-<p-table [value]="tableData" [styleClass]="'modern-table'">
-  <ng-template pTemplate="header">
+<p-table
+[columns]="columns" [value]="tableData" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '50rem' }"
+[paginator]="true"
+[showCurrentPageReport]="true"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[10, 25, 50]"
+>
+  <ng-template pTemplate="header" let-columns>
     <tr>
       <th *ngFor="let column of columns">{{ column }}</th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-rowData>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
       <td *ngFor="let column of columns">{{ rowData[column] }}</td>
     </tr>

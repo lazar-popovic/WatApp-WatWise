@@ -22,7 +22,7 @@ export class UsersOverviewComponent {
   showAddUProsumer: boolean = false;
 
   usersData: any[] = []; // Variable to hold the user data
-  columns: string[] = []; // Variable to hold the column names
+  columns: any[] = []; // Variable to hold the column names
 
 
   filter : any = {
@@ -38,7 +38,7 @@ export class UsersOverviewComponent {
 
   getProsumers() {
     this.userService.getProsumers(this.pageSize, this.currentIndex, this.filter.name, this.filter.address, this.filter.order).subscribe((result: any) => {
-      /*this.users = [];
+      this.usersData = [];
       for(let item of result.data) {
         let user = new User();
         user.firstName = item.firstname;
@@ -50,9 +50,9 @@ export class UsersOverviewComponent {
           user.num = item.location.addressNumber;
           user.city = item.location.city;
         }
-        this.users.push(user);
-      }*/
-      this.usersData = result.data;
+        this.usersData.push(user);
+      }
+      //this.usersData = result.data;
       this.columns = Object.keys(this.usersData[0]);
     },(error: any) => {
       console.log(error);

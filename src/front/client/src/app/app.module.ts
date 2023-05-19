@@ -63,7 +63,7 @@ import { SchedulerJobsListComponent } from './components/scheduler-jobs-list/sch
 import { IdDeleteDialogComponent } from './components/id-delete-dialog/id-delete-dialog.component';
 import { DeleteProfileComponent } from './components/delete-profile/delete-profile.component';
 import { PrimengTableComponent } from './components/primeng-table/primeng-table.component';
-import { TableModule } from 'primeng/table';
+import { TableModule } from 'primeng/table'
 
 @NgModule({
   declarations: [

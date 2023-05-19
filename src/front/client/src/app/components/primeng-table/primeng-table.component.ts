@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class PrimengTableComponent {
   @Input() tableData: any[] = [];
-  @Input() columns: string[] = [];
+  @Input() columns: any[] = [];
 
   ngOnInit(): void {
     if (this.tableData && this.tableData.length > 0) {
