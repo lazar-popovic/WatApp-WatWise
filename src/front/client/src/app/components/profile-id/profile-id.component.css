@@ -109,11 +109,17 @@
   bottom: 20px;
   right: 20px;
 }
+#delete-profile img {
+  cursor: pointer;
+}
 
 #resend-verif-mail {
   position: absolute;
   bottom: 20px;
   right: 70px;
+}
+#resend-verif-mail img {
+  cursor: pointer;
 }
 
 @media (max-width: 599px) {
