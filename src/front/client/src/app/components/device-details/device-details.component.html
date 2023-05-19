@@ -42,7 +42,7 @@
       </div>
     </div>
 
-    <div id="additional-filter">
+    <div id="additional-filter" *ngIf="historyflag==true">
       <form *ngIf="historyflag==true">
         <input type="date" *ngIf="todayFlag==true" [(ngModel)]="date" name="date" (change)="todayClick()">
         <select id="picked-month" *ngIf="monthFlag==true" [(ngModel)]="month" name="month" (change)="monthClick()">
