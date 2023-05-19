@@ -236,7 +236,7 @@ namespace API.DAL.Implementations
                 .Select(u => new
                 {
                     User = u,
-                    Devices = u.Devices.Where(d => d.ActivityStatus == true),
+                    Devices = u.Devices.Where(d => d.ActivityStatus == true && d.DataShare == true),
                     EnergyUsage = u.Devices
                         .SelectMany(d => d.DeviceEnergyUsages)
                         .Where(eu => eu.Timestamp == now)
