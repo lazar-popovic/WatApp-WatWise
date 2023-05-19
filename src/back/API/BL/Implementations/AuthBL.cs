@@ -68,27 +68,32 @@ namespace API.BL.Implementations
         {
             var response = new Response<RegisterResponseViewModel>();
 
-            if (string.IsNullOrEmpty(userRegisterRequest.Email.Trim()))
+            if (string.IsNullOrEmpty(userRegisterRequest.Email!.Trim()))
             {
                 response.Errors.Add("Email is required");
             }
 
-            if (string.IsNullOrEmpty(userRegisterRequest.Firstname.Trim()))
+            if (string.IsNullOrEmpty(userRegisterRequest.Firstname!.Trim()))
             {
                 response.Errors.Add("Firstname is required");
             }
 
-            if (string.IsNullOrEmpty(userRegisterRequest.Lastname.Trim()))
+            if (string.IsNullOrEmpty(userRegisterRequest.Lastname!.Trim()))
             {
                 response.Errors.Add("Lastname is required");
             }
 
-            if (string.IsNullOrEmpty(userRegisterRequest.Location.Address.Trim()))
+            if (string.IsNullOrEmpty(userRegisterRequest.Location.Address!.Trim()))
             {
                 response.Errors.Add("Address is required");
             }
 
-            if (string.IsNullOrEmpty(userRegisterRequest.Location.City.Trim()))
+            if (string.IsNullOrEmpty(userRegisterRequest.Location.Neighborhood!.Trim()))
+            {
+                response.Errors.Add("Neighborhood is required");
+            }
+
+            if (string.IsNullOrEmpty(userRegisterRequest.Location.City!.Trim()))
             {
                 response.Errors.Add("City is required");
             }
@@ -137,6 +142,11 @@ namespace API.BL.Implementations
             var response = new Response<RegisterResponseViewModel>();
 
             if (string.IsNullOrEmpty(employeeRegisterRequest.Email.Trim()))
+            {
+                response.Errors.Add("Email is required");
+            }
+
+            if (IsValidEmail(employeeRegisterRequest.Email.Trim()))
             {
                 response.Errors.Add("Email is required");
             }
@@ -439,7 +449,18 @@ namespace API.BL.Implementations
 
         #region private
 
-
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var mailAddress = new System.Net.Mail.MailAddress(email);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
 
         private Response<LoginResponseViewModel> ValidateUserWithRole(User? userWithRole)
         {
