@@ -263,10 +263,10 @@ namespace API.DAL.Implementations
                         .Where(eu => eu.Device!.DeviceType!.Category == 1)
                         .Sum(eu => eu.PredictedValue),
                     ConsumingDevicesTurnedOn = u.Devices
-                        .Where(d => d.DeviceType!.Category == -1 && d.ActivityStatus == true)
+                        .Where(d => d.DeviceType!.Category == -1 && d.ActivityStatus == true && d.DataShare == true)
                         .Count(),
                     ProducingDevicesTurnedOn = u.Devices
-                        .Where(d => d.DeviceType!.Category == -1 && d.ActivityStatus == true)
+                        .Where(d => d.DeviceType!.Category == 1 && d.ActivityStatus == true && d.DataShare == true)
                         .Count()
                 })
                 .OrderByDescending(u => u.CurrentConsumption)
