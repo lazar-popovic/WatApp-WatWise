@@ -144,3 +144,8 @@ form .text h3 a:hover{
   margin-bottom: 5px;
   color: #3E3E3E;
 }
+
+.display-item:hover {
+  cursor: pointer;
+  background-color: rgb(233, 233, 233);
+}
