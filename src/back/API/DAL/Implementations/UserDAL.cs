@@ -230,7 +230,7 @@ namespace API.DAL.Implementations
         public async Task<List<AllProsumersWithConsumptionProductionDTO>> ProsumersWithConsumptionProductionAndNumberOfWorkingDevices()
         {
             var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
-
+            
             var userDTOs = await _dbContext.Users
                 .Where(u => u.RoleId == (int?)RoleEnum.Role.User)
                 .Select(u => new
@@ -274,7 +274,6 @@ namespace API.DAL.Implementations
                 .ToListAsync();
 
             return userDTOs;
-
         }
     }
 
