@@ -16,7 +16,6 @@
                 <tr>
                     <td>Firstname</td>
                     <td id="lastname-filter" (click)="inverseOrder()">Lastname↑</td>
-                    <td>Mail</td>
                     <td>Address</td>
                     <td>City</td>
                     <td [matTooltip]="'This number represents total current consumption for prosumer'">Current consumption[kWh]</td>
@@ -27,7 +26,6 @@
                 <tr *ngFor="let user of users" class="tr-prosumer" routerLink="/profile/{{user.id}}">
                     <td>{{user.firstname}}</td>
                     <td>{{user.lastname}}</td>
-                    <td>{{user.email}}</td>
                     <td>{{user.location.address}} {{user.location.addressNumber}}</td>
                     <td>{{user.location.city}}</td>
                     <td><span style="color: rgba(191, 65, 65, 1);">{{user.currentConsumption.toFixed(2)}}</span></td>
