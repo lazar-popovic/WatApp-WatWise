@@ -33,23 +33,27 @@ export class UsersOverviewComponent {
 
   constructor(private userService: UserService) {
     //this.getNumberOfPages();
-    this.getProsumers ();
+    this.getProsumers();
   }
 
   getProsumers() {
-    this.userService.getProsumers(this.pageSize, this.currentIndex, this.filter.name, this.filter.address, this.filter.order).subscribe((result: any) => {
+    //this.userService.getProsumers(this.pageSize, this.currentIndex, this.filter.name, this.filter.address, this.filter.order).subscribe((result: any) => {
+      this.userService.getProsumersWithEnergyUsage().subscribe((result: any) => {
       this.usersData = [];
       for(let item of result.data) {
-        let user = new User();
-        user.firstName = item.firstname;
-        user.lastName = item.lastname;
-        user.id = item.id;
-        user.mail = item.email;
-        if (item.location != null) {
-          user.address = item.location.address;
-          user.num = item.location.addressNumber;
-          user.city = item.location.city;
-        }
+        let user: User = {
+          firstName: item.firstname,
+          lastName: item.lastname,
+          mail: item.email,
+          address: item.location?.address,
+          num: item.location?.addressNumber,
+          city: item.location?.city,
+          currentConsumption: item.currentConsumption,
+          currentProduction: item.currentProduction,
+          activeConsumers: item.consumingDevicesTurnedOn,
+          activeProducers: item.producingDevicesTurnedOn,
+        };
+
         this.usersData.push(user);
       }
       //this.usersData = result.data;
@@ -59,7 +63,7 @@ export class UsersOverviewComponent {
     });
   }
 
-
+/*
   handler(type: number) {
     let active = document.querySelector(".overview-pagination-page-active") as HTMLDivElement;
 
@@ -103,4 +107,5 @@ export class UsersOverviewComponent {
 
       this.getProsumers();
   }
+  */
 }
