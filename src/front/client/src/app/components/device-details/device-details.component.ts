@@ -570,13 +570,16 @@ export class DeviceDetailsComponent implements OnInit
         options: {
           scales: {
             y: {
-              beginAtZero: true,
-              ticks: {
-                callback: function(value, index, ticks) {
-                  return value+'kWh';
-                }
-              }
-            }
+              beginAtZero: false,
+              title: {
+                display: true,
+                text: 'Electrical energy [kWh]',
+                font: {
+                  size: 16,
+                  weight: 'bold',
+                },
+              },
+            },
           }
         }
       });

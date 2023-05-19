@@ -455,13 +455,16 @@ export class ProductionComponent
       options: {
         scales: {
           y: {
-            beginAtZero: true,
-            ticks: {
-              callback: function(value, index, ticks) {
-                return value+'kW';
-              }
-            }
-          }
+            beginAtZero: false,
+            title: {
+              display: true,
+              text: 'Electrical energy [kWh]',
+              font: {
+                size: 16,
+                weight: 'bold',
+              },
+            },
+          },
         }
       }
     });
