@@ -3,7 +3,7 @@
 [paginator]="true"
 [showCurrentPageReport]="true"
 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} prosumers"
-    [rowsPerPageOptions]="[10, 15, 20]"
+    [rowsPerPageOptions]="[5, 15, 20]"
 >
 <ng-template pTemplate="caption">
   <div class="flex align-items-center justify-content-between">
@@ -13,7 +13,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} prosumers
 </ng-template>
   <ng-template pTemplate="header" let-columns>
     <tr>
-      <th *ngFor="let column of columns">{{ column }}</th>
+      <th *ngFor="let column of columns" pSortableColumn="{{column}}">{{ column }}<p-sortIcon field="{{column}}"></p-sortIcon></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
