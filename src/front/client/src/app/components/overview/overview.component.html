@@ -6,38 +6,38 @@
     <div class="card-group">
       <div class="card standard-card-style card-small">
         <div class="card-left">
-          <app-tooltip [message]="'Current total consumption of electrical energy in kWh'"></app-tooltip>
+          <app-tooltip [message]="'Current total consumption of electrical energy in [kWh]'"></app-tooltip>
           <h4>Currently consuming</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-red">{{cards.currentConsumption.toFixed(2)}}kWh</h4>
+          <h4 class="c-red">{{cards.currentConsumption.toFixed(2)}} [kWh]</h4>
         </div>
       </div>
       <div class="card standard-card-style card-small">
         <div class="card-left">
-          <app-tooltip [message]="'Current total production of electrical energy in kWh'"></app-tooltip>
+          <app-tooltip [message]="'Current total production of electrical energy in [kWh]'"></app-tooltip>
           <h4>Currently producing</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-blue">{{cards.currentProduction.toFixed(2)}}kWh</h4>
+          <h4 class="c-blue">{{cards.currentProduction.toFixed(2)}} [kWh]</h4>
         </div>
       </div>
       <div class="card standard-card-style card-small">
         <div class="card-left">
-          <app-tooltip [message]="'Predicted total consumption of electrical energy in kWh for today'"></app-tooltip>
+          <app-tooltip [message]="'Predicted total consumption of electrical energy in [kWh] for today'"></app-tooltip>
           <h4>Predicted consumption for today</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-red">{{cards.totalConsumption.toFixed(2)}}kW</h4>
+          <h4 class="c-red">{{cards.totalConsumption.toFixed(2)}} [kWh]</h4>
         </div>
       </div>
       <div class="card standard-card-style card-small">
         <div class="card-left">
-          <app-tooltip [message]="'Predicted total production of electrical energy in kWh for today'"></app-tooltip>
+          <app-tooltip [message]="'Predicted total production of electrical energy in [kWh] for today'"></app-tooltip>
           <h4>Predicted production for today</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-blue">{{cards.totalProduction.toFixed(2)}}kWh</h4>
+          <h4 class="c-blue">{{cards.totalProduction.toFixed(2)}} [kWh]</h4>
         </div>
       </div>
     </div>
