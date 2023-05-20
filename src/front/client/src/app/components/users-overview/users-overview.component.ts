@@ -41,7 +41,7 @@ export class UsersOverviewComponent {
       this.userService.getProsumersWithEnergyUsage().subscribe((result: any) => {
       this.usersData = [];
       for(let item of result.data) {
-        let user: User = {
+        let user: any = {
           firstName: item.firstname,
           lastName: item.lastname,
           address: item.location?.address,

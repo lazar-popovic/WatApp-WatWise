@@ -113,7 +113,7 @@ import { ButtonModule } from 'primeng/button';
     ConfirmWindowComponent,
     IdDeleteDialogComponent,
     DeleteProfileComponent,
-    ResendVerificationMailDialogComponent
+    ResendVerificationMailDialogComponent,
     DeleteProfileComponent,
     PrimengTableComponent
   ],
