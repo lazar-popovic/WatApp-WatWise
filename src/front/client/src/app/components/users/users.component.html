@@ -17,7 +17,7 @@
       <div class="input-box autocomplete-seacrh-div">
         <app-tooltip [message]="'To retrieve a list of potential locations, please enter the street address and city, and then click on the \'Search\' button. From the search results provided below, choose the desired option by clicking on it.'"></app-tooltip>
         <input type="name" class="users-form-location" placeholder="Address" name="street" [(ngModel)]="searchAddress" required>
-        <button type="button" (click)="getAddress()">Search</button>
+        <button type="submit" (click)="getAddress()">Search</button>
       </div>
       <div id="address-show">
         <h2 id="no-valid-streets" *ngIf="items.length == 0 && displayNo == true">No valid streets</h2>
