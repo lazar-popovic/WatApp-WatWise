@@ -1,4 +1,6 @@
-﻿namespace API.Models.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace API.Models.ViewModels
 {
     public class UpdateUserNameAndEmailViewModel
     {

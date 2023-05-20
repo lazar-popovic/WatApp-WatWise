@@ -10,8 +10,11 @@
                 <button class="button green" (click)="showAddUProsumer = true">+Add Prosumer</button>
             </form>
         </div>
-
+        <app-primeng-table [tableData]="usersData" [columns]="columns"></app-primeng-table>
+        <!--
         <div class="overview-users-table">
+
+
             <table>
                 <tr>
                     <td>Firstname</td>
@@ -34,8 +37,10 @@
                     <td>{{user.producingDevicesTurnedOn}}</td>
                 </tr>
             </table>
-        </div>
 
+        </div>
+        -->
+        <!--
         <div class="overview-pagination">
             <form>
                 <div class="page-size-holder">
@@ -56,6 +61,11 @@
             </form>
         </div>
     </div>
+<<<<<<< HEAD
+    <div class="hover-form" *ngIf="showAddUProsumer" style="z-index: 2;">
+      <app-users (output)="formEmitter($event)"></app-users>
+=======
+  -->
     <div class="hover-form" *ngIf="showAddUProsumer" style="z-index: 2;">
       <app-users (output)="formEmitter($event)"></app-users>
     </div>

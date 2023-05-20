@@ -1,5 +1,6 @@
 ﻿using API.Common;
 using API.Models;
+using API.Models.DTOs;
 using API.Models.Entity;
 using API.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -19,5 +20,6 @@ namespace API.BL.Interfaces
         Task<Response> SaveImageForUser(int id, [FromBody] byte[] profilePicture);
         Task<Response<string>> DeleteProsumer(int id);
         Task<Response<string>> DeleteProfilePictureAsync(int userId);
+        Task<Response<List<AllProsumersWithConsumptionProductionDTO>>> ProsumersWithEnergyUsage();
     }
 }

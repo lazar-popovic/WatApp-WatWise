@@ -6,7 +6,9 @@ using API.Models.Entity;
 using API.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using API.Common;
+using API.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API.BL.Implementations
 {
@@ -308,6 +310,27 @@ namespace API.BL.Implementations
 
 
 
+        }
+
+        public async Task<Response<List<AllProsumersWithConsumptionProductionDTO>>> ProsumersWithEnergyUsage()
+        {
+            Response<List<AllProsumersWithConsumptionProductionDTO>> response =
+                new Response<List<AllProsumersWithConsumptionProductionDTO>>();
+            
+            var users = await _userDal.ProsumersWithConsumptionProductionAndNumberOfWorkingDevices();
+
+            if (users.IsNullOrEmpty())
+            {
+                response.Errors.Add("No prosumers are registered!");
+                response.Success = false;
+
+                return response;
+            }
+
+            response.Data = users;
+            response.Success = response.Errors.Count == 0;
+
+            return response;
         }
     }
 }

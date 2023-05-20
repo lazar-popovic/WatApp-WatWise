@@ -21,6 +21,10 @@ export class UsersOverviewComponent {
   pageSize: any = 10;
   showAddUProsumer: boolean = false;
 
+  usersData: any[] = []; // Variable to hold the user data
+  columns: any[] = []; // Variable to hold the column names
+
+
   filter : any = {
     name : '',
     address: '',
@@ -28,32 +32,38 @@ export class UsersOverviewComponent {
   };
 
   constructor(private userService: UserService) {
-    this.getNumberOfPages();
+    //this.getNumberOfPages();
     this.getProsumers();
   }
 
   getProsumers() {
-    this.userService.getProsumers(this.pageSize, this.currentIndex, this.filter.name, this.filter.address, this.filter.order).subscribe((result: any) => {
-      /*this.users = [];
+    //this.userService.getProsumers(this.pageSize, this.currentIndex, this.filter.name, this.filter.address, this.filter.order).subscribe((result: any) => {
+      this.userService.getProsumersWithEnergyUsage().subscribe((result: any) => {
+      this.usersData = [];
       for(let item of result.data) {
-        let user = new User();
-        user.firstName = item.firstname;
-        user.lastName = item.lastname;
-        user.id = item.id;
-        user.mail = item.email;
-        if (item.location != null) {
-          user.address = item.location.address;
-          user.num = item.location.addressNumber;
-          user.city = item.location.city;
-        }
-        this.users.push(user);
-      }*/
-      this.users = result.data;
+        let user: User = {
+          firstName: item.firstname,
+          lastName: item.lastname,
+          address: item.location?.address,
+          num: item.location?.addressNumber,
+          city: item.location?.city,
+          currentConsumption: item.currentConsumption.toFixed(4),
+          currentProduction: item.currentProduction.toFixed(4),
+          activeConsumers: item.consumingDevicesTurnedOn,
+          activeProducers: item.producingDevicesTurnedOn,
+        };
+
+        this.usersData.push(user);
+      }
+      //this.usersData = result.data;
+      this.columns = Object.keys(this.usersData[0]);
+      //this.columns = ["Firstname","Lastname","Address","Address","Number","City","Current consumption","Current production","Active consumers","Active producers"];
     },(error: any) => {
       console.log(error);
     });
   }
 
+/*
   handler(type: number) {
     let active = document.querySelector(".overview-pagination-page-active") as HTMLDivElement;
 
@@ -97,6 +107,7 @@ export class UsersOverviewComponent {
 
       this.getProsumers();
   }
+  */
 
   formEmitter( event: boolean) : void {
     if( event == true) {

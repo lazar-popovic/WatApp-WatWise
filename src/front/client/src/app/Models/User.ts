@@ -2,13 +2,17 @@ export class User {
     id ?: number;
     firstName = "Ime";
     lastName = "Prezime";
-    mail = "mejl";
-    password = "as";
-    roleId = 3;
-    role = "Prosumer";
+    mail? = "mejl";
+    password? = "as";
+    roleId? = 3;
+    role? = "Prosumer";
     address = "Radoja Domanovica";
     num = 1;
     city = "Kragujevac";
-    profileImage = "";
+    profileImage? = "";
+    currentConsumption ?: number;
+    currentProduction ?: number;
+    activeConsumers ?:number;
+    activeProducers ?:number;
 }
 

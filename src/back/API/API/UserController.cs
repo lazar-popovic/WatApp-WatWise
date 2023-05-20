@@ -106,5 +106,11 @@ namespace API.API
         {
             return Ok(await _userBL.DeleteProfilePictureAsync(id));
         }
+
+        [HttpGet("prosumers-with-energy-usage")]
+        public async Task<IActionResult> ProsumersWithEnergyUsage()
+        {
+            return Ok(await _userBL.ProsumersWithEnergyUsage());
+        }
     }
 }

@@ -63,6 +63,9 @@ import { SchedulerJobsListComponent } from './components/scheduler-jobs-list/sch
 import { IdDeleteDialogComponent } from './components/id-delete-dialog/id-delete-dialog.component';
 import { DeleteProfileComponent } from './components/delete-profile/delete-profile.component';
 import { ResendVerificationMailDialogComponent } from './components/resend-verification-mail-dialog/resend-verification-mail-dialog.component';
+import { PrimengTableComponent } from './components/primeng-table/primeng-table.component';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -111,6 +114,8 @@ import { ResendVerificationMailDialogComponent } from './components/resend-verif
     IdDeleteDialogComponent,
     DeleteProfileComponent,
     ResendVerificationMailDialogComponent
+    DeleteProfileComponent,
+    PrimengTableComponent
   ],
   imports: [
     BrowserModule,
@@ -131,7 +136,9 @@ import { ResendVerificationMailDialogComponent } from './components/resend-verif
     NgxChartsModule,
     NgBusyModule,
     MatTooltipModule,
-    ImageCropperModule
+    ImageCropperModule,
+    TableModule,
+    ButtonModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
