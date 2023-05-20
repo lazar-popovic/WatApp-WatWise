@@ -2,12 +2,7 @@
     <app-sidebar></app-sidebar>
     <div class="overview-tab">
         <div class="overview-filter-holder">
-            <form>
-                <div class="search-input">
-                    <input type="text" name="name" [(ngModel)]="filter.name" (keyup)="getProsumers()" placeholder = "Search by name" autocomplete="off">
-                    <input type="text" name="address" [(ngModel)]="filter.address" (keyup)="getProsumers()" placeholder = "Search by address" autocomplete="off">
-                </div>
-            </form>
+
             <button class="button green" (click)="showAddUProsumer = true" style="display:inline-block;">+Add Prosumer</button>
         </div>
         <app-primeng-table [tableData]="usersData" [columns]="columns" [columnLabels]="columnLabels"></app-primeng-table>

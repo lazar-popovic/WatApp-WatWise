@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-primeng-table',
@@ -6,6 +7,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./primeng-table.component.css']
 })
 export class PrimengTableComponent {
+
+  @ViewChild('dt1') dt1: Table | undefined;
   @Input() tableData: any[] = [];
   @Input() columns: any[] = [];
   @Input() columnLabels: any[] = [];
@@ -20,8 +23,12 @@ export class PrimengTableComponent {
     const firstItem = this.tableData[0];
     return typeof firstItem[column] === 'number';
   }
-  /*
-  isColumnNumber(column: any): boolean {
-    return typeof column === 'number';
-  } */
+
+  clear(table: Table) {
+    table.clear();
+}
+
+applyFilterGlobal($event: any, stringVal: any) {
+  this.dt1!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
+}
 }
