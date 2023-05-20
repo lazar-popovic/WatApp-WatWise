@@ -7,7 +7,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 >
   <ng-template pTemplate="header" let-columns>
     <tr>
-      <th *ngFor="let column of columns" pSortableColumn="{{column}}">{{ column }}<p-sortIcon field="{{column}}"></p-sortIcon></th>
+      <th *ngFor="let column of columns; let i = index" pSortableColumn="{{column}}">{{ columnLabels[i] }}<p-sortIcon field="{{column}}"></p-sortIcon></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">

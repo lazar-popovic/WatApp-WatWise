@@ -23,6 +23,7 @@ export class UsersOverviewComponent {
 
   usersData: any[] = []; // Variable to hold the user data
   columns: any[] = []; // Variable to hold the column names
+  columnLabels: any[] = [];
 
 
   filter : any = {
@@ -57,7 +58,7 @@ export class UsersOverviewComponent {
       }
       //this.usersData = result.data;
       this.columns = Object.keys(this.usersData[0]);
-      //this.columns = ["Firstname","Lastname","Address","Address","Number","City","Current consumption","Current production","Active consumers","Active producers"];
+      this.columnLabels = ["Firstname","Lastname","Address","Address","Number","City","Current consumption","Current production","Active consumers","Active producers"];
     },(error: any) => {
       console.log(error);
     });
