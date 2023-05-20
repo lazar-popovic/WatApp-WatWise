@@ -1,19 +1,13 @@
 <p-table
-[columns]="columns" [value]="tableData" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '50rem' }"
+[columns]="columns" [value]="tableData" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '60rem' }"
 [paginator]="true"
 [showCurrentPageReport]="true"
 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} prosumers"
     [rowsPerPageOptions]="[5, 15, 20]"
 >
-<ng-template pTemplate="caption">
-  <div class="flex align-items-center justify-content-between">
-      Prosumers
-      <p-button icon="pi pi-refresh"></p-button>
-  </div>
-</ng-template>
   <ng-template pTemplate="header" let-columns>
     <tr>
-      <th *ngFor="let column of columns" pSortableColumn="{{column}}">{{ column }}<p-sortIcon field="{{column}}"></p-sortIcon></th>
+      <th *ngFor="let column of columns" pSortableColumn="{{column}}" style="column-width: 20%;!important">{{ column }}<p-sortIcon field="{{column}}"></p-sortIcon></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
