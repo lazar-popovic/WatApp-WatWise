@@ -15,4 +15,13 @@ export class PrimengTableComponent {
       this.columns = Object.keys(this.tableData[0]);
     }
   }
+
+  isColumnNumber(column: string): boolean {
+    const firstItem = this.tableData[0];
+    return typeof firstItem[column] === 'number';
+  }
+  /*
+  isColumnNumber(column: any): boolean {
+    return typeof column === 'number';
+  } */
 }
