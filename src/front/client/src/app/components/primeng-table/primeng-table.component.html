@@ -21,14 +21,14 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     <tr>
       <th *ngFor="let column of columns; let i = index" pSortableColumn="{{column}}">{{ columnLabels[i] }}<p-sortIcon field="{{column}}"></p-sortIcon>
         <ng-container *ngIf="isColumnNumber(column); else textFilter">
-          <th style="min-width:15rem">
+          <th style="min-width:10rem">
             <div class="flex align-items-center">
           <p-columnFilter type="numeric" field="{{column}}" display="menu"></p-columnFilter>
         </div>
       </th>
         </ng-container>
         <ng-template #textFilter>
-          <th style="min-width:15rem">
+          <th style="min-width:10rem">
             <div class="flex align-items-center">
           <p-columnFilter type="text" field="{{column}}" display="menu"></p-columnFilter>
         </div>
