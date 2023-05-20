@@ -27,9 +27,9 @@
 }
 
 .overview-tab {
-    width: 1500px;
+    width: 100%;
     position: relative;
-    margin: 100px auto;
+    margin: 100px 20px;
 }
 .overview-filter-holder {
   display: flex;

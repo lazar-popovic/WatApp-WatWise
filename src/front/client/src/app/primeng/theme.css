@@ -1907,6 +1907,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   background-color: transparent;
   color: #14B8A6;
   border: 1px solid;
+  border-radius: 5px!important;
 }
 .p-button.p-button-outlined:enabled:hover {
   background: rgba(20, 184, 166, 0.04);
