@@ -44,7 +44,6 @@ export class UsersOverviewComponent {
         let user: User = {
           firstName: item.firstname,
           lastName: item.lastname,
-          mail: item.email,
           address: item.location?.address,
           num: item.location?.addressNumber,
           city: item.location?.city,
