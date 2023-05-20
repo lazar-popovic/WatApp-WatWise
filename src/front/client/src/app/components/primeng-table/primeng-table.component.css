@@ -1,25 +1,5 @@
-/*
-:host ::ng-deep .primeng-table {
-  width: 100%;
-  color: #000;
-}
 
-:host ::ng-deep .primeng-table th,
-:host ::ng-deep .primeng-table td {
-  padding: 10px;
-  border: 1px solid #ccc;
-}
-
-:host ::ng-deep .primeng-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
-
-:host ::ng-deep .primeng-table .p-row:nth-child(even) {
-  background-color: #e6e6e6;
-}
-*/
 @import "node_modules/primeng/resources/themes/saga-green/theme.css";
 @import "node_modules/primeng/resources/primeng.min.css";
 @import "node_modules/primeng/resources/primeng.css";
-@import  "node_modules/primeicons/primeicons.css";
+@import "node_modules/primeicons/primeicons.css";

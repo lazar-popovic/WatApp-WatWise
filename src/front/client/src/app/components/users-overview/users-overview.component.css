@@ -65,7 +65,7 @@
 .search-input button:hover,#add-user-btn:hover {
     outline: 1px solid black;
 }
-
+/*
 .overview-users-table table {
     width: 100%;
     background-color: white;
@@ -172,4 +172,4 @@
 .tr-prosumer:hover {
   background-color: #d8d8d8;
 }
-
+*/

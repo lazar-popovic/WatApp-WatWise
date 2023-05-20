@@ -8,8 +8,6 @@ import { Component, Input } from '@angular/core';
 export class PrimengTableComponent {
   @Input() tableData: any[] = [];
   @Input() columns: any[] = [];
-  loading: boolean = false;
-
 
   ngOnInit(): void {
     if (this.tableData && this.tableData.length > 0) {
