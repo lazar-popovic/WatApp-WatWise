@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DeviceDataService} from "../../services/device-data.service";
 import {DatePipe} from "@angular/common";
 import {Chart} from "chart.js";
+import { DateService } from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-energy-usage',
@@ -10,16 +11,13 @@ import {Chart} from "chart.js";
 })
 export class EnergyUsageComponent implements OnInit {
 
-  constructor( private deviceDataService: DeviceDataService, private datePipe: DatePipe) {
+  constructor( private deviceDataService: DeviceDataService, private datePipe: DatePipe, private dateService: DateService) {
   }
 
   ngOnInit(): void {
-    let now = new Date();
-    let month: any = (now.getMonth()+1);
-    let day: any =  now.getDate();
-    if (month<10) month = "0" + month;
-    if (day<10) day = "0" + day;
-    this.date  =  now.getFullYear() + "-" + month + "-" + day;
+    this.date  =  this.dateService.toDateString( new Date());
+    let futureDate = (new Date()).setDate((new Date()).getDate() + 7)
+    this.maxDate = this.dateService.toDateString( new Date(futureDate));
     this.historyClick();
   }
   tableTitle: string = "Timestamp";
@@ -44,6 +42,7 @@ export class EnergyUsageComponent implements OnInit {
   dataConsumption: any[] = [];
   dataProduction: any[] = [];
 
+  maxDate: any;
   date: any;
   month: number = 4;
   yearForMonth: number = 2023;

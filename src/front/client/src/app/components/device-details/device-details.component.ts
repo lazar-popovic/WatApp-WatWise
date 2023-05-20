@@ -15,6 +15,7 @@ import { ViewEncapsulation } from '@angular/core';
 import { JWTService } from '../../services/jwt.service';
 import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
 import { Subscription } from 'rxjs';
+import { DateService } from 'src/app/services/date.service';
 
 
 interface DatepickerOptions {
@@ -57,6 +58,7 @@ export class DeviceDetailsComponent implements OnInit
     showEdit: boolean = false;
     showDelete: boolean = false;
 
+    maxDate: any;
     date: any;
     month: number = 4;
     yearForMonth: number = 2023;
@@ -87,17 +89,15 @@ export class DeviceDetailsComponent implements OnInit
                  private router: Router,
                  private deviceDataService: DeviceDataService,
                  private jwtService: JWTService,
-                 private toastrNotifService: ToastrNotifService) {
+                 private toastrNotifService: ToastrNotifService,
+                 private dateService: DateService) {
     }
 
     ngOnInit(): void {
       this.data=[1];
-      let now = new Date();
-      let month: any = (now.getMonth()+1);
-      let day: any =  now.getDate();
-      if (month<10) month = "0" + month;
-      if (day<10) day = "0" + day;
-      this.date  =  now.getFullYear() + "-" + month + "-" + day;
+      this.date  =  this.dateService.toDateString( new Date());
+      let futureDate = (new Date()).setDate((new Date()).getDate() + 7)
+      this.maxDate = this.dateService.toDateString( new Date(futureDate));
       this.roleId = this.jwtService.roleId;
       this.data=[1];
       this.busy = this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(

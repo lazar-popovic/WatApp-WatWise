@@ -13,6 +13,7 @@ import {DatePipe} from "@angular/common";
 import { ViewEncapsulation } from '@angular/core';
 // import { JWTService } from 'src/app/services/jwt.service';
 import { JWTService } from '../../services/jwt.service';
+import { DateService } from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-production',
@@ -34,22 +35,26 @@ export class ProductionComponent
 
   showDropdown : boolean = false;
 
+  maxDate: any;
   date: any;
   month: number = 4;
   yearForMonth: number = 2023;
   year: number = 2023;
 
-  constructor( private jwtService: JWTService, private datePipe: DatePipe, private authService:AuthService, private route: ActivatedRoute, private router: Router, private deviceDataService: DeviceDataService) {
+  constructor( private jwtService: JWTService,
+               private datePipe: DatePipe,
+               private authService:AuthService,
+               private route: ActivatedRoute,
+               private router: Router,
+               private deviceDataService: DeviceDataService,
+               private dateService: DateService) {
     Chart.register(...registerables);
   }
 
   ngOnInit(): void {
-    let now = new Date();
-    let month: any = (now.getMonth()+1);
-    let day: any =  now.getDate();
-    if (month<10) month = "0" + month;
-    if (day<10) day = "0" + day;
-    this.date  =  now.getFullYear() + "-" + month + "-" + day;
+    this.date = this.dateService.toDateString( new Date());
+    let futureDate = (new Date()).setDate((new Date()).getDate() + 7)
+    this.maxDate = this.dateService.toDateString( new Date(futureDate));
     this.historyClick();
   }
 
