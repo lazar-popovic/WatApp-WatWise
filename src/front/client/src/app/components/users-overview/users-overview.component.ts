@@ -56,7 +56,8 @@ export class UsersOverviewComponent {
         this.usersData.push(user);
       }
       //this.usersData = result.data;
-      this.columns = Object.keys(this.usersData[0]);
+      //this.columns = Object.keys(this.usersData[0]);
+      this.columns = ["Firstname","Lastname","Address","Address","Number","City","Current consumption","Current production","Active consumers","Active producers"];
     },(error: any) => {
       console.log(error);
     });
