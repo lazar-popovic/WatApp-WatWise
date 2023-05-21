@@ -1,6 +1,10 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import * as FileSaver from 'file-saver';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { HtmlParser } from '@angular/compiler';
+
 
 @Component({
   selector: 'app-primeng-table',
@@ -17,14 +21,15 @@ export class PrimengTableComponent{
   selectedData: any[] = [];
   exportColumns: any[] = [];
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loading = true;
     if (this.tableData && this.tableData.length > 0) {
       this.columns = Object.keys(this.tableData[0]);
-      this.exportColumns = this.columns.map((column) => ({ field: column, header: column}));
-      console.log("AHAHAHAHAHAHAH");
-    }
+     /* const columnNames = Object.keys(this.tableData[0]);
+    this.columns = columnNames.map((col) => ({ field: col, header: col }));
+    this.exportColumns = columnNames.map((col) => ({ title: col, dataKey: col }));*/
   }
+}
 
   isColumnNumber(column: string): boolean {
     const firstItem = this.tableData[0];
@@ -43,26 +48,17 @@ export class PrimengTableComponent{
   exportPdf() {
     import('jspdf').then((jsPDF) => {
         import('jspdf-autotable').then((x) => {
-            const doc = new jsPDF.default('p', 'px', 'a4');
-            (doc as any).autoTable(this.exportColumns, this.tableData);
-            doc.save('products.pdf');
-        });
+            const doc = new jsPDF.default('l', 'px', 'a4');
+            const rows = this.tableData.map(item => this.columns.map(col => item[col]));
+
+            (doc as any).autoTable({
+              head: [this.columnLabels],
+              body: rows,
+            });
+              doc.save('products.pdf');
+          });
     });
 }
-
-  /*
-  exportPdf(): void {
-    import('jspdf').then((jsPDF) => {
-      import('jspdf-autotable').then((autoTable) => {
-        const doc = new jsPDF.default('p', 'px', 'a4');
-        autoTable.default(doc, {
-          head: [this.exportColumns.map((column) => column.header)],
-          body: this.tableData.map((data) => this.exportColumns.map((column) => data[column.field]))
-        });
-        doc.save('Data.pdf');
-      });
-    });
-  } */
 
 exportExcel() {
     import('xlsx').then((xlsx) => {
