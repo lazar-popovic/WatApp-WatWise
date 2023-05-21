@@ -43,10 +43,10 @@ export class UsersOverviewComponent {
       this.usersData = [];
       for(let item of result.data) {
         let user: any = {
-          firstName: item.firstname,
-          lastName: item.lastname,
+          firstname: item.firstname,
+          lastname: item.lastname,
           address: item.location?.address,
-          num: item.location?.addressNumber,
+          number: item.location?.addressNumber,
           city: item.location?.city,
           currentConsumption: item.currentConsumption,
           currentProduction: item.currentProduction,
@@ -60,7 +60,6 @@ export class UsersOverviewComponent {
         field: column,
         header: this.formatHeader(column)}));
         console.log(this.columns);
-      //this.columnLabels = ["Firstname","Lastname","Address","Number","City","Current consumption","Current production","Active consumers","Active producers"];
     },(error: any) => {
       console.log(error);
     });
