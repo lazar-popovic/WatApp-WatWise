@@ -105,6 +105,11 @@
   justify-content: space-around;
   padding: 10px 35px 0px 20px;
   box-sizing: border-box;
+  cursor: pointer;
+}
+
+.device-item:hover {
+  background-color: rgb(232, 232, 232);
 }
 
 .device-item-header, .device-item-footer {
