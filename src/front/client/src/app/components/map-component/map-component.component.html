@@ -6,6 +6,9 @@
 <div id="filter">
   <div id="select-city">
     <app-tooltip [message]="'This select contains all cities in which prosumer has been registered.'"></app-tooltip>
+    <div style="margin:0!important; display: flex; align-items: center; padding-left:10px; width: 40%!important; color:#3e3e3e">
+      <h4>City</h4>
+    </div>
     <select name="city" (change)="getNeighborhoods();getTop5Neighborhoods();" [(ngModel)]="selectedCity">
       <option *ngFor="let city of cities">{{city}}</option>
     </select>
@@ -34,6 +37,9 @@
   </div>
   <div id="select-neighborhood">
     <app-tooltip [message]="'For selected city above, this select contains all neighborhoods in which prosumer has been registered.'"></app-tooltip>
+    <div style="margin:0!important; display: flex; align-items: center; padding-left:10px; width: 40%!important; color:#3e3e3e">
+      <h4>Neighborhood</h4>
+    </div>
     <select name="neighborhood" (change)="getLocationsForNeighborhood()" [(ngModel)]="selectedNeighborhood">
       <option>All</option>
       <option *ngFor="let neighborhood of neighborhoods">{{neighborhood}}</option>
