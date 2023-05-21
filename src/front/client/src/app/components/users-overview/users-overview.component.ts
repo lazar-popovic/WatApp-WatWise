@@ -48,8 +48,8 @@ export class UsersOverviewComponent {
           address: item.location?.address,
           num: item.location?.addressNumber,
           city: item.location?.city,
-          currentConsumption: item.currentConsumption.toFixed(4),
-          currentProduction: item.currentProduction.toFixed(4),
+          currentConsumption: item.currentConsumption,
+          currentProduction: item.currentProduction,
           activeConsumers: item.consumingDevicesTurnedOn,
           activeProducers: item.producingDevicesTurnedOn,
         };

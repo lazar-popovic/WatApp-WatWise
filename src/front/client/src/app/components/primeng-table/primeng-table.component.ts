@@ -4,6 +4,8 @@ import * as FileSaver from 'file-saver';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { HtmlParser } from '@angular/compiler';
+import { WorkSheet } from 'xlsx';
+import * as saveAs from 'file-saver';
 
 
 @Component({
@@ -28,7 +30,7 @@ export class PrimengTableComponent{
   }
 }
 
-  isColumnNumber(column: string): boolean {
+  isColumnNumber(column: any): boolean {
     const firstItem = this.tableData[0];
     return typeof firstItem[column] === 'number';
   }
@@ -52,7 +54,7 @@ export class PrimengTableComponent{
               head: [this.columnLabels],
               body: rows,
             });
-              doc.save('products.pdf');
+              doc.save('Data.pdf');
           });
     });
 }
@@ -83,4 +85,5 @@ saveAsExcelFile(buffer: any, fileName: string): void {
     });
     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
 }
+
 }
