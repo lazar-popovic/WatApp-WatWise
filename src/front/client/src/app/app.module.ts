@@ -67,6 +67,7 @@ import { PrimengTableComponent } from './components/primeng-table/primeng-table.
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { ScrollTopModule } from 'primeng/scrolltop';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -140,7 +141,8 @@ import { ScrollTopModule } from 'primeng/scrolltop';
     ImageCropperModule,
     TableModule,
     ButtonModule,
-    ScrollTopModule
+    ScrollTopModule,
+    TooltipModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,

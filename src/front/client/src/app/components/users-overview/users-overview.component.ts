@@ -48,67 +48,30 @@ export class UsersOverviewComponent {
           address: item.location?.address,
           num: item.location?.addressNumber,
           city: item.location?.city,
-          currentConsumption: item.currentConsumption.toFixed(4),
-          currentProduction: item.currentProduction.toFixed(4),
+          currentConsumption: item.currentConsumption,
+          currentProduction: item.currentProduction,
           activeConsumers: item.consumingDevicesTurnedOn,
           activeProducers: item.producingDevicesTurnedOn,
         };
 
         this.usersData.push(user);
       }
-      //this.usersData = result.data;
-      this.columns = Object.keys(this.usersData[0]);
-      this.columnLabels = ["Firstname","Lastname","Address","Number","City","Current consumption","Current production","Active consumers","Active producers"];
+      this.columns = Object.keys(this.usersData[0]).map(column => ({
+        field: column,
+        header: this.formatHeader(column)}));
+        console.log(this.columns);
+      //this.columnLabels = ["Firstname","Lastname","Address","Number","City","Current consumption","Current production","Active consumers","Active producers"];
     },(error: any) => {
       console.log(error);
     });
   }
 
-/*
-  handler(type: number) {
-    let active = document.querySelector(".overview-pagination-page-active") as HTMLDivElement;
-
-    if(type == 2) {
-      if(this.currentIndex < this.pagesNum)
-        this.currentIndex++;
-    }
-    if(type == 1  ) {
-      if(this.currentIndex>1)
-      this.currentIndex--;
-    }
-    this.getProsumers();
-    active.innerHTML = this.currentIndex as unknown as string;
+  formatHeader(column: string): string {
+    const formattedColumn = column.replace(/([A-Z])/g, ' $1').trim();
+    const firstLetterCapitalized = formattedColumn.charAt(0).toUpperCase() + formattedColumn.slice(1).toLowerCase();
+    return firstLetterCapitalized;
   }
 
-  getNumberOfPages() {
-    this.userService.getNumberOfProsumers().subscribe((result: any) => {
-      this.pagesNum = Math.ceil((result.body.data as number)/this.pageSize);
-    }, (error : any) => {
-      console.log(error);
-    });
-  }
-
-  pageSizeHandler() {
-    this.getNumberOfPages();
-    this.getProsumers();
-  }
-
-  inverseOrder() {
-    if(this.filter.order == "asc")
-      this.filter.order = "desc";
-    else if(this.filter.order == "desc")
-      this.filter.order = "asc";
-
-    let element = document.querySelector("#lastname-filter") as HTMLDivElement;
-
-    if(this.filter.order == "asc")
-      element.innerText = "Lastname↑";
-    if(this.filter.order == "desc")
-      element.innerText = "Lastname↓";
-
-      this.getProsumers();
-  }
-  */
 
   formEmitter( event: boolean) : void {
     if( event == true) {

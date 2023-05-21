@@ -25,3 +25,12 @@
   border-radius: 5px!important;
   border: 1px solid #3e3e3e;
 }
+
+.exports {
+  margin-left: 65%;
+}
+
+.exports button {
+  margin: 5px;
+  border-radius: 5px!important;
+}
