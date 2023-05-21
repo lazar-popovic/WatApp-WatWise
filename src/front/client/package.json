@@ -32,8 +32,10 @@
     "chartjs-plugin-annotation": "^2.2.1",
     "chartjs-plugin-datalabels": "^2.2.0",
     "date-fns": "^2.29.3",
+    "file-saver": "^2.0.5",
     "igniteui-angular": "^15.1.1",
     "jquery": "^3.6.4",
+    "jspdf-autotable": "^3.5.29",
     "leaflet": "^1.9.3",
     "leaflet.markercluster": "^1.5.3",
     "ng-busy": "^15.0.0",
@@ -44,6 +46,7 @@
     "primeng": "^15.4.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.12.0"
   },
   "devDependencies": {
@@ -54,6 +57,7 @@
     "@types/d3-scale": "^4.0.3",
     "@types/d3-selection": "^3.0.5",
     "@types/d3-shape": "^3.1.1",
+    "@types/file-saver": "^2.0.5",
     "@types/jasmine": "~4.3.0",
     "@types/jquery": "^3.5.16",
     "@types/jqueryui": "^1.12.16",
