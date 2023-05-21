@@ -2,38 +2,34 @@
 [columns]="columns" [value]="tableData" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '50rem' }"
 [paginator]="true"
 [showCurrentPageReport]="true"
+[rows]="10"
 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [rowsPerPageOptions]="[5, 15, 20]"
+    [rowsPerPageOptions]="[10, 25, 50]"
     #dt1
     dataKey="id"
     [globalFilterFields]="columns"
 >
 <ng-template pTemplate="caption">
-  <div class="flex">
+  <div class="datatable-header-custom">
       <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-      <span class="p-input-icon-left ml-auto">
+      <div class="datatable-search">
           <i class="pi pi-search"></i>
           <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Search keyword" />
-      </span>
+      </div>
   </div>
 </ng-template>
   <ng-template pTemplate="header" let-columns>
     <tr>
-      <th *ngFor="let column of columns; let i = index" pSortableColumn="{{column}}">{{ columnLabels[i] }}<p-sortIcon field="{{column}}"></p-sortIcon>
-        <ng-container *ngIf="isColumnNumber(column); else textFilter">
-          <th style="min-width:10rem">
-            <div class="flex align-items-center">
-          <p-columnFilter type="numeric" field="{{column}}" display="menu"></p-columnFilter>
+      <th *ngFor="let column of columns; let i = index" pSortableColumn="{{column}}">{{ columnLabels[i] }}
+        <div>
+          <p-sortIcon field="{{column}}"></p-sortIcon>
+          <ng-container *ngIf="isColumnNumber(column); else textFilter">
+              <p-columnFilter type="numeric" field="{{column}}" display="menu"></p-columnFilter>
+          </ng-container>
+          <ng-template #textFilter>
+              <p-columnFilter type="text" field="{{column}}" display="menu"></p-columnFilter>
+          </ng-template>
         </div>
-      </th>
-        </ng-container>
-        <ng-template #textFilter>
-          <th style="min-width:10rem">
-            <div class="flex align-items-center">
-          <p-columnFilter type="text" field="{{column}}" display="menu"></p-columnFilter>
-        </div>
-      </th>
-        </ng-template>
       </th>
     </tr>
   </ng-template>

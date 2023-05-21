@@ -66,6 +66,7 @@ import { ResendVerificationMailDialogComponent } from './components/resend-verif
 import { PrimengTableComponent } from './components/primeng-table/primeng-table.component';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { ScrollTopModule } from 'primeng/scrolltop';
 
 @NgModule({
   declarations: [
@@ -138,7 +139,8 @@ import { ButtonModule } from 'primeng/button';
     MatTooltipModule,
     ImageCropperModule,
     TableModule,
-    ButtonModule
+    ButtonModule,
+    ScrollTopModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
