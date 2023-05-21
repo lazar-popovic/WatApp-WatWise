@@ -25,9 +25,6 @@ export class PrimengTableComponent{
     this.loading = true;
     if (this.tableData && this.tableData.length > 0) {
       this.columns = Object.keys(this.tableData[0]);
-     /* const columnNames = Object.keys(this.tableData[0]);
-    this.columns = columnNames.map((col) => ({ field: col, header: col }));
-    this.exportColumns = columnNames.map((col) => ({ title: col, dataKey: col }));*/
   }
 }
 
@@ -62,7 +59,16 @@ export class PrimengTableComponent{
 
 exportExcel() {
     import('xlsx').then((xlsx) => {
-        const worksheet = xlsx.utils.json_to_sheet(this.tableData);
+        const dataWithHeaders = [];
+        dataWithHeaders.push(this.columnLabels);
+
+        // Add data rows
+        for (const item of this.tableData) {
+          const dataRow = this.columns.map(col => item[col]);
+          dataWithHeaders.push(dataRow);
+        }
+
+        const worksheet = xlsx.utils.aoa_to_sheet(dataWithHeaders);
         const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
         this.saveAsExcelFile(excelBuffer, 'Data');
