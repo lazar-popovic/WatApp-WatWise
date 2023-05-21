@@ -26,14 +26,14 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 </ng-template>
   <ng-template pTemplate="header" let-columns>
     <tr>
-      <th *ngFor="let column of columns; let i = index" pSortableColumn="{{column}}">{{ columnLabels[i] }}
+      <th *ngFor="let column of columns; let i = index" pSortableColumn="{{column.field}}">{{ column.header }}
         <div>
-          <p-sortIcon field="{{column}}"></p-sortIcon>
-          <ng-container *ngIf="isColumnNumber(column); else textFilter">
-              <p-columnFilter type="numeric" field="{{column}}" display="menu"></p-columnFilter>
+          <p-sortIcon field="{{column.field}}"></p-sortIcon>
+          <ng-container *ngIf="isColumnNumber(column.field); else textFilter">
+              <p-columnFilter type="numeric" field="{{column.field}}" display="menu"></p-columnFilter>
           </ng-container>
           <ng-template #textFilter>
-              <p-columnFilter type="text" field="{{column}}" display="menu"></p-columnFilter>
+              <p-columnFilter type="text" field="{{column.field}}" display="menu"></p-columnFilter>
           </ng-template>
         </div>
       </th>
@@ -41,7 +41,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
-      <td *ngFor="let column of columns">{{ rowData[column] }}</td>
+      <td *ngFor="let column of columns">{{ rowData[column.field] }}</td>
     </tr>
   </ng-template>
   <ng-template pTemplate="summary">

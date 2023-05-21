@@ -7,7 +7,7 @@
     <div class="overview-filter-holder">
       <button class="button green" (click)="showAddUProsumer = true" style="display:inline-block;">+Add Prosumer</button>
     </div>
-    <app-primeng-table [tableData]="usersData" [columns]="columns" [columnLabels]="columnLabels"></app-primeng-table>
+    <app-primeng-table [tableData]="usersData" [columns]="columns"></app-primeng-table>
   </div>
   <div class="hover-form" *ngIf="showAddUProsumer" style="z-index: 2;">
     <app-users (output)="formEmitter($event)"></app-users>

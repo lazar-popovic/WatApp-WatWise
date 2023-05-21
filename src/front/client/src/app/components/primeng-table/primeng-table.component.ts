@@ -25,9 +25,6 @@ export class PrimengTableComponent{
 
   ngOnInit() {
     this.loading = true;
-    if (this.tableData && this.tableData.length > 0) {
-      this.columns = Object.keys(this.tableData[0]);
-  }
 }
 
   isColumnNumber(column: any): boolean {
@@ -43,7 +40,7 @@ export class PrimengTableComponent{
     this.dt1!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
-
+  /*
   exportPdf() {
     import('jspdf').then((jsPDF) => {
         import('jspdf-autotable').then((x) => {
@@ -57,16 +54,28 @@ export class PrimengTableComponent{
               doc.save('Data.pdf');
           });
     });
+} */
+exportPdf() {
+  this.exportColumns = this.columns.map((col) => ({ title: col.header, dataKey: col.field }));
+  console.log(this.exportColumns);
+  import('jspdf').then((jsPDF) => {
+      import('jspdf-autotable').then((x) => {
+          const doc = new jsPDF.default('l', 'px', 'a4');
+          (doc as any).autoTable(this.exportColumns, this.tableData);
+          doc.save('products.pdf');
+      });
+  });
 }
 
 exportExcel() {
     import('xlsx').then((xlsx) => {
         const dataWithHeaders = [];
-        dataWithHeaders.push(this.columnLabels);
+        const headerRow = this.columns.map(col => col.header);
+        dataWithHeaders.push(headerRow);
 
         // Add data rows
         for (const item of this.tableData) {
-          const dataRow = this.columns.map(col => item[col]);
+          const dataRow = this.columns.map(col => item[col.field]);
           dataWithHeaders.push(dataRow);
         }
 
@@ -76,6 +85,15 @@ exportExcel() {
         this.saveAsExcelFile(excelBuffer, 'Data');
     });
 }
+/*
+exportExcel() {
+  import('xlsx').then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(this.tableData);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, 'products');
+  });
+}*/
 
 saveAsExcelFile(buffer: any, fileName: string): void {
     let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
