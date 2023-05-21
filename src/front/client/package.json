@@ -35,6 +35,7 @@
     "file-saver": "^2.0.5",
     "igniteui-angular": "^15.1.1",
     "jquery": "^3.6.4",
+    "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.29",
     "leaflet": "^1.9.3",
     "leaflet.markercluster": "^1.5.3",

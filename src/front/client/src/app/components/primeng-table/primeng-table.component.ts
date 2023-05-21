@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import { saveAs } from 'file-saver';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-primeng-table',
@@ -21,7 +21,8 @@ export class PrimengTableComponent{
     this.loading = true;
     if (this.tableData && this.tableData.length > 0) {
       this.columns = Object.keys(this.tableData[0]);
-      this.exportColumns = this.columns.map((column) => ({ field: column, header: column }));
+      this.exportColumns = this.columns.map((column) => ({ field: column, header: column}));
+      console.log("AHAHAHAHAHAHAH");
     }
   }
 
@@ -38,6 +39,7 @@ export class PrimengTableComponent{
     this.dt1!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
+
   exportPdf() {
     import('jspdf').then((jsPDF) => {
         import('jspdf-autotable').then((x) => {
@@ -48,12 +50,26 @@ export class PrimengTableComponent{
     });
 }
 
+  /*
+  exportPdf(): void {
+    import('jspdf').then((jsPDF) => {
+      import('jspdf-autotable').then((autoTable) => {
+        const doc = new jsPDF.default('p', 'px', 'a4');
+        autoTable.default(doc, {
+          head: [this.exportColumns.map((column) => column.header)],
+          body: this.tableData.map((data) => this.exportColumns.map((column) => data[column.field]))
+        });
+        doc.save('Data.pdf');
+      });
+    });
+  } */
+
 exportExcel() {
     import('xlsx').then((xlsx) => {
         const worksheet = xlsx.utils.json_to_sheet(this.tableData);
         const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-        this.saveAsExcelFile(excelBuffer, 'products');
+        this.saveAsExcelFile(excelBuffer, 'Data');
     });
 }
 
@@ -63,7 +79,6 @@ saveAsExcelFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], {
         type: EXCEL_TYPE
     });
-    var FileSaver = require('file-saver');
     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
 }
 }
