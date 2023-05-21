@@ -229,7 +229,7 @@ table tbody tr:hover {
   width: 100%;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 1000px) {
   #device-schedule-holder {
     width: calc(100% - 1000px);
     margin-left: 20px;

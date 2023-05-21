@@ -1,4 +1,4 @@
-@media (max-width: 599px) {
+@media (max-width: 999px) {
 
   .device-container > .device-items-holder {
     display: grid;
@@ -19,7 +19,7 @@
   }
 }
 
-@media (min-width:500px) and (max-width: 599px) {
+@media (min-width:500px) and (max-width: 999px) {
   .devices-container > .device-container {
     margin-bottom: 20px;
     width: 500px;

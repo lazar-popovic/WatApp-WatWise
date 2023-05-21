@@ -23,7 +23,7 @@ body {
   padding: 5px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
   .horizontal-legend {
     overflow-x: scroll!important;
   }

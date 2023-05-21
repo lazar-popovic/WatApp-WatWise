@@ -7,7 +7,7 @@
 .profile-wraper {
   margin: 100px 0 0 100px;
   position: relative;
-  
+
   height: 50%;
   margin-right: 10%;
 
@@ -97,7 +97,7 @@
   display: flex;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 999px) {
   .profile-container {
     display: flex;
     flex-direction: column;
@@ -157,7 +157,7 @@
   border-radius: 10px;
   border: 0px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  
+
   margin-left: 100px;
 
   /* background-image: url(/assets/sett.png);

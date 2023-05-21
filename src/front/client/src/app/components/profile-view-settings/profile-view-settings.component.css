@@ -127,7 +127,7 @@ p {
     top: 20%;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 999px) {
     .profile-view-settings > .profile-view-image {
         justify-content: center;
         margin-bottom: 30px;
