@@ -15,16 +15,16 @@
     <div id="filter">
       <div *ngIf="historyflag==true">
         <div class="slider">
-          <div id="today" (click)="todayClick()">Date</div>
-          <div id="month" (click)="monthClick()">Month</div>
-          <div id="year" (click)="yearClick()">Year</div>
+          <div id="today" (click)="todayClick()" [ngClass]="{'slider-selected': todayFlag, 'slider-not-selected': !todayFlag}">Date</div>
+          <div id="month" (click)="monthClick()" [ngClass]="{'slider-selected': monthFlag, 'slider-not-selected': !monthFlag}">Month</div>
+          <div id="year" (click)="yearClick()" [ngClass]="{'slider-selected': yearFlag, 'slider-not-selected': !yearFlag}">Year</div>
         </div>
       </div>
       <div *ngIf="predictionFlag==true">
         <div class="slider">
-          <div id="day1" (click)="tommorowClick()">Tom.</div>
-          <div id="day2" (click)="threeDaysClick()">3 Days</div>
-          <div id="day3" (click)="sevenDaysClick()">7 Days</div>
+          <div id="day1" (click)="tommorowClick()" [ngClass]="{'slider-selected': tommorowFlag, 'slider-not-selected': !tommorowFlag}">Tom.</div>
+          <div id="day2" (click)="threeDaysClick()" [ngClass]="{'slider-selected': threeDaysFlag, 'slider-not-selected': !threeDaysFlag}">3 Days</div>
+          <div id="day3" (click)="sevenDaysClick()" [ngClass]="{'slider-selected': sevenDaysFlag, 'slider-not-selected': !sevenDaysFlag}">7 Days</div>
         </div>
       </div>
     </div>
