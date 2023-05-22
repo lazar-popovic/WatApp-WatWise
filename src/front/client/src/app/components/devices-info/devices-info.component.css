@@ -117,9 +117,9 @@
 }
 
 .device-item-header {
+  flex-direction: column;
   justify-content: space-between;
   flex-wrap: wrap;
-  align-items: center;
   font-size: 20px;
   font-weight: 300;
   color: #3e3e3e;

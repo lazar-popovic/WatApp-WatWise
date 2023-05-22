@@ -10,10 +10,12 @@
         <div class="device-item" *ngFor="let device of consumeDevices" (click)="toDevice( device.id)">
           <div class="device-item-header">
             <div class="device-item-header-model">
-              <img src="/assets/consumer.png" alt="consumer">
+              <img [src]="'/assets/deviceTypes/'+device.type+'.png'" alt="consumer">
               <h3>{{device.name}}</h3>
             </div>
-            {{device.type}}
+            <div>
+              <p>{{device.type}}</p>
+            </div>
           </div>
           <div class="device-item-footer c">
             <div *ngIf="device.activityStatus"><img src="/assets/active.png" alt="active"></div>
@@ -34,7 +36,7 @@
         <div class="device-item" *ngFor="let device of prosumeDevices" (click)="toDevice( device.id)">
           <div class="device-item-header">
             <div class="device-item-header-model">
-              <img src="/assets/prosumer.png" alt="consumer">
+              <img [src]="'/assets/deviceTypes/'+device.type+'.png'" alt="consumer">
               <h3>{{device.name}}</h3>
             </div>
             {{device.type}}
@@ -57,7 +59,7 @@
         <div class="device-item" *ngFor="let device of storageDevices" (click)="toDevice( device.id)">
           <div class="device-item-header">
             <div class="device-item-header-model">
-              <img src="/assets/storage.png" alt="consumer">
+              <img [src]="'/assets/deviceTypes/'+device.type+'.png'" alt="consumer">
               <h3>{{device.name}}</h3>
             </div>
             {{device.type}}

@@ -68,6 +68,7 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { TooltipModule } from 'primeng/tooltip';
+import { PrimengValueTableComponent } from './components/primeng-value-table/primeng-value-table.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,8 @@ import { TooltipModule } from 'primeng/tooltip';
     DeleteProfileComponent,
     ResendVerificationMailDialogComponent,
     DeleteProfileComponent,
-    PrimengTableComponent
+    PrimengTableComponent,
+    PrimengValueTableComponent
   ],
   imports: [
     BrowserModule,

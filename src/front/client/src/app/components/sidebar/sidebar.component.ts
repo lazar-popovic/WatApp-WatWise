@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  styleUrls: ['./sidebar.component.css','./sidebar.component.mobile.css']
 })
 export class SidebarComponent {
   url = 'Overview';
