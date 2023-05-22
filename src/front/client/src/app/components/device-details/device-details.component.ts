@@ -596,7 +596,8 @@ export class DeviceDetailsComponent implements OnInit
       },
       mean: 0,
       mae: 0,
-      rmse: 0
+      rmse: 0,
+      median: 0
     }
 
     additionalStats() {
@@ -616,6 +617,18 @@ export class DeviceDetailsComponent implements OnInit
           this.additionalStatsData.rmse = Math.sqrt(values.reduce((total, obj) => {
             return total + Math.pow(parseFloat(obj.value) - parseFloat(obj.predictedValue), 2);
           }, 0) / values.length);
+
+          const valuesValues = values.map(obj => obj.value);
+          valuesValues.sort((a, b) => a - b);
+
+          const length = valuesValues.length;
+          const middleIndex = Math.floor(length / 2);
+
+          if (length % 2 === 1) {
+            this.additionalStatsData.median = valuesValues[middleIndex];
+          } else {
+            this.additionalStatsData.median = (valuesValues[middleIndex - 1] + valuesValues[middleIndex]) / 2;
+          }
         }
       }
     }

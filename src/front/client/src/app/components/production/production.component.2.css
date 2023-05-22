@@ -226,9 +226,9 @@ table tbody tr:hover {
 
 #stats-button {
   background-image: url(/assets/stats.png);
-  background-size: 15px;
+  background-size: 20px;
   background-repeat: no-repeat;
-  background-position: 10px 15px;
+  background-position: 5px 10px;;
 
   font-family: 'Inter', sans-serif;
   font-style: normal;
