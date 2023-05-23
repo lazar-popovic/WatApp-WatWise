@@ -23,12 +23,19 @@
       <p>{{device.deviceSubtype!.subtypeName}}</p>
     </div>
   </div>
-  <div class="device-detail" *ngIf="(device.deviceType.category != 0) && (role == 3 || device.dsoControl == true)">
+  <div class="device-detail" *ngIf="(device.deviceType.category != 0)">
     <div class="title">
       <p>Activity status</p>
     </div>
-    <div>
-      <app-slider [status]="device.activityStatus"  (sliderEvent)="onSliderChange($event)"></app-slider>
+    <div *ngIf="role == 3 || device.dsoControl == true">
+      <p-toggleButton [(ngModel)]="device.activityStatus" onLabel="On" offLabel="Off" (click)="onSliderChange( device.activityStatus)"></p-toggleButton>
+      <!--<app-slider [status]="device.activityStatus"  (sliderEvent)="onSliderChange($event)"></app-slider>-->
+    </div>
+    <div *ngIf="role != 3 && device.dsoControl == false">
+      <p pInputText pTooltip="It appears that the prosumer has not granted you permission to change the activity status of this device." tooltipPosition="bottom" >
+        <span style="color:#3acc5e; text-decoration: underline;" *ngIf="device.activityStatus">On</span>
+        <span style="color:#c15757; text-decoration: underline;" *ngIf="!device.activityStatus">Off</span>
+      </p>
     </div>
   </div>
   <div class="device-detail" *ngIf="device.deviceType.category == 0">

@@ -69,6 +69,7 @@ import { ButtonModule } from 'primeng/button';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { TooltipModule } from 'primeng/tooltip';
 import { PrimengValueTableComponent } from './components/primeng-value-table/primeng-value-table.component';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 @NgModule({
   declarations: [
@@ -144,7 +145,8 @@ import { PrimengValueTableComponent } from './components/primeng-value-table/pri
     TableModule,
     ButtonModule,
     ScrollTopModule,
-    TooltipModule
+    TooltipModule,
+    ToggleButtonModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
