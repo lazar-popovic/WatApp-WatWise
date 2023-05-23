@@ -32,20 +32,29 @@ export class EmployeeOverviewComponent {
   }
 
   getEmployees() {
-    this.userService.getEmployees(this.filter.name, this.filter.sortOrder, this.pageSize, this.pagesNum).subscribe((result: any) => {
-      this.users = [];
+    this.userService.getEmployees().subscribe((result: any) => {
+      this.usersData = [];
       for(let item of result.data) {
-        let user = new User();
-        user.firstName = item.firstname;
-        user.lastName = item.lastname;
-        user.id = item.userId;
-        user.mail = item.email;
-        user.roleId = item.roleId;
-        this.users.push(user);
+        let user: any = {
+          firstname: item.firstname,
+          lastname: item.lastname,
+          mail: item.email,
+        };
+        this.usersData.push(user);
       }
+      this.columns = Object.keys(this.usersData[0]).map(column => ({
+        field: column,
+        header: this.formatHeader(column)}));
+        console.log(this.columns);
     },(error: any) => {
       console.log(error);
     });
+  }
+
+  formatHeader(column: string): string {
+    const formattedColumn = column.replace(/([A-Z])/g, ' $1').trim();
+    const firstLetterCapitalized = formattedColumn.charAt(0).toUpperCase() + formattedColumn.slice(1).toLowerCase();
+    return firstLetterCapitalized;
   }
 
   addEmployee() {
