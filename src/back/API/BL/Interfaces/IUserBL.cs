@@ -21,5 +21,6 @@ namespace API.BL.Interfaces
         Task<Response<string>> DeleteProsumer(int id);
         Task<Response<string>> DeleteProfilePictureAsync(int userId);
         Task<Response<List<AllProsumersWithConsumptionProductionDTO>>> ProsumersWithEnergyUsage();
+        Task<Response<List<User>>> GetAllEmployees();
     }
 }
