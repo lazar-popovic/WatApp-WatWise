@@ -49,6 +49,7 @@
             </form>
         </div>
     </div> -->
+    <app-primeng-table [tableData]="usersData" [columns]="columns"></app-primeng-table>
     <div class="hover-form" *ngIf="showAddNewEmployeeForm == true">
       <app-add-employee (output)="formEmitter( $event)"></app-add-employee>
     </div>
