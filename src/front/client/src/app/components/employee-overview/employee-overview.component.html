@@ -3,13 +3,14 @@
     <div class="overview-tab">
         <div class="overview-filter-holder">
             <form>
+              <!--
                 <div class="search-input">
                     <input name="fullName" [(ngModel)]="filter.name" (keyup)="getEmployees()" placeholder = "Search by name" autocomplete="off">
-                </div>
+                </div> -->
                 <button (click)="addEmployee()" class="button green" style="margin: 0!important">+Add Employee</button>
             </form>
         </div>
-
+        <!--
         <div class="overview-users-table">
             <table>
                 <tr>
@@ -47,7 +48,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> -->
     <div class="hover-form" *ngIf="showAddNewEmployeeForm == true">
       <app-add-employee (output)="formEmitter( $event)"></app-add-employee>
     </div>

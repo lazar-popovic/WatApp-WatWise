@@ -62,7 +62,7 @@ exportPdf() {
       import('jspdf-autotable').then((x) => {
           const doc = new jsPDF.default('l', 'px', 'a4');
           (doc as any).autoTable(this.exportColumns, this.tableData);
-          doc.save('products.pdf');
+          doc.save('Data.pdf');
       });
   });
 }
