@@ -338,7 +338,7 @@ namespace API.BL.Implementations
             Response<List<User>> response =
                 new Response<List<User>>();
             
-            var employees = await _userDal.ProsumersWithConsumptionProductionAndNumberOfWorkingDevices();
+            var employees = await _userDal.GetAllEmployees();
 
             if (employees.IsNullOrEmpty())
             {

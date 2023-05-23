@@ -22,5 +22,6 @@ namespace API.DAL.Interfaces
         Task DeleteUser(User user);
         Task<User> DeleteProfilePictureAsync(int userId);
         Task<List<AllProsumersWithConsumptionProductionDTO>> ProsumersWithConsumptionProductionAndNumberOfWorkingDevices();
+        Task<List<User>> GetAllEmployees();
     }
 }
