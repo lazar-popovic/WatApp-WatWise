@@ -105,7 +105,7 @@
       </div>
     </div>
     <div id="table" *ngIf="data.length > 0">
-      <table *ngIf="historyflag">
+      <!--<table *ngIf="historyflag">
         <thead>
           <tr id="thead-tr">
             <th>{{tableTitle}}</th>
@@ -134,7 +134,8 @@
             <td>{{row.predictedValue}}</td>
           </tr>
         </tbody>
-      </table>
+      </table>-->
+      <app-primeng-value-table [tableData]="data" [columnLabels]="columnLabels" [columns]="columns"></app-primeng-value-table>
     </div>
     <div id="no-data" *ngIf="data.length == 0">
       <h3>No data for given filters</h3>

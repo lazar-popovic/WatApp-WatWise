@@ -16,24 +16,19 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         <button type="button" pButton pRipple icon="pi pi-file" (click)="dt1.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
         <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
         <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
-        <!--<button type="button" pButton pRipple icon="pi pi-filter" (click)="dt1.exportCSV({ selectionOnly: true })" class="p-button-info ml-auto" pTooltip="Selectable CSV" tooltipPosition="bottom"></button>-->
-    </div>
-      <div class="datatable-search">
-          <i class="pi pi-search"></i>
-          <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Search keyword" />
       </div>
   </div>
 </ng-template>
   <ng-template pTemplate="header" let-columns>
     <tr>
-      <th *ngFor="let column of columns; let i = index" pSortableColumn="{{column.field}}">{{ column.header }}
+      <th *ngFor="let column of columns; let i = index" pSortableColumn="{{column}}">{{ columnLabels[i] }}
         <div>
-          <p-sortIcon field="{{column.field}}"></p-sortIcon>
-          <ng-container *ngIf="isColumnNumber(column.field); else textFilter">
-              <p-columnFilter type="numeric" field="{{column.field}}" display="menu"></p-columnFilter>
+          <p-sortIcon field="{{column}}"></p-sortIcon>
+          <ng-container *ngIf="isColumnNumber(column); else textFilter">
+              <p-columnFilter type="numeric" field="{{column}}" display="menu"></p-columnFilter>
           </ng-container>
           <ng-template #textFilter>
-              <p-columnFilter type="text" field="{{column.field}}" display="menu"></p-columnFilter>
+              <p-columnFilter type="text" field="{{column}}" display="menu"></p-columnFilter>
           </ng-template>
         </div>
       </th>
@@ -41,7 +36,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
-      <td *ngFor="let column of columns">{{ rowData[column.field] }}</td>
+      <td *ngFor="let column of columns">{{ rowData[column] }}</td>
     </tr>
   </ng-template>
   <ng-template pTemplate="summary">
