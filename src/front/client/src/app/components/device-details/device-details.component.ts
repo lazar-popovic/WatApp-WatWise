@@ -49,6 +49,8 @@ export class DeviceDetailsComponent implements OnInit
       dsoControl: false
     }
     capacity: number = 1;
+    columns: any[] = [];
+    columnLabels: any[] = [];
 
     busy: Subscription | undefined;
 
@@ -183,6 +185,8 @@ export class DeviceDetailsComponent implements OnInit
     dataProduction: any[] = [];
 
     historyClick(){
+      this.columns = ['timestamp','predictedValue','value'];
+      this.columnLabels = ['Hour','Predicted '+this.categoryLabel,this.categoryLabel];
       this.historyflag = true;
       var historyDiv = document.getElementById("history-h3");
       if(historyDiv)  { historyDiv.style.color = "#3e3e3e"; }
@@ -195,6 +199,8 @@ export class DeviceDetailsComponent implements OnInit
     }
 
     predictionClick(){
+      this.columns = ['timestamp','predictedValue'];
+      this.columnLabels = ['Hour','Predicted '+this.categoryLabel];
       this.historyflag = false;
       var historyDiv = document.getElementById("history-h3");
       if(historyDiv)  { historyDiv.style.color = "gray"; }
@@ -210,6 +216,7 @@ export class DeviceDetailsComponent implements OnInit
     {
       this.data=[1];
       this.tableTitle = "Hour";
+      this.columnLabels[0] = "Hour";
       this.todayFlag  = true; this.monthFlag  = false; this.yearFlag = false;
       var todayDiv = document.getElementById("today");
       if(todayDiv)
@@ -301,6 +308,7 @@ export class DeviceDetailsComponent implements OnInit
     {
       this.data=[1];
       this.tableTitle = "Day";
+      this.columnLabels[0] = "Day";
       this.todayFlag = false; this.monthFlag  = true; this.yearFlag = false;
       const monthDiv = document.getElementById("month");
       if(monthDiv)
@@ -377,6 +385,7 @@ export class DeviceDetailsComponent implements OnInit
     {
       this.data=[1];
       this.tableTitle = "Month";
+      this.columnLabels[0] = "Month";
       this.todayFlag = false; this.monthFlag  = false; this.yearFlag = true;
       var yearDiv = document.getElementById("year");
       if(yearDiv)
@@ -422,6 +431,8 @@ export class DeviceDetailsComponent implements OnInit
     tommorowClick()
     {
       this.data=[1];
+      this.tableTitle = "Hour";
+      this.columnLabels[0] = "Hour"
       this.tommorowFlag = true;
       this.threeDaysFlag = false;
       this.sevenDaysFlag = false;
@@ -469,6 +480,8 @@ export class DeviceDetailsComponent implements OnInit
     threeDaysClick()
     {
       this.data=[1];
+      this.tableTitle = "Hour";
+      this.columnLabels[0] = "Hour"
       this.tommorowFlag = false;
       this.threeDaysFlag = true;
       this.sevenDaysFlag = false;
@@ -516,6 +529,8 @@ export class DeviceDetailsComponent implements OnInit
     sevenDaysClick()
     {
       this.data=[1];
+      this.tableTitle = "Day";
+      this.columnLabels[0] = "Day"
       this.tommorowFlag = false;
       this.threeDaysFlag = false;
       this.sevenDaysFlag = true;
