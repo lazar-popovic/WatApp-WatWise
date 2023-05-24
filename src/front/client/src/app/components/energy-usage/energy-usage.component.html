@@ -55,42 +55,7 @@
       </div>
     </div>
     <div id="table">
-      <table *ngIf="historyflag">
-        <thead>
-        <tr id="thead-tr">
-          <th>Timestamp</th>
-          <th>Predicted Consumption<br>[kWh]</th>
-          <th>Consumption<br>[kWh]</th>
-          <th>Predicted Production<br>[kWh]</th>
-          <th>Production<br>[kWh]</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let row of result">
-          <td>{{ row.timestamp }}</td>
-          <td style="color: rgba(191, 65, 65, 0.8)">{{row.predictedConsumption?.toFixed(3) }}</td>
-          <td style="color: rgba(191, 65, 65, 1)">{{ row.consumption?.toFixed(3) }}</td>
-          <td style="color: rgba(69, 94, 184, 0.8)">{{ row.predictedProduction?.toFixed(3) }}</td>
-          <td style="color: rgba(69, 94, 184, 1)">{{ row.production?.toFixed(3) }}</td>
-        </tr>
-        </tbody>
-      </table>
-      <table *ngIf="predictionFlag">
-        <thead>
-        <tr id="thead-tr">
-          <th>{{tableTitle}}</th>
-          <th>Predicted Consumption<br>[kWh]</th>
-          <th>Predicted Production<br>[kWh]</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let data of dataConsumption; let i = index">
-          <td>{{ data?.x }}</td>
-          <td>{{ data?.y.toFixed(3) }}</td>
-          <td>{{ dataProduction[i]?.y.toFixed(3) }}</td>
-        </tr>
-        </tbody>
-      </table>
+      <app-primeng-value-table [tableData]="result" [columnLabels]="columnLabels" [columns]="columns"></app-primeng-value-table>
     </div>
   </div>
 </div>

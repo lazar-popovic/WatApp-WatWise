@@ -21,6 +21,8 @@ export class EnergyUsageComponent implements OnInit {
     this.historyClick();
   }
   tableTitle: string = "Timestamp";
+  columns: any[] = [];
+  columnLabels: any[] = [];
   historyflag : boolean = true;
   predictionFlag : boolean = false;
 
@@ -49,6 +51,8 @@ export class EnergyUsageComponent implements OnInit {
   year: number = 2023;
 
   historyClick(){
+    this.columns = ['timestamp','predictedConsumption','consumption','predictedProduction','production'];
+    this.columnLabels = ['Hour','Predicted Consumption [kWh]','Consumption [kWh]','Predicted Production [kWh]','Production [kWh]'];
     this.historyflag = true;
     var historyDiv = document.getElementById("history-h3");
     if(historyDiv)  { historyDiv.style.color = "#3e3e3e"; }
@@ -61,6 +65,8 @@ export class EnergyUsageComponent implements OnInit {
   }
 
   predictionClick(){
+    this.columns = ['timestamp','predictedConsumption','predictedProduction'];
+    this.columnLabels = ['Hour','Predicted Consumption [kWh]','Predicted Production [kWh]'];
     this.historyflag = false;
     var historyDiv = document.getElementById("history-h3");
     if(historyDiv)  { historyDiv.style.color = "gray"; }
@@ -74,6 +80,8 @@ export class EnergyUsageComponent implements OnInit {
 
   todayClick()
   {
+    this.tableTitle = "Hour";
+    this.columnLabels[0] = "Hour";
     this.todayFlag  = true; this.monthFlag  = false; this.yearFlag = false;
     var todayDiv = document.getElementById("today");
     if(todayDiv)
@@ -182,6 +190,8 @@ export class EnergyUsageComponent implements OnInit {
 
   monthClick()
   {
+    this.tableTitle = "Day";
+    this.columnLabels[0] = "Day";
     this.todayFlag = false; this.monthFlag  = true; this.yearFlag = false;
     const monthDiv = document.getElementById("month");
     if(monthDiv)
@@ -285,6 +295,8 @@ export class EnergyUsageComponent implements OnInit {
 
   yearClick()
   {
+    this.tableTitle = "Month";
+    this.columnLabels[0] = "Month";
     this.todayFlag = false; this.monthFlag  = false; this.yearFlag = true;
     var yearDiv = document.getElementById("year");
     if(yearDiv)
@@ -342,6 +354,8 @@ export class EnergyUsageComponent implements OnInit {
 
   tommorowClick()
   {
+    this.tableTitle = "Hour";
+    this.columnLabels[0] = "Hour";
     this.tommorowFlag = true;
     this.threeDaysFlag = false;
     this.sevenDaysFlag = false;
@@ -365,6 +379,7 @@ export class EnergyUsageComponent implements OnInit {
         if( result.success) {
           this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
           this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.value}));
+          this.result = this.transformEnergyUsage( result.data.consumingEnergyUsageByTimestamp, result.data.producingEnergyUsageByTimestamp);
           this.datasets = [{
             data: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: this.datePipe.transform(ceu.timestamp,"shortTime"), y: ceu.value})),
             label: 'Predicted consumption [kWh]',
@@ -388,6 +403,8 @@ export class EnergyUsageComponent implements OnInit {
 
   threeDaysClick()
   {
+    this.tableTitle = "Hour";
+    this.columnLabels[0] = "Hour";
     this.tommorowFlag = false;
     this.threeDaysFlag = true;
     this.sevenDaysFlag = false;
@@ -411,6 +428,7 @@ export class EnergyUsageComponent implements OnInit {
         if( result.success) {
           this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
           this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+          this.result = this.transformEnergyUsage( result.data.consumingEnergyUsageByTimestamp, result.data.producingEnergyUsageByTimestamp);
           this.datasets = [{
             data: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
             label: 'Predicted consumption [kWh]',
@@ -434,6 +452,8 @@ export class EnergyUsageComponent implements OnInit {
 
   sevenDaysClick()
   {
+    this.tableTitle = "Day";
+    this.columnLabels[0] = "Day";
     this.tommorowFlag = false;
     this.threeDaysFlag = false;
     this.sevenDaysFlag = true;
@@ -457,6 +477,7 @@ export class EnergyUsageComponent implements OnInit {
         if( result.success) {
           this.dataConsumption = result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
           this.dataProduction = result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value}));
+          this.result = this.transformEnergyUsage( result.data.consumingEnergyUsageByTimestamp, result.data.producingEnergyUsageByTimestamp);
           this.datasets = [{
             data: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({x: ceu.timestamp, y: ceu.value})),
             label: 'Predicted consumption [kWh]',
