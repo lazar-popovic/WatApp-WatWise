@@ -107,36 +107,7 @@
       </div>
     </div>
     <div id="table" *ngIf="data.length > 0">
-      <table *ngIf="historyflag">
-        <thead>
-          <tr id="thead-tr">
-            <th>{{tableTitle}}</th>
-            <th>Predicted {{categoryLabel}}</th>
-            <th>{{categoryLabel}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor=" let row of data">
-            <td>{{row.timestamp}}</td>
-            <td>{{row.predictedValue}}</td>
-            <td>{{row.value}}</td>
-          </tr>
-        </tbody>
-      </table>
-      <table *ngIf="predictionFlag">
-        <thead>
-          <tr id="thead-tr">
-            <th>{{tableTitle}}</th>
-            <th>Predicted {{categoryLabel}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor=" let row of data">
-            <td>{{row.timestamp}}</td>
-            <td>{{row.predictedValue}}</td>
-          </tr>
-        </tbody>
-      </table>
+      <app-primeng-value-table [tableData]="data" [columnLabels]="columnLabels" [columns]="columns"></app-primeng-value-table>
     </div>
     <div id="no-data" *ngIf="data.length == 0">
       <h3>No data for given filters</h3>

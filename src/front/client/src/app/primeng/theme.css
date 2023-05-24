@@ -2736,6 +2736,8 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   border-width: 1px 0 1px 0;
   padding: 1rem 1rem;
   font-weight: 700;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .p-datatable .p-datatable-footer {
   background: #f8f9fa;
@@ -2744,6 +2746,8 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   border-width: 0 0 1px 0;
   padding: 1rem 1rem;
   font-weight: 700;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 .p-datatable .p-datatable-thead > tr > th {
   text-align: left;
@@ -2869,6 +2873,10 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 .p-datatable .p-datatable-scrollable-footer {
   background: #f8f9fa;
 }
+.p-datatable.p-datatable-wrapper table{
+
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3)!important;
+}
 .p-datatable.p-datatable-scrollable > .p-datatable-wrapper > .p-datatable-table > .p-datatable-thead,
 .p-datatable.p-datatable-scrollable > .p-datatable-wrapper > .p-datatable-table > .p-datatable-tfoot, .p-datatable.p-datatable-scrollable > .p-datatable-wrapper > .p-scroller-viewport > .p-scroller > .p-datatable-table > .p-datatable-thead,
 .p-datatable.p-datatable-scrollable > .p-datatable-wrapper > .p-scroller-viewport > .p-scroller > .p-datatable-table > .p-datatable-tfoot {
@@ -2930,6 +2938,10 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 .p-datatable.p-datatable-gridlines:has(.p-datatable-tbody):has(.p-datatable-tfoot) .p-datatable-tbody > tr:last-child > td:last-child {
   border-width: 0 1px 0 1px;
+}
+.p-datatable-striped {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
 }
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
   background: #fcfcfc;
