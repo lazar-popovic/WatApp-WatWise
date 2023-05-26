@@ -5,7 +5,7 @@
       <h2>Prosumers</h2>
     </div>
     <div class="overview-filter-holder">
-      <button class="button green" (click)="showAddUProsumer = true" style="display:inline-block;">+Add Prosumer</button>
+      <p-button  (click)="showAddUProsumer = true" label="Add Prosumer" icon="pi pi-plus" style="display:inline-block;"></p-button>
     </div>
     <app-primeng-table [tableData]="usersData" [columns]="columns"></app-primeng-table>
   </div>
