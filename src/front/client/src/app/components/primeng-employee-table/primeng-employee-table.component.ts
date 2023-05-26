@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import * as FileSaver from 'file-saver';
 import jsPDF from 'jspdf';
@@ -18,27 +18,37 @@ export class PrimengEmployeeTableComponent {
   @Input() tableData: any[] = [];
   @Input() columns: any[] = [];
   @Input() columnLabels: any[] = [];
+  @Output() deleteEvent = new EventEmitter<any>();
+  @Output() resendEvent = new EventEmitter<any>();
   loading: boolean = true;
   selectedData: any[] = [];
   exportColumns: any[] = [];
   showDelete: boolean = false;
   showResend: boolean = false;
   selectedUser: any = null;
-  //users: User[] = [];
+
 
   ngOnInit() {
     this.loading = true;
 }
 
-showResendForm( user: any) {
-  this.selectedUser = user;
-  console.log( this.selectedUser);
+delete(id: any) {
+  this.deleteEvent.emit(id);
+}
+
+resend(email: any) {
+  this.resendEvent.emit(email);
+}
+
+showResendForm( rowData: any) {
+  const userEmail = rowData.mail;
+  console.log( userEmail);
   this.showResend = true
 }
 
-showDeleteForm( user: any) {
-  this.selectedUser = user;
-  console.log( this.selectedUser);
+showDeleteForm( rowData: any) {
+  const userId = rowData.id;
+  console.log( userId);
   this.showDelete = true
 }
 

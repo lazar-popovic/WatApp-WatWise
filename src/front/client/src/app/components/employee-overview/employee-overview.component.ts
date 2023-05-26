@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { event } from 'jquery';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/Models/User';
+import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -25,8 +27,10 @@ export class EmployeeOverviewComponent {
   selectedUser: any = null;
   usersData: any[] = []; // Variable to hold the user data
   columns: any[] = []; // Variable to hold the column names
+  busyDelete: Subscription | undefined;
 
-  constructor(private userService: UserService) {
+
+  constructor(private userService: UserService, private toastrNotifService: ToastrNotifService) {
     this.getEmployees();
   }
 
@@ -38,6 +42,7 @@ export class EmployeeOverviewComponent {
           firstname: item.firstname,
           lastname: item.lastname,
           mail: item.email,
+          id: item.id
         };
         this.usersData.push(user);
       }
@@ -60,30 +65,6 @@ export class EmployeeOverviewComponent {
     this.showAddNewEmployeeForm = true
   }
 
-  /*
-  getNumberOfPages() {
-    //this.userService.getNumberOfEmployees();
-  }
-
-  handler(type: number) {
-    let active = document.querySelector(".overview-pagination-page-active") as HTMLDivElement;
-
-    if(type == 2) {
-      if(this.currentIndex < this.pagesNum)
-        this.currentIndex++;
-    }
-    if(type == 1  ) {
-      if(this.currentIndex>1)
-      this.currentIndex--;
-    }
-
-    active.innerHTML = this.currentIndex as unknown as string;
-  }
-
-  pageSizeHandler() {
-    console.log(this.pageSize);
-  }
-  */
   formEmitter( event: boolean) : void {
     if( event == true) {
       this.getEmployees();
@@ -91,15 +72,34 @@ export class EmployeeOverviewComponent {
     this.showAddNewEmployeeForm = false
   }
 
-  showResendForm( user: any) {
-    this.selectedUser = user;
-    console.log( this.selectedUser);
+  showResendForm( rowData: any) {
+    const userEmail = rowData.mail;
+    console.log( userEmail);
     this.showResend = true
   }
 
-  showDeleteForm( user: any) {
-    this.selectedUser = user;
-    console.log( this.selectedUser);
+  showDeleteForm( rowData: any) {
+    const userId = rowData.id;
+    console.log( userId);
     this.showDelete = true
+  }
+
+  deleteEmployee(id: any)
+  {
+    this.busyDelete = this.userService.deleteUser(id).subscribe((result: any) => {
+      if( result.body.success) {
+        this.toastrNotifService.showSuccess("Login successful!");
+      }
+      else {
+        this.toastrNotifService.showErrors( result.body.errors);
+      }
+    },(error: any) => {
+      console.log(error.error.errors)
+    })
+  }
+
+  resendVerification(email: any)
+  {
+
   }
 }
