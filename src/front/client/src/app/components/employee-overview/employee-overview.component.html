@@ -5,16 +5,18 @@
       <h2>Employees</h2>
       </div>
         <div class="overview-filter-holder">
-                <p-button (click)="addEmployee()" label="+Add Employee" style="display:inline-block;"></p-button>
+                <p-button (click)="addEmployee()" label="Add Employee" icon="pi pi-plus" style="display:inline-block;"></p-button>
         </div>
     <app-primeng-employee-table [tableData]="usersData" [columns]="columns"></app-primeng-employee-table>
-    <div class="hover-form" *ngIf="showAddNewEmployeeForm == true" style="z-index: 2;">
+    <div class="overlay" *ngIf="showAddNewEmployeeForm == true">
+      <div class="hover-form">
       <app-add-employee (output)="formEmitter( $event)"></app-add-employee>
     </div>
-    <div class="hover-form" *ngIf="showDelete">
+    </div>
+    <div class="hover-form" *ngIf="showDelete" style="z-index: 2;">
       <app-delete-profile (output)="showDelete=false" [id]="selectedUser.id" [user]="selectedUser"></app-delete-profile>
     </div>
-    <div class="hover-form" *ngIf="showResend">
+    <div class="hover-form" *ngIf="showResend" style="z-index: 2;">
       <app-resend-verification-mail-dialog (exitStatusEvent)="showResend=false" [email]="selectedUser.mail"></app-resend-verification-mail-dialog>
     </div>
 </div>

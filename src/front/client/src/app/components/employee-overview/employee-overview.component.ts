@@ -23,7 +23,6 @@ export class EmployeeOverviewComponent {
   showDelete: boolean = false;
   showResend: boolean = false;
   selectedUser: any = null;
-
   usersData: any[] = []; // Variable to hold the user data
   columns: any[] = []; // Variable to hold the column names
 
