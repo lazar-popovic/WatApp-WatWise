@@ -61,6 +61,7 @@ export class EmployeeOverviewComponent {
     this.showAddNewEmployeeForm = true
   }
 
+  /*
   getNumberOfPages() {
     //this.userService.getNumberOfEmployees();
   }
@@ -83,7 +84,7 @@ export class EmployeeOverviewComponent {
   pageSizeHandler() {
     console.log(this.pageSize);
   }
-
+  */
   formEmitter( event: boolean) : void {
     if( event == true) {
       this.getEmployees();

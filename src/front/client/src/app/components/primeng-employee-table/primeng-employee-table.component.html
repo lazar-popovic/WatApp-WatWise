@@ -43,8 +43,8 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
       <td *ngFor="let column of columns">{{ rowData[column.field] }}</td>
-      <td><p-button label="Resend" styleClass="p-button-outlined, p-button-sm" pTooltip="Resend verification email to employee" tooltipPosition="bottom" (click)="showResendForm(tableData)"></p-button></td>
-      <td><p-button label="Delete" styleClass="p-button-outlined" pTooltip="Delete employee" tooltipPosition="bottom" (click)="showDeleteForm(tableData)"></p-button></td>
+      <td><p-button label="Resend" styleClass="p-button-outlined, p-button-sm" pTooltip="Resend verification email to employee" tooltipPosition="bottom" (click)="showResendForm(rowData)"></p-button></td>
+      <td><p-button label="Delete" styleClass="p-button-outlined" pTooltip="Delete employee" tooltipPosition="bottom" (click)="showDeleteForm(rowData)"></p-button></td>
     </tr>
   </ng-template>
   <ng-template pTemplate="summary">
