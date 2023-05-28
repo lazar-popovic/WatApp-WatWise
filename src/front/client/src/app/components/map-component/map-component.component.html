@@ -5,6 +5,9 @@
 
 <div id="filter">
   <div id="select-city">
+    <h3>Prosumers map of current electrical energy usage</h3>
+  </div>
+  <div id="select-city">
     <app-tooltip [message]="'This select contains all cities in which prosumer has been registered.'"></app-tooltip>
     <div style="margin:0!important; display: flex; align-items: center; padding-left:10px; width: 40%!important; color:#3e3e3e">
       <h4>City</h4>
@@ -87,7 +90,4 @@
       <td><p class="pin-about">More than 5 kWh</p></td>
     </tr>
   </table>
-  <div style="position: absolute; right: 10px; top:10px">
-    <p><i class="fa fa-info-circle" aria-hidden="true" [matTooltip]="'This number represents power usage for this location. Represents sum of all production and consumption for this hour. If number is below zero, that means there is more consumption of electrical energy at this location. If power usage is bigger than zero, then there is more production of electrical energy.'"></i></p>
-  </div>
 </div>
