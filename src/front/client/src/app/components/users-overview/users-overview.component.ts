@@ -57,7 +57,7 @@ export class UsersOverviewComponent {
 
         this.usersData.push(user);
       }
-      this.columns = Object.keys(this.usersData[0]).map(column => ({
+      this.columns = Object.keys(this.usersData[0]).filter(column => column !== 'id').map(column => ({
         field: column,
         header: this.formatHeader(column)}));
         console.log(this.columns);
