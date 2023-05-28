@@ -6,6 +6,7 @@ import autoTable from 'jspdf-autotable';
 import { HtmlParser } from '@angular/compiler';
 import { WorkSheet } from 'xlsx';
 import * as saveAs from 'file-saver';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -23,6 +24,9 @@ export class PrimengTableComponent{
   selectedData: any[] = [];
   exportColumns: any[] = [];
   selectedRow: any;
+
+  constructor(private router: Router) { }
+
 
   ngOnInit() {
     this.loading = true;
