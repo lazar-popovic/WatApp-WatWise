@@ -25,11 +25,15 @@ export class PrimengTableComponent{
   exportColumns: any[] = [];
   selectedRow: any;
 
-  constructor(private router: Router) { }
-
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
     this.loading = true;
+}
+
+navigateToUserDetails(user: any) {
+  this.router.navigate(['profile/', user.id]);
 }
 
   isColumnNumber(column: any): boolean {
