@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {LocationService} from "../../services/location.service";
 import { Router } from '@angular/router';
-import { Color } from '@swimlane/ngx-charts';
+import { Color, LegendPosition } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-map-component',
@@ -12,6 +12,7 @@ import { Color } from '@swimlane/ngx-charts';
 export class MapComponentComponent implements OnInit {
 
   private map: any;
+  legendPosition = "below" as LegendPosition;
   cities: any[] = [];
   neighborhoods: any[] = [];
   locations: any[] = [];

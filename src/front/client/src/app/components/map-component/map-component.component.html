@@ -20,18 +20,20 @@
         <option value="1" selected>Production</option>
       </select>
     </div>
-    <div style="margin: 0!important">
+    <div style="margin: 20px 0 0 0!important;">
       <ngx-charts-bar-vertical-2d
+        [view]="[450,280]"
         [results]="chartData"
         [xAxis]="true"
         [yAxis]="true"
-        [legend]="false"
+        [legend]="true"
         [showXAxisLabel]="true"
         [showYAxisLabel]="true"
         [xAxisLabel]="'Neighborhood'"
         [yAxisLabel]="'Current electrical energy usage [kWh]'"
         [legendTitle]="'Electrical energy usage by neighborhood'"
         [scheme]="colorScheme"
+        [legendPosition]="legendPosition"
       ></ngx-charts-bar-vertical-2d>
     </div>
   </div>
