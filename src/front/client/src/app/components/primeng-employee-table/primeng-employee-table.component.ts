@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import * as FileSaver from 'file-saver';
 import jsPDF from 'jspdf';
@@ -6,25 +6,50 @@ import autoTable from 'jspdf-autotable';
 import { HtmlParser } from '@angular/compiler';
 import { WorkSheet } from 'xlsx';
 import * as saveAs from 'file-saver';
-
+import { User } from 'src/app/Models/User';
 
 @Component({
-  selector: 'app-primeng-table',
-  templateUrl: './primeng-table.component.html',
-  styleUrls: ['./primeng-table.component.css']
+  selector: 'app-primeng-employee-table',
+  templateUrl: './primeng-employee-table.component.html',
+  styleUrls: ['./primeng-employee-table.component.css']
 })
-export class PrimengTableComponent{
-
+export class PrimengEmployeeTableComponent {
   @ViewChild('dt1') dt1: Table | undefined;
   @Input() tableData: any[] = [];
   @Input() columns: any[] = [];
   @Input() columnLabels: any[] = [];
+  @Output() deleteEvent = new EventEmitter<any>();
+  @Output() resendEvent = new EventEmitter<any>();
   loading: boolean = true;
   selectedData: any[] = [];
   exportColumns: any[] = [];
+  showDelete: boolean = false;
+  showResend: boolean = false;
+  selectedUser: any = null;
+
 
   ngOnInit() {
     this.loading = true;
+}
+
+delete(id: any) {
+  this.deleteEvent.emit(id);
+}
+
+resend(email: any) {
+  this.resendEvent.emit(email);
+}
+
+showResendForm( rowData: any) {
+  const userEmail = rowData.mail;
+  console.log( rowData);
+  this.resendEvent.emit(rowData);
+}
+
+showDeleteForm( rowData: any) {
+  const userId = rowData.id;
+  console.log( rowData);
+  this.deleteEvent.emit(rowData);
 }
 
   isColumnNumber(column: any): boolean {
@@ -40,21 +65,6 @@ export class PrimengTableComponent{
     this.dt1!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
-  /*
-  exportPdf() {
-    import('jspdf').then((jsPDF) => {
-        import('jspdf-autotable').then((x) => {
-            const doc = new jsPDF.default('l', 'px', 'a4');
-            const rows = this.tableData.map(item => this.columns.map(col => item[col]));
-
-            (doc as any).autoTable({
-              head: [this.columnLabels],
-              body: rows,
-            });
-              doc.save('Data.pdf');
-          });
-    });
-} */
 exportPdf() {
   this.exportColumns = this.columns.map((col) => ({ title: col.header, dataKey: col.field }));
   console.log(this.exportColumns);
@@ -85,15 +95,6 @@ exportExcel() {
         this.saveAsExcelFile(excelBuffer, 'Data');
     });
 }
-/*
-exportExcel() {
-  import('xlsx').then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(this.tableData);
-      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-      this.saveAsExcelFile(excelBuffer, 'products');
-  });
-}*/
 
 saveAsExcelFile(buffer: any, fileName: string): void {
     let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';

@@ -27,8 +27,8 @@ export class ProfileIDComponent{
       if(result.errors.length > 0) {
         this.router.navigateByUrl("profile");
       } else {
-        this.user.firstName = result.data.firstname;
-        this.user.lastName = result.data.lastname;
+        this.user.firstname = result.data.firstname;
+        this.user.lastname = result.data.lastname;
         this.user.mail = result.data.email;
         this.user.roleId = result.data.roleId;
         this.user.role = result.data.role.roleName;

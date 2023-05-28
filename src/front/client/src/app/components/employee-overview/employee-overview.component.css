@@ -1,3 +1,4 @@
+/*
 * {
     font-family: 'Inter', sans-serif;
     font-size: 20px;
@@ -62,7 +63,7 @@
     overflow-y: scroll;
     max-height: 80vh;
 }
-*/
+
 
 .overview-users-table table {
     width: 100%;
@@ -186,3 +187,132 @@
 .green:hover {
   background-color: #115746;
 }
+*/
+* {
+  font-family: 'Inter', sans-serif;
+  color: white;
+}
+
+.overview-container {
+  display: flex;
+  background-color: #E1E1E1;
+  min-height: 100vh;
+}
+
+.overview-container button {
+  padding: 5px 30px;
+  border-radius: 20px;
+  border: 0px;
+  outline: 0;
+}
+
+#lastname-filter {
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  font-weight: 600;
+  border-radius: 20px;
+  border: 0px;
+  outline: 0;
+}
+
+#header {
+box-sizing: border-box;
+width: 100%;
+height: 60px;
+display: flex;
+align-items: center;
+padding-left: 0;
+}
+
+#header h2 {
+color: #3e3e3e;
+}
+.overview-tab {
+  width: 100%;
+  position: relative;
+  margin: 0 20px;
+}
+.overview-filter-holder {
+display: flex;
+flex-direction: row;
+justify-content: end;
+box-sizing: border-box;
+margin-bottom: 20px;
+}
+
+.overview-filter-holder form{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+#add-user-btn {
+  background-color: white;
+  color: #3E3E3E;
+  font-weight: 600;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.search-input input {
+  width: 250px;
+  color: black;
+  height: 35px;
+  outline: 0;
+  border: 0;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-right: 35px;
+}
+
+.search-input button {
+  background-color: #3E3E3E;
+  font-weight: 600;
+  height: 100%;
+}
+
+.search-input button:hover,#add-user-btn:hover {
+  outline: 1px solid black;
+}
+
+.button {
+height: 35px;
+padding: 10px 20px;
+margin: 0;
+border: none;
+border-radius: 6px!important;
+font-size: 16px;
+font-weight: 600;
+color: #fff;
+cursor: pointer;
+transition: background-color 0.3s ease;
+box-sizing: border-box;
+}
+
+.green {
+background-color: #239F81;
+margin: 0!important;
+}
+.green:hover {
+background-color: #115746;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
+  z-index: 2;
+}
+
+.hover-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 3;
+}
+

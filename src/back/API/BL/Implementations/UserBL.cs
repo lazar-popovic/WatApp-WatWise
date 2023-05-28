@@ -332,5 +332,26 @@ namespace API.BL.Implementations
 
             return response;
         }
+
+        public async Task<Response<List<User>>> GetAllEmployees()
+        {
+            Response<List<User>> response =
+                new Response<List<User>>();
+            
+            var employees = await _userDal.GetAllEmployees();
+
+            if (employees.IsNullOrEmpty())
+            {
+                response.Errors.Add("No employees are registered!");
+                response.Success = false;
+
+                return response;
+            }
+
+            response.Data = employees;
+            response.Success = response.Errors.Count == 0;
+
+            return response;
+        }
     }
 }

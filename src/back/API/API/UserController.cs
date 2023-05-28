@@ -112,5 +112,11 @@ namespace API.API
         {
             return Ok(await _userBL.ProsumersWithEnergyUsage());
         }
+        
+        [HttpGet("all-employees")]
+        public async Task<IActionResult> GetAllEmployees()
+        {
+            return Ok(await _userBL.GetAllEmployees());
+        }
     }
 }

@@ -38,8 +38,8 @@ export class UserService {
     return this.http.get<any[]>(`${environment.apiUrl}user/prosumers-number`, {observe: 'response'});
   }
 
-  public getEmployees(name:string, sortOrder:string, pageSize: number, pageNumber: number) : Observable<User[]> {
-    return this.http.get<User[]>(`${environment.apiUrl}user/get-employees-filtered?fullName=${name}&pageSize=${pageSize}&pageNumber=${pageNumber}&sortOrder=${sortOrder}`);
+  public getEmployees() : Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiUrl}user/all-employees`, {observe: 'response'}).pipe(map(response => response.body || []));
   }
 
   public updatePassword(data: any, id: number) : Observable<any> {

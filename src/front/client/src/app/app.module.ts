@@ -70,6 +70,7 @@ import { ScrollTopModule } from 'primeng/scrolltop';
 import { TooltipModule } from 'primeng/tooltip';
 import { PrimengValueTableComponent } from './components/primeng-value-table/primeng-value-table.component';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { PrimengEmployeeTableComponent } from './components/primeng-employee-table/primeng-employee-table.component';
 
 @NgModule({
   declarations: [
@@ -120,7 +121,8 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     ResendVerificationMailDialogComponent,
     DeleteProfileComponent,
     PrimengTableComponent,
-    PrimengValueTableComponent
+    PrimengValueTableComponent,
+    PrimengEmployeeTableComponent
   ],
   imports: [
     BrowserModule,

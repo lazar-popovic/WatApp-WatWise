@@ -336,6 +336,27 @@ namespace API.DAL.Implementations
             return userDTOs;
 
         }
+
+        public async Task<List<User>> GetAllEmployees()
+        {
+            var employees = await _dbContext.Users.Where(u => u.RoleId == (int)RoleEnum.Role.Employee)
+                .Select(u => new User
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    Firstname = u.Firstname,
+                    Lastname = u.Lastname,
+                    Verified = u.Verified,
+                    RoleId = u.RoleId,
+                    Role = u.Role,
+                    LocationId = u.LocationId,
+                    Location = u.Location,
+                    ProfileImage = u.ProfileImage
+
+                }).AsNoTracking().ToListAsync();
+
+            return employees;
+        }
     }
 
 
