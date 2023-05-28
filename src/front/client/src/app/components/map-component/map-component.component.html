@@ -18,7 +18,7 @@
   </div>
   <div id="city-chart" class="standard-card-style">
     <div style="margin: 0!important">
-      <select (change)="getTop5Neighborhoods()" [(ngModel)]="selectedCategory" style="width:100%!important">
+      <select (change)="getTop5Neighborhoods(); getLocationsForNeighborhood()" [(ngModel)]="selectedCategory" style="width:100%!important">
         <option value="-1" selected>Consumption</option>
         <option value="1" selected>Production</option>
       </select>
@@ -54,9 +54,9 @@
     <div *ngIf="selectedLocation != null">
       <div id="location-header">
         <h3>{{selectedLocation.address}} {{selectedLocation.addressNumber}}<br>{{selectedLocation.city}}</h3>
-        <h3><span style="color: #bf4141;" *ngIf="selectedLocation.totalPowerUsage<0">{{selectedLocation.totalPowerUsage.toFixed(3)}}kWh </span>
-            <span style="color: #3e3e3e" *ngIf="selectedLocation.totalPowerUsage==0">{{selectedLocation.totalPowerUsage.toFixed(3)}}kWh </span>
-            <span style="color: #455eb8;" *ngIf="selectedLocation.totalPowerUsage>0">{{selectedLocation.totalPowerUsage.toFixed(3)}}kWh </span> <i class="fa fa-info-circle" aria-hidden="true" [matTooltip]="'This number represents power usage for this location. Represents sum of all production and consumption for this hour. If number is below zero, that means there is more consumption of electrical energy at this location. If power usage is bigger than zero, then there is more production of electrical energy.'"></i></h3>
+        <h3><span style="color: #bf4141;" *ngIf="selectedCategory == -1">{{selectedLocation.totalPowerUsage.toFixed(3)}}kWh </span>
+            <span style="color: #455eb8;" *ngIf="selectedCategory == 1">{{selectedLocation.totalPowerUsage.toFixed(3)}}kWh </span>
+        </h3>
       </div>
       <div id="user-div" *ngFor="let user of users">
         <h4 style="margin-bottom: 5px">{{user.firstname}} {{user.lastname}}</h4>
@@ -68,26 +68,40 @@
 </div>
 
 <div class="standard-card-style" id="legend">
-  <table>
-    <tr>
-      <td><img class="pin" src="/assets/pins/pin-2.png"/></td>
-      <td><p class="pin-about">Less than -5 kWh</p></td>
-    </tr>
-    <tr>
-      <td><img class="pin" src="/assets/pins/pin-1.png"/></td>
-      <td><p class="pin-about">Between -5 and 0 kWh</p></td>
-    </tr>
-    <tr>
-      <td><img class="pin" src="/assets/pins/pin0.png"/></td>
-      <td><p class="pin-about">Exactly 0 kWh</p></td>
-    </tr>
-    <tr>
-      <td><img class="pin" src="/assets/pins/pin1.png"/></td>
-      <td><p class="pin-about">Between 0 and 5 kWh</p></td>
-    </tr>
-    <tr>
-      <td><img class="pin" src="/assets/pins/pin2.png"/></td>
-      <td><p class="pin-about">More than 5 kWh</p></td>
-    </tr>
-  </table>
+  <div *ngIf="selectedCategory == -1">
+    <h3>Consumption</h3>
+    <table>
+      <tr>
+        <td><img class="pin" src="/assets/pins/pinCons1.png"/></td>
+        <td><p class="pin-about">Less than 5 kWh</p></td>
+      </tr>
+      <tr>
+        <td><img class="pin" src="/assets/pins/pinCons2.png"/></td>
+        <td><p class="pin-about">Between 5 and 10 kWh</p></td>
+      </tr>
+      <tr>
+        <td><img class="pin" src="/assets/pins/pinCons3.png"/></td>
+        <td><p class="pin-about">More than 10 kWh</p></td>
+      </tr>
+    </table>
+  </div>
+  <div *ngIf="selectedCategory == 1">
+    <h3>Production</h3>
+    <table>
+      <tr>
+        <td><img class="pin" src="/assets/pins/pinProd1.png"/></td>
+        <td><p class="pin-about">Less than 5 kWh</p></td>
+      </tr>
+      <tr>
+        <td><img class="pin" src="/assets/pins/pinProd2.png"/></td>
+        <td><p class="pin-about">Between 5 and 10 kWh</p></td>
+      </tr>
+      <tr>
+        <td><img class="pin" src="/assets/pins/pinProd3.png"/></td>
+        <td><p class="pin-about">More than 10 kWh</p></td>
+      </tr>
+    </table>
+  </div>
 </div>
+
+

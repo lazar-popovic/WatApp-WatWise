@@ -81,11 +81,11 @@ namespace API.BL.Implementations
         }
 
         public async Task<Response<List<LocationWithPowerUsageDTO>>> GetAllLocationWithNeighborhood(string city,
-            string neighborhood)
+            string neighborhood, int category)
         {
             var response = new Response<List<LocationWithPowerUsageDTO>>();
 
-            var locations = await _ilocationDal.GetAllLocationWithNeighborhood(city, neighborhood);
+            var locations = await _ilocationDal.GetAllLocationWithNeighborhood(city, neighborhood, category);
             if (locations.IsNullOrEmpty())
             {
                 response.Errors.Add("Error with displaying location!");

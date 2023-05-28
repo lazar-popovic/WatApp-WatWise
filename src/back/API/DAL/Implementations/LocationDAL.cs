@@ -108,7 +108,7 @@ public class LocationDAL : ILocationDAL
         return neighborhoods!;
     }
 
-    public async Task<List<LocationWithPowerUsageDTO>> GetAllLocationWithNeighborhood(string city, string neighborhood)
+    public async Task<List<LocationWithPowerUsageDTO>> GetAllLocationWithNeighborhood(string city, string neighborhood, int category)
     {
         var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
 
@@ -135,8 +135,9 @@ public class LocationDAL : ILocationDAL
                 ld.Location.Neighborhood,
                 PowerUsage = ld.Device == null
                     ? 0.0
-                    : ld.Device.DeviceType!.Category * ld.Device.DeviceEnergyUsages!
-                        .Where(usage => usage.Timestamp == now).Sum(usage => usage.Value)
+                    : ld.Device.DeviceEnergyUsages!
+                        .Where(usage => usage.Timestamp == now && ld.Device.DeviceType!.Category == category)
+                        .Sum(usage => usage.Value)
             })
             .GroupBy(l => l.Id)
             .Select(g => new LocationWithPowerUsageDTO
