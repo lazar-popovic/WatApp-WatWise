@@ -25,7 +25,6 @@ export class UsersOverviewComponent {
   columns: any[] = []; // Variable to hold the column names
   columnLabels: any[] = [];
 
-
   filter : any = {
     name : '',
     address: '',

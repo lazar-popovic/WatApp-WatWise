@@ -22,6 +22,7 @@ export class PrimengTableComponent{
   loading: boolean = true;
   selectedData: any[] = [];
   exportColumns: any[] = [];
+  selectedRow: any;
 
   ngOnInit() {
     this.loading = true;
