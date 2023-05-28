@@ -42,7 +42,6 @@ export class EmployeeOverviewComponent {
           firstname: item.firstname,
           lastname: item.lastname,
           mail: item.email,
-          id: item.id
         };
         this.usersData.push(user);
       }

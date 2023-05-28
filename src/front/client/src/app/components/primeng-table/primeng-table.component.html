@@ -3,6 +3,7 @@
 [paginator]="true"
 [showCurrentPageReport]="true"
 [rows]="10"
+selectionMode="single" [(selection)]="selectedRow"
 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [rowsPerPageOptions]="[10, 25, 50]"
     #dt1
@@ -39,8 +40,8 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       </th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-rowData let-columns="columns">
-    <tr>
+  <ng-template pTemplate="body" let-rowData let-i="index" let-columns="columns">
+    <tr [pSelectableRow]="rowData[columns]" (click)="navigateToUserDetails(rowData)">
       <td *ngFor="let column of columns">{{ rowData[column.field] }}</td>
     </tr>
   </ng-template>

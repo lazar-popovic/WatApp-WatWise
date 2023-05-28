@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 
 import { User } from '../../Models/User';
 import {UserService} from '../../services/user.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users-overview',
@@ -25,14 +26,13 @@ export class UsersOverviewComponent {
   columns: any[] = []; // Variable to hold the column names
   columnLabels: any[] = [];
 
-
   filter : any = {
     name : '',
     address: '',
     order: 'asc'
   };
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
     //this.getNumberOfPages();
     this.getProsumers();
   }
@@ -43,6 +43,7 @@ export class UsersOverviewComponent {
       this.usersData = [];
       for(let item of result.data) {
         let user: any = {
+          id:item.id,
           firstname: item.firstname,
           lastname: item.lastname,
           address: item.location?.address,
@@ -56,7 +57,7 @@ export class UsersOverviewComponent {
 
         this.usersData.push(user);
       }
-      this.columns = Object.keys(this.usersData[0]).map(column => ({
+      this.columns = Object.keys(this.usersData[0]).filter(column => column !== 'id').map(column => ({
         field: column,
         header: this.formatHeader(column)}));
         console.log(this.columns);
