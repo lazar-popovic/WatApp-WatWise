@@ -72,15 +72,13 @@ export class EmployeeOverviewComponent {
     this.showAddNewEmployeeForm = false
   }
 
-  showResendForm( rowData: any) {
-    const userEmail = rowData.mail;
-    console.log( userEmail);
+  showResendForm( event: any) {
+    this.selectedUser = event;
     this.showResend = true
   }
 
-  showDeleteForm( rowData: any) {
-    const userId = rowData.id;
-    console.log( userId);
+  showDeleteForm( event: any) {
+    this.selectedUser = event;
     this.showDelete = true
   }
 

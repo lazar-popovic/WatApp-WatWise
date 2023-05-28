@@ -42,14 +42,14 @@ resend(email: any) {
 
 showResendForm( rowData: any) {
   const userEmail = rowData.mail;
-  console.log( userEmail);
-  this.showResend = true
+  console.log( rowData);
+  this.resendEvent.emit(rowData);
 }
 
 showDeleteForm( rowData: any) {
   const userId = rowData.id;
-  console.log( userId);
-  this.showDelete = true
+  console.log( rowData);
+  this.deleteEvent.emit(rowData);
 }
 
   isColumnNumber(column: any): boolean {

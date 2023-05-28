@@ -8,18 +8,18 @@
                 <p-button (click)="addEmployee()" label="Add Employee" icon="pi pi-plus"></p-button>
         </div>
     <app-primeng-employee-table [tableData]="usersData" [columns]="columns"
-      (deleteEvent)="deleteEmployee($event)"
-      (resendEvent)="resendVerification($event)">
+      (deleteEvent)="showDeleteForm($event)"
+      (resendEvent)="showResendForm($event)">
     </app-primeng-employee-table>
     <div class="overlay" *ngIf="showAddNewEmployeeForm == true">
       <div class="hover-form">
         <app-add-employee (output)="formEmitter( $event)"></app-add-employee>
       </div>
     </div>
-    <div class="hover-form" *ngIf="showDelete">
-      <app-delete-profile (output)="showDelete=false; deleteEmployee($event)" [id]="selectedUser?.id" [user]="selectedUser"></app-delete-profile>
-    </div>
-    <div class="hover-form" *ngIf="showResend">
-      <app-resend-verification-mail-dialog (exitStatusEvent)="showResend=false" [email]="selectedUser.mail"></app-resend-verification-mail-dialog>
-    </div>
+</div>
+<div class="hover-form" *ngIf="showDelete">
+  <app-delete-profile (output)="showDelete=false" [id]="selectedUser?.id" [user]="selectedUser"></app-delete-profile>
+</div>
+<div class="hover-form" *ngIf="showResend">
+  <app-resend-verification-mail-dialog (exitStatusEvent)="showResend=false" [email]="selectedUser.mail"></app-resend-verification-mail-dialog>
 </div>
