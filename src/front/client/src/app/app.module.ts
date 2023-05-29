@@ -71,6 +71,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { PrimengValueTableComponent } from './components/primeng-value-table/primeng-value-table.component';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { PrimengEmployeeTableComponent } from './components/primeng-employee-table/primeng-employee-table.component';
+import { ProfileCardComponent } from './components/profile-card/profile-card.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { PrimengEmployeeTableComponent } from './components/primeng-employee-tab
     SidebarComponent,
     ProfileComponent,
     ProfileIDComponent,
+    ProfileCardComponent,
     DevicesComponent,
     ConsumptionComponent,
     OverviewComponent,

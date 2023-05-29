@@ -32,6 +32,7 @@ export class ProfileComponent {
           this.user.num = result.data.location.addressNumber;
           this.user.city = result.data.location.city;
         }
+        this.user.id = result.data.id;
       }
     });
   }
