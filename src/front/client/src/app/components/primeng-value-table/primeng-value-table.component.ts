@@ -51,53 +51,8 @@ export class PrimengValueTableComponent implements OnInit {
           });
     });
 }
-/*
-exportPdf() {
-  //this.exportColumns = this.columns.map((col) => ({ title: col.header, dataKey: col.field }));
-  this.exportColumns = [];
-  for( let i = 0; i < this.columns.length; i++) {
-    this.exportColumns.push( { title: this.columnLabels[i], dataKey: this.columns[i] });
-  }
-  console.log(this.exportColumns);
-  import('jspdf').then((jsPDF) => {
-      import('jspdf-autotable').then((x) => {
-          const doc = new jsPDF.default('l', 'px', 'a4');
-          (doc as any).autoTable(this.exportColumns, this.tableData);
-          doc.save('products.pdf');
-      });
-  });
-}*/
-/*
-exportExcel() {
-    import('xlsx').then((xlsx) => {
-        const dataWithHeaders = [];
-        const headerRow = this.columnLabels;//this.columns.map(col => col.header);
-        dataWithHeaders.push(headerRow);
-
-        // Add data rows
-        for (const item of this.tableData) {
-          const dataRow = this.columns.map(col => item[col]);
-          dataWithHeaders.push(dataRow);
-        }
-
-        const worksheet = xlsx.utils.aoa_to_sheet(dataWithHeaders);
-        const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-        const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-        this.saveAsExcelFile(excelBuffer, 'Data');
-    });
-}*/
 
 exportExcel() {
-  /*
-  import('xlsx').then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(this.tableData);
-      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-      this.saveAsExcelFile(excelBuffer, 'Data');
-  }); */
-  //let Heading = [['FirstName', 'Last Name', 'Email']];
-
-  //Had to create a new workbook and then add the header
   let Heading = [this.columnLabels];
   const wb = XLSX.utils.book_new();
   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet([]);
@@ -118,6 +73,22 @@ saveAsExcelFile(buffer: any, fileName: string): void {
         type: EXCEL_TYPE
     });
     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+}
+
+public exportToCsv() {
+  let Heading = [this.columnLabels];
+  const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(Heading);
+
+  //Starting in the second row to avoid overriding and skipping headers
+  XLSX.utils.sheet_add_json(ws, this.tableData, { origin: 'A2', skipHeader: true });
+
+  // Convert the worksheet to a CSV string
+  const csvData = XLSX.utils.sheet_to_csv(ws);
+  this.saveAsFile(csvData, 'Data.csv', 'text/csv');
+}
+private saveAsFile(buffer: any, fileName: string, fileType: string): void {
+  const data: Blob = new Blob([buffer], { type: fileType });
+  FileSaver.saveAs(data, fileName);
 }
 
 }
