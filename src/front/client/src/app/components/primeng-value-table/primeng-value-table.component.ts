@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import * as FileSaver from 'file-saver';
 import { Table } from 'primeng/table';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-primeng-value-table',
@@ -83,12 +84,27 @@ exportExcel() {
 }*/
 
 exportExcel() {
+  /*
   import('xlsx').then((xlsx) => {
       const worksheet = xlsx.utils.json_to_sheet(this.tableData);
       const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
       const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-      this.saveAsExcelFile(excelBuffer, 'products');
-  });
+      this.saveAsExcelFile(excelBuffer, 'Data');
+  }); */
+  //let Heading = [['FirstName', 'Last Name', 'Email']];
+
+  //Had to create a new workbook and then add the header
+  let Heading = [this.columnLabels];
+  const wb = XLSX.utils.book_new();
+  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet([]);
+  XLSX.utils.sheet_add_aoa(ws, Heading);
+
+  //Starting in the second row to avoid overriding and skipping headers
+  XLSX.utils.sheet_add_json(ws, this.tableData, { origin: 'A2', skipHeader: true });
+
+  XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+  XLSX.writeFile(wb, 'Data.xlsx');
 }
 
 saveAsExcelFile(buffer: any, fileName: string): void {
