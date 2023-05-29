@@ -8,7 +8,7 @@
     <div class="card-and-map-holder">
       <app-profile-card [user]="user" (showDelete)="showDelete = true" (showResend)="showResend = true"></app-profile-card>
       <div class="map-holder" *ngIf="user.roleId == 3">
-        <div class="map-profile-wrapper standard-card-style">
+        <div class="map-profile-wrapper standard-card-style" id="map">
         </div>
       </div>
     </div>
