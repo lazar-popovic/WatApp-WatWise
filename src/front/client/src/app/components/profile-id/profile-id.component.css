@@ -9,6 +9,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  padding: 20px;
 }
 
 @media (max-width: 1000px) {
@@ -192,5 +193,25 @@
   }
   .profile-header img {
     margin: 0;
+  }
+}
+
+.card-and-map-holder {
+  display: flex;
+  justify-content: space-between;
+}
+
+.map-holder {
+  width: calc(100% - 420px);
+}
+
+
+@media (max-width: 599px) {
+  .card-and-map-holder {
+    flex-direction: column;
+  }
+  .map-holder {
+    margin-top: 20px;
+    width: 100%;
   }
 }

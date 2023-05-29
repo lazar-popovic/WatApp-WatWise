@@ -14,5 +14,7 @@ export class User {
     currentProduction ?: number;
     activeConsumers ?:number;
     activeProducers ?:number;
+    latitude ?:number;
+    longitude ?:number;
 }
 

@@ -72,3 +72,9 @@ body {
 /*@import "node_modules/primeng/resources/primeng.css";*/
 
 
+.map-profile-wrapper {
+  height: 485px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: white;
+}

@@ -9,6 +9,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  padding: 20px;
 }
 
 @media (max-width: 1000px) {
@@ -36,5 +37,25 @@
 @media ( max-width: 999px) {
   .profile-container {
     margin-top: 88px;
+  }
+}
+
+.card-and-map-holder {
+  display: flex;
+  justify-content: space-between;
+}
+
+.map-holder {
+  width: calc(100% - 420px);
+}
+
+
+@media (max-width: 599px) {
+  .card-and-map-holder {
+    flex-direction: column;
+  }
+  .map-holder {
+    margin-top: 20px;
+    width: 100%;
   }
 }

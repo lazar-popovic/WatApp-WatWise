@@ -5,6 +5,17 @@
     </app-sidebar>
   </div>
   <div id="content">
-    <app-profile-card [user]="user"></app-profile-card>
+    <div class="card-and-map-holder">
+      <app-profile-card [user]="user"></app-profile-card>
+      <div class="map-holder" *ngIf="user.roleId == 3">
+        <div class="map-profile-wrapper standard-card-style" id="map">
+
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 20px; display: flex; justify-content: center;"
+         *ngIf="user.roleId == 3">
+      <app-devices-info [id]="id"></app-devices-info>
+    </div>
   </div>
 </div>

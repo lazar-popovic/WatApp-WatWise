@@ -1,8 +1,21 @@
+body {
+  width: 400px;
+}
+
 .profile-card {
-  width: 300px;
+  width: 400px;
+  height: 485px;
+  max-width: 400px;
   background-color: #fff;
   padding: 20px!important;
   color: #3e3e3e;
+  box-sizing: border-box;
+  display: inline-block;
+}
+@media (max-width: 599px) {
+  .profile-card {
+    width: 100%;
+  }
 }
 
 .profile-image {

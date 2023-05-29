@@ -5,14 +5,23 @@
     </app-sidebar>
   </div>
   <div id="content">
-    <app-profile-card [user]="user"></app-profile-card>
-    <app-devices-info [id]="id"></app-devices-info>
+    <div class="card-and-map-holder">
+      <app-profile-card [user]="user" (showDelete)="showDelete = true" (showResend)="showResend = true"></app-profile-card>
+      <div class="map-holder" *ngIf="user.roleId == 3">
+        <div class="map-profile-wrapper standard-card-style">
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 20px; display: flex; justify-content: center;"
+         *ngIf="user.roleId == 3">
+      <app-devices-info [id]="id"></app-devices-info>
+    </div>
+  </div>
+  <div class="hover-form" *ngIf="showDelete">
+    <app-delete-profile (output)="showDelete=false" [id]="id" [user]="user"></app-delete-profile>
+  </div>
+  <div class="hover-form" *ngIf="showResend">
+    <app-resend-verification-mail-dialog (exitStatusEvent)="showResend=false" [email]="user.mail"></app-resend-verification-mail-dialog>
   </div>
 </div>
 
-<div class="hover-form" *ngIf="showDelete">
-  <app-delete-profile (output)="showDelete=false" [id]="id" [user]="user"></app-delete-profile>
-</div>
-<div class="hover-form" *ngIf="showResend">
-  <app-resend-verification-mail-dialog (exitStatusEvent)="showResend=false" [email]="user.mail"></app-resend-verification-mail-dialog>
-</div>

@@ -33,6 +33,8 @@ export class ProfileIDComponent{
         this.user.mail = result.data.email;
         this.user.roleId = result.data.roleId;
         this.user.role = result.data.role.roleName;
+        this.user.latitude = result.data.latitude;
+        this.user.longitude = result.data.longitude;
         this.user.profileImage = environment.pictureAppendix + result.data.profileImage;
         if(result.data.location != null) {
           this.user.address = result.data.location.address;
