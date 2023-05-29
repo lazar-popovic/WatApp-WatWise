@@ -1,16 +1,25 @@
 .profile-view-image {
     display: flex;
+    flex-direction: column;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     align-items: center;
-    margin-bottom: 100px;
-}
+    margin-bottom: 30px;
+    width: 316px;
+    padding: 20px!important;
+    background-color: white;
+    box-sizing: border-box;
+  }
 
 .profile-view-image img {
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    margin-right: 100px;
+    margin-bottom: 10px;
+}
+
+.profile-view-image-buttons {
+  width: 100%;
 }
 
 .profile-view-image-buttons form {
@@ -18,17 +27,26 @@
     flex-direction: column;
     gap: 20px;
 }
-
-.profile-view-settings button {
-    width: 200px;
-    height: 50px;
-    border-radius: 10px;
-    border: none;
-    font-weight: 600;
-    font-size: 20px;
-    cursor: pointer;
+.profile-view-settings {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
-
+.profile-view-settings button{
+  color: #fff;
+  letter-spacing: 1px;
+  border: none;
+  background: #1676AC;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  width: 100%;
+}
+.profile-view-settings button:hover{
+  background: #0e4bf1;
+}
 .profile-button-blue {
     background-color: #1676AC;
     color: white;
@@ -177,6 +195,10 @@ p {
         width: 40vw;
     }
 
+    .form-holder {
+      margin-bottom: 20px;
+    }
+
     .profile-view-settings button {
         width: 100%;
         height: 50px;
@@ -199,4 +221,128 @@ p {
         top: 15%;
         transform: translateX(-50%);
     }
+}
+
+
+
+
+
+
+
+
+
+.login-holder
+{
+    background: -webkit-linear-gradient(60deg, #239F81 30%, #1676AC 70%);
+    background: -moz-linear-gradient(60deg, #239F81 30%, #1676AC 70%);
+    background: -ms-linear-gradient(60deg, #239F81 30%, #1676AC 70%);
+    background: -o-linear-gradient(60deg, #239F81 30%, #1676AC 70%);
+    background: linear-gradient(60deg, #239F81 30%, #1676AC 70%);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-change-password-container {
+  display: flex;
+  justify-content: center;
+}
+
+.form-holder {
+  display: flex;
+  justify-content: center;
+}
+
+/*Forma za login*/
+.login-container
+{
+  height: 50vh; /* sets container height to full viewport height */
+}
+a {
+font-family: 'Poppins', sans-serif;
+  color: #3E3E3E;
+}
+.wrapper * {
+  box-sizing: border-box;
+}
+.wrapper{
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  max-width: 330px;
+  width: 100%;
+  background: #fff;
+  padding: 34px;
+  height: 460px;
+}
+.wrapper h2{
+  position: relative;
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+}
+.wrapper form{
+  margin-top: 30px;
+}
+.wrapper form .input-box{
+  height: 52px;
+  margin: 18px 0 10px;
+}
+form .input-box input{
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding: 0 15px;
+  font-size: 17px;
+  font-weight: 400;
+  color: #333;
+  border: 1.5px solid #C7BEBE;
+  border-bottom-width: 2.5px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+.input-box input:focus,
+.input-box input:valid{
+  border-color: #1676AC;
+}
+form .policy{
+  display: flex;
+  align-items: center;
+}
+form h3{
+  color: #707070;
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 10px;
+}
+.input-box.button button{
+  color: #fff;
+  letter-spacing: 1px;
+  border: none;
+  background: #1676AC;
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+}
+.input-box.button button:hover{
+  background: #0e4bf1;
+}
+form {
+  height: 300px;
+}
+form .text h3{
+  color: #333;
+  width: 80%;
+  text-align: center;
+  margin: 10px 0 3px;
+}
+form .text h3 a{
+  color: #4070f4;
+  text-decoration: none;
+}
+form .text h3 a:hover{
+  text-decoration: underline;
 }
