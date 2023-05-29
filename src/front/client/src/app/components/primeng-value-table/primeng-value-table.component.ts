@@ -51,7 +51,11 @@ export class PrimengValueTableComponent implements OnInit {
     });
 } */
 exportPdf() {
-  this.exportColumns = this.columns.map((col) => ({ title: col.header, dataKey: col.field }));
+  //this.exportColumns = this.columns.map((col) => ({ title: col.header, dataKey: col.field }));
+  this.exportColumns = [];
+  for( let i = 0; i < this.columns.length; i++) {
+    this.exportColumns.push( { title: this.columnLabels[i], dataKey: this.columns[i] });
+  }
   console.log(this.exportColumns);
   import('jspdf').then((jsPDF) => {
       import('jspdf-autotable').then((x) => {
@@ -65,12 +69,12 @@ exportPdf() {
 exportExcel() {
     import('xlsx').then((xlsx) => {
         const dataWithHeaders = [];
-        const headerRow = this.columns.map(col => col.header);
+        const headerRow = this.columnLabels;//this.columns.map(col => col.header);
         dataWithHeaders.push(headerRow);
 
         // Add data rows
         for (const item of this.tableData) {
-          const dataRow = this.columns.map(col => item[col.field]);
+          const dataRow = this.columns.map(col => item[col]);
           dataWithHeaders.push(dataRow);
         }
 
