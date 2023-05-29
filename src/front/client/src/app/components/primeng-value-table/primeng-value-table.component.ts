@@ -35,7 +35,7 @@ export class PrimengValueTableComponent implements OnInit {
     this.dt1!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
-  /*
+
   exportPdf() {
     import('jspdf').then((jsPDF) => {
         import('jspdf-autotable').then((x) => {
@@ -49,7 +49,8 @@ export class PrimengValueTableComponent implements OnInit {
               doc.save('Data.pdf');
           });
     });
-} */
+}
+/*
 exportPdf() {
   this.exportColumns = this.columns.map((col) => ({ title: col.header, dataKey: col.field }));
   console.log(this.exportColumns);
@@ -60,8 +61,8 @@ exportPdf() {
           doc.save('products.pdf');
       });
   });
-}
-
+}*/
+/*
 exportExcel() {
     import('xlsx').then((xlsx) => {
         const dataWithHeaders = [];
@@ -79,8 +80,8 @@ exportExcel() {
         const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
         this.saveAsExcelFile(excelBuffer, 'Data');
     });
-}
-/*
+}*/
+
 exportExcel() {
   import('xlsx').then((xlsx) => {
       const worksheet = xlsx.utils.json_to_sheet(this.tableData);
@@ -88,7 +89,7 @@ exportExcel() {
       const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
       this.saveAsExcelFile(excelBuffer, 'products');
   });
-}*/
+}
 
 saveAsExcelFile(buffer: any, fileName: string): void {
     let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
