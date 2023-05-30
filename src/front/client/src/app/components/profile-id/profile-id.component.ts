@@ -86,4 +86,7 @@ export class ProfileIDComponent{
     .addTo(this.map);
   }
 
+  reload() {
+    window.location.reload()
+  }
 }

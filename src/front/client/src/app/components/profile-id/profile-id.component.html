@@ -24,7 +24,7 @@
     <app-resend-verification-mail-dialog (exitStatusEvent)="showResend=false" [email]="user.mail"></app-resend-verification-mail-dialog>
   </div>
   <div class="hover-form" *ngIf="showUpdateProsumer">
-    <app-update-prosumer (output)="showUpdateProsumer = false"
+    <app-update-prosumer (output)="reload()"
                          [searchAddress]="user.address + ', ' + user.neighborhood + ', ' + user.city"
                          [user] = "{id: user.id,
                           email: user.mail,
