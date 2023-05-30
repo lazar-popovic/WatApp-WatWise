@@ -1,15 +1,15 @@
 <div class="login-holder">
   <div class="wrapper standard-card-style">
-    <div style="display: flex; justify-content: space-between; align-items: center; color: #3e3e3e" (click)="output.emit( true)">
+    <div style="display: flex; justify-content: space-between; align-items: center; color: #3e3e3e">
       <h2>Register prosumer</h2>
-      <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;"></i>
+      <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;" (click)="output.emit( false)"></i>
     </div>
     <form action="#" [ngBusy]="busy">
       <div class="input-box">
-        <input type="text" name="email" placeholder="Firstname" [(ngModel)]="user.firstname">
+        <input type="text" name="firstname" placeholder="Firstname" [(ngModel)]="user.firstname">
       </div>
       <div class="input-box">
-        <input type="text" name="password" placeholder="Lastname" [(ngModel)]="user.lastname">
+        <input type="text" name="lastname" placeholder="Lastname" [(ngModel)]="user.lastname">
       </div>
       <div class="input-box">
         <input type="email" name="email" placeholder="Email" [(ngModel)]="user.email">
@@ -17,11 +17,12 @@
       <div class="input-box autocomplete-seacrh-div">
         <app-tooltip [message]="'To retrieve a list of potential locations, please enter the street address and city, and then click on the \'Search\' button. From the search results provided below, choose the desired option by clicking on it.'"></app-tooltip>
         <input type="name" class="users-form-location" placeholder="Address" name="street" [(ngModel)]="searchAddress" required>
-        <button type="button" (click)="getAddress()">Search</button>
+        <button type="submit" (click)="getAddress()">Search</button>
       </div>
       <div id="address-show">
+        <h2 id="no-valid-streets" *ngIf="items.length == 0 && displayNo == true">No valid streets</h2>
         <div *ngFor="let item of items" class="display-item standard-card-style" (click)="pickAddressHandler($event)">
-          <p>{{item.addressDetails.split(", ")[0]}}, {{item.neighborhood}}, {{item.city}}</p>
+          <p>{{item.road}}, {{item.neighborhood}}, {{item.city}}</p>
         </div>
       </div>
       <div class="input-box">

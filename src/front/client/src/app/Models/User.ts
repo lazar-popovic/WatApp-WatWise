@@ -1,14 +1,21 @@
 export class User {
     id ?: number;
-    firstName = "Ime";
-    lastName = "Prezime";
+    firstname = "Ime";
+    lastname = "Prezime";
     mail = "mejl";
-    password = "as";
-    roleId = 3;
-    role = "Prosumer";
+    password? = "as";
+    roleId? = 3;
+    role? = "Prosumer";
     address = "Radoja Domanovica";
     num = 1;
     city = "Kragujevac";
-    profileImage = "";
+    neighborhood ?: string;
+    profileImage? = "";
+    currentConsumption ?: number;
+    currentProduction ?: number;
+    activeConsumers ?:number;
+    activeProducers ?:number;
+    latitude ?:number;
+    longitude ?:number;
 }
 

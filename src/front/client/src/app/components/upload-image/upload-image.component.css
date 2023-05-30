@@ -86,7 +86,7 @@ input[type="file"] {
     align-items: right;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 999px) {
     #preview img {
         height: 100px;
         width: 100px;

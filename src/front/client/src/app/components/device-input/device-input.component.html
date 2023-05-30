@@ -7,10 +7,12 @@
 
     <form action="#" (ngSubmit)="addDevice()">
       <div class="input-box">
+        <h3>Device name</h3>
         <input type="text" name="name" [(ngModel)]="newDevice.name" placeholder="Device name">
       </div>
 
       <div class="input-box">
+        <h3>Device category</h3>
         <select name="category" [(ngModel)]="newDevice.category" (change)="fillTypes()">
           <option value=-1 selected>Consumer</option>
           <option value=1>Producer</option>
@@ -19,12 +21,14 @@
       </div>
 
       <div class="input-box">
+        <h3>Device type</h3>
         <select type="text" name="deviceTypeId" [(ngModel)]="newDevice.deviceTypeId" (change)="fillSubtypes()">
           <option *ngFor=" let type of types" [value]="type.id">{{type.type}}</option>
         </select>
       </div>
 
       <div class="input-box">
+        <h3>Device manufacturer</h3>
         <select type="text" name="deviceSubtypeId" [(ngModel)]="newDevice.deviceSubtypeId">
           <option *ngFor=" let subtype of subtypes" [value]="subtype.id">{{subtype.subtypeName}}</option>
         </select>

@@ -63,6 +63,17 @@ import { SchedulerJobsListComponent } from './components/scheduler-jobs-list/sch
 import { IdDeleteDialogComponent } from './components/id-delete-dialog/id-delete-dialog.component';
 import { DeleteProfileComponent } from './components/delete-profile/delete-profile.component';
 import { ResendVerificationMailDialogComponent } from './components/resend-verification-mail-dialog/resend-verification-mail-dialog.component';
+import { PrimengTableComponent } from './components/primeng-table/primeng-table.component';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { ScrollTopModule } from 'primeng/scrolltop';
+import { TooltipModule } from 'primeng/tooltip';
+import { PrimengValueTableComponent } from './components/primeng-value-table/primeng-value-table.component';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { PrimengEmployeeTableComponent } from './components/primeng-employee-table/primeng-employee-table.component';
+import { ProfileCardComponent } from './components/profile-card/profile-card.component';
+import { ProfileMapComponent } from './components/profile-map/profile-map.component';
+import { UpdateProsumerComponent } from './components/update-prosumer/update-prosumer.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +82,9 @@ import { ResendVerificationMailDialogComponent } from './components/resend-verif
     SidebarComponent,
     ProfileComponent,
     ProfileIDComponent,
+    ProfileCardComponent,
+    ProfileMapComponent,
+    UpdateProsumerComponent,
     DevicesComponent,
     ConsumptionComponent,
     OverviewComponent,
@@ -110,7 +124,11 @@ import { ResendVerificationMailDialogComponent } from './components/resend-verif
     ConfirmWindowComponent,
     IdDeleteDialogComponent,
     DeleteProfileComponent,
-    ResendVerificationMailDialogComponent
+    ResendVerificationMailDialogComponent,
+    DeleteProfileComponent,
+    PrimengTableComponent,
+    PrimengValueTableComponent,
+    PrimengEmployeeTableComponent
   ],
   imports: [
     BrowserModule,
@@ -131,7 +149,12 @@ import { ResendVerificationMailDialogComponent } from './components/resend-verif
     NgxChartsModule,
     NgBusyModule,
     MatTooltipModule,
-    ImageCropperModule
+    ImageCropperModule,
+    TableModule,
+    ButtonModule,
+    ScrollTopModule,
+    TooltipModule,
+    ToggleButtonModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,

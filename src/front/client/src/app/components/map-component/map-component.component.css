@@ -2,7 +2,7 @@
   z-index: 1;
 }
 /* PHONE */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1000px) {
   #map {
     width: 100%;
     height: 90vh;
@@ -141,10 +141,11 @@
 
 #prosumers {
   width: 100%;
-  height: calc(100% - 520px);
+  height: calc(100% - 570px);
   background-color: white;
   box-sizing: border-box;
   padding: 15px!important;
+  overflow-y: scroll;
 }
 
 #location-header {
@@ -177,3 +178,4 @@
 .pin-about {
   margin-left: 5px;
 }
+

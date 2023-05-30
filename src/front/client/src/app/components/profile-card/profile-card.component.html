@@ -1,0 +1,24 @@
+<div class="profile-card standard-card-style">
+  <div class="profile-image">
+    <img [src]="user.profileImage" alt="Profile Image">
+  </div>
+  <div class="profile-details">
+    <h2 class="name">{{user.firstname}} {{user.lastname}}</h2>
+    <p class="email">{{user.mail}}</p>
+    <p class="address">{{user.address}} {{user.num}}, {{user.city}}</p>
+  </div>
+  <div class="profile-actions">
+    <p [routerLink]="'/profile-settings'" class="edit-user" *ngIf="userId == user.id">
+      <i class="fas fa-gear"></i>Settings
+    </p>
+    <p (click)="showUpdateProsumer.emit( true)" class="edit-user" *ngIf="userId != user.id">
+      <i class="fas fa-edit"></i>Edit prosumer
+    </p>
+    <p (click)="showResend.emit( true)"  class="resend-verification" *ngIf="userId != user.id">
+      <i class="fas fa-envelope"></i> Resend Verification
+    </p>
+    <p (click)="showDelete.emit( true)" class="delete-user" *ngIf="userId != user.id">
+      <i class="fas fa-trash"></i> Delete User
+    </p>
+  </div>
+</div>

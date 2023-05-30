@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 
 import { User } from '../../Models/User';
 import {UserService} from '../../services/user.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users-overview',
@@ -21,80 +22,61 @@ export class UsersOverviewComponent {
   pageSize: any = 10;
   showAddUProsumer: boolean = false;
 
+  usersData: any[] = []; // Variable to hold the user data
+  columns: any[] = []; // Variable to hold the column names
+  columnLabels: any[] = [];
+
   filter : any = {
     name : '',
     address: '',
     order: 'asc'
   };
 
-  constructor(private userService: UserService) {
-    this.getNumberOfPages();
+  constructor(private userService: UserService, private router: Router) {
+    //this.getNumberOfPages();
     this.getProsumers();
   }
 
   getProsumers() {
-    this.userService.getProsumers(this.pageSize, this.currentIndex, this.filter.name, this.filter.address, this.filter.order).subscribe((result: any) => {
-      /*this.users = [];
+    //this.userService.getProsumers(this.pageSize, this.currentIndex, this.filter.name, this.filter.address, this.filter.order).subscribe((result: any) => {
+      this.userService.getProsumersWithEnergyUsage().subscribe((result: any) => {
+      this.usersData = [];
       for(let item of result.data) {
-        let user = new User();
-        user.firstName = item.firstname;
-        user.lastName = item.lastname;
-        user.id = item.id;
-        user.mail = item.email;
-        if (item.location != null) {
-          user.address = item.location.address;
-          user.num = item.location.addressNumber;
-          user.city = item.location.city;
-        }
-        this.users.push(user);
-      }*/
-      this.users = result.data;
+        let user: any = {
+          id:item.id,
+          firstname: item.firstname,
+          lastname: item.lastname,
+          address: item.location?.address,
+          number: item.location?.addressNumber,
+          city: item.location?.city,
+          currentConsumption: item.currentConsumption,
+          currentProduction: item.currentProduction,
+          activeConsumers: item.consumingDevicesTurnedOn,
+          activeProducers: item.producingDevicesTurnedOn,
+        };
+
+        this.usersData.push(user);
+      }
+      this.columns = Object.keys(this.usersData[0]).filter(column => column !== 'id').map(column => ({
+        field: column,
+        header: this.formatHeader(column)}));
+        console.log(this.columns);
     },(error: any) => {
       console.log(error);
     });
   }
 
-  handler(type: number) {
-    let active = document.querySelector(".overview-pagination-page-active") as HTMLDivElement;
-
-    if(type == 2) {
-      if(this.currentIndex < this.pagesNum)
-        this.currentIndex++;
-    }
-    if(type == 1  ) {
-      if(this.currentIndex>1)
-      this.currentIndex--;
-    }
-    this.getProsumers();
-    active.innerHTML = this.currentIndex as unknown as string;
+  formatHeader(column: string): string {
+    const formattedColumn = column.replace(/([A-Z])/g, ' $1').trim();
+    const firstLetterCapitalized = formattedColumn.charAt(0).toUpperCase() + formattedColumn.slice(1).toLowerCase();
+    return firstLetterCapitalized;
   }
 
-  getNumberOfPages() {
-    this.userService.getNumberOfProsumers().subscribe((result: any) => {
-      this.pagesNum = Math.ceil((result.body.data as number)/this.pageSize);
-    }, (error : any) => {
-      console.log(error);
-    });
-  }
 
-  pageSizeHandler() {
-    this.getNumberOfPages();
-    this.getProsumers();
-  }
-
-  inverseOrder() {
-    if(this.filter.order == "asc")
-      this.filter.order = "desc";
-    else if(this.filter.order == "desc")
-      this.filter.order = "asc";
-
-    let element = document.querySelector("#lastname-filter") as HTMLDivElement;
-
-    if(this.filter.order == "asc")
-      element.innerText = "Lastname↑";
-    if(this.filter.order == "desc")
-      element.innerText = "Lastname↓";
-
+  formEmitter( event: boolean) : void {
+    if( event == true) {
       this.getProsumers();
+    }
+    this.showAddUProsumer=false
   }
 }

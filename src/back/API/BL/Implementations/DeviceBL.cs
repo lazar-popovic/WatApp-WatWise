@@ -143,6 +143,10 @@ namespace API.BL.Implementations
             {
                 response.Errors.Add("Subtype must be selected!");
             }
+            if(dev.Category == 0 && !(dev.Capacity > 0))
+            {
+                response.Errors.Add("Capacity must be greater than 0!");
+            }
 
             response.Success = !response.Errors.Any();
 

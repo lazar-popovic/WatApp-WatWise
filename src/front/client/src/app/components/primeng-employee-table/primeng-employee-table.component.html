@@ -1,0 +1,55 @@
+<p-table
+[columns]="columns" [value]="tableData" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '50rem' }"
+[paginator]="true"
+[showCurrentPageReport]="true"
+[rows]="10"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    #dt1
+    dataKey="id"
+    [globalFilterFields]="columns"
+>
+<ng-template pTemplate="caption">
+  <div class="datatable-header-custom">
+      <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+      <div class="exports">
+        <button type="button" pButton pRipple icon="pi pi-file" (click)="dt1.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+        <!--<button type="button" pButton pRipple icon="pi pi-filter" (click)="dt1.exportCSV({ selectionOnly: true })" class="p-button-info ml-auto" pTooltip="Selectable CSV" tooltipPosition="bottom"></button>-->
+    </div>
+      <div class="datatable-search">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Search keyword" />
+      </div>
+  </div>
+</ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let column of columns; let i = index" pSortableColumn="{{column.field}}">{{ column.header }}
+        <div>
+          <p-sortIcon field="{{column.field}}"></p-sortIcon>
+          <ng-container *ngIf="isColumnNumber(column.field); else textFilter">
+              <p-columnFilter type="numeric" field="{{column.field}}" display="menu"></p-columnFilter>
+          </ng-container>
+          <ng-template #textFilter>
+              <p-columnFilter type="text" field="{{column.field}}" display="menu"></p-columnFilter>
+          </ng-template>
+        </div>
+      </th>
+      <th colspan="2">Employee control</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <td *ngFor="let column of columns">{{ rowData[column.field] }}</td>
+      <td><p-button label="Resend" styleClass="p-button-outlined" pTooltip="Resend verification email to employee" tooltipPosition="bottom" (click)="showResendForm(rowData)"></p-button></td>
+      <td><p-button label="Delete" styleClass="p-button-outlined" pTooltip="Delete employee" tooltipPosition="bottom" (click)="showDeleteForm(rowData)"></p-button></td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="summary">
+    <div class="flex align-items-center justify-content-between">
+        In total there are {{tableData ? tableData.length : 0 }} employees.
+    </div>
+</ng-template>
+</p-table>

@@ -1,60 +1,25 @@
 <div class="overview-container">
     <app-sidebar></app-sidebar>
     <div class="overview-tab">
+      <div id="header">
+      <h2>Employees</h2>
+      </div>
         <div class="overview-filter-holder">
-            <form>
-                <div class="search-input">
-                    <input name="fullName" [(ngModel)]="filter.name" (keyup)="getEmployees()" placeholder = "Search by name" autocomplete="off">
-                </div>
-                <button (click)="addEmployee()" class="button green" style="margin: 0!important">+Add Employee</button>
-            </form>
+                <p-button (click)="addEmployee()" label="Add Employee" icon="pi pi-plus"></p-button>
         </div>
-
-        <div class="overview-users-table">
-            <table>
-                <tr>
-                    <td>First Name</td>
-                    <td>Last Name</td>
-                    <td>Mail</td>
-                    <td></td>
-                </tr>
-                <tr *ngFor="let user of users">
-                    <td>{{user.firstName}}</td>
-                    <td>{{user.lastName}}</td>
-                    <td>{{user.mail}}</td>
-                    <td style="width: 60px"><button (click)="selectedUser = user; showResend = true" class="button blue" [matTooltip]="'Resend verification mail'">Resend</button></td>
-                    <td style="width: 60px"><button (click)="selectedUser = user; showDelete = true" class="button red" [matTooltip]="'Delete employee'">Delete</button></td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="overview-pagination">
-            <form>
-                <div class="page-size-holder">
-                    <label for="page-size">Select page size:</label>
-                    <select name="page-size" [(ngModel)]="pageSize" (change)="pageSizeHandler()">
-                        <option value="10" selected>10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                    </select>
-                </div>
-                <div class="overview-pagination-pages">
-                    <div class="overview-pagination-page" (click)="handler(1)"><<</div>
-                    <div class="overview-pagination-page-active">
-                        {{currentIndex}}
-                    </div>
-                    <div class="overview-pagination-page" (click)="handler(2)">>></div>
-                </div>
-            </form>
-        </div>
+    <app-primeng-employee-table [tableData]="usersData" [columns]="columns"
+      (deleteEvent)="showDeleteForm($event)"
+      (resendEvent)="showResendForm($event)">
+    </app-primeng-employee-table>
+    <div class="overlay" *ngIf="showAddNewEmployeeForm == true">
+      <div class="hover-form">
+        <app-add-employee (output)="formEmitter( $event)"></app-add-employee>
+      </div>
     </div>
-    <div class="hover-form" *ngIf="showAddNewEmployeeForm == true">
-      <app-add-employee (output)="showAddNewEmployeeForm = false"></app-add-employee>
-    </div>
-    <div class="hover-form" *ngIf="showDelete">
-      <app-delete-profile (output)="showDelete=false" [id]="selectedUser.id" [user]="selectedUser"></app-delete-profile>
-    </div>
-    <div class="hover-form" *ngIf="showResend">
-      <app-resend-verification-mail-dialog (exitStatusEvent)="showResend=false" [email]="selectedUser.mail"></app-resend-verification-mail-dialog>
-    </div>
+</div>
+<div class="hover-form" *ngIf="showDelete">
+  <app-delete-profile (output)="showDelete=false" [id]="selectedUser?.id" [user]="selectedUser"></app-delete-profile>
+</div>
+<div class="hover-form" *ngIf="showResend">
+  <app-resend-verification-mail-dialog (exitStatusEvent)="showResend=false" [email]="selectedUser.mail"></app-resend-verification-mail-dialog>
 </div>

@@ -1,0 +1,74 @@
+body {
+  width: 400px;
+}
+
+.profile-card {
+  width: 400px;
+  height: 485px;
+  max-width: 400px;
+  background-color: #fff;
+  padding: 20px!important;
+  color: #3e3e3e;
+  box-sizing: border-box;
+  display: inline-block;
+}
+@media (max-width: 599px) {
+  .profile-card {
+    width: 100%;
+  }
+}
+
+.profile-image {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-image img {
+  width: 70%;
+  border-radius: 50%;
+}
+
+.profile-details {
+  margin-top: 20px;
+}
+
+.profile-details .name {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.profile-details p {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.profile-actions {
+  margin-top: 20px;
+}
+
+.profile-actions p {
+  display: block;
+  margin-bottom: 10px;
+  color: #333;
+  text-decoration: underline;
+  cursor: pointer;
+  color: #3e3e3e;
+}
+
+.profile-actions i {
+  margin-right: 5px;
+}
+
+.delete-user {
+  color: #ff3b30;
+}
+
+.edit-user {
+  color: #007aff;
+}
+
+.resend-verification {
+  color: #34c759;
+}

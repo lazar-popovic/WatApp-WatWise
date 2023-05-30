@@ -22,7 +22,7 @@ export class DeviceInputComponent implements OnInit{
     name: "",
     deviceTypeId: 0,
     category: -1,
-    capacity: 0,
+    capacity: "",
     deviceSubtypeId: 0
   }
   category: number = -1;
@@ -73,6 +73,9 @@ export class DeviceInputComponent implements OnInit{
   addDevice()
   {
     this.newDevice.userId = this.jwtService.userId;
+    if( this.newDevice.capacity == "") {
+      this.newDevice.capacity = "0";
+    }
     this.busyAddDevice = this.deviceService.insertDevice( this.newDevice).subscribe(
       result => {
         if( result.body.success)
@@ -82,6 +85,7 @@ export class DeviceInputComponent implements OnInit{
         }
         else
         {
+          this.newDevice.capacity = "";
           this.toastrService.showErrors( result.body.errors);
         }
       }

@@ -1,11 +1,11 @@
-@media (max-width: 599px) {
+@media (max-width: 999px) {
   .devices-page {
     display: flex;
     flex-direction: column;
   }
   .devices-container {
     min-width: 300px;
-    max-width: 599px;
+    max-width: 999px;
     margin-top: 0!important;
   }
   h2 {

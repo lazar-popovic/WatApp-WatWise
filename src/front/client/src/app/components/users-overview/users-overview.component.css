@@ -26,11 +26,29 @@
     outline: 0;
 }
 
+#header {
+  box-sizing: border-box;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding-left: 0;
+}
+
+#header h2 {
+  color: #3e3e3e;
+}
 .overview-tab {
     width: 100%;
-    max-width: 1500px;
     position: relative;
-    margin: 100px auto;
+    margin: 0 20px;
+}
+.overview-filter-holder {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  box-sizing: border-box;
+  margin-bottom: 20px;
 }
 
 .overview-filter-holder form{
@@ -66,118 +84,10 @@
     outline: 1px solid black;
 }
 
-.overview-users-table table {
-    width: 100%;
-    overflow-x: scroll;
-    background-color: white;
-    border-radius: 10px;
-    border-collapse: collapse;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.overview-users-table table tr:first-child{
-    border-bottom: 3px solid black;
-    cursor: default;
-    font-weight: 600;
-    font-size: 26px;
-}
-
-.overview-users-table table tr {
-    border-bottom: 1px solid black;
-}
-
-.overview-users-table table tr:last-child {
-    border: 0;
-}
-
-.overview-users-table table tr td {
-    color: #3E3E3E;
-    height: 40px;
-    font-size: 16px!important;
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-.overview-users-table button{
-    padding: 5px 30px;
-    background-color: #1676AC;
-}
-
-.overview-users-table button:hover{
-    outline: 2px solid black;
-}
-
-#overiew-filter {
-    outline: none;
-}
-
-.overview-pagination form{
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.overview-pagination form, select, option, label{
-    color: black;
-    outline: none;
-    border: none;
-}
-
-.page-size-holder {
-    margin-right:50px;
-}
-
-.overview-pagination-pages {
-    display: flex;
-}
-
-.overview-pagination-page, .overview-pagination-page-active {
-    width: 30px;
-    color: black;
-    font-weight: 400;
-    text-align: center;
-    line-height: 30px;
-    height: 30px;
-    border-radius: 5px;
-}
-
-.overview-pagination-page-active {
-    background-color: rgba(22, 118, 172, 0.5)
-}
-
-.overview-pagination-page:hover {
-    background-color: rgba(22, 118, 172, 0.75);
-}
-
-.users-overview-overlay {
-    width: 100%;
-    height: 100%;
-    z-index: 9998;
-    position: fixed;
-    background-color: rgba(157, 157, 157, 0.5);
-}
-
-.users-overview-add-new {
-    z-index: 9999;
-    position: fixed;
-    left: 40%;
-    top: 20%;
-}
-
-.input[type="text"]::-webkit-search-decoration,
-.input[type="text"]::-webkit-search-results-decoration,
-.input[type="text"]::-webkit-search-results {
-    display: none;
-}
-
-.tr-prosumer:hover {
-  background-color: #d8d8d8;
-}
-
-
 .button {
+  height: 35px;
   padding: 10px 20px;
-  margin: 0 10px;
+  margin: 0;
   border: none;
   border-radius: 6px!important;
   font-size: 16px;
@@ -185,6 +95,7 @@
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  box-sizing: border-box;
 }
 
 .green {

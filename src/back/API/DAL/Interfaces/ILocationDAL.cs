@@ -12,6 +12,6 @@ public interface ILocationDAL
     Task<List<LocationWithPowerUsageDTO>> GetAllLocationsAsync();
     Task<List<string?>?> GetAllLocationsCity();
     Task<List<String>> GetAllNeighborhood(string city);
-    Task<List<LocationWithPowerUsageDTO>> GetAllLocationWithNeighborhood(string city, string neighborhood);
+    Task<List<LocationWithPowerUsageDTO>> GetAllLocationWithNeighborhood(string city, string neighborhood, int category);
     Task<List<NeighborhoodPowerUsageDTO>> Top5NeighborhoodsForCityPowerUsageAndPredictedPowerUsage(string city, int category);
 }

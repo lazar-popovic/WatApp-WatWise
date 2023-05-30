@@ -45,7 +45,7 @@
           </div>
           <div class="routine-content">
             <div class="routine-header">
-              <h3>{{routine.deviceName}}</h3>
+              <h3>{{routine.deviceName.replace(" ","").substring( 0, 10)}}</h3>
               <p>
                 <span *ngIf="routineFinished( routine)">will be </span>
                 <span *ngIf="!routineFinished( routine)">was </span>
@@ -118,7 +118,7 @@
 
 
   <div class="hover-form" *ngIf="showForm">
-    <app-device-job-form (output)="showForm = false"></app-device-job-form>
+    <app-device-job-form [deviceId]="selectedDevice" (output)="showForm = false"></app-device-job-form>
   </div>
 
 </div>

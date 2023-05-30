@@ -45,4 +45,15 @@ export class EditDeviceComponent implements OnInit{
   hideForm() {
     this.exitStatusEvent.emit(true);
   }
+
+  turnOnShareData() {
+    if( this.device.dsoControl == true) {
+      this.device.dataShare = true;
+    }
+  }
+  turnOffDsoControll() {
+    if( this.device.dataShare == false) {
+      this.device.dsoControl = false;
+    }
+  }
 }

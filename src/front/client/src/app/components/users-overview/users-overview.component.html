@@ -1,64 +1,15 @@
 <div class="overview-container">
-    <app-sidebar></app-sidebar>
-    <div class="overview-tab">
-        <div class="overview-filter-holder">
-            <form>
-                <div class="search-input">
-                    <input type="text" name="name" [(ngModel)]="filter.name" (keyup)="getProsumers()" placeholder = "Search by name" autocomplete="off">
-                    <input type="text" name="address" [(ngModel)]="filter.address" (keyup)="getProsumers()" placeholder = "Search by address" autocomplete="off">
-                </div>
-                <button class="button green" (click)="showAddUProsumer = true">+Add Prosumer</button>
-            </form>
-        </div>
-
-        <div class="overview-users-table">
-            <table>
-                <tr>
-                    <td>Firstname</td>
-                    <td id="lastname-filter" (click)="inverseOrder()">Lastname↑</td>
-                    <td>Mail</td>
-                    <td>Address</td>
-                    <td>City</td>
-                    <td [matTooltip]="'This number represents total current consumption for prosumer'">Current consumption[kWh]</td>
-                    <td [matTooltip]="'This number represents total current production for prosumer'">Current production[kWh]</td>
-                    <td [matTooltip]="'This number represents total number of currently active devices that consume electrical energy'">Active consumers</td>
-                    <td [matTooltip]="'This number represents total number of currently active devices that produce electrical energy'">Active producers</td>
-                </tr>
-                <tr *ngFor="let user of users" class="tr-prosumer" routerLink="/profile/{{user.id}}">
-                    <td>{{user.firstname}}</td>
-                    <td>{{user.lastname}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.location.address}} {{user.location.addressNumber}}</td>
-                    <td>{{user.location.city}}</td>
-                    <td><span style="color: rgba(191, 65, 65, 1);">{{user.currentConsumption.toFixed(2)}}</span></td>
-                    <td><span style="color: rgba(69, 94, 184, 1);">{{user.currentProduction.toFixed(2)}}</span></td>
-                    <td>{{user.consumingDevicesTurnedOn}}</td>
-                    <td>{{user.producingDevicesTurnedOn}}</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="overview-pagination">
-            <form>
-                <div class="page-size-holder">
-                    <label for="page-size">Select page size:</label>
-                    <select name="page-size" [(ngModel)]="pageSize" (change)="pageSizeHandler()">
-                        <option value="10" selected>10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                    </select>
-                </div>
-                <div class="overview-pagination-pages">
-                    <div class="overview-pagination-page" (click)="handler(1)"><<</div>
-                    <div class="overview-pagination-page-active">
-                        {{currentIndex}}
-                    </div>
-                    <div class="overview-pagination-page" (click)="handler(2)">>></div>
-                </div>
-            </form>
-        </div>
+  <app-sidebar></app-sidebar>
+  <div class="overview-tab">
+    <div id="header">
+      <h2>Prosumers</h2>
     </div>
-    <div class="hover-form" *ngIf="showAddUProsumer" style="z-index: 2;">
-      <app-users (output)="showAddUProsumer=false"></app-users>
+    <div class="overview-filter-holder">
+      <p-button  (click)="showAddUProsumer = true" label="Add Prosumer" icon="pi pi-plus" style="display:inline-block;"></p-button>
     </div>
+    <app-primeng-table [tableData]="usersData" [columns]="columns"></app-primeng-table>
+  </div>
+  <div class="hover-form" *ngIf="showAddUProsumer" style="z-index: 2;">
+    <app-users (output)="formEmitter($event)"></app-users>
+  </div>
 </div>

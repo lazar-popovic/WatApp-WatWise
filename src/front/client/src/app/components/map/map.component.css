@@ -6,7 +6,7 @@
   width: 100vw;
   position: relative;
 }
-@media (max-width: 599px) {
+@media (max-width: 999px) {
   #container {
     flex-direction: column;
   }

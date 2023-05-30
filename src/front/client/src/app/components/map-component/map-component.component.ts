@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {LocationService} from "../../services/location.service";
 import { Router } from '@angular/router';
-import { Color } from '@swimlane/ngx-charts';
+import { Color, LegendPosition } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-map-component',
@@ -12,6 +12,7 @@ import { Color } from '@swimlane/ngx-charts';
 export class MapComponentComponent implements OnInit {
 
   private map: any;
+  legendPosition = "below" as LegendPosition;
   cities: any[] = [];
   neighborhoods: any[] = [];
   locations: any[] = [];
@@ -47,33 +48,42 @@ export class MapComponentComponent implements OnInit {
   markers: any[] = [];
 
   placeMarkers() {
-    const customIcons = [
+    const iconsCons = [
       L.icon({
-        iconUrl: 'assets/pins/pin-2.png',
+        iconUrl: 'assets/pins/pinCons1.png',
         iconSize: [26, 40],
         iconAnchor: [16, 32],
         popupAnchor: [0, -32]
       }),
       L.icon({
-        iconUrl: 'assets/pins/pin-1.png',
+        iconUrl: 'assets/pins/pinCons2.png',
         iconSize: [26, 40],
         iconAnchor: [16, 32],
         popupAnchor: [0, -32]
       }),
       L.icon({
-        iconUrl: 'assets/pins/pin0.png',
+        iconUrl: 'assets/pins/pinCons3.png',
+        iconSize: [26, 40],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+      })
+    ];
+
+    const iconsProd = [
+      L.icon({
+        iconUrl: 'assets/pins/pinProd1.png',
         iconSize: [26, 40],
         iconAnchor: [16, 32],
         popupAnchor: [0, -32]
       }),
       L.icon({
-        iconUrl: 'assets/pins/pin1.png',
+        iconUrl: 'assets/pins/pinProd2.png',
         iconSize: [26, 40],
         iconAnchor: [16, 32],
         popupAnchor: [0, -32]
       }),
       L.icon({
-        iconUrl: 'assets/pins/pin2.png',
+        iconUrl: 'assets/pins/pinProd3.png',
         iconSize: [26, 40],
         iconAnchor: [16, 32],
         popupAnchor: [0, -32]
@@ -86,20 +96,22 @@ export class MapComponentComponent implements OnInit {
 
     this.markers = [];
     for (const location of this.locations) {
-      let icon = 0;
-      console.log( location.totalPowerUsage );
-      if( location.totalPowerUsage < -5 )
-        icon = 0;
-      else if( location.totalPowerUsage < 0 )
-        icon = 1;
-      else if( location.totalPowerUsage == 0 )
-        icon = 2;
-      else if( location.totalPowerUsage <= 5)
-        icon = 3;
-      else if( location.totalPowerUsage > 5 )
-        icon = 4;
-      console.log( icon);
-      const marker = L.marker([location.latitude, location.longitude], { icon: customIcons[ icon] })
+      let iconIndex = 0;
+      let icon;
+      if( location.totalPowerUsage < 5 )
+        iconIndex = 0;
+      else if( location.totalPowerUsage < 10 )
+        iconIndex = 1;
+      else
+        iconIndex = 2;
+
+      if( this.selectedCategory == 1) {
+        icon = iconsProd[iconIndex];
+      }
+      else {
+        icon = iconsCons[iconIndex];
+      }
+      const marker = L.marker([location.latitude, location.longitude], { icon: icon })
         .bindPopup(`<strong>Address:</strong> ${location.address} ${location.addressNumber}<br><strong>Current power usage:</strong> ${location.totalPowerUsage.toFixed(3)}kWh`)
         .addTo(this.map);
 
@@ -183,7 +195,7 @@ export class MapComponentComponent implements OnInit {
   }
 
   getLocationsForNeighborhood() {
-    this.locationService.getLocationsForNeighborhood( this.selectedCity, this.selectedNeighborhood).subscribe(
+    this.locationService.getLocationsForNeighborhood( this.selectedCity, this.selectedNeighborhood, this.selectedCategory).subscribe(
       ( result: any) => {
         if( result.success)
         {

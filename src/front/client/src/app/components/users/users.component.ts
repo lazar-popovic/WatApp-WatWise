@@ -24,7 +24,8 @@ export class UsersComponent {
 
   searchAddress = "";
   busy: Subscription | undefined;
-  items : any;
+  items : any[] = [];
+  displayNo: boolean = false;
   @Output() output: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private userService: UserService,private router: Router, private geoService: GeocodingService ,private toastrNotifService: ToastrNotifService) { }
@@ -35,7 +36,8 @@ export class UsersComponent {
     this.busy = this.userService.createUser(this.user).subscribe((result: any) => {
       if( result.body.success) {
         this.toastrNotifService.showSuccess( result.body.data.message);
-        this.router.navigateByUrl('/dso/users');
+        //this.router.navigateByUrl('/dso/users');
+        this.output.emit( true);
       }
       else {
         this.toastrNotifService.showErrors( result.body.errors);
@@ -47,12 +49,10 @@ export class UsersComponent {
 
   pickAddressHandler(event: any) {
     let element = event.target;
-    console.log( element);
     let street =  (element as HTMLDivElement).innerText.split(", ");
     this.user.location.address = street[0];
     this.user.location.neighborhood = street[1];
     this.user.location.city = street[2];
-    console.log( this.user);
     (document.querySelector(".users-form-location") as HTMLInputElement).value = (element as HTMLDivElement).innerText;
   }
 
@@ -61,12 +61,16 @@ export class UsersComponent {
       this.toastrNotifService.showErrors(["Enter address for search!"]);
     }
     else {
+      this.displayNo = true;
       this.geoService.getAddress(this.searchAddress).subscribe((result: any) => {
         (document.querySelector('#address-show') as HTMLDivElement).style.display = 'block';
         let city="";
         let neighbourhood="";
         let road="";
         this.items = result.body.map((item:any) => {
+
+          if (item.address.road)
+          road = item.address.road;
 
           if (item.address.city)
             city = item.address.city;
@@ -81,12 +85,11 @@ export class UsersComponent {
           else
             neighbourhood = item.address.city_district;
 
+          item.road = road;
           item.city = city;
           item.neighborhood = neighbourhood;
-          console.log( item);
           return item;
-        });
-
+        }).filter( (item:any) => item.road!="" && item.neighborhood!="" && item.city!="");
         (document.querySelector('.users-form-location') as HTMLDivElement).style.marginBottom = "0px";
       }, (error: any) => {
         console.log(error);
