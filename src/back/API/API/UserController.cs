@@ -118,5 +118,12 @@ namespace API.API
         {
             return Ok(await _userBL.GetAllEmployees());
         }
+
+        [HttpPut("update-prosumer")]
+        public async Task<IActionResult> UpdateProsumer( UpdateUserViewModel updateUserViewModel)
+        {
+            return Ok(await _userBL.UpdateProsumer(updateUserViewModel));
+            //return Ok(new Response().Data = updateUserViewModel);
+        }
     }
 }

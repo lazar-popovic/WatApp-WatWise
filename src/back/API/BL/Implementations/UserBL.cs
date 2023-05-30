@@ -9,16 +9,23 @@ using API.Common;
 using API.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Amazon.Runtime.Internal;
+using API.Services.Geocoding.Interfaces;
+using Cyrillic.Convert;
 
 namespace API.BL.Implementations
 {
     public class UserBL : IUserBL
     {
         private readonly IUserDAL _userDal;
+        private readonly ILocationDAL _locationDal;
+        private readonly IGeocodingService _geocodingService;
 
-        public UserBL(IUserDAL userDal)
+        public UserBL(IUserDAL userDal, IGeocodingService geocodingService, ILocationDAL locationDAL)
         {
             _userDal = userDal;
+            _geocodingService = geocodingService;
+            _locationDal = locationDAL;
         }
 
         public async Task<Response<User>> GetByIdAsync(int id)
@@ -169,7 +176,7 @@ namespace API.BL.Implementations
 
             if (user == null)
             {
-                response.Errors.Add("User with this id doesen't exist!");
+                response.Errors.Add("User with this id doesn't exist!");
 
                 response.Success = false;
                 return response;
@@ -201,7 +208,7 @@ namespace API.BL.Implementations
 
             if (user == null)
             {
-                response.Errors.Add("User with this email doesent exist!");
+                response.Errors.Add("User with this email doesn't exist!");
                 response.Success = false;
 
                 return response;
@@ -269,7 +276,7 @@ namespace API.BL.Implementations
 
             if (user == null)
             {
-                response.Errors.Add("User with this id does not exist!");
+                response.Errors.Add("User with this id doesn't exist!");
                 response.Success = response.Errors.Count == 0;
 
                 return response;
@@ -294,7 +301,7 @@ namespace API.BL.Implementations
         public async Task<Response<string>> DeleteProfilePictureAsync(int userId)
         {
             var response = new Response<string>();
-            var user = _userDal.DeleteProfilePictureAsync(userId);
+            var user = await _userDal.DeleteProfilePictureAsync(userId);
 
             if (user == null)
             {
@@ -350,6 +357,88 @@ namespace API.BL.Implementations
 
             response.Data = employees;
             response.Success = response.Errors.Count == 0;
+
+            return response;
+        }
+
+        public async Task<Response> UpdateProsumer(UpdateUserViewModel updateUserViewModel)
+        {
+            var response = new Response();
+
+            var user = await _userDal.GetByIdWithPasswordAsync(updateUserViewModel.Id);
+            
+            if (user == null)
+            {
+                response.Errors.Add("User with this id doesn't exist!");
+
+                response.Success = false;
+                return response;
+            }
+
+            if (string.IsNullOrEmpty(updateUserViewModel.Email))
+            {
+                response.Errors.Add("Email can not be empty!");
+            }
+
+            if (string.IsNullOrEmpty(updateUserViewModel.Firstname))
+            {
+                response.Errors.Add("Firstname can not be empty!");
+            }
+
+            if (string.IsNullOrEmpty(updateUserViewModel.Lastname))
+            {
+                response.Errors.Add("Lastname can not be empty!");
+            }
+
+            if (string.IsNullOrEmpty(updateUserViewModel.Location.Address))
+            {
+                response.Errors.Add("Address can not be empty!");
+            }
+
+            if (string.IsNullOrEmpty(updateUserViewModel.Location.City))
+            {
+                response.Errors.Add("City can not be empty!");
+            }
+
+            if ( updateUserViewModel.Location.Number == null)
+            {
+                response.Errors.Add("Number can not be empty!");
+            }
+
+            if (!string.IsNullOrEmpty(updateUserViewModel.Email))
+            {
+                var user2 = await _userDal.GetByEmailAsync(updateUserViewModel.Email);
+
+                if (user2 != null && user2.Id != updateUserViewModel.Id)
+                {
+                    response.Errors.Add("Can not change email because is alredy used by other user!");
+                    response.Success = false;
+
+                    return response;
+                }
+            }
+            
+            user.Firstname = updateUserViewModel.Firstname;
+            user.Lastname = updateUserViewModel.Lastname;
+            user.Email = updateUserViewModel.Email;
+
+            var conversion = new Conversion();
+            updateUserViewModel.Location.Address = conversion.SerbianCyrillicToLatin(updateUserViewModel.Location.Address);
+            updateUserViewModel.Location.Neighborhood = conversion.SerbianCyrillicToLatin(updateUserViewModel.Location.Neighborhood);
+            updateUserViewModel.Location.City = conversion.SerbianCyrillicToLatin(updateUserViewModel.Location.City);
+            var cords = _geocodingService.Geocode(updateUserViewModel.Location);
+            var locationId = _locationDal.GetLocationByLatLongAsync(cords);
+            if (locationId == 0)
+            {
+                locationId = _locationDal.InsertLocation(updateUserViewModel.Location, cords);
+            }
+
+            user.LocationId = locationId;
+
+            _userDal.UpdateUser(user);
+
+            response.Success = response.Errors.Count() == 0;
+            response.Data = "Prosumer information successfully changed!";
 
             return response;
         }

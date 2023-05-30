@@ -51,12 +51,12 @@ namespace API.DAL.Implementations
                                        PasswordHash = u.PasswordHash,
                                        Verified = u.Verified,
                                        RoleId = u.RoleId,
-                                       Role = u.Role,
+                                       //Role = u.Role,
                                        LocationId = u.LocationId,
-                                       Location = u.Location,
+                                       //Location = u.Location,
                                        ProfileImage = u.ProfileImage
                                     ,
-                                   }).AsNoTracking().SingleOrDefaultAsync();
+                                   }).SingleOrDefaultAsync();
 
             return user;
         }
