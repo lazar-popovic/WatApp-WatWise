@@ -9,6 +9,7 @@ export class User {
     address = "Radoja Domanovica";
     num = 1;
     city = "Kragujevac";
+    neighborhood ?: string;
     profileImage? = "";
     currentConsumption ?: number;
     currentProduction ?: number;

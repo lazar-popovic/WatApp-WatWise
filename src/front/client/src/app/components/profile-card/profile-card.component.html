@@ -11,9 +11,9 @@
     <p [routerLink]="'/profile-settings'" class="edit-user" *ngIf="userId == user.id">
       <i class="fas fa-gear"></i>Settings
     </p>
-    <!--<p [routerLink]="'/profile-settings'" class="edit-user" *ngIf="userId != user.id">
-      <i class="fas fa-edit"></i>Edit user
-    </p>-->
+    <p (click)="showUpdateProsumer.emit( true)" class="edit-user" *ngIf="userId != user.id">
+      <i class="fas fa-edit"></i>Edit prosumer
+    </p>
     <p (click)="showResend.emit( true)"  class="resend-verification" *ngIf="userId != user.id">
       <i class="fas fa-envelope"></i> Resend Verification
     </p>

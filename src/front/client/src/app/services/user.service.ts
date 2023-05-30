@@ -57,4 +57,8 @@ export class UserService {
   public deleteUser(id: number) : Observable<any> {
     return this.http.delete<any>(`${environment.apiUrl}user/delete/${id}`, { observe: 'response'})
   }
+
+  public updateProsumer( data: any) : Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}user/update-prosumer`, data, { observe: 'response'})
+  }
 }

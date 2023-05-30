@@ -73,6 +73,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { PrimengEmployeeTableComponent } from './components/primeng-employee-table/primeng-employee-table.component';
 import { ProfileCardComponent } from './components/profile-card/profile-card.component';
 import { ProfileMapComponent } from './components/profile-map/profile-map.component';
+import { UpdateProsumerComponent } from './components/update-prosumer/update-prosumer.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { ProfileMapComponent } from './components/profile-map/profile-map.compon
     ProfileIDComponent,
     ProfileCardComponent,
     ProfileMapComponent,
+    UpdateProsumerComponent,
     DevicesComponent,
     ConsumptionComponent,
     OverviewComponent,

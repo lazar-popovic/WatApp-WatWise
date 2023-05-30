@@ -12,6 +12,7 @@ export class ProfileCardComponent implements OnInit {
   @Input() user = new User();
   @Output() showDelete = new EventEmitter<boolean>();
   @Output() showResend = new EventEmitter<boolean>();
+  @Output() showUpdateProsumer = new EventEmitter<boolean>();
 
   userId: any = this.jwtService.userId;
   roleId: any = this.jwtService.roleId;

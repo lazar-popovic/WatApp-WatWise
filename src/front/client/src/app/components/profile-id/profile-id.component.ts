@@ -17,6 +17,7 @@ export class ProfileIDComponent{
   idNum: number = 0;
   showDelete: boolean = false;
   showResend: boolean = false;
+  showUpdateProsumer: boolean = false;
 
   constructor(private authService:AuthService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -41,6 +42,7 @@ export class ProfileIDComponent{
           this.user.address = result.data.location.address;
           this.user.num = result.data.location.addressNumber;
           this.user.city = result.data.location.city;
+          this.user.neighborhood = result.data.location.neighborhood;
           this.user.latitude = result.data.location.latitude;
           this.user.longitude = result.data.location.longitude;
         }
