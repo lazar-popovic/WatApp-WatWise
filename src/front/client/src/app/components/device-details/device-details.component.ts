@@ -15,6 +15,7 @@ import { ViewEncapsulation } from '@angular/core';
 import { JWTService } from '../../services/jwt.service';
 import { ToastrNotifService } from 'src/app/services/toastr-notif.service';
 import { Subscription } from 'rxjs';
+import { DateService } from 'src/app/services/date.service';
 
 
 interface DatepickerOptions {
@@ -48,6 +49,8 @@ export class DeviceDetailsComponent implements OnInit
       dsoControl: false
     }
     capacity: number = 1;
+    columns: any[] = [];
+    columnLabels: any[] = [];
 
     busy: Subscription | undefined;
 
@@ -57,6 +60,7 @@ export class DeviceDetailsComponent implements OnInit
     showEdit: boolean = false;
     showDelete: boolean = false;
 
+    maxDate: any;
     date: any;
     month: number = 4;
     yearForMonth: number = 2023;
@@ -87,17 +91,15 @@ export class DeviceDetailsComponent implements OnInit
                  private router: Router,
                  private deviceDataService: DeviceDataService,
                  private jwtService: JWTService,
-                 private toastrNotifService: ToastrNotifService) {
+                 private toastrNotifService: ToastrNotifService,
+                 private dateService: DateService) {
     }
 
     ngOnInit(): void {
       this.data=[1];
-      let now = new Date();
-      let month: any = (now.getMonth()+1);
-      let day: any =  now.getDate();
-      if (month<10) month = "0" + month;
-      if (day<10) day = "0" + day;
-      this.date  =  now.getFullYear() + "-" + month + "-" + day;
+      this.date  =  this.dateService.toDateString( new Date());
+      let futureDate = (new Date()).setDate((new Date()).getDate() + 7)
+      this.maxDate = this.dateService.toDateString( new Date(futureDate));
       this.roleId = this.jwtService.roleId;
       this.data=[1];
       this.busy = this.deviceService.getDeviceById(this.route.snapshot.paramMap.get('id')).subscribe(
@@ -148,6 +150,15 @@ export class DeviceDetailsComponent implements OnInit
               this.router.navigate(['/profile',result.data.userId]);
             }
           }
+          else {
+            this.toastrNotifService.showErrors( result.errors);
+            if( this.jwtService.roleId == 3) {
+              this.router.navigate(['/prosumer/overview']);
+            }
+            else {
+              this.router.navigate(['/dso/overview']);
+            }
+          }
         }, error => {
           console.log( error);
         }
@@ -174,6 +185,8 @@ export class DeviceDetailsComponent implements OnInit
     dataProduction: any[] = [];
 
     historyClick(){
+      this.columns = ['timestamp','predictedValue','value'];
+      this.columnLabels = ['Hour','Predicted '+this.categoryLabel,this.categoryLabel];
       this.historyflag = true;
       var historyDiv = document.getElementById("history-h3");
       if(historyDiv)  { historyDiv.style.color = "#3e3e3e"; }
@@ -186,6 +199,8 @@ export class DeviceDetailsComponent implements OnInit
     }
 
     predictionClick(){
+      this.columns = ['timestamp','predictedValue'];
+      this.columnLabels = ['Hour','Predicted '+this.categoryLabel];
       this.historyflag = false;
       var historyDiv = document.getElementById("history-h3");
       if(historyDiv)  { historyDiv.style.color = "gray"; }
@@ -201,6 +216,7 @@ export class DeviceDetailsComponent implements OnInit
     {
       this.data=[1];
       this.tableTitle = "Hour";
+      this.columnLabels[0] = "Hour";
       this.todayFlag  = true; this.monthFlag  = false; this.yearFlag = false;
       var todayDiv = document.getElementById("today");
       if(todayDiv)
@@ -292,6 +308,7 @@ export class DeviceDetailsComponent implements OnInit
     {
       this.data=[1];
       this.tableTitle = "Day";
+      this.columnLabels[0] = "Day";
       this.todayFlag = false; this.monthFlag  = true; this.yearFlag = false;
       const monthDiv = document.getElementById("month");
       if(monthDiv)
@@ -368,6 +385,7 @@ export class DeviceDetailsComponent implements OnInit
     {
       this.data=[1];
       this.tableTitle = "Month";
+      this.columnLabels[0] = "Month";
       this.todayFlag = false; this.monthFlag  = false; this.yearFlag = true;
       var yearDiv = document.getElementById("year");
       if(yearDiv)
@@ -413,6 +431,8 @@ export class DeviceDetailsComponent implements OnInit
     tommorowClick()
     {
       this.data=[1];
+      this.tableTitle = "Hour";
+      this.columnLabels[0] = "Hour"
       this.tommorowFlag = true;
       this.threeDaysFlag = false;
       this.sevenDaysFlag = false;
@@ -460,6 +480,8 @@ export class DeviceDetailsComponent implements OnInit
     threeDaysClick()
     {
       this.data=[1];
+      this.tableTitle = "Hour";
+      this.columnLabels[0] = "Hour"
       this.tommorowFlag = false;
       this.threeDaysFlag = true;
       this.sevenDaysFlag = false;
@@ -507,6 +529,8 @@ export class DeviceDetailsComponent implements OnInit
     sevenDaysClick()
     {
       this.data=[1];
+      this.tableTitle = "Day";
+      this.columnLabels[0] = "Day"
       this.tommorowFlag = false;
       this.threeDaysFlag = false;
       this.sevenDaysFlag = true;
@@ -561,13 +585,16 @@ export class DeviceDetailsComponent implements OnInit
         options: {
           scales: {
             y: {
-              beginAtZero: true,
-              ticks: {
-                callback: function(value, index, ticks) {
-                  return value+'kWh';
-                }
-              }
-            }
+              beginAtZero: false,
+              title: {
+                display: true,
+                text: 'Electrical energy [kWh]',
+                font: {
+                  size: 16,
+                  weight: 'bold',
+                },
+              },
+            },
           }
         }
       });
@@ -584,7 +611,8 @@ export class DeviceDetailsComponent implements OnInit
       },
       mean: 0,
       mae: 0,
-      rmse: 0
+      rmse: 0,
+      median: 0
     }
 
     additionalStats() {
@@ -604,6 +632,18 @@ export class DeviceDetailsComponent implements OnInit
           this.additionalStatsData.rmse = Math.sqrt(values.reduce((total, obj) => {
             return total + Math.pow(parseFloat(obj.value) - parseFloat(obj.predictedValue), 2);
           }, 0) / values.length);
+
+          const valuesValues = values.map(obj => obj.value);
+          valuesValues.sort((a, b) => a - b);
+
+          const length = valuesValues.length;
+          const middleIndex = Math.floor(length / 2);
+
+          if (length % 2 === 1) {
+            this.additionalStatsData.median = valuesValues[middleIndex];
+          } else {
+            this.additionalStatsData.median = (valuesValues[middleIndex - 1] + valuesValues[middleIndex]) / 2;
+          }
         }
       }
     }

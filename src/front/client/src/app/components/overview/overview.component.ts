@@ -15,10 +15,10 @@ import { Color, LegendPosition, ScaleType } from '@swimlane/ngx-charts';
 export class OverviewComponent implements OnInit
 {
   yAxisTickFormatting(value: number) {
-    return value + ' kW';
+    return value;
   }
   xAxisTickFormatting( value: string) {
-    return value.split(":")[0];
+    return  value.split(":")[0];
   }
 
   currentConsumption: number = 0;
@@ -94,34 +94,34 @@ export class OverviewComponent implements OnInit
           if( result.data.consumingEnergyUsageByTimestamp.length > 0) {
             console.log("c da");
             this.chart1.data.push({
-              name:"Consumption[kWh]",
+              name:"Consumption [kWh]",
               series: result.data.consumingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
-                              .map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.totalEnergyUsage}))
+                              .map( (ceu:any) => ({name: ceu.timestamp.split("T")[1].substring(0, 5), value: ceu.totalEnergyUsage}))
             });
             this.chart1.colors.domain.push('rgba(191, 65, 65, 1)');
           }
           if( result.data.producingEnergyUsageByTimestamp.length > 0) {
             console.log("p da");
             this.chart1.data.push({
-              name:"Production[kWh]",
+              name:"Production [kWh]",
               series: result.data.producingEnergyUsageByTimestamp.filter((ceu:any) => new Date(ceu.timestamp) <= new Date())
-                              .map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.totalEnergyUsage}))
+                              .map( (ceu:any) => ({name: ceu.timestamp.split("T")[1].substring(0, 5), value: ceu.totalEnergyUsage}))
             });
             this.chart1.colors.domain.push('rgba(69, 94, 184, 1)');
           }
           if( result.data.producingEnergyUsageByTimestamp.length > 0) {
             console.log("pp da");
             this.chart1.data.push({
-              name:"Predicted production[kWh]",
-              series: result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.predictedValue}))
+              name:"Predicted production [kWh]",
+              series: result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({name: ceu.timestamp.split("T")[1].substring(0, 5), value: ceu.predictedValue}))
             });
             this.chart1.colors.domain.push('rgba(69, 94, 184, 0.4)');
           }
           if( result.data.consumingEnergyUsageByTimestamp.length > 0) {
             console.log("pc da");
             this.chart1.data.push({
-              name:"Predicted consumption[kWh]",
-              series: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.predictedValue}))
+              name:"Predicted consumption [kWh]",
+              series: result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({name: ceu.timestamp.split("T")[1].substring(0, 5), value: ceu.predictedValue}))
             });
             this.chart1.colors.domain.push('rgba(191, 65, 65, 0.4)');
           }
@@ -134,16 +134,17 @@ export class OverviewComponent implements OnInit
             return total + current.predictedValue;
           }, 0);
 
-          this.cards.currentConsumption = this.chart1.data.find(d => d.name === "Consumption[kWh]")?.series.slice(-1)[0]?.value;
+          this.cards.currentConsumption = this.chart1.data.find(d => d.name === "Consumption [kWh]")?.series.slice(-1)[0]?.value;
           if( this.cards.currentConsumption == undefined) {
             this.cards.currentConsumption = 0;
           }
-          this.cards.currentProduction = this.chart1.data.find(d => d.name === "Production[kWh]")?.series.slice(-1)[0]?.value;
+          this.cards.currentProduction = this.chart1.data.find(d => d.name === "Production [kWh]")?.series.slice(-1)[0]?.value;
           if( this.cards.currentProduction == undefined) {
             this.cards.currentProduction = 0;
           }
 
-          console.log( this.cards);
+          console.log("cards");
+          console.log(this.cards);
         }
       }, error => {
         console.log( error);
@@ -157,14 +158,27 @@ export class OverviewComponent implements OnInit
       this.deviceDataService.getUserDayStats( date2.getDate(), date2.getMonth()+1, date2.getFullYear(), this.jwtService.userId).subscribe(
         (result:any) => {
           if( result.success) {
-            this.chart2.data = [{
-                "name":"Predicted consumption[kWh]",//this.datePipe.transform(ceu.timestamp,"shortTime")
-                "series": result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.predictedValue}))
+            this.chart2.data = [];
+            if( result.data.consumingEnergyUsageByTimestamp.length > 0) {
+              this.chart2.data.push({
+                "name":"Predicted consumption [kWh]",//this.datePipe.transform(ceu.timestamp,"shortTime")
+                "series": result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({name: ceu.timestamp.split("T")[1].substring(0, 5), value: ceu.predictedValue}))
+              });
+            }
+            if( result.data.producingEnergyUsageByTimestamp.length > 0) {
+              this.chart2.data.push({
+                "name":"Predicted production [kWh]",//this.datePipe.transform(ceu.timestamp,"shortTime")
+                "series": result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({name: ceu.timestamp.split("T")[1].substring(0, 5), value: ceu.predictedValue}))
+              });
+            }
+            /*this.chart2.data = [{
+                "name":"Predicted consumption [kWh]",//this.datePipe.transform(ceu.timestamp,"shortTime")
+                "series": result.data.consumingEnergyUsageByTimestamp.map( (ceu:any) => ({name: ceu.timestamp.split("T")[1].substring(0, 5).toTimeString(), value: ceu.predictedValue}))
               },{
-                "name":"Predicted production[kWh]",
-                "series": result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({name: new Date( ceu.timestamp).toTimeString(), value: ceu.predictedValue}))
+                "name":"Predicted production [kWh]",
+                "series": result.data.producingEnergyUsageByTimestamp.map( (ceu:any) => ({name: ceu.timestamp.split("T")[1].substring(0, 5).toTimeString(), value: ceu.predictedValue}))
               }
-            ];
+            ];*/
           }
         }, error => {
           console.log( error);

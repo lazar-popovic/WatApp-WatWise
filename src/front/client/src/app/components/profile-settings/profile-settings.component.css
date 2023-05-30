@@ -42,13 +42,13 @@
     margin-right: 20px;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 999px) {
     .profile-settings-container {
         display: flex;
         flex-direction: column;
         gap: 0px;
     }
-    
+
     .profile-settings-container > .profile-settings-holder {
         margin-top: 20px;
     }

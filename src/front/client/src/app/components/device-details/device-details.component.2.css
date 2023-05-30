@@ -100,7 +100,7 @@ table tr td {
 table tr th {
   text-align: center;
   height: 50px;
-  width: 33%;
+
 }
 
 table tbody tr:hover {
@@ -143,9 +143,9 @@ table tbody tr:hover {
 
 #stats-button {
   background-image: url(/assets/stats.png);
-  background-size: 15px;
+  background-size: 20px;
   background-repeat: no-repeat;
-  background-position: 10px 15px;
+  background-position: 5px 10px;;
 
   font-family: 'Inter', sans-serif;
   font-style: normal;
@@ -229,7 +229,7 @@ table tbody tr:hover {
   width: 100%;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 1000px) {
   #device-schedule-holder {
     width: calc(100% - 1000px);
     margin-left: 20px;

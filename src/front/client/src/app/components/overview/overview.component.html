@@ -6,38 +6,38 @@
     <div class="card-group">
       <div class="card standard-card-style card-small">
         <div class="card-left">
-          <app-tooltip [message]="'Current total consumption of electrical energy in kWh'"></app-tooltip>
+          <app-tooltip [message]="'Current total consumption of electrical energy in [kWh]'"></app-tooltip>
           <h4>Currently consuming</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-red">{{cards.currentConsumption.toFixed(2)}}kWh</h4>
+          <h4 class="c-red">{{cards.currentConsumption.toFixed(2)}} [kWh]</h4>
         </div>
       </div>
       <div class="card standard-card-style card-small">
         <div class="card-left">
-          <app-tooltip [message]="'Current total production of electrical energy in kWh'"></app-tooltip>
+          <app-tooltip [message]="'Current total production of electrical energy in [kWh]'"></app-tooltip>
           <h4>Currently producing</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-blue">{{cards.currentProduction.toFixed(2)}}kWh</h4>
+          <h4 class="c-blue">{{cards.currentProduction.toFixed(2)}} [kWh]</h4>
         </div>
       </div>
       <div class="card standard-card-style card-small">
         <div class="card-left">
-          <app-tooltip [message]="'Predicted total consumption of electrical energy in kWh for today'"></app-tooltip>
+          <app-tooltip [message]="'Predicted total consumption of electrical energy in [kWh] for today'"></app-tooltip>
           <h4>Predicted consumption for today</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-red">{{cards.totalConsumption.toFixed(2)}}kW</h4>
+          <h4 class="c-red">{{cards.totalConsumption.toFixed(2)}} [kWh]</h4>
         </div>
       </div>
       <div class="card standard-card-style card-small">
         <div class="card-left">
-          <app-tooltip [message]="'Predicted total production of electrical energy in kWh for today'"></app-tooltip>
+          <app-tooltip [message]="'Predicted total production of electrical energy in [kWh] for today'"></app-tooltip>
           <h4>Predicted production for today</h4>
         </div>
         <div class="card-right">
-          <h4 class="c-blue">{{cards.totalProduction.toFixed(2)}}kWh</h4>
+          <h4 class="c-blue">{{cards.totalProduction.toFixed(2)}} [kWh]</h4>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@
             [showXAxisLabel]="true"
             [showYAxisLabel]="true"
             [xAxisLabel]="'Time[h]'"
-            [yAxisLabel]="'Electrical energy[kWh]'"
+            [yAxisLabel]="'Electrical energy [kWh]'"
             [showGridLines]="true"
             [scheme]="chart1.colors"
             [xAxisTickFormatting]="xAxisTickFormatting"
@@ -72,7 +72,7 @@
             [yAxis]="true"
             [xAxis]="true"
             [xAxisLabel]="'Time[h]'"
-            [yAxisLabel]="'Electrical energy[kWh]'"
+            [yAxisLabel]="'Electrical energy [kWh]'"
             [showXAxisLabel]="true"
             [showYAxisLabel]="true"
             [showGridLines]="true"
@@ -83,25 +83,27 @@
         </div>
       </div>
       <div class="card card-big standard-card-style" *ngIf="chart3.data.length > 0">
-        <h4>Top consuming devices</h4>
+        <h4>Top currently active consuming devices of <span style="color: rgba(191, 65, 65, 1);">{{cards.currentConsumption.toFixed(2)}} [kWh]</span></h4>
         <div class="chart-holder chart-holder-pie-grid">
           <ngx-charts-pie-grid
             [results]="chart3.data"
             [scheme]="chart3.colors"
             [minWidth]="120"
             [designatedTotal] = "cards.currentConsumption"
+            [label]="'Total [kWh]'"
           >
           </ngx-charts-pie-grid>
         </div>
       </div>
       <div class="card card-big standard-card-style" *ngIf="chart4.data.length > 0">
-        <h4>Top producing devices</h4>
+        <h4>Top currently active producing devices of <span style="color: rgba(69, 94, 184, 1);">{{cards.currentProduction.toFixed(2)}} [kWh]</span></h4>
         <div class="chart-holder chart-holder-pie-grid">
           <ngx-charts-pie-grid class="chart"
             [results]="chart4.data"
             [scheme]="chart4.colors"
             [minWidth]="120"
             [designatedTotal] = "cards.currentProduction"
+            [label]="'Total [kWh]'"
           >
           </ngx-charts-pie-grid>
         </div>
@@ -117,3 +119,6 @@
     </div>
   </div>
 </div>
+
+
+<p-scrollTop></p-scrollTop>

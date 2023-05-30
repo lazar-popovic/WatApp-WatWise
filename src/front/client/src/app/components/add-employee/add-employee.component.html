@@ -1,15 +1,15 @@
 <div class="login-holder">
   <div class="wrapper standard-card-style">
-    <div style="display: flex; justify-content: space-between; align-items: center; color: #3e3e3e" (click)="output.emit( true)">
+    <div style="display: flex; justify-content: space-between; align-items: center; color: #3e3e3e">
       <h2>Register employee</h2>
-      <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;"></i>
+      <i class="fa fa-times" id="close-overlay-btn" aria-hidden="true" style="font-size: 30px; margin: 0;" (click)="output.emit( false)"></i>
     </div>
     <form action="#" [ngBusy]="busy">
       <div class="input-box">
-        <input type="text" name="email" placeholder="Firstname" [(ngModel)]="employee.firstname">
+        <input type="text" name="firstname" placeholder="Firstname" [(ngModel)]="employee.firstname">
       </div>
       <div class="input-box">
-        <input type="text" name="password" placeholder="Lastname" [(ngModel)]="employee.lastname">
+        <input type="text" name="lastname" placeholder="Lastname" [(ngModel)]="employee.lastname">
       </div>
       <div class="input-box">
         <input type="email" name="email" placeholder="Email" [(ngModel)]="employee.email">

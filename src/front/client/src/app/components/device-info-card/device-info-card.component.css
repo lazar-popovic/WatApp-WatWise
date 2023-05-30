@@ -25,7 +25,7 @@
   margin-right: 10px;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 999px) {
   .device-detail {
     width: 100%;
     flex-direction: row;

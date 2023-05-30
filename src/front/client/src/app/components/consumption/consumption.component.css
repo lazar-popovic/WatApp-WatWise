@@ -11,7 +11,7 @@
   flex-direction: column;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
   #container {
     flex-direction: row;
   }
@@ -20,7 +20,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
   #container {
     flex-direction: column;
   }
@@ -199,7 +199,6 @@
 }
 
 table {
-  margin-top: 10px;
   width: 100%;
   background-color: #ffff;
   text-align: center;
@@ -213,7 +212,6 @@ table {
 }
 
 table {
-  margin-top: 10px;
   width: 100%;
 
   background-color: #ffff;

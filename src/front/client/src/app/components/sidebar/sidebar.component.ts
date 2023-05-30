@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { User } from '../../Models/User';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service.service';
@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  styleUrls: ['./sidebar.component.css','./sidebar.component.mobile.css']
 })
 export class SidebarComponent {
   url = 'Overview';
@@ -38,6 +38,12 @@ export class SidebarComponent {
     this.url = this.route.url.split('/')[2];
     this.role = authService.roleId;
     this.getUser();
+
+    let mobileLink = (document.querySelector('.link-' + this.url) as HTMLDivElement);
+    console.log( mobileLink);
+    if( mobileLink != null) {
+      mobileLink.style.backgroundColor = '#3e3e3e';
+    }
   }
 
   select(element: EventTarget | null, role: number) {
@@ -61,8 +67,8 @@ export class SidebarComponent {
       if(result.errors.length > 0) {
         this.route.navigateByUrl("profile");
       } else {
-        this.user.firstName = result.data.firstname;
-        this.user.lastName = result.data.lastname;
+        this.user.firstname = result.data.firstname;
+        this.user.lastname = result.data.lastname;
         this.user.mail = result.data.email;
         this.user.roleId = result.data.roleId;
         this.user.role = result.data.role.roleName;
@@ -101,6 +107,23 @@ export class SidebarComponent {
   menuOpen = false;
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const targetElement = event.target as HTMLElement;
+    const menuElement = document.querySelector('.menu-list');
+    const burgerMenuElement = document.querySelector('.burger-menu');
+
+    if (this.menuOpen == true && menuElement && !menuElement.contains(targetElement) && !burgerMenuElement?.contains(targetElement)) {
+      this.toggleMenu();
+    }
+  }
+
+  isThisPage( linkUrl: string) {
+    if( this.url == linkUrl) {
+      this.menuOpen = false;
+    }
   }
 }
 

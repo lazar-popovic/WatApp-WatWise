@@ -13,6 +13,7 @@ using API.Services.Geocoding.Interfaces;
 using Cyrillic;
 using Cyrillic.Convert.Dictionaries;
 using Cyrillic.Convert;
+using System.Text.RegularExpressions;
 
 namespace API.BL.Implementations
 {
@@ -68,27 +69,37 @@ namespace API.BL.Implementations
         {
             var response = new Response<RegisterResponseViewModel>();
 
-            if (string.IsNullOrEmpty(userRegisterRequest.Email.Trim()))
+            if (string.IsNullOrEmpty(userRegisterRequest.Email!.Trim()))
             {
                 response.Errors.Add("Email is required");
             }
 
-            if (string.IsNullOrEmpty(userRegisterRequest.Firstname.Trim()))
+            if (IsValidEmail(userRegisterRequest.Email.Trim()))
+            {
+                response.Errors.Add("Email must be in valid format");
+            }
+
+            if (string.IsNullOrEmpty(userRegisterRequest.Firstname!.Trim()))
             {
                 response.Errors.Add("Firstname is required");
             }
 
-            if (string.IsNullOrEmpty(userRegisterRequest.Lastname.Trim()))
+            if (string.IsNullOrEmpty(userRegisterRequest.Lastname!.Trim()))
             {
                 response.Errors.Add("Lastname is required");
             }
 
-            if (string.IsNullOrEmpty(userRegisterRequest.Location.Address.Trim()))
+            if (string.IsNullOrEmpty(userRegisterRequest.Location.Address!.Trim()))
             {
                 response.Errors.Add("Address is required");
             }
 
-            if (string.IsNullOrEmpty(userRegisterRequest.Location.City.Trim()))
+            if (string.IsNullOrEmpty(userRegisterRequest.Location.Neighborhood!.Trim()))
+            {
+                response.Errors.Add("Neighborhood is required");
+            }
+
+            if (string.IsNullOrEmpty(userRegisterRequest.Location.City!.Trim()))
             {
                 response.Errors.Add("City is required");
             }
@@ -136,22 +147,27 @@ namespace API.BL.Implementations
         {
             var response = new Response<RegisterResponseViewModel>();
 
-            if (string.IsNullOrEmpty(employeeRegisterRequest.Email.Trim()))
+            if (string.IsNullOrEmpty(employeeRegisterRequest.Email!.Trim()))
             {
                 response.Errors.Add("Email is required");
             }
 
-            if (string.IsNullOrEmpty(employeeRegisterRequest.Firstname.Trim()))
+            if (IsValidEmail(employeeRegisterRequest.Email!.Trim()))
+            {
+                response.Errors.Add("Email must be in valid format");
+            }
+
+            if (string.IsNullOrEmpty(employeeRegisterRequest.Firstname!.Trim()))
             {
                 response.Errors.Add("Firstname is required");
             }
 
-            if (string.IsNullOrEmpty(employeeRegisterRequest.Lastname.Trim()))
+            if (string.IsNullOrEmpty(employeeRegisterRequest.Lastname!.Trim()))
             {
                 response.Errors.Add("Lastname is required");
             }
 
-            if (_authDAL.EmailExists(employeeRegisterRequest.Email))
+            if (_authDAL.EmailExists(employeeRegisterRequest.Email!))
                 response.Errors.Add("Employee with this email already exists");
 
             response.Success = response.Errors.Count == 0;
@@ -439,7 +455,20 @@ namespace API.BL.Implementations
 
         #region private
 
+        private bool IsValidEmail(string email)
+        {
+            // Regular expression pattern for email validation
+            string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
 
+            // Create a Regex object with the pattern
+            Regex regex = new Regex(pattern);
+
+            // Use the Match method to check if the email matches the pattern
+            Match match = regex.Match(email);
+
+            // Return true if the email matches the pattern, false otherwise
+            return !match.Success;
+        }
 
         private Response<LoginResponseViewModel> ValidateUserWithRole(User? userWithRole)
         {

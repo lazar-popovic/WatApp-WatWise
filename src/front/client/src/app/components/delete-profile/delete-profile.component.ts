@@ -19,9 +19,15 @@ export class DeleteProfileComponent {
 
   deleteProfile() {
     this.busy = this.userService.deleteUser(this.id).subscribe((result: any) => {
-      console.log( result);
       if( result.body.success) {
-        this.router.navigate(['/dso/prosumers']);
+        console.log( this.user);
+        this.toastrNotifService.showSuccess( result.body.data);
+        if( this.user?.roleId == 3) {
+          this.router.navigate(['/dso/prosumers']);
+        }
+        else {
+          window.location.reload();
+        }
       } else {
         this.toastrNotifService.showSuccess( result.body.errors);
       }

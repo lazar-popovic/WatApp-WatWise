@@ -51,12 +51,12 @@ namespace API.DAL.Implementations
                                        PasswordHash = u.PasswordHash,
                                        Verified = u.Verified,
                                        RoleId = u.RoleId,
-                                       Role = u.Role,
+                                       //Role = u.Role,
                                        LocationId = u.LocationId,
-                                       Location = u.Location,
+                                       //Location = u.Location,
                                        ProfileImage = u.ProfileImage
                                     ,
-                                   }).AsNoTracking().SingleOrDefaultAsync();
+                                   }).SingleOrDefaultAsync();
 
             return user;
         }
@@ -290,13 +290,13 @@ namespace API.DAL.Implementations
         public async Task<List<AllProsumersWithConsumptionProductionDTO>> ProsumersWithConsumptionProductionAndNumberOfWorkingDevices()
         {
             var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
-
+            
             var userDTOs = await _dbContext.Users
                 .Where(u => u.RoleId == (int?)RoleEnum.Role.User)
                 .Select(u => new
                 {
                     User = u,
-                    Devices = u.Devices!.Where(d => d.ActivityStatus == true),
+                    Devices = u.Devices!.Where(d => d.ActivityStatus == true && d.DataShare == true),
                     EnergyUsage = u.Devices!
                         .SelectMany(d => d.DeviceEnergyUsages!)
                         .Where(eu => eu.Timestamp == now)
@@ -323,10 +323,10 @@ namespace API.DAL.Implementations
                         .Where(eu => eu.Device!.DeviceType!.Category == 1)
                         .Sum(eu => eu.PredictedValue),
                     ConsumingDevicesTurnedOn = u.Devices
-                        .Where(d => d.DeviceType!.Category == -1 && d.ActivityStatus == true)
+                        .Where(d => d.DeviceType!.Category == -1 && d.ActivityStatus == true && d.DataShare == true)
                         .Count(),
                     ProducingDevicesTurnedOn = u.Devices
-                        .Where(d => d.DeviceType!.Category == -1 && d.ActivityStatus == true)
+                        .Where(d => d.DeviceType!.Category == 1 && d.ActivityStatus == true && d.DataShare == true)
                         .Count()
                 })
                 .OrderByDescending(u => u.CurrentConsumption)
@@ -335,6 +335,27 @@ namespace API.DAL.Implementations
 
             return userDTOs;
 
+        }
+
+        public async Task<List<User>> GetAllEmployees()
+        {
+            var employees = await _dbContext.Users.Where(u => u.RoleId == (int)RoleEnum.Role.Employee)
+                .Select(u => new User
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    Firstname = u.Firstname,
+                    Lastname = u.Lastname,
+                    Verified = u.Verified,
+                    RoleId = u.RoleId,
+                    Role = u.Role,
+                    LocationId = u.LocationId,
+                    Location = u.Location,
+                    ProfileImage = u.ProfileImage
+
+                }).AsNoTracking().ToListAsync();
+
+            return employees;
         }
     }
 

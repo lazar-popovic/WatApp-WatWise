@@ -89,6 +89,7 @@ public class LocationDAL : ILocationDAL
     public async Task<List<string?>?> GetAllLocationsCity()
     {
         var cities = await _context.Locations
+            .Where(l =>  l.Users.Count() > 0)
             .Select(l => l.City)
             .Distinct()
             .ToListAsync();
@@ -100,29 +101,29 @@ public class LocationDAL : ILocationDAL
     public async Task<List<String>> GetAllNeighborhood(string city)
     {
         var neighborhoods = await _context.Locations
-            .Where(l => l.City.ToLower() == city.ToLower())
+            .Where(l => l.City!.ToLower() == city.ToLower() && l.Users!.Count() > 0)
             .Select(l => l.Neighborhood)
             .Distinct()
             .ToListAsync();
-        return neighborhoods;
+        return neighborhoods!;
     }
 
-    public async Task<List<LocationWithPowerUsageDTO>> GetAllLocationWithNeighborhood(string city, string neighborhood)
+    public async Task<List<LocationWithPowerUsageDTO>> GetAllLocationWithNeighborhood(string city, string neighborhood, int category)
     {
         var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
 
         var locationDTOs = await _context.Locations
             .GroupJoin(_context.Users, l => l.Id, u => u.LocationId, (l, users) => new { Location = l, Users = users })
             .SelectMany(lu => lu.Users.DefaultIfEmpty(), (lu, user) => new { lu.Location, User = user })
-            .GroupJoin(_context.Devices, lu => lu.User.Id, d => d.UserId,
+            .GroupJoin(_context.Devices, lu => lu.User!.Id, d => d.UserId,
                 (lu, devices) => new { lu.Location, lu.User, Devices = devices })
             .SelectMany(ld => ld.Devices.DefaultIfEmpty(),
                 (ld, device) => new { ld.Location, ld.User, Device = device })
-            .Where(ld =>
+            .Where(ld => ld.Location.Users!.Count() > 0 &&
                 (ld.Device == null || (ld.Device.ActivityStatus == true && ld.Device.DataShare == true &&
-                                       ld.Device.DeviceEnergyUsages.Any(usage => usage.Timestamp == now))) &&
-                ((ld.Location.Neighborhood.ToLower() == neighborhood.ToLower() || neighborhood == "All" ||
-                  neighborhood == "all") && ld.Location.City.ToLower() == city.ToLower()))
+                                       ld.Device.DeviceEnergyUsages!.Any(usage => usage.Timestamp == now))) &&
+                ((ld.Location.Neighborhood!.ToLower() == neighborhood.ToLower() || neighborhood == "All" ||
+                  neighborhood == "all") && ld.Location.City!.ToLower() == city.ToLower()))
             .Select(ld => new
             {
                 ld.Location.Id,
@@ -134,8 +135,9 @@ public class LocationDAL : ILocationDAL
                 ld.Location.Neighborhood,
                 PowerUsage = ld.Device == null
                     ? 0.0
-                    : ld.Device.DeviceType.Category * ld.Device.DeviceEnergyUsages
-                        .Where(usage => usage.Timestamp == now).Sum(usage => usage.Value)
+                    : ld.Device.DeviceEnergyUsages!
+                        .Where(usage => usage.Timestamp == now && ld.Device.DeviceType!.Category == category)
+                        .Sum(usage => usage.Value)
             })
             .GroupBy(l => l.Id)
             .Select(g => new LocationWithPowerUsageDTO
@@ -171,7 +173,8 @@ public class LocationDAL : ILocationDAL
                     where loc.City == city &&
                           (devType == null || devType.Category == category) &&
                           (dev == null || dev.DataShare == true) &&
-                          (energy == null || energy.Timestamp == now)
+                          (energy == null || energy.Timestamp == now) &&
+                          loc.Users!.Count() > 0
                     group new { energy.Value, energy.PredictedValue } by new { loc.Neighborhood } into g
                     select new NeighborhoodPowerUsageDTO
                     {

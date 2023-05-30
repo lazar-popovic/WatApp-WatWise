@@ -58,14 +58,14 @@ export class DeviceJobFormComponent implements OnInit {
   }
 
   getDevices() {
-    this.deviceService.getDevicesIdAndNameByUserId( this.jwtService.userId).subscribe( (result:any) => {
+    this.busyAddDeviceJob = this.deviceService.getDevicesIdAndNameByUserId( this.jwtService.userId).subscribe( (result:any) => {
       if( result.success) {
         this.devices = result.data;
         if( this.devices.length > 0) {
           this.newJob.deviceId = this.devices[0].id;
           if( this.deviceId > 0) {
             this.newJob.deviceId = this.deviceId;
-            (document.querySelector('#device') as HTMLInputElement).disabled = true;
+            /*(document.querySelector('#device') as HTMLInputElement).disabled = true;*/
           }
         }
       }

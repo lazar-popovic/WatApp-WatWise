@@ -24,6 +24,7 @@ export class AddEmployeeComponent {
     this.busy = this.userService.createEmployee(this.employee).subscribe((result: any) => {
       if(result.body.success) {
         this.toastrNotifService.showSuccess(result.body.data.message);
+        this.output.emit( true);
       }
       else {
         this.toastrNotifService.showErrors(result.body.errors);

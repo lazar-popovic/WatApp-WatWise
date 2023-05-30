@@ -7,6 +7,7 @@ import { DeviceDataService } from "../../services/device-data.service";
 import { DatePipe } from "@angular/common";
 //import { JWTService } from 'src/app/services/jwt.service';
 import { JWTService } from '../../services/jwt.service';
+import { DateService } from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-consumption',
@@ -20,28 +21,34 @@ export class ConsumptionComponent implements OnInit {
   id: any = '';
   result: any[] = [];
   data: any[] = [1];
+  columns: any[] = [];
+  columnLabels: any[] = [];
 
   showEdit: boolean = false;
   showDelete: boolean = false;
 
   tableTitle: string = "Timestamp";
 
+  maxDate: any;
   date: any;
   month: number = 4;
   yearForMonth: number = 2023;
   year: number = 2023;
 
-  constructor(private jwtService: JWTService, private datePipe: DatePipe, private authService: AuthService, private route: ActivatedRoute, private router: Router, private deviceDataService: DeviceDataService) {
+  constructor(private jwtService: JWTService,
+              private datePipe: DatePipe,
+              private authService: AuthService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private deviceDataService: DeviceDataService,
+              private dateService: DateService) {
     Chart.register(...registerables);
   }
 
   ngOnInit(): void {
-    let now = new Date();
-    let month: any = (now.getMonth()+1);
-    let day: any =  now.getDate();
-    if (month<10) month = "0" + month;
-    if (day<10) day = "0" + day;
-    this.date  =  now.getFullYear() + "-" + month + "-" + day;
+    this.date = this.dateService.toDateString( new Date());
+    let futureDate = (new Date()).setDate((new Date()).getDate() + 7)
+    this.maxDate = this.dateService.toDateString( new Date(futureDate));
     this.historyClick();
   }
 
@@ -64,6 +71,8 @@ export class ConsumptionComponent implements OnInit {
   dataProduction: any[] = [];
 
   historyClick() {
+    this.columns = ['timestamp','predictedValue','value'];
+    this.columnLabels = ['Hour','Predicted Consumption [kWh]','Consumption [kWh]'];
     this.historyflag = true;
     var historyDiv = document.getElementById("history-h3");
     if (historyDiv) { historyDiv.style.color = "#3e3e3e"; }
@@ -76,6 +85,8 @@ export class ConsumptionComponent implements OnInit {
   }
 
   predictionClick() {
+    this.columns = ['timestamp','predictedValue'];
+    this.columnLabels = ['Hour','Predicted Consumption [kWh]'];
     this.historyflag = false;
     var historyDiv = document.getElementById("history-h3");
     if (historyDiv) { historyDiv.style.color = "gray"; }
@@ -90,6 +101,7 @@ export class ConsumptionComponent implements OnInit {
   todayClick() {
     this.data=[1];
     this.tableTitle = "Hour";
+    this.columnLabels[0] = "Hour";
     this.todayFlag = true; this.monthFlag = false; this.yearFlag = false;
     var todayDiv = document.getElementById("today");
     if (todayDiv) {
@@ -171,6 +183,7 @@ export class ConsumptionComponent implements OnInit {
   monthClick() {
     this.data=[1];
     this.tableTitle = "Day";
+    this.columnLabels[0] = "Day";
     this.todayFlag = false; this.monthFlag = true; this.yearFlag = false;
     const monthDiv = document.getElementById("month");
     if (monthDiv) {
@@ -245,6 +258,7 @@ export class ConsumptionComponent implements OnInit {
   yearClick() {
     this.data=[1];
     this.tableTitle = "Month";
+    this.columnLabels[0] = "Month";
     this.todayFlag = false; this.monthFlag = false; this.yearFlag = true;
     var yearDiv = document.getElementById("year");
     if (yearDiv) {
@@ -289,6 +303,7 @@ export class ConsumptionComponent implements OnInit {
   tommorowClick() {
     this.data=[1];
     this.tableTitle = "Hour";
+    this.columnLabels[0] = "Hour";
     this.tommorowFlag = true;
     this.threeDaysFlag = false;
     this.sevenDaysFlag = false;
@@ -321,7 +336,7 @@ export class ConsumptionComponent implements OnInit {
             data: result.data.map((ceu: any) => ({ x: this.datePipe.transform(ceu.timestamp, "shortTime"), y: ceu.predictedValue })),
             label: 'Predicted ' + this.categoryLabel,
             backgroundColor: this.predColor,
-            borderColor: this.color,
+            borderColor: this.predColor,
             borderWidth: 2
           }];
           this.createBarChart();
@@ -335,6 +350,7 @@ export class ConsumptionComponent implements OnInit {
   threeDaysClick() {
     this.data=[1];
     this.tableTitle = "Hour";
+    this.columnLabels[0] = "Hour";
     this.tommorowFlag = false;
     this.threeDaysFlag = true;
     this.sevenDaysFlag = false;
@@ -381,6 +397,7 @@ export class ConsumptionComponent implements OnInit {
   sevenDaysClick() {
     this.data=[1];
     this.tableTitle = "Day";
+    this.columnLabels[0] = "Day";
     this.tommorowFlag = false;
     this.threeDaysFlag = false;
     this.sevenDaysFlag = true;
@@ -432,13 +449,16 @@ export class ConsumptionComponent implements OnInit {
       options: {
         scales: {
           y: {
-            beginAtZero: true,
-            ticks: {
-              callback: function (value, index, ticks) {
-                return value + 'kW';
-              }
-            }
-          }
+            beginAtZero: false,
+            title: {
+              display: true,
+              text: 'Electrical energy [kWh]',
+              font: {
+                size: 16,
+                weight: 'bold',
+              },
+            },
+          },
         }
       }
     });
@@ -455,7 +475,8 @@ export class ConsumptionComponent implements OnInit {
     },
     mean: 0,
     mae: 0,
-    rmse: 0
+    rmse: 0,
+    median: 0
   }
 
   additionalStats() {
@@ -475,6 +496,18 @@ export class ConsumptionComponent implements OnInit {
         this.additionalStatsData.rmse = Math.sqrt(values.reduce((total, obj) => {
           return total + Math.pow(parseFloat(obj.value) - parseFloat(obj.predictedValue), 2);
         }, 0) / values.length);
+
+        const valuesValues = values.map(obj => obj.value);
+        valuesValues.sort((a, b) => a - b);
+
+        const length = valuesValues.length;
+        const middleIndex = Math.floor(length / 2);
+
+        if (length % 2 === 1) {
+          this.additionalStatsData.median = valuesValues[middleIndex];
+        } else {
+          this.additionalStatsData.median = (valuesValues[middleIndex - 1] + valuesValues[middleIndex]) / 2;
+        }
       }
     }
   }

@@ -106,5 +106,24 @@ namespace API.API
         {
             return Ok(await _userBL.DeleteProfilePictureAsync(id));
         }
+
+        [HttpGet("prosumers-with-energy-usage")]
+        public async Task<IActionResult> ProsumersWithEnergyUsage()
+        {
+            return Ok(await _userBL.ProsumersWithEnergyUsage());
+        }
+        
+        [HttpGet("all-employees")]
+        public async Task<IActionResult> GetAllEmployees()
+        {
+            return Ok(await _userBL.GetAllEmployees());
+        }
+
+        [HttpPut("update-prosumer")]
+        public async Task<IActionResult> UpdateProsumer( UpdateUserViewModel updateUserViewModel)
+        {
+            return Ok(await _userBL.UpdateProsumer(updateUserViewModel));
+            //return Ok(new Response().Data = updateUserViewModel);
+        }
     }
 }
